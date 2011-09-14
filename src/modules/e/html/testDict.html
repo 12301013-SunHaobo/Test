@@ -1,0 +1,32 @@
+<script type="text/javascript">
+function getFlashMovieObject(a) {
+	if (window.document[a]) {
+		return window.document[a]
+	}
+	if (navigator.appName.indexOf("Microsoft Internet") == -1) {
+		if (document.embeds && document.embeds[a]) {
+			return document.embeds[a]
+		}
+	} else {
+		return document.getElementById(a)
+	}
+}
+function ssplay(b) {
+	var a = getFlashMovieObject("recite");
+	if (a) {
+		a.SetVariable("audio", b); 
+		a.GotoFrame(1)
+	}
+}
+</script>
+<embed src="http://dict.cn/nimgs/dict.swf" quality="high" width="1" height="1"
+	name="recite" id="recite" align="absmiddle" allownetworking="all"
+	allowScriptAccess="always" type="application/x-shockwave-flash"
+	pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
+	
+	
+<a href="javascript:void(0);" onClick="ssplay('9eSze');">test</a>	
+
+<a onmouseout="if(!(usercfg.search.Sound === null || usercfg.search.Sound & 1))ssstop()" onmouseover="if(!(usercfg.search.Sound === null || usercfg.search.Sound & 1))ssplay('20101016')" onclick="ssplay('20101016');this.blur();return false;" href="javascript:void(0);"><img class="icon soundicon" src="/nimgs/cleardot.gif"/></a> &nbsp;
+
+<a href="http://dict.cn/ketang/kouyu/">Love asks faith, and faith firmness. 爱情要求信任，信任要求坚定。</a>
