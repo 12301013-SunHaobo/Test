@@ -1,0 +1,5 @@
+
+formula:
+http://j2eecode.blogspot.com/2010/01/calculate-relative-strength-index-rsi.html
+
+

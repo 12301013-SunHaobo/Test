@@ -1,0 +1,155 @@
+<ivy-module version="2.0">
+    <info organisation="org" module="test" revision="1.0.0"/>
+
+    <configurations>
+        <include file="conf/ivy-configurations.xml"/>
+    </configurations>
+
+    <publications defaultconf="compile">
+        <artifact name="test" />
+        <artifact name="test-src" type="source" ext="jar"/>
+    </publications>
+
+    <dependencies defaultconfmapping='compile;runtime;test;web-assets'>
+
+		<!--
+        <dependency org="wgen" name="wgspringcore" rev="${wgspringcore.revision}" conf="compile->*;web-assets" changing="true"/>
+		-->
+        <dependency org="wgen" name="wgspringmodule-userappstate" rev="${wgspringmodule.userappstate.revision}" conf="compile->*;web-assets" changing="true"/>
+
+        <dependency org="mclass" name="bends-java-client" rev="${mclass-dependencies.bends.revision}" conf="compile->*" changing="true"/>
+        <dependency org="mclass" name="mas-java-client" rev="${mclass-dependencies.mas.revision}" conf="compile->*" changing="true"/>
+        <dependency org="mclass" name="napi-java-client" rev="${mclass-dependencies.napi.revision}" conf="compile->*" changing="true"/>
+        <dependency org="mclass" name="common-api-java" rev="${mclass-dependencies.default.revision}" conf="compile->*" changing="true"/>
+
+        <dependency org="antlr" name="antlr" rev="2.7.6" conf="compile->*"/>
+        <dependency org="apache" name="ant" rev="1.8.0" conf="compile->*"/>
+        <dependency org="apache" name="ant-junit" rev="1.8.0" conf="compile->*"/>
+        <dependency org="apache" name="batik-anim" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-awt-util" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-css" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-dom" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-ext" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-parser" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-svg-dom" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-util" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="batik-xml" rev="1.7" conf="compile->*"/>
+        <dependency org="apache" name="commons-beanutils" rev="1.8.3" conf="compile->*"/>
+        <dependency org="apache" name="commons-codec" rev="1.4" conf="compile->*"/>
+        <dependency org="apache" name="commons-collections" rev="3.2.1" conf="compile->*"/>
+        <dependency org="apache" name="commons-configuration" rev="1.6" conf="compile->*"/>
+        <dependency org="apache" name="commons-dbcp" rev="1.2.2" conf="compile->*"/>
+        <dependency org="apache" name="commons-fileupload" rev="1.2.1" conf="compile->*"/>
+        <dependency org="apache" name="commons-httpclient" rev="3.1" conf="compile->*"/>
+        <dependency org="apache" name="commons-io" rev="1.4" conf="compile->*"/>
+        <dependency org="apache" name="commons-lang" rev="2.4" conf="compile->*"/>
+        <dependency org="apache" name="commons-logging" rev="1.1.1" conf="compile->*"/>
+        <dependency org="apache" name="commons-pool" rev="1.3" conf="compile->*"/>
+        <dependency org="apache" name="cxf" rev="2.2.8" conf="compile->*"/>
+        <dependency org="apache" name="httpclient" rev="4.0.2" conf="compile->*"/>
+        <dependency org="apache" name="httpcore" rev="4.0.1" conf="compile->*"/>
+        <dependency org="apache" name="httpmime" rev="4.0.1" conf="compile->*"/>
+        <dependency org="apache" name="log4j" rev="1.2.14" conf="compile->*"/>
+        <dependency org="apache" name="mime4j" rev="0.6" conf="test->*"/>
+        <dependency org="apache" name="neethi" rev="2.0.4" conf="compile->*"/>
+        <dependency org="apache" name="poi" rev="3.6-20091214" conf="compile->*"/>
+        <dependency org="apache" name="poi-ooxml" rev="3.6" conf="compile->*"/>
+        <dependency org="apache" name="serializer" rev="2.7.1" conf="test->*"/>
+        <dependency org="apache" name="solr-core" rev="1.4.0" conf="compile->*"/>
+        <dependency org="apache" name="solr-dataimporthandler" rev="1.4.0" conf="compile->*"/>
+        <dependency org="apache" name="solr-solrj" rev="1.4.0" conf="compile->*"/>
+        <dependency org="apache" name="xalan" rev="2.7.1" conf="test->*"/>
+        <dependency org="apache" name="xbean" rev="2.5.0-r882429" conf="compile->*"/>
+        <dependency org="apache" name="xercesImpl" rev="2.9.1" conf="compile->*"/>
+        <dependency org="apache" name="xmlgraphics-commons" rev="1.3.1" conf="compile->*"/>
+        <dependency org="apache" name="xmlpublic" rev="2.5.0-r882429" conf="compile->*"/>
+        <dependency org="aspectj" name="aspectjrt" rev="1.6.1" conf="compile->*"/>
+        <dependency org="aspectj" name="aspectjweaver" rev="1.6.1" conf="compile->*"/>
+        <dependency org="bouncycastle" name="bcprov-jdk15" rev="135" conf="test->*"/>
+        <dependency org="cobertura" name="cobertura" rev="1.9.4.1" conf="coverage->*"/>
+        <dependency org="codehaus" name="groovy" rev="1.1-rc-1" conf="compile->*"/>
+        <dependency org="ezmorph" name="ezmorph" rev="1.0.6" conf="compile->*"/>
+        <dependency org="google" name="guava" rev="r06" conf="test->*"/>
+        <dependency org="googlecode" name="jslint4java" rev="1.3.3" conf="build->*"/>
+        <dependency org="hamcrest" name="hamcrest-all" rev="1.1" conf="test->*"/>
+        <dependency org="hibernate" name="ejb3-persistence" rev="1.0.2.GA" conf="compile->*"/>
+        <dependency org="hibernate" name="hibernate-annotations" rev="3.4.0.GA" conf="compile->*"/>
+        <dependency org="hibernate" name="hibernate-commons-annotations" rev="3.1.0.GA" conf="compile->*"/>
+        <dependency org="hibernate" name="hibernate-core" rev="3.3.2.GA" conf="compile->*"/>
+        <dependency org="hibernate" name="hibernate-tools" rev="3.2.4.GA" conf="compile->*"/>
+        <dependency org="hibernate" name="hibernate-c3p0" rev="3.3.2.GA" conf="compile->*"/>
+        <dependency org="ibm" name="wsdl4j" rev="1.6.2" conf="compile->*"/>
+        <dependency org="jakarta" name="oro" rev="2.0.8" conf="coverage->*"/>
+        <dependency org="javassist" name="javassist" rev="3.8.0.GA" conf="compile->*"/>
+        <dependency org="java" name="jna" rev="3.2.2" conf="test->*"/>
+        <dependency org="javax" name="jsr311-api" rev="1.0" conf="compile->*"/>
+        <dependency org="javax" name="jta" rev="1.0.1B" conf="compile->*"/>
+        <dependency org="javax" name="servlet-api" rev="2.5-6.1.9" conf="compile->*"/>
+        <dependency org="javax" name="xmlbeans-qname" rev="2009-nov" conf="compile->*"/>
+        <dependency org="jdom" name="jdom" rev="1.1" conf="compile->*"/>
+        <dependency org="jmock" name="jmock" rev="2.4.0" conf="test->*"/>
+        <dependency org="jmock" name="jmock-junit3" rev="2.4.0" conf="test->*"/>
+        <dependency org="json" name="json" rev="20080701" conf="test->*"/>
+        <dependency org="junit" name="junit" rev="4.4" conf="compile->*"/>
+        <dependency org="junit" name="junit-dep" rev="4.8.1" conf="test->*"/>
+        <dependency org="junit" name="junit-sources" rev="4.4" conf="compile->*"/>
+        <dependency org="kitfox" name="svgsalamander" rev="0.0.1" conf="compile->*"/>
+        <dependency org="liquibase" name="liquibase-core" rev="1.9.5" conf="compile->*"/>
+        <dependency org="mchange" name="c3p0" rev="0.9.1" conf="compile->*"/>
+        <dependency org="mx4j" name="mx4j-tools" rev="3.0.1" conf="test->*"/>
+        <dependency org="mysql" name="mysql-connector-java" rev="5.1.6" conf="compile->*"/>
+        <dependency org="objectplanet" name="image" rev="2.0.2" conf="compile->*"/>
+        <dependency org="objectweb" name="asm" rev="3.0" conf="compile->*"/>
+        <dependency org="objectweb" name="asm-tree" rev="3.0" conf="coverage->*"/>
+        <dependency org="openxmlformats" name ="ooxml-schemas" rev="2008-oct" conf="compile->*"/>
+        <dependency org="owasp" name="antisamy" rev="1.3-wgenv2" conf="compile->*"/>
+        <!-- 
+        <dependency org="owasp" name="esapi" rev="2.0-rc4" conf="compile->*"/>
+        -->
+        <dependency org="postgres" name="postgresql-jdbc4" rev="9.0-801" conf="compile->*"/>
+        <dependency org="puppycrawl" name="checkstyle-all" rev="5.1" conf="build->*"/>
+        <dependency org="seleniumhq" name="selenium-java" rev="2.4.0" conf="test->*"/>
+        <dependency org="slf4j" name="slf4j-api" rev="1.5.8" conf="compile->*"/>
+        <dependency org="slf4j" name="slf4j-log4j12" rev="1.5.2" conf="compile->*"/>
+        <dependency org="sourceforge" name="ant-contrib" rev="2008-oct" conf="build->*"/>
+        <dependency org="sourceforge" name="backport-util-concurrent" rev="2.2" conf="compile->*"/>
+        <dependency org="sourceforge" name="cssparser" rev="0.9.5" conf="test->*"/>
+        <dependency org="sourceforge" name="cglib-nodep" rev="2.1_3" conf="compile->*"/>
+        <dependency org="sourceforge" name="dom4j" rev="1.6.1" conf="compile->*"/>
+        <dependency org="sourceforge" name="freemarker" rev="2.3.15" conf="compile->*"/>
+        <dependency org="sourceforge" name="htmlunit" rev="2.8" conf="test->*"/>
+        <dependency org="sourceforge" name="htmlunit-core-js" rev="2.8" conf="test->*"/>
+        <dependency org="sourceforge" name="jeuclid-core" rev="3.1.7" conf="compile->*"/>
+        <dependency org="sourceforge" name="joda-time" rev="1.5.1" conf="compile->*"/>
+        <dependency org="sourceforge" name="joda-time-hibernate" rev="0.8" conf="compile->*"/>
+        <dependency org="sourceforge" name="json-lib" rev="2.3" conf="compile->*"/>
+        <dependency org="sourceforge" name="json-lib-ext-spring" rev="1.0.2" conf="compile->*"/>
+        <dependency org="sourceforge" name="nekohtml" rev="1.9.14" conf="compile->*"/>
+        <dependency org="sourceforge" name="opencsv" rev="2.1" conf="compile->*"/>
+        <dependency org="sourceforge" name="sojo" rev="1.0.0" conf="compile->*"/>
+        <dependency org="springsource" name="spring" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-aspects" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-beans" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-context" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-context-support" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-core" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-flex" rev="1.0.1.RELEASE" conf="compile->*"/>
+        <dependency org="springsource" name="spring-json" rev="1.3.0" conf="compile->*"/>
+        <dependency org="springsource" name="spring-orm" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-test" rev="2.5.6.SEC01" conf="compile->*"/>
+        <dependency org="springsource" name="spring-tx" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-web" rev="2.5.6" conf="compile->*"/>
+        <dependency org="springsource" name="spring-webmvc" rev="2.5.6" conf="compile->*"/>
+        <dependency org="terracotta" name="ehcache" rev="core-2.4.2" conf="compile->*"/>
+        <dependency org="googlecode" name="ehcache-spring-annotations" rev="1.1.3" conf="compile->*"/>
+        <dependency org="w3c" name="sac" rev="1.3" conf="compile->*"/>
+        <dependency org="yahoo" name="yuiant" rev="2007-nov" conf="build->*"/>
+        <dependency org="yahoo" name="yuicompressor" rev="2.3.5" conf="build->*"/>
+
+        <!--If you get an error message about wgspringcore conflicts stemming from wgspringmodule dependencies,
+            make sure that your wgspringmodule Jenkins builds are running downstream of the Jenkins build that
+            builds wgspringcore.  Your project and your wgspringmodules must depend on the same wgspringcore. -->
+        <conflict manager="strict" />
+
+    </dependencies>
+</ivy-module>
