@@ -27,18 +27,13 @@ public class GetNazData {
          * ticks@page bottom->top
          */
         
-        int timeLot = 1;
-        int pageno = 4;
-        Stack<String> onePageStack = extractPageTicks(timeLot, pageno);
-        while(!onePageStack.isEmpty()){
-            allList.add(onePageStack.pop());
-        }
-        
-        timeLot = 1;
-        pageno = 3;
-        Stack<String> secondPageStack = extractPageTicks(timeLot, pageno);
-        while(!secondPageStack.isEmpty()){
-            allList.add(secondPageStack.pop());
+        int timeLot = 5;
+        for(int pageno = 51; pageno>=1; pageno-- ){
+            Stack<String> onePageStack = extractPageTicks(timeLot, pageno);
+            while(!onePageStack.isEmpty()){
+                allList.add(onePageStack.pop());
+            }
+            System.out.println(pageno+" done");
         }
         
         String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/"+TimeUtil.getCurrentTimeStr()+".txt";
@@ -91,7 +86,8 @@ public class GetNazData {
             List<String> tdList = RegUtil.getMatchedStrings(trStr, tdPattern);
             String tick = "";
             for(String tdStr: tdList){
-                tick += tdStr.replaceAll("<td>|</td>|\\$|&nbsp;| ", "")+",";
+                //remove chars: "<td>","</td>","$","&nbsp;"," ",","
+                tick += tdStr.replaceAll("<td>|</td>|\\$|&nbsp;| |,", "")+",";
             }
             //System.out.println(tick);
             if(!tick.trim().equals("")){
