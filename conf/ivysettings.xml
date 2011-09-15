@@ -1,0 +1,64 @@
+<ivysettings>
+    <!-- property "ivy.resolution.cache.dir" MUST be set before using this file. 
+
+         It is the directory used to store Ivy resolution data, which is used by Ivy 
+         to reuse the results of a resolve process.
+         It is overwritten each time a new resolve is performed, and should
+         never be used by multiple processes at the same time.
+
+         The value should be specific to the project.
+         Here's an example value:
+
+                   <my project root dir>/.ivy2/cache/resolution
+    -->
+
+    <property name="ivy.retrieve.pattern" value="${ivy.lib.dir}/[conf]/[artifact]-[revision].[ext]"/>
+    <property name="ivy.checksums" value=""/>
+    <property name="ivy.nobranch.pattern" value="[organisation]/[module]/ivy-[revision].xml"/>
+    <property name="ivy.pattern" value="[organisation]/[module]/[branch]/ivy-[revision].xml"/>
+    <property name="artifact.nobranch.pattern" value="[organisation]/[module]/[artifact]-[revision].[type]"/>
+    <property name="artifact.pattern" value="[organisation]/[module]/[branch]/[artifact]-[revision].[type]"/>
+
+    <!-- Default local repo. Used for dev purposes. Setting this property will override this value. -->
+    <property name="ivy.local.repo.dir" value="${user.home}/.ivy2/local" override="false"/>
+
+    <!-- Default resolver to use. Setting this property will override this value. -->
+    <property name="ivy.default.resolver" value="ivyrepo" override="false"/>
+
+    <!-- The repository cache is where Ivy stores data downloaded from module 
+         repositories, along with some meta information concerning these artifacts, 
+         like their original location.
+         This part of the cache can be shared if you use a well suited lock strategy.
+         Setting this property will override this value.
+    -->
+    <property name="ivy.repository.cache.dir" value="${user.home}/.ivy2/cache/repository" override="false"/>
+
+
+
+    <settings defaultResolver="${ivy.default.resolver}"
+              defaultConflictManager="all" />    <!-- in order to get all revisions without any eviction -->
+
+    <caches defaultCacheDir="${user.home}/.ivy2/cache" 
+            repositoryCacheDir="${ivy.repository.cache.dir}/${ivy.default.resolver}"
+            resolutionCacheDir="${ivy.resolution.cache.dir}" 
+            ivyPattern="${ivy.pattern}"
+            artifactPattern="${artifact.pattern}" 
+            lockStrategy="artifact-lock"/>
+
+    <resolvers>
+        <chain name="allrepos" returnFirst="true" checkmodified="true" latest="latest-time">
+            <filesystem name="localrepo" local="true" checkmodified="true" latest="latest-time">
+                <ivy pattern="${ivy.local.repo.dir}/${ivy.pattern}"/>
+                <artifact pattern="${ivy.local.repo.dir}/${artifact.pattern}"/>
+            </filesystem>
+
+            <url name="ivyrepo" checkmodified="true" latest="latest-time">
+                <ivy pattern="http://build-mc.wgenhq.net/ivy/${ivy.pattern}"/>
+                <ivy pattern="http://build-mc.wgenhq.net/ivy/${ivy.nobranch.pattern}"/>
+                <artifact pattern="http://build-mc.wgenhq.net/ivy/${artifact.pattern}"/>
+                <artifact pattern="http://build-mc.wgenhq.net/ivy/${artifact.nobranch.pattern}"/>
+            </url>
+        </chain>
+    </resolvers>
+
+</ivysettings>
