@@ -11,13 +11,6 @@ import java.net.URLConnection;
 
 public class WebUtil {
 
-	static String s1 = "http://www.wholesale-dress.net/korea-style-lace-collar-bowknot-embellished-chiffon-dress-pink-g1154588.html";// wrong
-	// encoding
-	static String s2 = "http://www.wholesale-dress.net/fashion-style-letters-printed-messenger-bag-white-g1157530.html";
-	static String s3 = "http://www.wholesale-dress.net/sweet-round-collar-long-sleeve-lace-dress-black-g1169694.html"; // wrong
-
-	// encoding
-
 	public static void main(String[] args) throws Exception {
 		// getPageSource(s, "UTF8");//UTF8,GBK,gb2312,,,,,,,,,
 
@@ -28,7 +21,6 @@ public class WebUtil {
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			// http://proxy.ml.com:8083/
 //			Properties props = System.getProperties();
 //			props.put("http.proxyHost", "proxy.ml.com");
 //			props.put("http.proxyPort", "8083");

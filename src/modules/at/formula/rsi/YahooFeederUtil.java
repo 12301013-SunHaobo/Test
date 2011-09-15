@@ -1,4 +1,4 @@
-package tmp.rsi;
+package modules.at.formula.rsi;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import modules.at.model.Bar;
 
 public class YahooFeederUtil {
 public static ArrayList getPrices(String symbol)
@@ -34,7 +36,7 @@ public static ArrayList getPrices(String symbol)
        Date date = (Date) new SimpleDateFormat("yyyy-MM-dd")
                .parse(elements[0]);
 
-       prices.add(new Price(date, new Double(elements[1]).doubleValue(),
+       prices.add(new Bar(0, date, new Double(elements[1]).doubleValue(),
                new Double(elements[2]).doubleValue(), new Double(
                        elements[3]).doubleValue(), new Double(elements[4])
                        .doubleValue(), new Double(elements[5])

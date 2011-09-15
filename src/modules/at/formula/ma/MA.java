@@ -1,4 +1,4 @@
-package tmp.ma;
+package modules.at.formula.ma;
 
 import java.util.LinkedList;
 import java.util.Queue;

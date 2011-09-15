@@ -1,14 +1,16 @@
-package tmp.rsi;
+package modules.at.formula.rsi;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import modules.at.model.Bar;
+
 public class RSI {
     private int periodLength;
     private final Stack<Averages> avgList;
-    private final ArrayList<Price> prices;
+    private final ArrayList<Bar> prices;
 
     public RSI(int periodLength, String symbol) throws ParseException, IOException {
         super();

@@ -1,0 +1,15 @@
+package utils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class TimeUtil {
+
+    public static DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmmss");
+    
+    public static String getCurrentTimeStr(){
+        return DEFAULT_DATE_FORMAT.format(new Date());
+    }
+    
+}

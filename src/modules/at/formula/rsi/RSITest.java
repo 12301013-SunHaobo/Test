@@ -1,4 +1,4 @@
-package tmp.rsi;
+package modules.at.formula.rsi;
 
 import java.io.IOException;
 import java.text.ParseException;
