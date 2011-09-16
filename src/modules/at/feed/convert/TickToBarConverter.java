@@ -1,12 +1,10 @@
 package modules.at.feed.convert;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import modules.at.model.Bar;
 import modules.at.model.Tick;
-import utils.TimeUtil;
 
 public class TickToBarConverter {
 
@@ -26,7 +24,7 @@ public class TickToBarConverter {
 				// add previous bar to barList
 				if (bar != null) {
 					barList.add(bar);
-					System.out.println(bar.toString());
+					//System.out.println(bar.toString());
 				}
 				// new bar for current time lot
 				bar = new Bar(tick.getDate(), tick.getPrice(), tick.getPrice(), tick.getPrice(), tick.getPrice(), tick.getVolumn());
@@ -40,8 +38,8 @@ public class TickToBarConverter {
 		}
 		// add last bar to barList
 		barList.add(bar);
-		System.out.println(bar.toString());
-		return null;
+		//System.out.println(bar.toString());
+		return barList;
 	}
 
 	// beginning of the time lot in milliseconds

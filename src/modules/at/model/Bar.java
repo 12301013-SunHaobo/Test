@@ -86,7 +86,7 @@ public class Bar {
     public void setClose(double close) {
         this.close = close;
     }
-    public double getVolume() {
+    public int getVolume() {
         return volume;
     }
     public void setVolume(int volume) {

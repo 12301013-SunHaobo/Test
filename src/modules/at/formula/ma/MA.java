@@ -3,38 +3,27 @@ package modules.at.formula.ma;
 import java.util.LinkedList;
 import java.util.Queue;
 public class MA {
-    private final Queue<Double> window = new LinkedList<Double>();
-    private final int period;
+    private final Queue<Double> avgQ = new LinkedList<Double>(); //how many bars to store
+    private final int length; //how many bars to calculate
     private double sum;
  
     public MA(int period) {
         assert period > 0 : "Period must be a positive integer";
-        this.period = period;
+        this.length = period;
     }
  
-    public void newNum(double num) {
+    public void addPrice(double num) {
         sum += num;
-        window.add(num);
-        if (window.size() > period) {
-            sum -= window.remove();
+        avgQ.add(num);
+        if (avgQ.size() > length) {
+            sum -= avgQ.remove();
         }
     }
  
     public double getAvg() {
-        if (window.isEmpty()) return 0; // technically the average is undefined
-        return sum / window.size();
+        if (avgQ.size()<this.length) return -1; // technically the average is undefined
+        return sum / avgQ.size();
     }
  
-    public static void main(String[] args) {
-        double[] testData = {1,2,3,4,5,5,4,3,2,1};
-        int[] windowSizes = {3,5};
-        for (int windSize : windowSizes) {
-            MA ma = new MA(windSize);
-            for (double x : testData) {
-                ma.newNum(x);
-                System.out.println("Next number = " + x + ", SMA = " + ma.getAvg());
-            }
-            System.out.println();
-        }
-    }
+
 }
