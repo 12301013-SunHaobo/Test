@@ -8,42 +8,40 @@ import java.util.Stack;
 import modules.at.model.Bar;
 
 public class RSI {
-    private int periodLength;
+    private int length;
     private final Stack<Averages> avgList;
-    private final ArrayList<Bar> prices;
+    private final ArrayList<Bar> rsiQ;
 
-    public RSI(int periodLength, String symbol) throws ParseException, IOException {
+    public RSI(int length, String symbol) throws ParseException, IOException {
         super();
-        this.periodLength = periodLength;
+        this.length = length;
         avgList = new Stack<Averages>();
-        prices = YahooFeederUtil.getPrices(symbol);
+        rsiQ = YahooFeederUtil.getPrices(symbol);
     }
 
     public double calculate() {
         double value = 0;
-        int pricesSize = prices.size();
+        int pricesSize = rsiQ.size();
         int lastPrice = pricesSize - 1;
-        int firstPrice = lastPrice - periodLength + 1;
+        int firstPrice = lastPrice - length + 1;
 
         double gains = 0;
         double losses = 0;
         double avgUp = 0;
         double avgDown = 0;
 
-        double delta = prices.get(lastPrice).getClose()
-                - prices.get(lastPrice - 1).getClose();
+        double delta = rsiQ.get(lastPrice).getClose() - rsiQ.get(lastPrice - 1).getClose();
         gains = Math.max(0, delta);
         losses = Math.max(0, -delta);
 
         if (avgList.isEmpty()) {
             for (int bar = firstPrice + 1; bar <= lastPrice; bar++) {
-                double change = prices.get(bar).getClose()
-                        - prices.get(bar - 1).getClose();
+                double change = rsiQ.get(bar).getClose() - rsiQ.get(bar - 1).getClose();
                 gains += Math.max(0, change);
                 losses += Math.max(0, -change);
             }
-            avgUp = gains / periodLength;
-            avgDown = losses / periodLength;
+            avgUp = gains / length;
+            avgDown = losses / length;
             avgList.push(new Averages(avgUp, avgDown));
 
         } else {
@@ -51,9 +49,8 @@ public class RSI {
             Averages avg = avgList.pop();
             avgUp = avg.getAvgUp();
             avgDown = avg.getAvgDown();
-            avgUp = ((avgUp * (periodLength - 1)) + gains) / (periodLength);
-            avgDown = ((avgDown * (periodLength - 1)) + losses)
-                    / (periodLength);
+            avgUp = ((avgUp * (length - 1)) + gains) / (length);
+            avgDown = ((avgDown * (length - 1)) + losses) / (length);
             avgList.add(new Averages(avgUp, avgDown));
         }
         value = 100 - (100 / (1 + (avgUp / avgDown)));
@@ -81,6 +78,6 @@ public class RSI {
     }
 
     public int getPeriodLength() {
-        return periodLength;
+        return length;
     }
 }

@@ -20,10 +20,18 @@ public class TestMA {
      */
     public static void main(String[] args) throws Exception {
 
+        //long b0 = System.currentTimeMillis();
         List<Tick> tickList = HistoryLoader.getHistTciks();
+        //long b1 = System.currentTimeMillis();
         List<Bar> barList = TickToBarConverter.convert(tickList);
+        long b2 = System.currentTimeMillis();
+        testMA(barList);
         //testConvertToFChartIntraday(barList);
-        testConvertToFChart(barList);
+        //testConvertToFChart(barList);
+        
+        long e0 = System.currentTimeMillis();
+        System.out.println("Total time : "+(e0-b2));
+        
     }
     
     private static void testConvertToFChartIntraday(List<Bar> barList) throws Exception{
@@ -73,7 +81,8 @@ public class TestMA {
         MA ma = new MA(13);
         for(Bar bar : barList){
         	ma.addPrice(bar.getClose());
-        	System.out.println(bar+","+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
+        	//System.out.println(bar+","+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
+        	System.out.println(bar.getId()+","+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
         	
         }
     	
