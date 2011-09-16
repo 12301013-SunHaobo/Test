@@ -36,11 +36,11 @@ public static ArrayList getPrices(String symbol)
        Date date = (Date) new SimpleDateFormat("yyyy-MM-dd")
                .parse(elements[0]);
 
-       prices.add(new Bar(0, date, new Double(elements[1]).doubleValue(),
+       prices.add(new Bar(date, new Double(elements[1]).doubleValue(),
                new Double(elements[2]).doubleValue(), new Double(
                        elements[3]).doubleValue(), new Double(elements[4])
-                       .doubleValue(), new Double(elements[5])
-                       .doubleValue()));
+                       .doubleValue(), new Integer(elements[5])
+                       .intValue()));
    }
    in.close();
    return prices;

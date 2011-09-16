@@ -2,18 +2,22 @@ package modules.at.model;
 
 import java.util.Date;
 
+import utils.TimeUtil;
+
 public class Bar {
+	private static int idSeq = 0; //sequence number to count how many bars are created
+	
     private int id;
-    private Date date;
+    private Date date; //close time
     private double open;
     private double high;
     private double low;
     private double close;
-    private double volume;
+    private int volume;
     
-    public Bar(int id, Date date, double open, double high, double low, double close, double volume) {
+    public Bar(Date date, double open, double high, double low, double close, int volume) {
         super();
-        this.id = id;
+        this.id = ++idSeq;
         this.date = date;
         this.open = open;
         this.high = high;
@@ -21,6 +25,31 @@ public class Bar {
         this.close = close;
         this.volume = volume;
     }
+    
+    public void addTick(Tick tick){
+    	this.date = tick.getDate();
+    	if(tick.getPrice()>this.high){
+    		this.high = tick.getPrice();
+    	}
+    	if(tick.getPrice()<this.low){
+    		this.low = tick.getPrice();
+    	}
+    	this.close = tick.getPrice();
+    	this.volume += tick.getVolumn();
+    }
+    
+    public void merge(Bar bar){
+    	this.date = bar.getDate();
+    	if(bar.getHigh()>this.high){
+    		this.high = bar.getHigh();
+    	}
+    	if(bar.getLow()<this.low){
+    		this.low = bar.getLow();
+    	}
+    	this.close = bar.getClose();
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -60,8 +89,13 @@ public class Bar {
     public double getVolume() {
         return volume;
     }
-    public void setVolume(double volume) {
+    public void setVolume(int volume) {
         this.volume = volume;
     }
+	@Override
+	public String toString() {
+		return "Bar [id=" + id + ", date=" + TimeUtil.TICK_TIME_FORMAT.format(date) + ", open=" + open + ", high=" + high + ", low=" + low + ", close=" + close + ", volume="
+				+ volume + "]";
+	}
 
 }

@@ -14,30 +14,47 @@ import utils.WebUtil;
 public class GetNazData {
 
     /**
-     * @param args
-     * @throws IOException 
+     * to make tick order by : earliest -> latest
+     * timeLot 1->13
+     * pages@timeLot max->1
+     * ticks@page bottom->top
      */
     public static void main(String[] args) throws IOException {
+    	
+    	long b0 = System.currentTimeMillis();
         LinkedList<String> allList = new LinkedList<String>();
-        //initTotalPageArr();
-        
-        /* to make tick order by : earliest -> latest
-         * timeLot 1->13
-         * pages@timeLot max->1
-         * ticks@page bottom->top
-         */
-        
-        int timeLot = 5;
-        for(int pageno = 51; pageno>=1; pageno-- ){
-            Stack<String> onePageStack = extractPageTicks(timeLot, pageno);
-            while(!onePageStack.isEmpty()){
-                allList.add(onePageStack.pop());
-            }
-            System.out.println(pageno+" done");
+        initTotalPageArr();
+
+        for(int i=0;i<totalPageArr.length;i++){
+        	for(int pageno=totalPageArr[i];pageno>=1;pageno--){
+
+				Stack<String> onePageStack = extractPageTicks((i+1), pageno);
+				while (!onePageStack.isEmpty()) {
+					allList.add(onePageStack.pop());
+				}
+
+        		System.out.println("timeLot:"+(i+1)+" page:"+pageno+" done");
+        	}
         }
+
+      String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/"+TimeUtil.getCurrentTimeStr()+".txt";
+      FileUtil.listToFile(allList, tickOutputFilePath);
+      
+      long e0 = System.currentTimeMillis();
+      System.out.println("Total used time: "+(e0-b0)/1000+" seconds.");
         
-        String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/"+TimeUtil.getCurrentTimeStr()+".txt";
-        FileUtil.listToFile(allList, tickOutputFilePath);
+        
+//        int timeLot = 5;
+//        for(int pageno = 51; pageno>=1; pageno-- ){
+//            Stack<String> onePageStack = extractPageTicks(timeLot, pageno);
+//            while(!onePageStack.isEmpty()){
+//                allList.add(onePageStack.pop());
+//            }
+//            System.out.println(pageno+" done");
+//        }
+//        
+//        String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/"+TimeUtil.getCurrentTimeStr()+".txt";
+//        FileUtil.listToFile(allList, tickOutputFilePath);
         
      
     }

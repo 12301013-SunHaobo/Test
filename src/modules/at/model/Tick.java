@@ -2,6 +2,8 @@ package modules.at.model;
 
 import java.util.Date;
 
+import utils.TimeUtil;
+
 public class Tick {
     int id;
     Date date;
@@ -34,7 +36,7 @@ public class Tick {
     }
     @Override
     public String toString() {
-        return "Tick [id=" + id + ", date=" + date + ", price=" + price + ", volumn=" + volumn + "]";
+        return "Tick [id=" + id + ", date=" + TimeUtil.TICK_TIME_FORMAT.format(date) + ", price=" + price + ", volumn=" + volumn + "]";
     }
     
     

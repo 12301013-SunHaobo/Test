@@ -12,7 +12,7 @@ public class HistoryLoader {
     
     public static List<Tick> getHistTciks() throws Exception{
         String dateStr = "20110915";
-        List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/20110915-174930.txt");
+        List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/20110915-194819.txt");
         List<Tick> tickList = new LinkedList<Tick>();
         
         for(String str: strList){
