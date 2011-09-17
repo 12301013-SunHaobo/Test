@@ -27,7 +27,7 @@ public class TestEma {
 	
     private static void testDailyEMA() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
-        EMA ema = new EMA(13);
+        EMASelfImpl ema = new EMASelfImpl(13);
         for(Bar bar : barList){
         	ema.addPrice(bar.getClose());
         	System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(ema.getValue()));
@@ -36,7 +36,7 @@ public class TestEma {
     }
     
 	private static void testStaticData()throws Exception{
-		EMA ema = new EMA(10);
+		EMASelfImpl ema = new EMASelfImpl(10);
 		double[] dArr = new double[]{
 				64.75,
 				63.79,

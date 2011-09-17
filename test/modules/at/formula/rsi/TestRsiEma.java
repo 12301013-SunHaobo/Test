@@ -21,7 +21,7 @@ public class TestRsiEma {
 	    List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
 
         long b1 = System.currentTimeMillis();
-        RsiEma rsi = new RsiEma(14);
+        RsiEmaSelfImpl rsi = new RsiEmaSelfImpl(14);
         for(Bar bar : barList){
             rsi.addPrice(bar.getClose());
             System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(rsi.getValue()));

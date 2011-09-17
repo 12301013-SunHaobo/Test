@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="libs/httpcore-4.0.1.jar"/>
 	<classpathentry kind="lib" path="libs/httpmime-4.0.3.jar"/>
 	<classpathentry kind="lib" path="libs/junit-4.9.jar"/>
+	<classpathentry kind="lib" path="libs/commons-math-2.2.jar" sourcepath="libs/commons-math-2.2-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

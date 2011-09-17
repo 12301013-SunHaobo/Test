@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.model.Bar;
@@ -22,7 +24,8 @@ public class TestMA {
 
         long b0 = System.currentTimeMillis();
     	
-        testDailyMA();
+        //testDailyMA();
+        testDailyMAByMathLib();
         
         long e0 = System.currentTimeMillis();
         System.out.println("Total time : "+(e0-b0));
@@ -31,7 +34,7 @@ public class TestMA {
     
     private static void testDailyMA() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
-        MA ma = new MA(13);
+        MASelfImpl ma = new MASelfImpl(13);
         for(Bar bar : barList){
         	ma.addPrice(bar.getClose());
         	System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
@@ -41,6 +44,17 @@ public class TestMA {
     	
     }
     
+    private static void testDailyMAByMathLib() throws Exception{
+    	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
+    	DescriptiveStatistics ds = new DescriptiveStatistics(13);
+        for(Bar bar : barList){
+        	ds.addValue(bar.getClose());
+        	System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(ds.getSum()/ds.getN()));
+        	
+        }
+    	
+    	
+    }
     
     
     private static void testConvertToFChartIntraday(List<Bar> barList) throws Exception{
@@ -61,7 +75,7 @@ public class TestMA {
     
     
     private static void testConvertToFChart(List<Bar> barList) throws Exception{
-    	MA ma = new MA(13);
+    	MASelfImpl ma = new MASelfImpl(13);
     	 
     	long oneDay = 1000 * 3600 * 24;
     	long curDate = TimeUtil.FCCHART_DATE_FORMAT.parse("19800101").getTime();
@@ -87,7 +101,7 @@ public class TestMA {
     }
     
     private static void testMA(List<Bar> barList){
-        MA ma = new MA(13);
+        MASelfImpl ma = new MASelfImpl(13);
         for(Bar bar : barList){
         	ma.addPrice(bar.getClose());
         	//System.out.println(bar+","+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
