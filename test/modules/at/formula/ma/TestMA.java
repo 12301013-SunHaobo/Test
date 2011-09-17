@@ -20,19 +20,28 @@ public class TestMA {
      */
     public static void main(String[] args) throws Exception {
 
-        //long b0 = System.currentTimeMillis();
-        List<Tick> tickList = HistoryLoader.getHistTciks();
-        //long b1 = System.currentTimeMillis();
-        List<Bar> barList = TickToBarConverter.convert(tickList);
-        long b2 = System.currentTimeMillis();
-        testMA(barList);
-        //testConvertToFChartIntraday(barList);
-        //testConvertToFChart(barList);
+        long b0 = System.currentTimeMillis();
+    	
+        testDailyMA();
         
         long e0 = System.currentTimeMillis();
-        System.out.println("Total time : "+(e0-b2));
+        System.out.println("Total time : "+(e0-b0));
         
     }
+    
+    private static void testDailyMA() throws Exception{
+    	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
+        MA ma = new MA(13);
+        for(Bar bar : barList){
+        	ma.addPrice(bar.getClose());
+        	System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
+        	
+        }
+    	
+    	
+    }
+    
+    
     
     private static void testConvertToFChartIntraday(List<Bar> barList) throws Exception{
     	DateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
@@ -55,11 +64,11 @@ public class TestMA {
     	MA ma = new MA(13);
     	 
     	long oneDay = 1000 * 3600 * 24;
-    	long curDate = TimeUtil.TICK_DATE_FORMAT.parse("19800101").getTime();
+    	long curDate = TimeUtil.FCCHART_DATE_FORMAT.parse("19800101").getTime();
     	for(Bar bar : barList){
     		ma.addPrice(bar.getClose());
     		System.out.println("QQQ,"+
-    				TimeUtil.TICK_DATE_FORMAT.format(new Date(curDate + bar.getId()*oneDay))+"," +
+    				TimeUtil.FCCHART_DATE_FORMAT.format(new Date(curDate + bar.getId()*oneDay))+"," +
     				Formatter.DECIMAL_FORMAT.format(ma.getAvg())
     				);
     				

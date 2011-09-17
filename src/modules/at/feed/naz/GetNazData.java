@@ -42,21 +42,7 @@ public class GetNazData {
       
       long e0 = System.currentTimeMillis();
       System.out.println("Total used time: "+(e0-b0)/1000+" seconds.");
-        
-        
-//        int timeLot = 5;
-//        for(int pageno = 51; pageno>=1; pageno-- ){
-//            Stack<String> onePageStack = extractPageTicks(timeLot, pageno);
-//            while(!onePageStack.isEmpty()){
-//                allList.add(onePageStack.pop());
-//            }
-//            System.out.println(pageno+" done");
-//        }
-//        
-//        String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/"+TimeUtil.getCurrentTimeStr()+".txt";
-//        FileUtil.listToFile(allList, tickOutputFilePath);
-        
-     
+
     }
 
     

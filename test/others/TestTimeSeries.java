@@ -1,6 +1,5 @@
 package others;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import utils.TimeUtil;
@@ -16,9 +15,9 @@ public class TestTimeSeries {
 	public static void main(String[] args) throws Exception {
 
 
-		Date d1 = TimeUtil.TICK_TIME_FORMAT.parse("20110915-13:21:21");
-		Date d2 = TimeUtil.TICK_TIME_FORMAT.parse("20110915-13:21:26");
-		Date d3 = TimeUtil.TICK_TIME_FORMAT.parse("20110915-13:21:26");
+		Date d1 = TimeUtil.DEFAULT_DATETIME_FORMAT.parse("20110915-13:21:21");
+		Date d2 = TimeUtil.DEFAULT_DATETIME_FORMAT.parse("20110915-13:21:26");
+		Date d3 = TimeUtil.DEFAULT_DATETIME_FORMAT.parse("20110915-13:21:26");
 		
 		System.out.println(d1.getTime());
 		System.out.println(d2.getTime());
@@ -30,12 +29,12 @@ public class TestTimeSeries {
 			long tmpTimeLot = getCurrentTimeLot(curTime);
 			if(tmpTimeLot!=curTimeLot){
 				curTimeLot = tmpTimeLot;
-				System.out.println("[new time lot:"+TimeUtil.TICK_TIME_FORMAT.format(new Date(curTimeLot)) +"]");
+				System.out.println("[new time lot:"+TimeUtil.DEFAULT_DATETIME_FORMAT.format(new Date(curTimeLot)) +"]");
 			}else {
 				System.out.println("["+curTime+"]:["
-						+TimeUtil.TICK_TIME_FORMAT.format(new Date(curTimeLot)) +"]:[ "
-						+TimeUtil.TICK_TIME_FORMAT.format(new Date(tmpTimeLot)) +"]:[ "
-						+TimeUtil.TICK_TIME_FORMAT.format(new Date(curTime))+"]");
+						+TimeUtil.DEFAULT_DATETIME_FORMAT.format(new Date(curTimeLot)) +"]:[ "
+						+TimeUtil.DEFAULT_DATETIME_FORMAT.format(new Date(tmpTimeLot)) +"]:[ "
+						+TimeUtil.DEFAULT_DATETIME_FORMAT.format(new Date(curTime))+"]");
 			}
 			Thread.sleep(547);
 		}

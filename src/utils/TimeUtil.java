@@ -6,12 +6,13 @@ import java.util.Date;
 
 public class TimeUtil {
 
-    public static DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmmss");
-    public static DateFormat TICK_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
-    public static DateFormat TICK_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+    //public static DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmmss");
+	public static DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+    public static DateFormat DEFAULT_DATETIME_FORMAT = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
+    public static DateFormat FCCHART_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
     
     public static String getCurrentTimeStr(){
-        return DEFAULT_DATE_FORMAT.format(new Date());
+        return DEFAULT_DATETIME_FORMAT.format(new Date());
     }
     
     

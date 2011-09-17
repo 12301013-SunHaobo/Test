@@ -5,12 +5,21 @@ import java.util.Date;
 import utils.TimeUtil;
 
 public class Tick {
+	private static int idSeq = 0; //sequence number to count how many bars are created
+	
     int id;
     Date date;
     double price;
     int volumn;
     
-    public int getId() {
+    public Tick(Date date, double price, int volumn) {
+		super();
+		this.id = ++idSeq;
+		this.date = date;
+		this.price = price;
+		this.volumn = volumn;
+	}
+	public int getId() {
         return id;
     }
     public void setId(int id) {
@@ -36,7 +45,7 @@ public class Tick {
     }
     @Override
     public String toString() {
-        return "Tick [id=" + id + ", date=" + TimeUtil.TICK_TIME_FORMAT.format(date) + ", price=" + price + ", volumn=" + volumn + "]";
+        return "Tick [id=" + id + ", date=" + TimeUtil.DEFAULT_DATETIME_FORMAT.format(date) + ", price=" + price + ", volumn=" + volumn + "]";
     }
     
     

@@ -3,27 +3,44 @@ package modules.at.feed.history;
 import java.util.LinkedList;
 import java.util.List;
 
+import modules.at.feed.convert.FChartConverter;
+import modules.at.feed.convert.NazConverter;
+import modules.at.model.Bar;
 import modules.at.model.Tick;
 import utils.FileUtil;
 import utils.GlobalSetting;
-import utils.TimeUtil;
 
 public class HistoryLoader {
     
-    public static List<Tick> getHistTciks() throws Exception{
-        String dateStr = "20110915";
-        List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/20110915-194819.txt");
+    public static List<Tick> getNazHistTicks(String code, String tickFileName, String dateStr) throws Exception{
+        List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/data/naz/tick/output/"+code+"/"+tickFileName);
         List<Tick> tickList = new LinkedList<Tick>();
         
-        for(String str: strList){
-            Tick tick = new Tick();
-            String[] strArr = str.split(",");
-            tick.setDate(TimeUtil.TICK_TIME_FORMAT.parse(dateStr+"-"+strArr[0]));
-            tick.setPrice(Double.parseDouble(strArr[1]));
-            tick.setVolumn(Integer.parseInt(strArr[2]));
-            
+        for(String row: strList){
+            Tick tick = NazConverter.toTick(row, dateStr);
             tickList.add(tick);
         }
         return tickList;
+    }
+
+    public static List<Bar> getNazHistDailyBars(String code, String dailyFileName) throws Exception {
+    	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/data/naz/bar/output/"+code+"/"+dailyFileName);
+    	List<Bar> barList = new LinkedList<Bar>();
+    	for(String row : strList){
+    		Bar bar = NazConverter.toBar(row);
+    		barList.add(bar);
+    	}
+    	return barList;
+    }
+    
+    public static List<Bar> getFChartHistBars(String fchartFileName) throws Exception {
+    	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/data/FChart/input/"+fchartFileName);//QQQ-20110915-mock-daily.txt");
+    	List<Bar> barList = new LinkedList<Bar>();
+    	for(String row : strList){
+    		Bar bar = FChartConverter.toBar(row);
+    		barList.add(bar);
+    	}
+    	return barList;
+    	
     }
 }

@@ -94,8 +94,8 @@ public class Bar {
     }
 	@Override
 	public String toString() {
-		return "Bar [id=" + id + ", date=" + TimeUtil.TICK_TIME_FORMAT.format(date) + ", open=" + open + ", high=" + high + ", low=" + low + ", close=" + close + ", volume="
-				+ volume + "]";
+		//return "Bar [id=" + id + ", date=" + TimeUtil.DEFAULT_DATETIME_FORMAT.format(date) + ", open=" + open + ", high=" + high + ", low=" + low + ", close=" + close + ", volume="+ volume + "]";
+		return "Bar [id=" + id + ", date=" + TimeUtil.DEFAULT_DATE_FORMAT.format(date) + ", o=" + open + ", h=" + high + ", l=" + low + ", c=" + close  + "]";
 	}
 
 }
