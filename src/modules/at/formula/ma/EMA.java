@@ -1,6 +1,11 @@
 package modules.at.formula.ma;
 
 
+/**
+ * EMA(13) stabilize at 59th bar
+ * @author r
+ *
+ */
 public class EMA {
 	private final int length; // how many bars to calculate
 	private double preEma = Double.NaN;
