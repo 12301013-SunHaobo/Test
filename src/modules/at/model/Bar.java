@@ -93,9 +93,9 @@ public class Bar {
         this.volume = volume;
     }
 	@Override
-	public String toString() {
+	public String toString() { 
 		//return "Bar [id=" + id + ", date=" + TimeUtil.DEFAULT_DATETIME_FORMAT.format(date) + ", open=" + open + ", high=" + high + ", low=" + low + ", close=" + close + ", volume="+ volume + "]";
-		return "Bar [id=" + id + ", date=" + TimeUtil.DEFAULT_DATE_FORMAT.format(date) + ", o=" + open + ", h=" + high + ", l=" + low + ", c=" + close  + "]";
+		return "Bar [id=" + id + ", date=" + TimeUtil.DISPLAY_DEFAULT_DATE_FORMAT.format(date) + ", o=" + open + ", h=" + high + ", l=" + low + ", c=" + close  + "]";
 	}
 
 }

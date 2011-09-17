@@ -3,7 +3,7 @@ package modules.at.formula.ma;
 import java.util.LinkedList;
 import java.util.Queue;
 public class MA {
-    private final Queue<Double> avgQ = new LinkedList<Double>(); //how many bars to store
+    private final Queue<Double> maQ = new LinkedList<Double>(); //how many bars to store
     private final int length; //how many bars to calculate
     private double sum;
  
@@ -14,16 +14,16 @@ public class MA {
  
     public void addPrice(double num) {
         sum += num;
-        avgQ.add(num);
-        if (avgQ.size() > length) {
-            sum -= avgQ.remove();
+        maQ.add(num);
+        if (maQ.size() > length) {
+            sum -= maQ.remove();
         }
     }
  
     public double getAvg() {
-        if (avgQ.size()<this.length) return -1; // technically the average is undefined
-        return sum / avgQ.size();
+        if (maQ.size()<this.length) return -1; // technically the average is undefined
+        return sum / maQ.size();
     }
  
-
+ 
 }
