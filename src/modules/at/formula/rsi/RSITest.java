@@ -17,15 +17,15 @@ public class RSITest extends TestCase {
 
     public void testRSICalculate() throws Exception {
         try {
-            RSI rsi = new RSI(nineDaysPeriod, symbolForTest);
+            RsiSample rsi = new RsiSample(nineDaysPeriod, symbolForTest);
             System.out.println("RSI for a " + rsi.getPeriodLength()
                     + " days period is: " + rsi.calculate());
 
-            rsi = new RSI(fourteenDaysPeriod, symbolForTest);
+            rsi = new RsiSample(fourteenDaysPeriod, symbolForTest);
             System.out.println("RSI for a " + rsi.getPeriodLength()
                     + " days period is: " + rsi.calculate());
 
-            rsi = new RSI(twentyFiveDaysPeriod, symbolForTest);
+            rsi = new RsiSample(twentyFiveDaysPeriod, symbolForTest);
             System.out.println("RSI for a " + rsi.getPeriodLength()
                     + " days period is: " + rsi.calculate());
         } catch (ParseException e) {

@@ -9,7 +9,7 @@ import modules.at.feed.history.HistoryLoader;
 import modules.at.model.Bar;
 import modules.at.model.Tick;
 
-public class TestRsi {
+public class TestRsiEma {
 
 	/**
 	 * @param args
@@ -21,10 +21,10 @@ public class TestRsi {
 	    List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
 
         long b1 = System.currentTimeMillis();
-        Rsi rsi = new Rsi(14);
+        RsiEma rsi = new RsiEma(14);
         for(Bar bar : barList){
             rsi.addPrice(bar.getClose());
-            System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(rsi.calculate()));
+            System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(rsi.getValue()));
         }
         
         long e0 = System.currentTimeMillis();
