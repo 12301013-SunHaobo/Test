@@ -5,16 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
-
-import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
+import modules.at.formula.Indicator;
 import modules.at.model.Bar;
-import modules.at.model.Tick;
 import utils.Formatter;
 import utils.TimeUtil;
 
-public class TestMA {
+public class TestSMA {
 
     /**
      * @param args
@@ -46,10 +43,11 @@ public class TestMA {
     
     private static void testDailyMAByMathLib() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
-    	DescriptiveStatistics ds = new DescriptiveStatistics(13);
+    	int length = 14;
+    	Indicator indicator = new Indicator(length);
         for(Bar bar : barList){
-        	ds.addValue(bar.getClose());
-        	System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(ds.getSum()/ds.getN()));
+        	indicator.addValue(bar.getClose());
+        	System.out.println(bar+" SMA("+length+")="+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast()));
         	
         }
     	
@@ -78,11 +76,11 @@ public class TestMA {
     	MASelfImpl ma = new MASelfImpl(13);
     	 
     	long oneDay = 1000 * 3600 * 24;
-    	long curDate = TimeUtil.FCCHART_DATE_FORMAT.parse("19800101").getTime();
+    	long curDate = Formatter.FCCHART_DATE_FORMAT.parse("19800101").getTime();
     	for(Bar bar : barList){
     		ma.addPrice(bar.getClose());
     		System.out.println("QQQ,"+
-    				TimeUtil.FCCHART_DATE_FORMAT.format(new Date(curDate + bar.getId()*oneDay))+"," +
+    				Formatter.FCCHART_DATE_FORMAT.format(new Date(curDate + bar.getId()*oneDay))+"," +
     				Formatter.DECIMAL_FORMAT.format(ma.getAvg())
     				);
     				

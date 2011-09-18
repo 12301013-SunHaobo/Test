@@ -2,7 +2,7 @@ package modules.at.model;
 
 import java.util.Date;
 
-import utils.TimeUtil;
+import utils.Formatter;
 
 public class Bar {
 	private static int idSeq = 0; //sequence number to count how many bars are created
@@ -95,7 +95,7 @@ public class Bar {
 	@Override
 	public String toString() { 
 		//return "Bar [id=" + id + ", date=" + TimeUtil.DEFAULT_DATETIME_FORMAT.format(date) + ", open=" + open + ", high=" + high + ", low=" + low + ", close=" + close + ", volume="+ volume + "]";
-		return "Bar [id=" + id + ", date=" + TimeUtil.DISPLAY_DEFAULT_DATE_FORMAT.format(date) + ", o=" + open + ", h=" + high + ", l=" + low + ", c=" + close  + "]";
+		return "Bar [id=" + id + ", date=" + Formatter.DISPLAY_DEFAULT_DATE_FORMAT.format(date) + ", o=" + open + ", h=" + high + ", l=" + low + ", c=" + close  + "]";
 	}
 
 }

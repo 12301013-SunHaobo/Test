@@ -2,7 +2,7 @@ package modules.at.model;
 
 import java.util.Date;
 
-import utils.TimeUtil;
+import utils.Formatter;
 
 public class Tick {
 	private static int idSeq = 0; //sequence number to count how many bars are created
@@ -45,7 +45,7 @@ public class Tick {
     }
     @Override
     public String toString() {
-        return "Tick [id=" + id + ", date=" + TimeUtil.DEFAULT_DATETIME_FORMAT.format(date) + ", price=" + price + ", volumn=" + volumn + "]";
+        return "Tick [id=" + id + ", date=" + Formatter.DEFAULT_DATETIME_FORMAT.format(date) + ", price=" + price + ", volumn=" + volumn + "]";
     }
     
     

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import modules.at.model.Bar;
 import modules.at.model.Tick;
+import utils.Formatter;
 import utils.TimeUtil;
 
 /**
@@ -23,7 +24,7 @@ public class NazConverter {
 	 */
 	public static Tick toTick(String row, String dateStr) throws Exception {
 		String[] strArr = row.split(",");
-		Date date = TimeUtil.DEFAULT_DATETIME_FORMAT.parse(dateStr+"-"+strArr[0]);
+		Date date = Formatter.DEFAULT_DATETIME_FORMAT.parse(dateStr+"-"+strArr[0]);
 		double price = Double.parseDouble(strArr[1]);
 		int volume = Integer.parseInt(strArr[2]);
 		Tick tick = new Tick(date, price, volume);
@@ -39,7 +40,7 @@ public class NazConverter {
 	public static Bar toBar(String row) throws Exception {
 		
 		String[] strArr = row.split(",");
-		Date date = TimeUtil.FCCHART_DATE_FORMAT.parse(strArr[0].trim());
+		Date date = Formatter.FCCHART_DATE_FORMAT.parse(strArr[0].trim());
 		double open = Double.parseDouble(strArr[1].trim());
 		double high = Double.parseDouble(strArr[2].trim());
 		double low = Double.parseDouble(strArr[3].trim());
