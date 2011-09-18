@@ -18,9 +18,10 @@ public class Point {
 	private Date dateTime;
 	private double price;
 	
+	private Point next;
+	
 	public Point(Type type, Date dateTime, double price) {
 		super();
-		this.id = ++idSeq;
 		this.type = type;
 		this.dateTime = dateTime;
 		this.price = price;
@@ -39,8 +40,8 @@ public class Point {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId() {
+		this.id = ++idSeq;
 	}
 
 	public Date getDateTime() {
@@ -58,6 +59,15 @@ public class Point {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
+	public Point getNext() {
+		return next;
+	}
+
+	public void setNext(Point next) {
+		this.next = next;
+	}
+
 
 	@Override
 	public String toString() {

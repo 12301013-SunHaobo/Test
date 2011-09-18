@@ -20,8 +20,6 @@ public class ChartScanner {
 	
 	
 	public static List<Point> findHighLowPoints(List<Bar> barList){
-//		List<Point> highPointList = new LinkedList<Point>();
-//		List<Point> lowPointList = new LinkedList<Point>();
 		
 		List<Point> highLowList = new LinkedList<Point>();
 		
@@ -47,6 +45,7 @@ public class ChartScanner {
 				if(Trend.UPFLAT.equals(highTrend) 
 						|| Trend.UP.equals(highTrend)
 						|| Trend.INITFLAT.equals(highTrend)){
+					prePointHigh.setId();
 					highLowList.add(prePointHigh);
 					prePointHigh = new Point(Point.Type.HIGH, bar.getDate(), bar.getHigh());
 				} else {
@@ -74,6 +73,7 @@ public class ChartScanner {
 				if(Trend.DOWNFLAT.equals(lowTrend) 
 						|| Trend.DOWN.equals(lowTrend)
 						|| Trend.INITFLAT.equals(lowTrend)){
+					prePointLow.setId();
 					highLowList.add(prePointLow);
 					prePointLow = new Point(Point.Type.LOW, bar.getDate(), bar.getLow());
 				} else {
