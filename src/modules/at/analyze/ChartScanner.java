@@ -19,12 +19,11 @@ public class ChartScanner {
 	}
 	
 	
-	public static List<Point> findHighLowPoints(List<Bar> barList){
+	public static List<Point> findHighLowPoints(List<Bar> barList) throws Exception{
 		
 		List<Point> highLowList = new LinkedList<Point>();
 		
 		Bar initBar = barList.get(0);
-
 		
 		Point prePointHigh = new Point(Point.Type.HIGH, initBar.getDate(), initBar.getHigh());
 		Point prePointLow = new Point(Point.Type.LOW, initBar.getDate(), initBar.getLow());
@@ -92,7 +91,17 @@ public class ChartScanner {
 			}
 			
 		}
-		
+		initPointNext(highLowList);
 		return highLowList;
+	}
+	
+	private static void initPointNext(List<Point> pointList) throws Exception{
+		Point curPoint = pointList.get(0);
+		for(int i=1;i<pointList.size();i++) {
+			Point tmpPoint = pointList.get(i);
+			curPoint.setNext(tmpPoint);
+			curPoint = tmpPoint;
+		}
+		curPoint.setNext(null);
 	}
 }

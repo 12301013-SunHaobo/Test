@@ -10,16 +10,27 @@ public class HighLowPattern {
 
 	public static enum Type {
 		HighHighLowHigh, //up 
+		HighHighLowFlat, //open up triangle
+		HighHighLowLow, //open triangle
+		
+		HighFlatLowHigh, //shrink up triangle
+		HighFlatLowFlat, //range
+		HighFlatLowLow, //open down triangle
+
+		HighLowLowHigh, //shrink triangle
+		HighLowLowFlat, //shrink down triangle
 		HighLowLowLow, //down
+		
 		NA 
 	}
+	
 
 	//1 is older then 2
-	
-	public List<HighLowMatch> match(List<Point> highLowPointList, Set<Type> filter) throws Exception{
+	/**
+	 * Match to find (high,low,high,low) or (low,high,low,high) sets, by wanted Types 
+	 */
+	public List<HighLowMatch> match(List<Point> highLowPointList, Set<Type> wantedTypes) throws Exception{
 
-		initPointNext(highLowPointList);
-		
 		List<HighLowMatch> matchList = new ArrayList<HighLowMatch>();
 		for(Point p : highLowPointList) {
 			//find next match after p
@@ -74,7 +85,7 @@ public class HighLowPattern {
 						tmpHigh2.getPrice(), 
 						tmpLow1.getPrice(), 
 						tmpLow2.getPrice());
-				if(filter!=null && filter.contains(type)){
+				if(wantedTypes==null || wantedTypes.contains(type)){
 					HighLowMatch highLowMatch = new HighLowMatch(oneMatchList, type);
 					matchList.add(highLowMatch);
 				}
@@ -84,28 +95,33 @@ public class HighLowPattern {
 	}
 	
 
-	private Type getType(double high1, double high2, double low1, double low2){
-		if(high1<high2 && low1<low2){
+
+	public static Type getType(double high1, double high2, double low1, double low2){
+		if(high1 < high2 && low1 < low2){
 			return Type.HighHighLowHigh;
-		}else if (high1>high2 && low1>low2){
+		}else if (high1 < high2 && low1 == low2){
+			return Type.HighHighLowFlat;
+		}else if (high1 < high2 && low1 > low2){
+			return Type.HighHighLowLow;
+			
+		}else if (high1 == high2 && low1 < low2){
+			return Type.HighFlatLowHigh;
+		}else if (high1 == high2 && low1 == low2){
+			return Type.HighFlatLowFlat;
+		}else if (high1 == high2 && low1 > low2){
+			return Type.HighFlatLowLow;
+			
+		}else if (high1 > high2 && low1 < low2){
+			return Type.HighLowLowHigh;
+		}else if (high1 > high2 && low1 == low2){
+			return Type.HighLowLowFlat;
+		}else if (high1 > high2 && low1 > low2){
 			return Type.HighLowLowLow;
 		}
 		return Type.NA;
 	}
 	
 	
-	private void initPointNext(List<Point> pointList) throws Exception{
-		if(pointList.size()<4){
-			throw new Exception("Need at least 4 points, but has only "+ pointList.size()+" points.");
-		}
-		Point curPoint = pointList.get(0);
-		for(int i=1;i<pointList.size();i++) {
-			Point tmpPoint = pointList.get(i);
-			curPoint.setNext(tmpPoint);
-			curPoint = tmpPoint;
-		}
-		curPoint.setNext(null);
-	}
 	
 	private void printList(List<Point> pointList){
 		Point tmpP = pointList.get(0);

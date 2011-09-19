@@ -13,6 +13,9 @@ import utils.Formatter;
  */
 public class FChartConverter {
 	
+	/**
+	 * from row in (file like /Test/tmp/data/FChart/input/QQQ-20110915-mock-daily.txt) to bar
+	 */
 	public static Bar toBar(String row) throws Exception{
 		String[] strArr = row.split(",");
 		Date date = Formatter.FCCHART_DATE_FORMAT.parse(strArr[1].trim());
@@ -23,5 +26,21 @@ public class FChartConverter {
 		int volumn = Integer.parseInt(strArr[6].trim());
 		Bar bar = new Bar(date, open, high, low, close, volumn);
 		return bar;
+	}
+	
+	/**
+	 * from Bar to row in (file like /Test/tmp/data/FChart/input/QQQ-20110915-mock-daily.txt)
+	 * @param bar
+	 * @return
+	 * @throws Exception
+	 */
+	public static String toRow(Bar bar) throws Exception{
+		return "QQQ,"+
+		Formatter.DEFAULT_DATE_FORMAT.format(bar.getDate())+"," +
+		Formatter.DECIMAL_FORMAT.format(bar.getOpen())+"," +
+		Formatter.DECIMAL_FORMAT.format(bar.getHigh())+"," +
+		Formatter.DECIMAL_FORMAT.format(bar.getLow())+"," +
+		Formatter.DECIMAL_FORMAT.format(bar.getClose())+"," +
+		bar.getVolume();
 	}
 }

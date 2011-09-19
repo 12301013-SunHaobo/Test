@@ -55,48 +55,11 @@ public class TestSMA {
     }
     
     
-    private static void testConvertToFChartIntraday(List<Bar> barList) throws Exception{
-    	DateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
-    	for(Bar bar : barList){
-    		
-    		System.out.println("QQQ,"+
-    				df.format(bar.getDate())+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getOpen())+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getHigh())+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getLow())+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getClose())+"," +
-    				bar.getVolume()
-    				);
-    	}
-    }
+
     
     
     
-    private static void testConvertToFChart(List<Bar> barList) throws Exception{
-    	MASelfImpl ma = new MASelfImpl(13);
-    	 
-    	long oneDay = 1000 * 3600 * 24;
-    	long curDate = Formatter.FCCHART_DATE_FORMAT.parse("19800101").getTime();
-    	for(Bar bar : barList){
-    		ma.addPrice(bar.getClose());
-    		System.out.println("QQQ,"+
-    				Formatter.FCCHART_DATE_FORMAT.format(new Date(curDate + bar.getId()*oneDay))+"," +
-    				Formatter.DECIMAL_FORMAT.format(ma.getAvg())
-    				);
-    				
-    				
-    		/*//mock daily 
-    		System.out.println("QQQ,"+
-    				TimeUtil.TICK_DATE_FORMAT.format(new Date(curDate + bar.getId()*oneDay))+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getOpen())+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getHigh())+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getLow())+"," +
-    				Formatter.DECIMAL_FORMAT.format(bar.getClose())+"," +
-    				bar.getVolume()
-    				);
-    		*/
-    	}
-    }
+
     
     private static void testMA(List<Bar> barList){
         MASelfImpl ma = new MASelfImpl(13);
