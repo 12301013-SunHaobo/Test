@@ -37,11 +37,11 @@ public class GetNazData {
         	}
         }
 
-      String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/tick/dataoutput/"+TimeUtil.getCurrentTimeStr()+".txt";
+      String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/data/naz/tick/output/qqq/"+TimeUtil.getCurrentTimeStr()+".txt";
       FileUtil.listToFile(allList, tickOutputFilePath);
       
       long e0 = System.currentTimeMillis();
-      System.out.println("Total used time: "+(e0-b0)/1000+" seconds.");
+      System.out.println("Total used time: "+(e0-b0)/1000+" seconds. Output file:"+tickOutputFilePath);
 
     }
 

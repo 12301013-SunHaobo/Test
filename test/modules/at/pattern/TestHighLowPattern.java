@@ -1,5 +1,7 @@
 package modules.at.pattern;
 
+import modules.at.pattern.highlow.HighLowPattern;
+
 public class TestHighLowPattern {
 
 	/**

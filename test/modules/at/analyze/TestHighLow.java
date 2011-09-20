@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
-
-import utils.Formatter;
-
 import modules.at.feed.history.HistoryLoader;
 import modules.at.model.Bar;
 import modules.at.model.Point;
-import modules.at.pattern.HighLowMatch;
-import modules.at.pattern.HighLowPattern;
+import modules.at.pattern.highlow.HighLowMatch;
+import modules.at.pattern.highlow.HighLowPattern;
+
+import org.apache.commons.lang.StringUtils;
+
+import utils.Formatter;
 
 public class TestHighLow {
 
@@ -39,7 +39,7 @@ public class TestHighLow {
 		
 		String mockDateStr = "20110916";
     	List<Bar> barList = HistoryLoader.getFChartHistBars("QQQ-"+mockDateStr+"-mock-daily.txt");
-    	List<Point> highLowPointList = ChartScanner.findHighLowPoints(barList);
+    	List<Point> highLowPointList = HighLowPattern.findHighLowPoints(barList);
     	
     	HighLowPattern hlPattern = new HighLowPattern();
     	//add wanted types
@@ -165,7 +165,7 @@ public class TestHighLow {
     	//List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
     	List<Bar> barList = HistoryLoader.getFChartHistBars("QQQ-20110915-mock-daily.txt");
 
-    	List<Point> highLowPoints = ChartScanner.findHighLowPoints(barList);
+    	List<Point> highLowPoints = HighLowPattern.findHighLowPoints(barList);
     	
     	System.out.println("<< ============ All high&low points =====================================>>");
     	for(Point p : highLowPoints){

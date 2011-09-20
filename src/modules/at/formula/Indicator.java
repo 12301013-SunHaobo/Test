@@ -2,6 +2,14 @@ package modules.at.formula;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
+/**
+ * SMA fast/slow
+ * BB
+ * 
+ * 
+ * @author r
+ *
+ */
 public class Indicator {
 
 	

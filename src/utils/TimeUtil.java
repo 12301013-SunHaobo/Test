@@ -6,7 +6,7 @@ public class TimeUtil {
 
     
     public static String getCurrentTimeStr(){ 
-        return Formatter.DEFAULT_DATETIME_FORMAT.format(new Date());
+        return Formatter.DEFAULT_FILENAME_DATETIME_FORMAT.format(new Date());
     }
     
     

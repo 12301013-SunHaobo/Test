@@ -1,10 +1,17 @@
-package modules.at.pattern;
+package modules.at.pattern.highlow;
 
 import java.util.List;
 
 import modules.at.model.Point;
-import modules.at.pattern.HighLowPattern.Type;
+import modules.at.pattern.highlow.HighLowPattern.Type;
 
+
+/**
+ * One match of the high/low pattern
+ * including either highLowHighLow or lowHighLowHigh
+ * @author r
+ *
+ */
 public class HighLowMatch {
 	
 	private List<Point> matchList;
