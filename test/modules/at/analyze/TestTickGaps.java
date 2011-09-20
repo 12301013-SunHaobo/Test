@@ -13,7 +13,8 @@ public class TestTickGaps {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		findTickPriceGaps();
+		//findTickPriceGaps();
+		findTickTimeGaps();
 
 	}
 		
@@ -62,4 +63,50 @@ public class TestTickGaps {
 		}
 	}
 
+	/**   date   0919   0916
+	 *   gapsize gaps   gaps
+	 *      1s   8264   7483
+	 *      2s   4610   
+	 *      3s   2885   2768
+	 *      4s   1891 
+	 *      5s   1356 
+	 *      6s    994   1112
+	 *      7s    738
+	 *      8s    547
+	 *      9s    403    
+	 *     10s    303    426
+	 *     20s     39     51
+	 *     60s      1      1
+	 * @throws Exception
+	 */
+	
+	
+    private static void findTickTimeGaps() throws Exception{
+        //change begin -> for new date
+        String nazTickOutputDateStr = "20110916";//change for new date 
+        List<Tick> tickList = HistoryLoader.getNazHistTicks("qqq", "20110916-195420.txt", nazTickOutputDateStr); //change for new file
+        //change end -> for new date
+
+        List<String> results = new ArrayList<String>();
+        Tick preTick = tickList.get(1);
+        Tick curTick = null; 
+        for(int i=2;i<tickList.size()-1;i++){
+            curTick = tickList.get(i);
+            if(Math.abs(curTick.getDate().getTime()-preTick.getDate().getTime())>=3*1000){
+                Tick aTick = tickList.get(i-2);
+                Tick bTick = tickList.get(i+1);
+                results.add(preTick.toString()+" "+curTick.toString()
+                        +" diff="+(curTick.getPrice()-preTick.getPrice())
+                        +" (next "+bTick.getPrice()+"-pre "+aTick.getPrice()+")="+(bTick.getPrice()-aTick.getPrice()));
+            }
+            preTick = curTick;
+        }
+        
+        String str = null;
+        for(int i=0;i<results.size();i++) {
+            str = results.get(i);
+            System.out.println(i+" "+str);
+        }
+    }
+	
 }
