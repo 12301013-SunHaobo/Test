@@ -13,7 +13,7 @@ import utils.GlobalSetting;
 public class HistoryLoader {
     
     public static List<Tick> getNazHistTicks(String code, String tickFileName, String dateStr) throws Exception{
-        List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/data/naz/tick/output/"+code+"/"+tickFileName);
+        List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/data/naz/tick/output/"+code+"/"+tickFileName);
         List<Tick> tickList = new LinkedList<Tick>();
         
         for(String row: strList){
@@ -24,7 +24,7 @@ public class HistoryLoader {
     }
 
     public static List<Bar> getNazHistDailyBars(String code, String dailyFileName) throws Exception {
-    	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/data/naz/bar/output/"+code+"/"+dailyFileName);
+    	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/data/naz/bar/output/"+code+"/"+dailyFileName);
     	List<Bar> barList = new LinkedList<Bar>();
     	for(String row : strList){
     		Bar bar = NazConverter.toBar(row);
@@ -34,7 +34,7 @@ public class HistoryLoader {
     }
     
     public static List<Bar> getFChartHistBars(String fchartFileName) throws Exception {
-    	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/tmp/data/FChart/input/"+fchartFileName);//QQQ-20110915-mock-daily.txt");
+    	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/data/FChart/input/"+fchartFileName);//QQQ-20110915-mock-daily.txt");
     	List<Bar> barList = new LinkedList<Bar>();
     	for(String row : strList){
     		Bar bar = FChartConverter.toBar(row);

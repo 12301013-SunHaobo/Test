@@ -20,9 +20,9 @@ public class GetFChartData {
 	
 	/**
 	 * convert from naz tick file 
-	 * /Test/tmp/data/naz/tick/output/qqq/20110916-195420.txt
+	 * /Test/data/naz/tick/output/qqq/20110916-195420.txt
 	 * to fchart mock daily file
-	 * /Test/tmp/data/FChart/input/QQQ-20110915-mock-daily.txt
+	 * /Test/data/FChart/input/QQQ-20110915-mock-daily.txt
 	 * 
 	 * @param args
 	 * @throws Exception 
@@ -36,7 +36,7 @@ public class GetFChartData {
 		
 		List<Bar> barList = TickToBarConverter.convert(tickList);
 		List<String> fchartInputMockDaily = convertToFChartInput(barList);
-		String mockDailyFile = GlobalSetting.TEST_HOME+"/tmp/data/FChart/input/QQQ-"+nazTickOutputDateStr+"-mock-daily"+".txt";
+		String mockDailyFile = GlobalSetting.TEST_HOME+"/data/FChart/input/QQQ-"+nazTickOutputDateStr+"-mock-tick"+".txt";
 		FileUtil.listToFile(fchartInputMockDaily, mockDailyFile);
 
 	}

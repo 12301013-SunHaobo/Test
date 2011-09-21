@@ -37,7 +37,7 @@ public class GetNazData {
         	}
         }
 
-      String tickOutputFilePath = GlobalSetting.TEST_HOME+"/tmp/data/naz/tick/output/qqq/"+TimeUtil.getCurrentTimeStr()+".txt";
+      String tickOutputFilePath = GlobalSetting.TEST_HOME+"/data/naz/tick/output/qqq/"+TimeUtil.getCurrentTimeStr()+".txt";
       FileUtil.listToFile(allList, tickOutputFilePath);
       
       long e0 = System.currentTimeMillis();

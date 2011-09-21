@@ -14,7 +14,7 @@ import utils.Formatter;
 public class FChartConverter {
 	
 	/**
-	 * from row in (file like /Test/tmp/data/FChart/input/QQQ-20110915-mock-daily.txt) to bar
+	 * from row in (file like /Test/data/FChart/input/QQQ-20110915-mock-daily.txt) to bar
 	 */
 	public static Bar toBar(String row) throws Exception{
 		String[] strArr = row.split(",");
@@ -29,7 +29,7 @@ public class FChartConverter {
 	}
 	
 	/**
-	 * from Bar to row in (file like /Test/tmp/data/FChart/input/QQQ-20110915-mock-daily.txt)
+	 * from Bar to row in (file like /Test/data/FChart/input/QQQ-20110915-mock-daily.txt)
 	 * @param bar
 	 * @return
 	 * @throws Exception

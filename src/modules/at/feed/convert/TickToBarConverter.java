@@ -46,5 +46,8 @@ public class TickToBarConverter {
 	private static long getCurrentTimeLot(long curTime) {
 		return curTime / timeFrame * timeFrame;
 	}
+	
+	
+	
 
 }
