@@ -1,0 +1,36 @@
+The following samples are worth taking a look
+
+SuperDemo.java  // << ----------------  UI to access all charts -------------------------------------------->>
+
+AnnotationDemo2.java //can annotate the point in chart
+BarChartDemo10.java //dynamic bar, changing height in chart
+CandlestickChartDemo1.java //candlestick
+CategoryLabelPositionsDemo1.java  //can tilt label
+CategoryMarkerDemo1.java  //mark with a vertical line
+CategoryMarkerDemo2.java  //mark with a vertical area
+CategoryPointerAnnotationDemo1.java //time series with arrow annotation
+ChartPanelSerializationTest.java // 2 price lines
+CloneTest1.java //random line chart
+ClusteredXYBarRendererDemo1.java //4 charts in one panel
+CombinedCategoryPlotDemo1.java //price & volume
+CompassFormatDemo2.java  //has a bar to dynamically adjust height
+CrosshairDemo1.java  //has cross hair
+CrosshairDemo2.java //
+DynamicDataDemo1.java  //random data line 
+LogarithmicAxisDemo1.java //log axis
+LogarithmicAxisDemo2.java
+MarkerDemo1.java //marker 
+MouseListenerDemo1.java  //mouse listener
+MouseListenerDemo3.java //click legend to highlight line
+MouseOverDemo1.java  //mouse over
+MultipleDatasetDemo1.java  //dynamically adding dataset(lines)
+PriceVolumeDemo1.java  //price & volume
+RegressionDemo1.java   //regression line
+SlidingCategoryDatasetDemo1.java  //vertical sliding bar
+SlidingCategoryDatasetDemo2.java  //horizontal sliding bar
+TimeSeriesDemo1.java  // time series line chart
+TimeSeriesDemo3.java // 2 time series line 
+TimeSeriesDemo8.java // price with moving average
+TranslateDemo1.java  // time series with horizontal sliding bar
+WindChartDemo1.java  // point has arrow direction
+XYPointerAnnotationDemo1.java // point with annotation

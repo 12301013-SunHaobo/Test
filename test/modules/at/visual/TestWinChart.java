@@ -7,7 +7,14 @@ package modules.at.visual;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import javax.swing.JPanel;
+
+import modules.at.feed.history.HistoryLoader;
+import modules.at.model.Tick;
+
 import org.jfree.chart.*;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
@@ -22,7 +29,7 @@ public class TestWinChart extends ApplicationFrame {
 
 	private static final long serialVersionUID = -9050631696899168131L;
 
-	public TestWinChart(String s) {
+	public TestWinChart(String s) throws Exception {
 		super(s);
 		JPanel jpanel = createDemoPanel();
 		jpanel.setPreferredSize(new Dimension(1500, 910));
@@ -49,23 +56,33 @@ public class TestWinChart extends ApplicationFrame {
 		return jfreechart;
 	}
 
-	private static XYDataset createDataset() {
+	private static XYDataset createDataset() throws Exception {
 		TimeSeries timeseries = new TimeSeries("Series 1");
-		timeseries.add(new Month(1, 2002), 500.19999999999999D);
-		timeseries.add(new Month(2, 2002), 694.10000000000002D);
-		timeseries.add(new Month(3, 2002), 734.39999999999998D);
-		timeseries.add(new Month(4, 2002), 453.19999999999999D);
+		
+		//change begin -> for new date
+		String nazTickOutputDateStr = "20110919";//change for new date 
+		List<Tick> tickList = HistoryLoader.getNazHistTicks("qqq", "20110919-205230.txt", nazTickOutputDateStr); //change for new file
+		//change end -> for new date
+		
+		Tick tmpTick = tickList.get(0);
+		long firstSecond = tmpTick.getDate().getTime();
+		for(int i=0; i< 100; i++){
+			tmpTick = tickList.get(i);
+			long tmpSecond = firstSecond+i*1000;
+			timeseries.add(new Second(new Date(tmpSecond)), tmpTick.getPrice());
+		}
+		
 		TimeSeriesCollection timeseriescollection = new TimeSeriesCollection();
 		timeseriescollection.addSeries(timeseries);
 		return timeseriescollection;
 	}
 
-	public static JPanel createDemoPanel() {
+	public static JPanel createDemoPanel() throws Exception {
 		JFreeChart jfreechart = createChart(createDataset());
 		return new ChartPanel(jfreechart);
 	}
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws Exception {
 		TestWinChart timeseriesdemo3 = new TestWinChart("Time Series Demo 3");
 		timeseriesdemo3.pack();
 		RefineryUtilities.centerFrameOnScreen(timeseriesdemo3);
