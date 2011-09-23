@@ -8,9 +8,14 @@ import modules.at.model.Tick;
 
 public class TickToBarConverter {
 
-	static int timeFrame = 60 * 1000; // milliseconds
+	public static int SECOND = 1 * 1000;
+	public static int MINUTE = 60 * SECOND;
+	public static int MINUTES_15  = 15 * MINUTE;
+	public static int MINUTES_30 = 30 * MINUTE;
+	
+	//static int timeFrame = 60 * 1000; // milliseconds
 
-	public static List<Bar> convert(List<Tick> tickList) {
+	public static List<Bar> convert(List<Tick> tickList, int timeFrame) {
 		List<Bar> barList = new LinkedList<Bar>();
 
 		long curTimeLot = -1;
@@ -19,7 +24,7 @@ public class TickToBarConverter {
 		for (Tick tick : tickList) {
 
 			long curTime = tick.getDate().getTime();
-			long tmpTimeLot = getCurrentTimeLot(curTime);
+			long tmpTimeLot = getCurrentTimeLot(curTime, timeFrame);
 			if (tmpTimeLot != curTimeLot) {
 				// add previous bar to barList
 				if (bar != null) {
@@ -43,7 +48,7 @@ public class TickToBarConverter {
 	}
 
 	// beginning of the time lot in milliseconds
-	private static long getCurrentTimeLot(long curTime) {
+	private static long getCurrentTimeLot(long curTime, int timeFrame) {
 		return curTime / timeFrame * timeFrame;
 	}
 	

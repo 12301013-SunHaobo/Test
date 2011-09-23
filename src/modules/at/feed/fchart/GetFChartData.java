@@ -34,7 +34,7 @@ public class GetFChartData {
 		List<Tick> tickList = HistoryLoader.getNazHistTicks("qqq", "20110916-195420.txt", nazTickOutputDateStr); //change for new file
 		//change end
 		
-		List<Bar> barList = TickToBarConverter.convert(tickList);
+		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 		List<String> fchartInputMockDaily = convertToFChartInput(barList);
 		String mockDailyFile = GlobalSetting.TEST_HOME+"/data/FChart/input/QQQ-"+nazTickOutputDateStr+"-mock-tick"+".txt";
 		FileUtil.listToFile(fchartInputMockDaily, mockDailyFile);
