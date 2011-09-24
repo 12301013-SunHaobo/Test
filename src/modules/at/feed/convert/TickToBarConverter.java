@@ -10,6 +10,7 @@ public class TickToBarConverter {
 
 	public static int SECOND = 1 * 1000;
 	public static int MINUTE = 60 * SECOND;
+	public static int MINUTES_5 = 5 * MINUTE;
 	public static int MINUTES_15  = 15 * MINUTE;
 	public static int MINUTES_30 = 30 * MINUTE;
 	

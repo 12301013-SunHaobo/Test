@@ -107,7 +107,9 @@ public class HighLowPattern {
 		INITFLAT //the very first initial point 
 	}
 	
-	
+	/**
+	 * Find all high/low points
+	 */
 	public static List<Point> findHighLowPoints(List<Bar> barList) throws Exception{
 		
 		List<Point> highLowList = new LinkedList<Point>();
