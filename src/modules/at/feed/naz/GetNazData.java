@@ -13,6 +13,7 @@ import utils.WebUtil;
 
 public class GetNazData {
 
+	private static String stockcode = "tna";//qqq, tna, 
     /**
      * to make tick order by : earliest -> latest
      * timeLot 1->13
@@ -37,7 +38,7 @@ public class GetNazData {
         	}
         }
 
-      String tickOutputFilePath = GlobalSetting.TEST_HOME+"/data/naz/tick/output/qqq/"+TimeUtil.getCurrentTimeStr()+".txt";
+      String tickOutputFilePath = GlobalSetting.TEST_HOME+"/data/naz/tick/output/"+stockcode+"/"+TimeUtil.getCurrentTimeStr()+".txt";
       FileUtil.listToFile(allList, tickOutputFilePath);
       
       long e0 = System.currentTimeMillis();
@@ -103,7 +104,7 @@ public class GetNazData {
     }
     
     //?pageno=4&time=7   //all starting from 1
-    private static String baseUrlStr = "http://www.nasdaq.com/symbol/qqq/time-sales";
+    private static String baseUrlStr = "http://www.nasdaq.com/symbol/"+stockcode+"/time-sales";
     private static String filePath = GlobalSetting.TEST_HOME+"/tmp/tick/pageoutput/output1.html";
     private static String encoding = "iso-8859-1";
     
