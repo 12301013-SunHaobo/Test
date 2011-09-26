@@ -79,8 +79,8 @@ public class ATBarChartBase extends ApplicationFrame {
 	private JFreeChart createChart() {
 		CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date/Time"));
 		combineddomainxyplot.setDomainPannable(true);
-		combineddomainxyplot.add(createCandlestickPlot());
-		combineddomainxyplot.add(createLowerIndicatorPlot());
+		combineddomainxyplot.add(createCandlestickPlot(),4);//weight 4 for upper candlestick chart
+		combineddomainxyplot.add(createLowerIndicatorPlot(),1);//weight 1 for lower indicator chart
 		//combineddomainxyplot.add(createSubplot2(createDataset2()));
 		JFreeChart jfreechart = new JFreeChart(STOCK_CODE+":"+TICK_FILENAME, JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, true);
 		//jfreechart.setBackgroundPaint(Color.white);
@@ -113,6 +113,8 @@ public class ATBarChartBase extends ApplicationFrame {
 		xyItemRenderer.setSeriesPaint(2, Color.blue);//bb lower band
 		xyplot.setRenderer(1, xyItemRenderer);
 		
+		xyplot.setDomainCrosshairVisible(true);
+		xyplot.setRangeCrosshairVisible(true);
 		
 		NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
 		numberaxis.setAutoRangeIncludesZero(false);
@@ -133,6 +135,9 @@ public class ATBarChartBase extends ApplicationFrame {
 		xyItemRenderer.setSeriesPaint(1, Color.gray);//bb middle
 		xyItemRenderer.setSeriesPaint(2, Color.blue);//bb lower band
 		xyplot.setRenderer(xyItemRenderer);
+		
+		xyplot.setDomainCrosshairVisible(true);
+		xyplot.setRangeCrosshairVisible(true);
 		
 		NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
 		numberaxis.setAutoRangeIncludesZero(false);
