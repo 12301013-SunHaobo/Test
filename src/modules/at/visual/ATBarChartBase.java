@@ -23,12 +23,16 @@ import modules.at.model.Point.Type;
 import modules.at.model.Tick;
 import modules.at.pattern.highlow.HighLowPattern;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYPointerAnnotation;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.OHLCDataset;
@@ -51,17 +55,14 @@ public class ATBarChartBase extends ApplicationFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	List<Bar> barList = null;
-	
+	private List<Bar> barList = null;
 	
 	public ATBarChartBase(String s) {
 		super(s);
-		
 		//init barList
 		this.barList = getBarList();
 		
-		
-		JFreeChart jfreechart = createChart(createDataset());
+		JFreeChart jfreechart = createChart();
 		ChartPanel chartpanel = new ChartPanel(jfreechart);
 		chartpanel.setMouseWheelEnabled(true);
 		chartpanel.setPreferredSize(new Dimension(1500, 700));//window (width, height)
@@ -75,9 +76,27 @@ public class ATBarChartBase extends ApplicationFrame {
 		candlestickchartdemo1.setVisible(true);
 	}
 
-	private JFreeChart createChart(OHLCDataset ohlcdataset) {
-		JFreeChart jfreechart = ChartFactory.createCandlestickChart(STOCK_CODE+":"+TICK_FILENAME, "Time", "Value", ohlcdataset, true);
-		XYPlot xyplot = (XYPlot) jfreechart.getPlot();
+	private JFreeChart createChart() {
+		CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date/Time"));
+		combineddomainxyplot.setDomainPannable(true);
+		combineddomainxyplot.add(createCandlestickPlot());
+		combineddomainxyplot.add(createLowerIndicatorPlot());
+		//combineddomainxyplot.add(createSubplot2(createDataset2()));
+		JFreeChart jfreechart = new JFreeChart(STOCK_CODE+":"+TICK_FILENAME, JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, true);
+		//jfreechart.setBackgroundPaint(Color.white);
+		//ChartUtilities.applyCurrentTheme(jfreechart); //gray background
+		
+		return jfreechart;
+	}
+
+	//create candlestick chart with BB
+	private XYPlot createCandlestickPlot(){
+        ValueAxis timeAxis = new DateAxis("Time");
+        NumberAxis valueAxis = new NumberAxis("Value");
+        XYDataset dataset = createCandlestickDataset();
+		XYPlot xyplot = new XYPlot(dataset, timeAxis, valueAxis, null);
+		xyplot.setRenderer(new CandlestickRenderer());
+		 
 		xyplot.setDomainPannable(true);
 		
 		//add annotations
@@ -86,7 +105,7 @@ public class ATBarChartBase extends ApplicationFrame {
 			xyplot.addAnnotation(anno);
 		}
 		
-		XYDataset bbDataset = createIndicatorXYDataset();
+		XYDataset bbDataset = createUpperIndicatorXYDataset();
 		xyplot.setDataset(1, bbDataset);
 		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
 		xyItemRenderer.setSeriesPaint(0, Color.blue);//bb upper band
@@ -99,9 +118,32 @@ public class ATBarChartBase extends ApplicationFrame {
 		numberaxis.setAutoRangeIncludesZero(false);
 		numberaxis.setUpperMargin(0.1);//upper margin
 		numberaxis.setLowerMargin(0.1);//lower margin
-		return jfreechart;
+		
+		return xyplot;
 	}
-
+	
+	private XYPlot createLowerIndicatorPlot(){
+		ValueAxis timeAxis = new DateAxis("Time");
+        NumberAxis valueAxis = new NumberAxis("Value");
+        XYDataset dataset = createLowerIndicatorXYDataset();
+        XYPlot xyplot = new XYPlot(dataset, timeAxis, valueAxis, null);
+        
+		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
+		xyItemRenderer.setSeriesPaint(0, Color.blue);//bb upper band
+		xyItemRenderer.setSeriesPaint(1, Color.gray);//bb middle
+		xyItemRenderer.setSeriesPaint(2, Color.blue);//bb lower band
+		xyplot.setRenderer(xyItemRenderer);
+		
+		NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
+		numberaxis.setAutoRangeIncludesZero(false);
+		 
+		return xyplot;
+		
+	}
+	
+	
+	
+	
 	//get bar list
 	private List<Bar> getBarList() {
 		List<Bar> barList = new ArrayList<Bar>();
@@ -134,7 +176,7 @@ public class ATBarChartBase extends ApplicationFrame {
 	}
 	
 	//create OHLC dataset
-	public OHLCDataset createDataset() {
+	public OHLCDataset createCandlestickDataset() {
 			int dataSize = this.barList.size();
 			Date dateArr[] = new Date[dataSize];
 			double highArr[] = new double[dataSize];
@@ -157,7 +199,7 @@ public class ATBarChartBase extends ApplicationFrame {
 	}
 	
 	//create BB dataset
-	private XYDataset createIndicatorXYDataset() {
+	private XYDataset createUpperIndicatorXYDataset() {
 		
 		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
 		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
@@ -174,6 +216,35 @@ public class ATBarChartBase extends ApplicationFrame {
 				bbUpperSeries.add(bar.getDate().getTime(), indicator.getBBUpper());
 				bbMiddleSeries.add(bar.getDate().getTime(), indicator.getSMAFast());
 				bbLowerSeries.add(bar.getDate().getTime(), indicator.getBBLower());
+			}
+		}
+		
+		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
+		xyseriescollection.addSeries(bbUpperSeries);
+		xyseriescollection.addSeries(bbMiddleSeries);
+		xyseriescollection.addSeries(bbLowerSeries);
+		
+		return xyseriescollection;
+	}
+	
+	//create lower dataset
+	private XYDataset createLowerIndicatorXYDataset() {
+		
+		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
+		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
+		XYSeries bbLowerSeries = new XYSeries("BB Lower Line");
+		Indicator indicator = new Indicator(14);
+
+		for(Bar bar : this.barList){
+			indicator.addValue(bar.getClose());
+			
+			if(Double.NaN != indicator.getBBUpper()
+					&& Double.NaN != indicator.getBBLower()
+					&& Double.NaN != indicator.getSMAFast()){
+			
+				bbUpperSeries.add(bar.getDate().getTime(), 70D);
+				bbMiddleSeries.add(bar.getDate().getTime(), indicator.getRsi());
+				bbLowerSeries.add(bar.getDate().getTime(), 30D);
 			}
 		}
 		

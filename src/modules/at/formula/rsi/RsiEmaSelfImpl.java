@@ -21,7 +21,7 @@ public class RsiEmaSelfImpl {
     
     private double curRsi = Double.NaN;
 
-    public RsiEmaSelfImpl(int length) throws Exception {
+    public RsiEmaSelfImpl(int length) {
         this.length = length;
         gainEma = new EMASelfImpl(length);
         lossEma = new EMASelfImpl(length);

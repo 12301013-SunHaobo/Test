@@ -34,3 +34,8 @@ TimeSeriesDemo8.java // price with moving average
 TranslateDemo1.java  // time series with horizontal sliding bar
 WindChartDemo1.java  // point has arrow direction
 XYPointerAnnotationDemo1.java // point with annotation
+XYTaskDatasetDemo2.java //has 2 chart, zoom in/out together
+
+
+
+

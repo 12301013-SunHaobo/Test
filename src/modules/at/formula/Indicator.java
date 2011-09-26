@@ -1,5 +1,8 @@
 package modules.at.formula;
 
+import modules.at.formula.rsi.RsiEmaSelfImpl;
+import modules.at.formula.rsi.RsiSelfImpl;
+
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 /**
@@ -17,7 +20,7 @@ public class Indicator {
 
 	private DescriptiveStatistics dsDefault;//for SMA fast and others
 	private DescriptiveStatistics dsSlow;//for SMA slow only
-	
+	private RsiEmaSelfImpl rsi;
 	
 	//for internal calculation only
 	private int barAdded = 0;
@@ -26,11 +29,13 @@ public class Indicator {
 		super();
 		this.length = length;
 		this.dsDefault = new DescriptiveStatistics(length);
+		this.rsi = new RsiEmaSelfImpl(length);
 	}
 	
 	public void addValue(double price){
 		this.barAdded++;
 		this.dsDefault.addValue(price);
+		this.rsi.addPrice(price);
 	}
 	
 	public double getSMAFast(){
@@ -54,7 +59,10 @@ public class Indicator {
 	}
 	
 	public double getRsi(){
-		return 0;
+		if(this.barAdded<this.length){
+			return Double.NaN;
+		}
+		return rsi.getValue();
 	}
 	
 

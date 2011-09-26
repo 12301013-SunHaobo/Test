@@ -9,7 +9,7 @@ public class RsiSelfImpl {
 
     private double prePrice = -1;
 
-    public RsiSelfImpl(int length) throws Exception {
+    public RsiSelfImpl(int length) {
         this.length = length;
     }
 
