@@ -13,7 +13,7 @@ import utils.WebUtil;
 
 public class GetNazData {
 
-	private static String stockcode = "tna";//qqq, tna, 
+	private static String stockcode = "qqq";//qqq, tna, 
     /**
      * to make tick order by : earliest -> latest
      * timeLot 1->13
