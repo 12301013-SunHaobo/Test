@@ -75,7 +75,12 @@ public class MockServer {
 				// Write the current time to the socket
 				PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 				//Date now = new Date();
-				out.println("time123");
+				String strToSend = "testStringToSend001";
+				System.out.println("<< ---- sending '"+strToSend+"'");
+				//out.println(strToSend);
+				out.write(strToSend);
+				System.out.println("sent '"+strToSend+"' ---- >>");
+				out.flush();
 				out.close();
 			}
 		}
