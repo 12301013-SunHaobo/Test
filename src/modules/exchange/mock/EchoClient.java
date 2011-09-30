@@ -17,12 +17,12 @@ public class EchoClient {
 
 	
     public static void main(String[] args) throws Exception {
-    	   Socket sock = new Socket(GlobalSetting.MOCK_SERVER_IP, GlobalSetting.MOCK_SERVER_PORT);
+    	   Socket socket = new Socket(GlobalSetting.MOCK_SERVER_IP, GlobalSetting.MOCK_SERVER_PORT);
     	    int c = 0;
     	    
-    	    OutputStream os = sock.getOutputStream();
-    	    InputStream is = sock.getInputStream();
-    	    String query = "thisistest";
+    	    OutputStream os = socket.getOutputStream();
+    	    InputStream is = socket.getInputStream();
+    	    String query = "thisistest\r\n";
     	    os.write(query.getBytes("iso8859_1"));
 
     	    while (c != -1) {
@@ -31,4 +31,8 @@ public class EchoClient {
     	        System.out.println((char) c);
     	    }
     }
+    
+    
+    
+    
 }
