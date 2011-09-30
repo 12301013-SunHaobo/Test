@@ -1,79 +1,99 @@
 package modules.exchange.mock;
 
-import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
+import java.net.Socket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.spi.SelectorProvider;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 import java.util.Iterator;
 import java.util.Set;
 
-import utils.GlobalSetting;
-
 public class MockServer {
-    
-    private static int PORT = 8900;
-    
-    public static void main(String[] args) throws IOException {
-        Charset charset = Charset.forName("ISO-8859-1");
-        CharsetEncoder encoder = charset.newEncoder();
-        CharsetDecoder decoder = charset.newDecoder();
 
-        ByteBuffer buffer = ByteBuffer.allocate(PORT);
+	private static Charset charset = Charset.forName("ISO-8859-1");
+	private static CharsetDecoder decoder = charset.newDecoder();
+	private static CharsetEncoder encoder = charset.newEncoder();
 
-        Selector selector = Selector.open();
+	
+	private static final int DEFAULT_TIME_PORT = 8900;
 
-        ServerSocketChannel server = ServerSocketChannel.open();
-        server.socket().bind(new InetSocketAddress(GlobalSetting.MOCK_SERVER_IP, GlobalSetting.MOCK_SERVER_PORT));
-        server.configureBlocking(false);
-        SelectionKey serverkey = server.register(selector, SelectionKey.OP_ACCEPT);
+	public MockServer() throws Exception {
+		acceptConnections(DEFAULT_TIME_PORT);
+	}
 
-        for (;;) {
-            selector.select();
-            Set keys = selector.selectedKeys();
+	public MockServer(int port) throws Exception {
+		acceptConnections(port);
+	}
 
-            for (Iterator i = keys.iterator(); i.hasNext();) {
-                SelectionKey key = (SelectionKey) i.next();
-                i.remove();
+	private static void acceptConnections(int port) throws Exception {
+		// Selector for incoming time requests
+		Selector acceptSelector = SelectorProvider.provider().openSelector();
 
-                if (key == serverkey) {
-                    if (key.isAcceptable()) {
-                        SocketChannel client = server.accept();
-                        client.configureBlocking(false);
-                        SelectionKey clientkey = client.register(selector, SelectionKey.OP_READ);
-                        clientkey.attach(new Integer(0));
-                    }
-                } else {
-                    SocketChannel client = (SocketChannel) key.channel();
-                    if (!key.isReadable())
-                        continue;
-                    int bytesread = client.read(buffer);
-                    if (bytesread == -1) {
-                        key.cancel();
-                        client.close();
-                        continue;
-                    }
-                    buffer.flip();
-                    String request = decoder.decode(buffer).toString();
-                    buffer.clear();
-                    if (request.trim().equals("quit")) {
-                        client.write(encoder.encode(CharBuffer.wrap("Bye.")));
-                        key.cancel();
-                        client.close();
-                    } else {
-                        int num = ((Integer) key.attachment()).intValue();
-                        String response = num + ": " + request.toUpperCase();
-                        client.write(encoder.encode(CharBuffer.wrap(response)));
-                        key.attach(new Integer(num + 1));
-                    }
-                }
-            }
-        }
-    }
+		// Create a new server socket and set to non blocking mode
+		ServerSocketChannel ssc = ServerSocketChannel.open();
+		ssc.configureBlocking(false);
+
+		// Bind the server socket to the local host and port
+
+		InetAddress lh = InetAddress.getLocalHost();
+		InetSocketAddress isa = new InetSocketAddress(lh, port);
+		ssc.socket().bind(isa);
+		System.out.println("listening on "+lh.getHostAddress()+":"+port);
+
+		// Register accepts on the server socket with the selector. This
+		// step tells the selector that the socket wants to be put on the
+		// ready list when accept operations occur, so allowing multiplexed
+		// non-blocking I/O to take place.
+		SelectionKey acceptKey = ssc.register(acceptSelector, SelectionKey.OP_ACCEPT);
+
+		int keysAdded = 0;
+		int counter = 0;
+
+		// Here's where everything happens. The select method will
+		// return when any operations registered above have occurred, the
+		// thread has been interrupted, etc.
+		while ((keysAdded = acceptSelector.select()) > 0) {
+			// Someone is ready for I/O, get the ready keys
+			Set<SelectionKey> readyKeys = acceptSelector.selectedKeys();
+			Iterator<SelectionKey> i = readyKeys.iterator();
+
+			// Walk through the ready keys collection and process date requests.
+			while (i.hasNext()) {
+				SelectionKey sk = (SelectionKey) i.next();
+				i.remove();
+				// The key indexes into the selector so you
+				// can retrieve the socket that's ready for I/O
+				ServerSocketChannel nextReady = (ServerSocketChannel) sk.channel();
+				// Accept the date request and send back the date string
+				Socket s = nextReady.accept().socket();
+				// Write the current time to the socket
+				PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+				//Date now = new Date();
+				String strToSend = "testStringToSend001";
+				System.out.print("<< ---- sending '"+strToSend+"'");
+				//out.println(strToSend);
+				out.write(strToSend);
+				System.out.println("sent >> "+(++counter));
+				out.flush();
+				out.close();
+			}
+		}
+	}
+
+	// Entry point.
+	public static void main(String[] args) {
+		// Parse command line arguments and
+		// create a new time server (no arguments yet)
+		try {
+			MockServer nbt = new MockServer();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
