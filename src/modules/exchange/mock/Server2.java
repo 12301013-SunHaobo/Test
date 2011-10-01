@@ -66,23 +66,17 @@ public class Server2 {
 				keys.remove();
 
 				if (key.isAcceptable()) {
-	
+					System.out.println("key.isAcceptable()");
 					ServerSocketChannel keyChannel = (ServerSocketChannel)key.channel();
 					ServerSocket serverSocket = keyChannel.socket();
 					Socket socket = serverSocket.accept();
 					
-					//read message
-//					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//				    
-//				    String input;
-//				    while ((input = in.readLine()) != null) {
-//				        System.out.println("received: " + input);
-//				    }
-//				    in.close();					
-					//send back message
-					PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-					out.write("<<"+"input"+">>"+(++counter));
-					out.close();
+					System.out.println("Server2 001");
+					String receivedMsg = read1(socket);
+					System.out.println("Server2 002");
+					write1(socket, receivedMsg);
+					System.out.println("Server2 003");
+					
 				} else {
 					System.out.println("key is not acceptable");
 				}
@@ -90,16 +84,31 @@ public class Server2 {
 		}
 	}
 
-	private void accept(SelectionKey sk) throws IOException {
+	private void accept1(SelectionKey sk) throws IOException {
 		//System.out.println("accept "+(++counter));
 	}
 	
-	private void read(SelectionKey sk) throws IOException {
-		System.out.println("read "+(++counter));
+	private String read1(Socket socket) throws IOException {
+		//read message
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	    
+	    String input = null;
+	    while ((input = in.readLine()) != null) {
+	        System.out.println("Server2 received:["+input+"]");
+	    }
+	    in.close();		
+	    return input;
 	}
 	
 	
-	private void write(SelectionKey sk) throws IOException {
+	private void write1(Socket socket, String msg) throws IOException {
+		//send back message
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		out.write("Send back to Client2 <<"+msg+">>"+(++counter));
+		out.close();
+	}
+	
+	private void write1(SelectionKey sk) throws IOException {
 		ServerSocketChannel nextReady = (ServerSocketChannel) sk.channel();
 		// Accept the date request and send back the date string
 		Socket s = nextReady.accept().socket();
