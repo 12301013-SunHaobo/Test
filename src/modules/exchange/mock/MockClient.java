@@ -9,7 +9,7 @@ import java.nio.charset.CharsetEncoder;
 
 import utils.GlobalSetting;
 
-public class EchoClient {
+public class MockClient {
 
 	public static Charset charset = Charset.forName("UTF-8");
 	public static CharsetEncoder encoder = charset.newEncoder();
