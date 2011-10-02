@@ -1,4 +1,4 @@
-package modules.exchange.mock3;
+package modules.exchange.nio.mock3;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;

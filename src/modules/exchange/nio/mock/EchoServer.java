@@ -1,4 +1,4 @@
-package modules.exchange.mock;
+package modules.exchange.nio.mock;
 
 import java.io.IOException;
 import java.net.InetAddress;

@@ -1,5 +1,6 @@
 package modules.at.feed.history;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class HistoryLoader {
     
     public static List<Tick> getNazHistTicks(String code, String tickFileName, String dateStr) throws Exception{
         List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/data/naz/tick/output/"+code+"/"+tickFileName);
-        List<Tick> tickList = new LinkedList<Tick>();
+        List<Tick> tickList = new ArrayList<Tick>();
         
         for(String row: strList){
             Tick tick = NazConverter.toTick(row, dateStr);
@@ -25,7 +26,7 @@ public class HistoryLoader {
 
     public static List<Bar> getNazHistDailyBars(String code, String dailyFileName) throws Exception {
     	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/data/naz/bar/output/"+code+"/"+dailyFileName);
-    	List<Bar> barList = new LinkedList<Bar>();
+    	List<Bar> barList = new ArrayList<Bar>();
     	for(String row : strList){
     		Bar bar = NazConverter.toBar(row);
     		barList.add(bar);
@@ -35,7 +36,7 @@ public class HistoryLoader {
     
     public static List<Bar> getFChartHistBars(String fchartFileName) throws Exception {
     	List<String> strList = FileUtil.fileToList(GlobalSetting.TEST_HOME+"/data/FChart/input/"+fchartFileName);//QQQ-20110915-mock-daily.txt");
-    	List<Bar> barList = new LinkedList<Bar>();
+    	List<Bar> barList = new ArrayList<Bar>();
     	for(String row : strList){
     		Bar bar = FChartConverter.toBar(row);
     		barList.add(bar);
