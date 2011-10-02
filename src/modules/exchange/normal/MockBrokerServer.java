@@ -1,6 +1,5 @@
 package modules.exchange.normal;
 
-import java.io.BufferedInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -37,7 +36,6 @@ public class MockBrokerServer {
 		try {
 			while (true) {
 				Socket socket = server.accept();
-				//BufferedReader socketReader = new BufferedReader(new InputStreamReader(new ObjectInputStream(client.getInputStream())));
 				ObjectInputStream socketReader = new ObjectInputStream(socket.getInputStream());
 				ObjectOutputStream socketWriter = new ObjectOutputStream(socket.getOutputStream());
 				TradeRequest tradeRequest = (TradeRequest)socketReader.readObject();

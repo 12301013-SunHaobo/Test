@@ -6,7 +6,10 @@ public class TestMockBrokerClient {
 		
 		long b0 = System.currentTimeMillis();
 
-		testObject();
+		int totalTimes = 10*100;
+		for(int i=0;i<totalTimes;i++){
+			testObject();
+		}
 		
 		long e0 = System.currentTimeMillis();
 		System.out.println("total time:"+(e0-b0));
@@ -19,14 +22,4 @@ public class TestMockBrokerClient {
 		System.out.println(tradeResponse);
 	}
 	
-	private static void testOld(){
-		String stockCode = "qqq";
-		
-		int totalTimes = 1; // 1000*10;
-		
-		for (int i=0;i<totalTimes;i++){
-			String tickStr = MockBrokerClient.getTick(i+":"+stockCode);
-			//System.out.println(tickStr);
-		}
-	}
 }
