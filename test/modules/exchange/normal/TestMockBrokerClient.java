@@ -2,11 +2,11 @@ package modules.exchange.normal;
 
 public class TestMockBrokerClient {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		long b0 = System.currentTimeMillis();
 
-		int totalTimes = 10*100;
+		int totalTimes = 1;//1000*10;
 		for(int i=0;i<totalTimes;i++){
 			testObject();
 		}
@@ -16,10 +16,19 @@ public class TestMockBrokerClient {
 	}
 	
 
-	private static void testObject(){
-		TradeRequest tradeRequest = new TradeRequest(TradeRequest.Type.BID_PRICE, "qqq", -1, -1);
-		TradeResponse tradeResponse = MockBrokerClient.request(tradeRequest);
-		System.out.println(tradeResponse);
+	private static void testObject() throws Exception{
+		TradeRequest request = new TradeRequest(TradeRequest.Type.BID_PRICE, "qqq", -1, -1);
+		TradeResponse response = MockBrokerClient.request(request);
+		System.out.println(response);
+		
+		request = new TradeRequest(TradeRequest.Type.ORDER_STATUS, "qqq", -1, -1);
+		response = MockBrokerClient.request(request);
+		System.out.println(response);
+		
+		request = new TradeRequest(TradeRequest.Type.PLACE_ORDER, "qqq", -1, -1);
+		response = MockBrokerClient.request(request);
+		System.out.println(response);
+
 	}
 	
 }

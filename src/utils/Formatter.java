@@ -16,4 +16,7 @@ public class Formatter {
     
     public static DateFormat DISPLAY_DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
+    public static DateFormat DATETIME_FORMAT_SSS = new SimpleDateFormat("yyyyMMdd-HH:mm:ss:SSS");
+    public static DateFormat TIME_FORMAT_SSS = new SimpleDateFormat("HH:mm:ss:SSS");
+    
 }

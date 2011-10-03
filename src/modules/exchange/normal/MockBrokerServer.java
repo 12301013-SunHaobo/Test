@@ -1,12 +1,22 @@
 package modules.exchange.normal;
 
+import java.io.BufferedInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
+import modules.at.feed.history.HistoryLoader;
+import modules.at.model.Tick;
+
+import utils.Formatter;
 import utils.GlobalSetting;
+import utils.MathUtil;
 
 /**
  * 
@@ -16,6 +26,8 @@ import utils.GlobalSetting;
  */
 public class MockBrokerServer {
 
+	private List<Tick> tickList;
+	
 	private ServerSocket server;
 
 	public static void main(String[] args) {
@@ -25,10 +37,15 @@ public class MockBrokerServer {
 
 	private MockBrokerServer() {
 		try {
+			long b0 = System.currentTimeMillis();
+			
+			
 			server = new ServerSocket(GlobalSetting.MOCK_SERVER_PORT, 50, InetAddress.getLocalHost());
 			System.out.println("MockBrokerServer listening at "+GlobalSetting.MOCK_SERVER_IP+":"+GlobalSetting.MOCK_SERVER_PORT);
-		} catch (Exception err) {
-			System.out.println(err);
+			long e0 = System.currentTimeMillis();
+			System.out.println("Server start in "+(e0-b0)+ " milliseconds.");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -36,7 +53,13 @@ public class MockBrokerServer {
 		try {
 			while (true) {
 				Socket socket = server.accept();
-				ObjectInputStream socketReader = new ObjectInputStream(socket.getInputStream());
+				ObjectInputStream socketReader = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+				/**
+				 * TECHDEBT
+				 * If i use new BufferedOutputStream, it will halt where outputs are sent, even if I call socketWriter.flush()
+				 * new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+				 * 
+				 */
 				ObjectOutputStream socketWriter = new ObjectOutputStream(socket.getOutputStream());
 				TradeRequest tradeRequest = (TradeRequest)socketReader.readObject();
 				if (tradeRequest != null) {
@@ -45,8 +68,8 @@ public class MockBrokerServer {
 				}
 				socket.close();
 			}
-		} catch (Exception err) {
-			System.err.println(err);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -89,10 +112,6 @@ public class MockBrokerServer {
 		System.out.println("processPlaceOrder ["+tradeRequest.toString()+"]");
 		return new TradeResponse(tradeRequest.getType(), tradeRequest.getTickCode(), "processed");
 	}
-	
-	
-	
-	
 	
 	
 	

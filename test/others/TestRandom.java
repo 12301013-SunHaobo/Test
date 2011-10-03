@@ -14,7 +14,7 @@ public class TestRandom {
 	 */
 	public static void main(String[] args) {
 		//testGetRandomInteger();
-		testGetUniqueRandomIntSet();
+		testGetUniqueRandomIntList();
 	}
 
 	
@@ -28,10 +28,10 @@ public class TestRandom {
 	}
 
 	
-	private static void testGetUniqueRandomIntSet(){
+	private static void testGetUniqueRandomIntList(){
 		Random random = new Random();
 		
-		List<Integer> resultList = MathUtil.getUniqueRandomIntSet(1000,4600,random,10);
+		List<Long> resultList = MathUtil.getUniqueRandomIntSet(1000,4600,random,10);
 		System.out.println(resultList.toString());
 		
 //		for(Integer i : resultList){

@@ -44,6 +44,11 @@ public class TradeResponse implements Serializable {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+
+	@Override
+	public String toString() {
+		return "TradeResponse [type=" + type + ", tickCode=" + tickCode + ", msg=" + msg + "]";
+	}
 	
 	
 }

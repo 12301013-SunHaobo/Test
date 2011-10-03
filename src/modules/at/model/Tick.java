@@ -45,7 +45,7 @@ public class Tick {
     }
     @Override
     public String toString() {
-        return "Tick [id=" + id + ", date=" + Formatter.DEFAULT_DATETIME_FORMAT.format(date) + ", price=" + price + ", volumn=" + volumn + "]";
+        return "Tick [id=" + id + ", date=" + Formatter.DATETIME_FORMAT_SSS.format(date) + ", price=" + price + ", volumn=" + volumn + "]";
     }
     
     
