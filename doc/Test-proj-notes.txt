@@ -1,4 +1,11 @@
 1. CreateServerMockSSSTicks.java
 	convert original tick data file to mock tick data file which contains appended mock SSS milliseconds.
 	
-2. 	
+2. GetNazData
+    pulls data from naz website, manually run daily
+    /Test/data/naz/tick/output folder has original data from naz
+    /Test/data/naz/tick/output-mock-sss has converted mock data which are appended with sss 
+
+3. exchange.nio package is not working, use normal instead
+
+4.     
