@@ -1,11 +1,11 @@
 package modules.at.feed.convert;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 import modules.at.model.Bar;
 import modules.at.model.Tick;
 import utils.Formatter;
-import utils.TimeUtil;
 
 /**
  *yyyyMMdd,open,high,low,close,volume
@@ -22,15 +22,17 @@ public class NazConverter {
 	 *  
 	 *  String dateStr yyyyMMdd
 	 */
-	public static Tick toTick(String row, String dateStr) throws Exception {
+//	public static Tick toTick(String row, String dateStr) throws Exception {
+//		return toTick(row, dateStr, Formatter.DEFAULT_DATETIME_FORMAT);
+//	}
+	public static Tick toTick(String row, String dateStr, DateFormat df) throws Exception {
 		String[] strArr = row.split(",");
-		Date date = Formatter.DEFAULT_DATETIME_FORMAT.parse(dateStr+"-"+strArr[0]);
+		Date date = df.parse(dateStr+"-"+strArr[0]);
 		double price = Double.parseDouble(strArr[1]);
 		int volume = Integer.parseInt(strArr[2]);
 		Tick tick = new Tick(date, price, volume);
 		return tick;
-	}
-	
+	}	
 	
 	
 	/**

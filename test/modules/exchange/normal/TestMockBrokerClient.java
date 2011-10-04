@@ -6,9 +6,10 @@ public class TestMockBrokerClient {
 		
 		long b0 = System.currentTimeMillis();
 
-		int totalTimes = 1;//1000*10;
+		int totalTimes = 100;//1000*10;
 		for(int i=0;i<totalTimes;i++){
 			testObject();
+			Thread.sleep(2000);
 		}
 		
 		long e0 = System.currentTimeMillis();
@@ -21,13 +22,13 @@ public class TestMockBrokerClient {
 		TradeResponse response = MockBrokerClient.request(request);
 		System.out.println(response);
 		
-		request = new TradeRequest(TradeRequest.Type.ORDER_STATUS, "qqq", -1, -1);
-		response = MockBrokerClient.request(request);
-		System.out.println(response);
-		
-		request = new TradeRequest(TradeRequest.Type.PLACE_ORDER, "qqq", -1, -1);
-		response = MockBrokerClient.request(request);
-		System.out.println(response);
+//		request = new TradeRequest(TradeRequest.Type.ORDER_STATUS, "qqq", -1, -1);
+//		response = MockBrokerClient.request(request);
+//		System.out.println(response);
+//		
+//		request = new TradeRequest(TradeRequest.Type.PLACE_ORDER, "qqq", -1, -1);
+//		response = MockBrokerClient.request(request);
+//		System.out.println(response);
 
 	}
 	
