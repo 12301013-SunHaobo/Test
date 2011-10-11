@@ -1,2 +1,5 @@
 1. complete Test-proj-notes.txt
-2. 
+2. how to track previous bar information, record by my program or there is a method call to get history bar?
+
+
+ 
