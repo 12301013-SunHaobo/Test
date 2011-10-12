@@ -16,6 +16,11 @@ import org.apache.commons.lang.StringUtils;
 
 import utils.Formatter;
 
+/**
+ * 
+ * 
+ *
+ */
 public class TestHighLow {
 
 	/**
@@ -34,7 +39,10 @@ public class TestHighLow {
 		
 	}
 	
-	
+	/**
+	 * Check direction after specified pattern 
+	 * @throws Exception
+	 */
 	public static void testDirectionAfterPattern() throws Exception{
 		
 		String mockDateStr = "20110916";
