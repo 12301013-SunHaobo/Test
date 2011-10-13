@@ -104,7 +104,7 @@ public class ATBarChartBase extends ApplicationFrame {
 		for (XYPointerAnnotation anno : annoList){
 			xyplot.addAnnotation(anno);
 		}
-		
+		//BB indicator
 		XYDataset bbDataset = createUpperIndicatorXYDataset();
 		xyplot.setDataset(1, bbDataset);
 		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
@@ -127,7 +127,7 @@ public class ATBarChartBase extends ApplicationFrame {
 	private XYPlot createLowerIndicatorPlot(){
 		ValueAxis timeAxis = new DateAxis("Time");
         NumberAxis valueAxis = new NumberAxis("Value");
-        XYDataset dataset = createLowerIndicatorXYDataset();
+        XYDataset dataset = createLowerRSIEMAIndicatorXYDataset();
         XYPlot xyplot = new XYPlot(dataset, timeAxis, valueAxis, null);
         
 		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
@@ -232,31 +232,28 @@ public class ATBarChartBase extends ApplicationFrame {
 		return xyseriescollection;
 	}
 	
-	//create lower dataset
-	private XYDataset createLowerIndicatorXYDataset() {
+	//create lower dataset RSI_EMA
+	private XYDataset createLowerRSIEMAIndicatorXYDataset() {
 		
-		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
-		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
-		XYSeries bbLowerSeries = new XYSeries("BB Lower Line");
+		XYSeries rsiEmaUpperSeries = new XYSeries("RSI_EMA_UPPER");
+		XYSeries rsiEmaSeries = new XYSeries("RSI_EMA");
+		XYSeries rsiEmaLowerSeries = new XYSeries("RSI_EMA_LOWER");
 		Indicator indicator = new Indicator(14);
 
 		for(Bar bar : this.barList){
 			indicator.addValue(bar.getClose());
 			
-			if(Double.NaN != indicator.getBBUpper()
-					&& Double.NaN != indicator.getBBLower()
-					&& Double.NaN != indicator.getSMAFast()){
-			
-				bbUpperSeries.add(bar.getDate().getTime(), 70D);
-				bbMiddleSeries.add(bar.getDate().getTime(), indicator.getRsi());
-				bbLowerSeries.add(bar.getDate().getTime(), 30D);
+			if(Double.NaN != indicator.getRsi()){
+				rsiEmaUpperSeries.add(bar.getDate().getTime(), 70D);
+				rsiEmaSeries.add(bar.getDate().getTime(), indicator.getRsi());
+				rsiEmaLowerSeries.add(bar.getDate().getTime(), 30D);
 			}
 		}
 		
 		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-		xyseriescollection.addSeries(bbUpperSeries);
-		xyseriescollection.addSeries(bbMiddleSeries);
-		xyseriescollection.addSeries(bbLowerSeries);
+		xyseriescollection.addSeries(rsiEmaUpperSeries);
+		xyseriescollection.addSeries(rsiEmaSeries);
+		xyseriescollection.addSeries(rsiEmaLowerSeries);
 		
 		return xyseriescollection;
 	}

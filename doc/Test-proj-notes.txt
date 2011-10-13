@@ -8,7 +8,8 @@
 
 3. exchange.nio package is not working, use normal instead
 
-4.     
+4. ATBarChartBase.java
+   show candlestick chart, with ERSI
 
 
 -----------------
