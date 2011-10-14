@@ -25,13 +25,11 @@ public class TestAuto {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-
 		auto();
-
 	}
 
 	static Position position = new Position(); //qty
-	static double CUT_LOSS = 0.01; //percentage
+	static double CUT_LOSS = - 0.05; //absolute loss, not %
 	static List<Trade> tradeList = new ArrayList<Trade>();
 	
 	private static void auto() throws Exception {
@@ -56,16 +54,18 @@ public class TestAuto {
 		printTrades(tradeList);
 	}
 
-	private static void printTrades(List<Trade> tradeList){
-		double pnL = 0;
-		for(Trade trade : tradeList){
-			System.out.println(trade);
-			pnL = pnL + (trade.getPrice() * trade.getQty());
-		}
-		System.out.println("Total pnL : "+pnL);
-	}
 	
-	
+	/**
+	 * position.qty==0: long, short, 
+	 * position.qty!=0: take profit, cut loss
+	 * 
+	 * @param rsi
+	 * @param price
+	 * @param time
+	 * @param position
+	 * @return
+	 * @throws Exception
+	 */
 	private static Trade decide(double rsi, double price, long time, Position position) throws Exception{
 		int pQty = position.getQty();
 		Trade trade = null;
@@ -74,27 +74,37 @@ public class TestAuto {
 			case PreTrade :
 				break;
 			case InTrade :
-				//cut loss checking
+				//cut loss checking, including short|long
 				if(pQty!=0){
 					//double profitPer = (price-position.getPrice())*(pQty>0?1:-1)/position.getPrice();
-					double lossPer = (position.getPrice()-price)*(pQty>0?1:-1)/position.getPrice();
-					if(lossPer>CUT_LOSS){
+					double tmpPnL = (price - position.getPrice())*pQty;
+					if(tmpPnL < CUT_LOSS){
 						trade = new Trade(price, -1 * pQty, time);
 						position.setQty(0);
 						break;
 					}
 				}
 				
-				//short or long
-				if(rsi>70){//short
-					if (pQty == 0){
+				
+				if(rsi>70){
+					if (pQty == 0){//short
 						trade = new Trade(price, -1, time);
 						position.setQty(pQty - 1);
+					} else if(pQty>0){//sell
+						trade = new Trade(price, -1, time);
+						position.setQty(pQty - 1);
+					} else {//pQty<0?
+						//keep short position
 					}
-				} else if(rsi<30) {//long
-					if (pQty == 0){
+				} else if(rsi<30) {
+					if (pQty == 0){//long
 						trade = new Trade(price, 1, time);
 						position.setQty(pQty + 1);
+					} else if(pQty <0){//cover short
+						trade = new Trade(price, 1, time);
+						position.setQty(pQty + 1);
+					} else{//pQty>0?
+						//keep long position
 					}
 				}
 				break;
@@ -209,4 +219,14 @@ public class TestAuto {
 			this.dateTime = dateTime;
 		}
 	}
+	
+	private static void printTrades(List<Trade> tradeList){
+		double pnL = 0;
+		for(Trade trade : tradeList){
+			System.out.println(trade);
+			pnL = pnL + (trade.getPrice() * trade.getQty());
+		}
+		System.out.println("Total pnL : "+pnL);
+	}
+
 }
