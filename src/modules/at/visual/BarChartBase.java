@@ -24,7 +24,6 @@ import modules.at.model.Tick;
 import modules.at.pattern.highlow.HighLowPattern;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.axis.DateAxis;
@@ -45,20 +44,22 @@ import org.jfree.ui.TextAnchor;
 
 import utils.Formatter;
 
-public class ATBarChartBase extends ApplicationFrame {
+public class BarChartBase extends ApplicationFrame {
 
 	//change begin
 	static String STOCK_CODE = "qqq";
 	static String DATE_STR = "20110923";
-	static String TICK_FILENAME = DATE_STR + "-" + "223948"+".txt";
+	static String TIME_STR = "223948";
+	static String TICK_FILENAME = DATE_STR + "-" + TIME_STR+".txt";
 	//change end
 	
 	private static final long serialVersionUID = 1L;
 	
 	private List<Bar> barList = null;
 	
-	public ATBarChartBase(String s) {
-		super(s);
+	public BarChartBase(String stockCode, String dateStr, String timeStr) {
+		super(stockCode+":"+dateStr + "-" + timeStr+".txt");
+		
 		//init barList
 		this.barList = getBarList();
 		
@@ -70,10 +71,10 @@ public class ATBarChartBase extends ApplicationFrame {
 	}
 
 	public static void main(String args[]) {
-		ATBarChartBase candlestickchartdemo1 = new ATBarChartBase(STOCK_CODE+":"+TICK_FILENAME);
-		candlestickchartdemo1.pack();
-		RefineryUtilities.centerFrameOnScreen(candlestickchartdemo1);
-		candlestickchartdemo1.setVisible(true);
+		BarChartBase barchartBase = new BarChartBase(STOCK_CODE,DATE_STR, TIME_STR);
+		barchartBase.pack();
+		RefineryUtilities.centerFrameOnScreen(barchartBase);
+		barchartBase.setVisible(true);
 	}
 
 	private JFreeChart createChart() {
@@ -276,7 +277,7 @@ public class ATBarChartBase extends ApplicationFrame {
 			}
 		}
 		
-		System.out.println(Formatter.DEFAULT_TIME_FORMAT.format(point.getDateTime())+" "+paint.toString());
+		//System.out.println(Formatter.DEFAULT_TIME_FORMAT.format(point.getDateTime())+" "+paint.toString());
 		
 		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
 				//""+point.getPrice(),
@@ -390,8 +391,8 @@ public class ATBarChartBase extends ApplicationFrame {
 			return true;
 		}
 
-		private ATBarChartBase getOuterType() {
-			return ATBarChartBase.this;
+		private BarChartBase getOuterType() {
+			return BarChartBase.this;
 		}
 		
 		

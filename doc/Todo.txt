@@ -2,5 +2,7 @@
 2. IB: how to track previous bar information, record by my program or there is a method call to get history bar?
 3. TestAuto.java : when to cut loss, take profit, enter?
 
+4. in the middle of changing BarChartBase.java (only draw base chart, by specified date time)
+
 
  
