@@ -1,6 +1,5 @@
 package modules.at.feed.naz;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -13,46 +12,51 @@ import utils.WebUtil;
 
 public class GetNazData {
 
-	private static String stockcode = "qqq";//qqq, tna, 
+	private static String[] stockcodes = {"qqq", "tna", "tza"};//qqq, tna, 
     /**
      * to make tick order by : earliest -> latest
      * timeLot 1->13
      * pages@timeLot max->1
      * ticks@page bottom->top
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
     	
-    	long b0 = System.currentTimeMillis();
+        for(int i=0;i<stockcodes.length;i++){
+            System.out.println("<<-------"+stockcodes[i]+"------------>>");
+            processOneCode(stockcodes[i]);
+        }
+
+    }
+
+    private static void processOneCode(String stockcode) throws Exception {
+        long b0 = System.currentTimeMillis();
         LinkedList<String> allList = new LinkedList<String>();
-        initTotalPageArr();
+        initTotalPageArr(stockcode);
 
         for(int i=0;i<totalPageArr.length;i++){
-        	for(int pageno=totalPageArr[i];pageno>=1;pageno--){
+            for(int pageno=totalPageArr[i];pageno>=1;pageno--){
 
-				Stack<String> onePageStack = extractPageTicks((i+1), pageno);
-				while (!onePageStack.isEmpty()) {
-					allList.add(onePageStack.pop());
-				}
+                Stack<String> onePageStack = extractPageTicks(stockcode, (i+1), pageno);
+                while (!onePageStack.isEmpty()) {
+                    allList.add(onePageStack.pop());
+                }
 
-        		System.out.println("timeLot:"+(i+1)+" page:"+pageno+" done");
-        	}
+                System.out.println(stockcode+":timeLot:"+(i+1)+" page:"+pageno+" done");
+            }
         }
 
       String tickOutputFilePath = GlobalSetting.TEST_HOME+"/data/naz/tick/output/"+stockcode+"/"+TimeUtil.getCurrentTimeStr()+".txt";
       FileUtil.listToFile(allList, tickOutputFilePath);
       
       long e0 = System.currentTimeMillis();
-      System.out.println("Total used time: "+(e0-b0)/1000+" seconds. Output file:"+tickOutputFilePath);
-
+      System.out.println(stockcode+":Total used time: "+(e0-b0)/1000+" seconds. Output file:"+tickOutputFilePath);
     }
-
-    
     
     
     //initialize totalPageArr
-    private static void initTotalPageArr(){
+    private static void initTotalPageArr(String stockcode){
         for(int i=0;i<13;i++){
-            int totalPageNum = getTotalPages(i+1);
+            int totalPageNum = getTotalPages(stockcode, i+1);
             totalPageArr[i] = totalPageNum;
             System.out.println("page "+(i+1)+" done.");
         }
@@ -63,8 +67,9 @@ public class GetNazData {
     }
     
     //get total pages for specified time lot
-    private static int getTotalPages(int timeLot){
-        String urlStr = baseUrlStr+"?time="+timeLot;
+    private static int getTotalPages(String stockcode, int timeLot){
+        //String urlStr = baseUrlStr+"?time="+timeLot;
+        String urlStr = String.format(baseUrlStr, stockcode)+"?time="+timeLot;
         String tmpPage = WebUtil.getPageSource(urlStr, encoding);
         String totalPagePattern = "<span id=\"TotalPagesLabel\">.*?</span>";
         List<String> totalPageList = RegUtil.getMatchedStrings(tmpPage, totalPagePattern);
@@ -73,8 +78,8 @@ public class GetNazData {
     }
     
     
-    private static Stack<String> extractPageTicks(int timeLot, int pageno){
-        String page = WebUtil.getPageSource(baseUrlStr+"?pageno="+pageno+"&time="+timeLot, encoding);
+    private static Stack<String> extractPageTicks(String stockcode, int timeLot, int pageno){
+        String page = WebUtil.getPageSource(String.format(baseUrlStr, stockcode)+"?pageno="+pageno+"&time="+timeLot, encoding);
 
         String dataTablePattern = "<table class=\"AfterHoursPagingContents\" name=\"AfterHoursPagingContents_Table\".*</table>";
         List<String> dataTableList = RegUtil.getMatchedStrings(page, dataTablePattern);
@@ -104,7 +109,8 @@ public class GetNazData {
     }
     
     //?pageno=4&time=7   //all starting from 1
-    private static String baseUrlStr = "http://www.nasdaq.com/symbol/"+stockcode+"/time-sales";
+    //private static String baseUrlStr = "http://www.nasdaq.com/symbol/"+stockcode+"/time-sales";
+    private static String baseUrlStr = "http://www.nasdaq.com/symbol/%s/time-sales";//%s to be replaced by stockcode
     private static String filePath = GlobalSetting.TEST_HOME+"/tmp/tick/pageoutput/output1.html";
     private static String encoding = "iso-8859-1";
     
