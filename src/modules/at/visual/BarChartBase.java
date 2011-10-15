@@ -6,22 +6,17 @@ package modules.at.visual;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Paint;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import modules.at.analyze.TestAuto;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicator;
 import modules.at.model.Bar;
-import modules.at.model.Point;
-import modules.at.model.Point.Type;
 import modules.at.model.Tick;
-import modules.at.pattern.highlow.HighLowPattern;
+import modules.at.model.Trade;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -40,9 +35,6 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
-import org.jfree.ui.TextAnchor;
-
-import utils.Formatter;
 
 public class BarChartBase extends ApplicationFrame {
 
@@ -50,18 +42,27 @@ public class BarChartBase extends ApplicationFrame {
 	static String STOCK_CODE = "qqq";
 	static String DATE_STR = "20110923";
 	static String TIME_STR = "223948";
-	static String TICK_FILENAME = DATE_STR + "-" + TIME_STR+".txt";
-	//change end
 	
+	public static double RSI_UPPER = TestAuto.rsiUpper; //70;//to pass in
+	public static double RSI_LOWER = TestAuto.rsiLower; //30;//to pass in
+	//change end
+
+	private String stockCode;
+	private String tickFileName;
+
 	private static final long serialVersionUID = 1L;
 	
-	private List<Bar> barList = null;
+	private List<Bar> barList;
+	private List<XYPointerAnnotation> annotationList;
 	
-	public BarChartBase(String stockCode, String dateStr, String timeStr) {
+	public BarChartBase(String stockCode, String dateStr, String timeStr, List<Trade> tradeList) {
 		super(stockCode+":"+dateStr + "-" + timeStr+".txt");
-		
+
+		this.stockCode = stockCode;
+		this.tickFileName = dateStr + "-" + timeStr+".txt";
 		//init barList
 		this.barList = getBarList();
+		this.annotationList = BarChartUtil.getTradeAnnotationList(tradeList);
 		
 		JFreeChart jfreechart = createChart();
 		ChartPanel chartpanel = new ChartPanel(jfreechart);
@@ -71,7 +72,8 @@ public class BarChartBase extends ApplicationFrame {
 	}
 
 	public static void main(String args[]) {
-		BarChartBase barchartBase = new BarChartBase(STOCK_CODE,DATE_STR, TIME_STR);
+		List<Trade> tradeList = new ArrayList<Trade>();
+		BarChartBase barchartBase = new BarChartBase(STOCK_CODE,DATE_STR, TIME_STR, tradeList);
 		barchartBase.pack();
 		RefineryUtilities.centerFrameOnScreen(barchartBase);
 		barchartBase.setVisible(true);
@@ -80,10 +82,11 @@ public class BarChartBase extends ApplicationFrame {
 	private JFreeChart createChart() {
 		CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date/Time"));
 		combineddomainxyplot.setDomainPannable(true);
-		combineddomainxyplot.add(createCandlestickPlot(),4);//weight 4 for upper candlestick chart
+		//upper height/lower height = 4/1
+		combineddomainxyplot.add(createCandlestickPlot(),4);//weight 4 for upper candlestick chart, 
 		combineddomainxyplot.add(createLowerIndicatorPlot(),1);//weight 1 for lower indicator chart
 		//combineddomainxyplot.add(createSubplot2(createDataset2()));
-		JFreeChart jfreechart = new JFreeChart(STOCK_CODE+":"+TICK_FILENAME, JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, true);
+		JFreeChart jfreechart = new JFreeChart(this.stockCode+":"+tickFileName, JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, true);
 		//jfreechart.setBackgroundPaint(Color.white);
 		//ChartUtilities.applyCurrentTheme(jfreechart); //gray background
 		
@@ -101,8 +104,7 @@ public class BarChartBase extends ApplicationFrame {
 		xyplot.setDomainPannable(true);
 		
 		//add annotations
-		List<XYPointerAnnotation> annoList = getAnnotationList();
-		for (XYPointerAnnotation anno : annoList){
+		for (XYPointerAnnotation anno : this.annotationList){
 			xyplot.addAnnotation(anno);
 		}
 		//BB indicator
@@ -125,6 +127,7 @@ public class BarChartBase extends ApplicationFrame {
 		return xyplot;
 	}
 	
+	//lower indicator plot : RSI_EMA
 	private XYPlot createLowerIndicatorPlot(){
 		ValueAxis timeAxis = new DateAxis("Time");
         NumberAxis valueAxis = new NumberAxis("Value");
@@ -132,9 +135,9 @@ public class BarChartBase extends ApplicationFrame {
         XYPlot xyplot = new XYPlot(dataset, timeAxis, valueAxis, null);
         
 		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
-		xyItemRenderer.setSeriesPaint(0, Color.blue);//bb upper band
-		xyItemRenderer.setSeriesPaint(1, Color.gray);//bb middle
-		xyItemRenderer.setSeriesPaint(2, Color.blue);//bb lower band
+		xyItemRenderer.setSeriesPaint(0, Color.blue);//RSI upper band
+		xyItemRenderer.setSeriesPaint(1, Color.gray);//RSI
+		xyItemRenderer.setSeriesPaint(2, Color.blue);//RSI lower band
 		xyplot.setRenderer(xyItemRenderer);
 		
 		xyplot.setDomainCrosshairVisible(true);
@@ -144,11 +147,7 @@ public class BarChartBase extends ApplicationFrame {
 		numberaxis.setAutoRangeIncludesZero(false);
 		 
 		return xyplot;
-		
 	}
-	
-	
-	
 	
 	//get bar list
 	private List<Bar> getBarList() {
@@ -156,29 +155,13 @@ public class BarChartBase extends ApplicationFrame {
 		try {
 			// change begin -> for new date
 			String nazTickOutputDateStr = DATE_STR;// change for new date
-			List<Tick> tickList = HistoryLoader.getNazHistTicks(STOCK_CODE, TICK_FILENAME, nazTickOutputDateStr); 
+			List<Tick> tickList = HistoryLoader.getNazHistTicks(this.stockCode, this.tickFileName, nazTickOutputDateStr); 
 			// change end -> for new date
 			barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return barList;
-	}
-	
-	//get high/low annotation list
-	private List<XYPointerAnnotation> getAnnotationList(){
-		List<XYPointerAnnotation> annoList = new ArrayList<XYPointerAnnotation>();
-		List<Point> highLowPointList = null;
-		try {
-			highLowPointList = HighLowPattern.findHighLowPoints(this.barList);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(highLowPointList!=null){
-			for(Point point : highLowPointList)
-			annoList.add(createAnnotation(point));
-		}
-		return annoList;
 	}
 	
 	//create OHLC dataset
@@ -245,9 +228,9 @@ public class BarChartBase extends ApplicationFrame {
 			indicator.addValue(bar.getClose());
 			
 			if(Double.NaN != indicator.getRsi()){
-				rsiEmaUpperSeries.add(bar.getDate().getTime(), 70D);
+				rsiEmaUpperSeries.add(bar.getDate().getTime(), RSI_UPPER);
 				rsiEmaSeries.add(bar.getDate().getTime(), indicator.getRsi());
-				rsiEmaLowerSeries.add(bar.getDate().getTime(), 30D);
+				rsiEmaLowerSeries.add(bar.getDate().getTime(), RSI_LOWER);
 			}
 		}
 		
@@ -259,143 +242,9 @@ public class BarChartBase extends ApplicationFrame {
 		return xyseriescollection;
 	}
 	
-	//create one annotation by a point
-	private XYPointerAnnotation createAnnotation(Point point){
-		//default is for high
-		double angle = -Math.PI/2;
-		Paint paint = Color.black;
-		if(Point.Type.LOW.equals(point.getType())){
-			angle = Math.PI/2;
-			paint = Color.white;
-		}
-		
-		if(isNoise(point)){
-			if(Point.Type.HIGH.equals(point.getType())){
-				paint = Color.green;
-			} else {
-				paint = Color.cyan;
-			}
-		}
-		
-		//System.out.println(Formatter.DEFAULT_TIME_FORMAT.format(point.getDateTime())+" "+paint.toString());
-		
-		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
-				//""+point.getPrice(),
-				//"",
-				Formatter.DEFAULT_TIME_FORMAT.format(point.getDateTime()),
-				point.getDateTime().getTime(), point.getPrice(), angle);
-		xypointerannotation.setTextAnchor(TextAnchor.BOTTOM_LEFT);
-		xypointerannotation.setPaint(paint);
-		xypointerannotation.setArrowPaint(paint);
-		return xypointerannotation;
-	}
+
 	
-	private boolean isNoise(Point point){
-		Set<Noise> noiseTimeSet = new HashSet<Noise>();
-		
-		//high noise
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "09:42:58"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "10:10:58"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "11:37:59"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "12:30:54"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "12:57:59"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "13:18:53"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "13:22:56"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "13:31:59"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "14:32:57"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "15:02:59"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "15:09:59"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "15:23:59"));
-		noiseTimeSet.add(new Noise(Point.Type.HIGH, "15:32:59"));
 
-		
-		//low noise
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "10:17:58"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "10:19:57"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "12:31:56"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "12:35:59"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "13:16:54"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "13:20:54"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "13:51:59"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "14:44:45"));
-		noiseTimeSet.add(new Noise(Point.Type.LOW, "14:53:58"));
-		
-		if(noiseTimeSet.contains(new Noise(point))){
-			return true;
-		}
-		return false;
-		
-	}
 
-	class Noise {
-		private Long time;
-		private Point.Type pointType;
-		
-		public Noise(Point point){
-			super();
-			this.pointType = point.getType();
-			this.time = point.getDateTime().getTime()/1000*1000;
-		}
-		
-		public Noise(Type pointType, String timeStr) {
-			super();
-			this.pointType = pointType;
-			try {
-				this.time = Formatter.DEFAULT_DATETIME_FORMAT.parse(DATE_STR+"-"+timeStr).getTime();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		public Long getTime() {
-			return time;
-		}
-		public void setTime(Long time) {
-			this.time = time;
-		}
-		public Point.Type getPointType() {
-			return pointType;
-		}
-		public void setPointType(Point.Type pointType) {
-			this.pointType = pointType;
-		}
 
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + getOuterType().hashCode();
-			result = prime * result + ((pointType == null) ? 0 : pointType.hashCode());
-			result = prime * result + ((time == null) ? 0 : time.hashCode());
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Noise other = (Noise) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
-			if (pointType != other.pointType)
-				return false;
-			if (time == null) {
-				if (other.time != null)
-					return false;
-			} else if (!time.equals(other.time))
-				return false;
-			return true;
-		}
-
-		private BarChartBase getOuterType() {
-			return BarChartBase.this;
-		}
-		
-		
-		
-	}
 }
