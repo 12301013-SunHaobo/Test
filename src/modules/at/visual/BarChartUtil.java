@@ -42,12 +42,15 @@ public class BarChartUtil {
 		
 		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
 				//""+trade.getPrice(),
-				trade.getType().toString()+"\n"+trade.getPrice(),
+				trade.getType().toString()+" "+trade.getPrice(),
 				//Formatter.DEFAULT_TIME_FORMAT.format(trade.getDateTime()),
 				trade.getDateTime(), trade.getPrice(), angle);
 		xypointerannotation.setTextAnchor(TextAnchor.BOTTOM_LEFT);
 		xypointerannotation.setPaint(paint);
 		xypointerannotation.setArrowPaint(paint);
+		xypointerannotation.setBaseRadius(100);
+		xypointerannotation.setTipRadius(5);
+
 		return xypointerannotation;
 	}
 
