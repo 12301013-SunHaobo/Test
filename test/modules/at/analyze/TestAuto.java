@@ -41,6 +41,8 @@ public class TestAuto {
 	}
 
 	static final double CUT_LOSS = - 0.05; //absolute loss, not %
+	static final double PROFIT_LOSS = - 0.05; //absolute loss from previous profit  
+	
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
 	private static List<Trade> auto() throws Exception {
@@ -101,11 +103,11 @@ public class TestAuto {
 							LOCK_PROFIT = Double.NaN;
 							break;
 						} else {//increase LOCK_PROFIT
-							LOCK_PROFIT = Math.max(LOCK_PROFIT, tmpPnL+CUT_LOSS);
+							LOCK_PROFIT = Math.max(LOCK_PROFIT, tmpPnL+PROFIT_LOSS);
 						}
 					} else {
 						if(tmpPnL > 0){
-							LOCK_PROFIT = Math.max(0, tmpPnL+CUT_LOSS);
+							LOCK_PROFIT = Math.max(0, tmpPnL+PROFIT_LOSS);
 						}
 					}
 					//cut loss checking

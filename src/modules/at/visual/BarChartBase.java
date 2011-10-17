@@ -36,10 +36,12 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
-import utils.Formatter;
-
 public class BarChartBase extends ApplicationFrame {
 
+	private static final boolean SHOW_BB = false;;
+	private static final boolean SHOW_MA_FAST = true; 
+	private static final boolean SHOW_MA_SLOW = true;
+	
 	private String stockCode;
 	private String dateStr;
 	private String tickFileName;
@@ -69,8 +71,8 @@ public class BarChartBase extends ApplicationFrame {
 	//Test BarCahrtBase.java
 	public static void main(String args[]) {
 		String stockCode = "qqq";
-		String dateStr = "20110923";
-		String timeStr = "223948";
+		String dateStr = "20111014";
+		String timeStr = "200153";
 		List<Trade> tradeList = new ArrayList<Trade>();
 		BarChartBase barchartBase = new BarChartBase(stockCode,dateStr, timeStr, tradeList);
 		barchartBase.pack();
@@ -106,14 +108,39 @@ public class BarChartBase extends ApplicationFrame {
 		for (XYPointerAnnotation anno : this.annotationList){
 			xyplot.addAnnotation(anno);
 		}
+		
+		int datasetIdx = 0;
 		//BB indicator
-		XYDataset bbDataset = createBBIndicatorXYDataset();
-		xyplot.setDataset(1, bbDataset);
-		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
-		xyItemRenderer.setSeriesPaint(0, Color.blue);//bb upper band
-		xyItemRenderer.setSeriesPaint(1, Color.gray);//bb middle
-		xyItemRenderer.setSeriesPaint(2, Color.blue);//bb lower band
-		xyplot.setRenderer(1, xyItemRenderer);
+		if(SHOW_BB){
+			datasetIdx++;
+			XYDataset bbDataset = createBBIndicatorXYDataset();
+			xyplot.setDataset(datasetIdx, bbDataset);
+			StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
+			xyItemRenderer.setSeriesPaint(0, Color.blue);//bb upper band
+			xyItemRenderer.setSeriesPaint(1, Color.gray);//bb middle
+			xyItemRenderer.setSeriesPaint(2, Color.blue);//bb lower band
+			xyplot.setRenderer(datasetIdx, xyItemRenderer);
+		}
+		//MA indicator
+		if(SHOW_MA_FAST){
+			datasetIdx++;
+			XYDataset bbDataset = createMAFastIndicatorXYDataset();
+			xyplot.setDataset(datasetIdx, bbDataset);
+			StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
+			xyItemRenderer.setSeriesPaint(0, Color.blue);//MA fast
+			xyplot.setRenderer(datasetIdx, xyItemRenderer);
+		}
+		//MA indicator
+		if(SHOW_MA_SLOW){
+			datasetIdx++;
+			XYDataset bbDataset = createMASlowIndicatorXYDataset();
+			xyplot.setDataset(datasetIdx, bbDataset);
+			StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
+			xyItemRenderer.setSeriesPaint(0, Color.green);//MA slow
+			xyplot.setRenderer(datasetIdx, xyItemRenderer);
+		}
+		
+		
 		
 		xyplot.setDomainCrosshairVisible(true);
 		xyplot.setRangeCrosshairVisible(true);
@@ -188,61 +215,94 @@ public class BarChartBase extends ApplicationFrame {
 	
 	//create BB dataset
 	private XYDataset createBBIndicatorXYDataset() {
-		
-		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
-		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
-		XYSeries bbLowerSeries = new XYSeries("BB Lower Line");
-		Indicators indicator = new Indicators();
-
-		for(Bar bar : this.barList){
-			indicator.addValue(bar.getClose());
-			
-			if(!Double.isNaN(indicator.getBBUpper())
-					&& !Double.isNaN(indicator.getBBLower())
-					&& !Double.isNaN(indicator.getSMAFast())){
-			
-				bbUpperSeries.add(bar.getDate().getTime(), indicator.getBBUpper());
-				bbMiddleSeries.add(bar.getDate().getTime(), indicator.getBBMiddle());
-				bbLowerSeries.add(bar.getDate().getTime(), indicator.getBBLower());
-			}
-		}
-		
 		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-		xyseriescollection.addSeries(bbUpperSeries);
-		xyseriescollection.addSeries(bbMiddleSeries);
-		xyseriescollection.addSeries(bbLowerSeries);
-		
+		xyseriescollection.addSeries(getXYSeries(SeriesType.BBUpper, barList));
+		xyseriescollection.addSeries(getXYSeries(SeriesType.BBMiddle, barList));
+		xyseriescollection.addSeries(getXYSeries(SeriesType.BBLower, barList));
 		return xyseriescollection;
 	}
 	
-	//create lower dataset RSI_EMA
+	//create MA fast dataset
+	private XYDataset createMAFastIndicatorXYDataset() {
+		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
+		xyseriescollection.addSeries(getXYSeries(SeriesType.MAFast, barList));
+		return xyseriescollection;
+	}
+	//create MA slow dataset
+	private XYDataset createMASlowIndicatorXYDataset() {
+		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
+		xyseriescollection.addSeries(getXYSeries(SeriesType.MASlow, barList));
+		return xyseriescollection;
+	}
+
+	
+	//create RSI_EMA dataset
 	private XYDataset createLowerRSIEMAIndicatorXYDataset() {
-		
-		XYSeries rsiEmaUpperSeries = new XYSeries("RSI_EMA_UPPER");
-		XYSeries rsiEmaSeries = new XYSeries("RSI_EMA");
-		XYSeries rsiEmaLowerSeries = new XYSeries("RSI_EMA_LOWER");
-		Indicators indicator = new Indicators();
-
-		for(Bar bar : this.barList){
-			indicator.addValue(bar.getClose());
-			
-			if(!Double.isNaN(indicator.getRsi())){
-				rsiEmaUpperSeries.add(bar.getDate().getTime(), AlgoSetting.RSI_UPPER);
-				rsiEmaSeries.add(bar.getDate().getTime(), indicator.getRsi());
-				rsiEmaLowerSeries.add(bar.getDate().getTime(), AlgoSetting.RSI_LOWER);
-			}
-		}
-		
 		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-		xyseriescollection.addSeries(rsiEmaUpperSeries);
-		xyseriescollection.addSeries(rsiEmaSeries);
-		xyseriescollection.addSeries(rsiEmaLowerSeries);
-		
+		xyseriescollection.addSeries(getXYSeries(SeriesType.RsiUpper, barList));
+		xyseriescollection.addSeries(getXYSeries(SeriesType.Rsi, barList));
+		xyseriescollection.addSeries(getXYSeries(SeriesType.RsiLower, barList));
 		return xyseriescollection;
 	}
 	
 
+	enum SeriesType {
+		RsiUpper, Rsi, RsiLower,
+		BBUpper, BBMiddle, BBLower,
+		MAFast, MASlow
+	}
+	private XYSeries getXYSeries(SeriesType seriesType, List<Bar> barList){
+		XYSeries series = new XYSeries(seriesType.toString());
+		Indicators indicator = new Indicators();
+		
+		for(Bar bar : this.barList){
+			indicator.addValue(bar.getClose());
+			switch (seriesType) {
+				case RsiUpper:
+					series.add(bar.getDate().getTime(), AlgoSetting.RSI_UPPER);
+					break;
+				case Rsi:
+					if(!Double.isNaN(indicator.getRsi())){
+						series.add(bar.getDate().getTime(), indicator.getRsi());
+					}
+					break;
+				case RsiLower:
+					series.add(bar.getDate().getTime(), AlgoSetting.RSI_LOWER);
+					break;
 	
+				case BBUpper:
+					if(!Double.isNaN(indicator.getBBUpper())){
+						series.add(bar.getDate().getTime(), indicator.getBBUpper());
+					}
+					break;
+				case BBMiddle:
+					if(!Double.isNaN(indicator.getBBMiddle())){
+						series.add(bar.getDate().getTime(), indicator.getBBMiddle());
+					}	
+					break;
+				case BBLower:
+					if(!Double.isNaN(indicator.getBBLower())){
+						series.add(bar.getDate().getTime(), indicator.getBBLower());
+					}
+					break;
+	
+				case MAFast:
+					if(!Double.isNaN(indicator.getSMAFast())){
+						series.add(bar.getDate().getTime(), indicator.getSMAFast());
+					}
+					break;
+				case MASlow:
+					if(!Double.isNaN(indicator.getSMASlow())){
+						series.add(bar.getDate().getTime(), indicator.getSMASlow());
+					}
+					break;
+	
+				default:
+					break;
+			}
+		}
+		return series;
+	}
 
 
 

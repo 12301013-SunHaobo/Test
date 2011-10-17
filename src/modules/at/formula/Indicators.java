@@ -44,7 +44,7 @@ public class Indicators {
 		if(this.barAdded<AlgoSetting.MA_SLOW_LENGTH){
 			return Double.NaN;
 		}
-		return ds4MAFast.getSum()/AlgoSetting.MA_SLOW_LENGTH;
+		return ds4MASlow.getSum()/AlgoSetting.MA_SLOW_LENGTH;
 	}
 
 	public double getSMAFast(){
