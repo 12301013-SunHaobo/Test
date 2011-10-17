@@ -3,15 +3,12 @@ package modules.at.visual;
 import java.awt.Color;
 import java.awt.Paint;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import modules.at.model.Trade;
 
 import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.ui.TextAnchor;
-
-import utils.Formatter;
 
 public class BarChartUtil {
 
@@ -35,21 +32,26 @@ public class BarChartUtil {
 		Paint paint = Color.black;
 		if(trade.getQty()>0){
 			angle = Math.PI*3/4;
+			paint = Color.blue;
+		}
+		
+		//highlight cutloss to read color
+		if(Trade.Type.CutLoss.equals(trade.getType())){
 			paint = Color.red;
 		}
 		
-		//System.out.println(Formatter.DEFAULT_TIME_FORMAT.format(new Date(trade.getDateTime()))+" "+paint.toString());
+		//System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(trade.getDateTime()))+" "+paint.toString());
 		
 		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
 				//""+trade.getPrice(),
-				trade.getType().toString()+" "+trade.getPrice(),
+				trade.getId()+":"+trade.getType().toString()+" "+trade.getPrice(),
 				//Formatter.DEFAULT_TIME_FORMAT.format(trade.getDateTime()),
 				trade.getDateTime(), trade.getPrice(), angle);
 		xypointerannotation.setTextAnchor(TextAnchor.BOTTOM_LEFT);
 		xypointerannotation.setPaint(paint);
 		xypointerannotation.setArrowPaint(paint);
-		xypointerannotation.setBaseRadius(100);
-		xypointerannotation.setTipRadius(5);
+		xypointerannotation.setBaseRadius(50);//the distance from point to arrow end
+		xypointerannotation.setTipRadius(5);//the distance from point to arrow head
 
 		return xypointerannotation;
 	}

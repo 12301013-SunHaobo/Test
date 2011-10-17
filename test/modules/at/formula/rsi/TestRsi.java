@@ -2,12 +2,9 @@ package modules.at.formula.rsi;
 
 import java.util.List;
 
-import utils.Formatter;
-
-import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.model.Bar;
-import modules.at.model.Tick;
+import utils.Formatter;
 
 public class TestRsi {
 
@@ -21,10 +18,10 @@ public class TestRsi {
 	    List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
 
         long b1 = System.currentTimeMillis();
-        RsiSelfImpl rsi = new RsiSelfImpl(14);
+        Rsi rsi = new RsiSelfImpl(14);
         for(Bar bar : barList){
             rsi.addPrice(bar.getClose());
-            System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(rsi.calculate()));
+            System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(rsi.getValue()));
         }
         
         long e0 = System.currentTimeMillis();

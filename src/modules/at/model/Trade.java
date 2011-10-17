@@ -1,6 +1,8 @@
 package modules.at.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import utils.Formatter;
 
@@ -10,18 +12,16 @@ public class Trade {
 	public enum Type {
 		Long, Sell, 
 		Short, CoverShort, 
-		CutLoss, 
+		LockProfit, CutLoss, 
 		WrapUp  
 	}
-	int id;
-	double price;
-	int qty;
-	long dateTime;
-	Type type;
+	private int id;
+	private double price;
+	private int qty;
+	private long dateTime;
+	private Type type;
 	
-	
-
-	
+	private List<String> reasonList = new ArrayList<String>();//reasons about this trade
 	
 	public Trade(double price, int qty, long dateTime, Type type) {
 		super();
@@ -30,12 +30,17 @@ public class Trade {
 		this.qty = qty;
 		this.dateTime = dateTime;
 		this.type = type;
-		
 	}
 	
 	@Override
 	public String toString() {
-		return "Trade [id="+id+", type="+type+", price=" + price + ", qty=" + qty + ", dateTime=" + Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(dateTime)) + "]";
+		return "Trade [id="+id+", " +
+				"type="+type+", " +
+				"price=" + price + ", " +
+				"qty=" + qty + ", " +
+				"dateTime=" + Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(dateTime))+", "+
+				"reasons: " + listReasons() +
+				"]";
 	}
 	public int getId() {
 		return id;
@@ -66,5 +71,16 @@ public class Trade {
 	}
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public String listReasons(){
+		StringBuilder sb = new StringBuilder();
+		for(String reason : reasonList) {
+			sb.append(reason+",");
+		}
+		return sb.toString();
+	}
+	public void addReason(String reason) {
+		this.reasonList.add(reason);
 	}
 }

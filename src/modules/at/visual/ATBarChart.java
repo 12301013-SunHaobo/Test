@@ -16,7 +16,7 @@ import java.util.Set;
 
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicator;
+import modules.at.formula.Indicators;
 import modules.at.model.Bar;
 import modules.at.model.Point;
 import modules.at.model.Point.Type;
@@ -209,15 +209,15 @@ public class ATBarChart extends ApplicationFrame {
 		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
 		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
 		XYSeries bbLowerSeries = new XYSeries("BB Lower Line");
-		Indicator indicator = new Indicator(14);
+		Indicators indicator = new Indicators();
 
 		for(Bar bar : this.barList){
 			indicator.addValue(bar.getClose());
 			
-			if(Double.NaN != indicator.getBBUpper()
-					&& Double.NaN != indicator.getBBLower()
-					&& Double.NaN != indicator.getSMAFast()){
-			
+			if(!Double.isNaN(indicator.getBBUpper())
+					&& !Double.isNaN(indicator.getBBLower())
+					&& !Double.isNaN(indicator.getSMAFast())){
+				
 				bbUpperSeries.add(bar.getDate().getTime(), indicator.getBBUpper());
 				bbMiddleSeries.add(bar.getDate().getTime(), indicator.getSMAFast());
 				bbLowerSeries.add(bar.getDate().getTime(), indicator.getBBLower());
@@ -238,12 +238,12 @@ public class ATBarChart extends ApplicationFrame {
 		XYSeries rsiEmaUpperSeries = new XYSeries("RSI_EMA_UPPER");
 		XYSeries rsiEmaSeries = new XYSeries("RSI_EMA");
 		XYSeries rsiEmaLowerSeries = new XYSeries("RSI_EMA_LOWER");
-		Indicator indicator = new Indicator(14);
+		Indicators indicator = new Indicators();
 
 		for(Bar bar : this.barList){
 			indicator.addValue(bar.getClose());
 			
-			if(Double.NaN != indicator.getRsi()){
+			if(!Double.isNaN(indicator.getRsi())){
 				rsiEmaUpperSeries.add(bar.getDate().getTime(), 70D);
 				rsiEmaSeries.add(bar.getDate().getTime(), indicator.getRsi());
 				rsiEmaLowerSeries.add(bar.getDate().getTime(), 30D);

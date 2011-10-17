@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modules.at.analyze.TestAuto;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicator;
+import modules.at.formula.Indicators;
+import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
@@ -36,18 +36,12 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import utils.Formatter;
+
 public class BarChartBase extends ApplicationFrame {
 
-	//change begin
-	static String STOCK_CODE = "qqq";
-	static String DATE_STR = "20110923";
-	static String TIME_STR = "223948";
-	
-	public static double RSI_UPPER = TestAuto.rsiUpper; //70;//to pass in
-	public static double RSI_LOWER = TestAuto.rsiLower; //30;//to pass in
-	//change end
-
 	private String stockCode;
+	private String dateStr;
 	private String tickFileName;
 
 	private static final long serialVersionUID = 1L;
@@ -59,6 +53,7 @@ public class BarChartBase extends ApplicationFrame {
 		super(stockCode+":"+dateStr + "-" + timeStr+".txt");
 
 		this.stockCode = stockCode;
+		this.dateStr = dateStr;
 		this.tickFileName = dateStr + "-" + timeStr+".txt";
 		//init barList
 		this.barList = getBarList();
@@ -71,9 +66,13 @@ public class BarChartBase extends ApplicationFrame {
 		setContentPane(chartpanel);
 	}
 
+	//Test BarCahrtBase.java
 	public static void main(String args[]) {
+		String stockCode = "qqq";
+		String dateStr = "20110923";
+		String timeStr = "223948";
 		List<Trade> tradeList = new ArrayList<Trade>();
-		BarChartBase barchartBase = new BarChartBase(STOCK_CODE,DATE_STR, TIME_STR, tradeList);
+		BarChartBase barchartBase = new BarChartBase(stockCode,dateStr, timeStr, tradeList);
 		barchartBase.pack();
 		RefineryUtilities.centerFrameOnScreen(barchartBase);
 		barchartBase.setVisible(true);
@@ -108,7 +107,7 @@ public class BarChartBase extends ApplicationFrame {
 			xyplot.addAnnotation(anno);
 		}
 		//BB indicator
-		XYDataset bbDataset = createUpperIndicatorXYDataset();
+		XYDataset bbDataset = createBBIndicatorXYDataset();
 		xyplot.setDataset(1, bbDataset);
 		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
 		xyItemRenderer.setSeriesPaint(0, Color.blue);//bb upper band
@@ -154,7 +153,7 @@ public class BarChartBase extends ApplicationFrame {
 		List<Bar> barList = new ArrayList<Bar>();
 		try {
 			// change begin -> for new date
-			String nazTickOutputDateStr = DATE_STR;// change for new date
+			String nazTickOutputDateStr = this.dateStr;// change for new date
 			List<Tick> tickList = HistoryLoader.getNazHistTicks(this.stockCode, this.tickFileName, nazTickOutputDateStr); 
 			// change end -> for new date
 			barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
@@ -188,22 +187,22 @@ public class BarChartBase extends ApplicationFrame {
 	}
 	
 	//create BB dataset
-	private XYDataset createUpperIndicatorXYDataset() {
+	private XYDataset createBBIndicatorXYDataset() {
 		
 		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
 		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
 		XYSeries bbLowerSeries = new XYSeries("BB Lower Line");
-		Indicator indicator = new Indicator(14);
+		Indicators indicator = new Indicators();
 
 		for(Bar bar : this.barList){
 			indicator.addValue(bar.getClose());
 			
-			if(Double.NaN != indicator.getBBUpper()
-					&& Double.NaN != indicator.getBBLower()
-					&& Double.NaN != indicator.getSMAFast()){
+			if(!Double.isNaN(indicator.getBBUpper())
+					&& !Double.isNaN(indicator.getBBLower())
+					&& !Double.isNaN(indicator.getSMAFast())){
 			
 				bbUpperSeries.add(bar.getDate().getTime(), indicator.getBBUpper());
-				bbMiddleSeries.add(bar.getDate().getTime(), indicator.getSMAFast());
+				bbMiddleSeries.add(bar.getDate().getTime(), indicator.getBBMiddle());
 				bbLowerSeries.add(bar.getDate().getTime(), indicator.getBBLower());
 			}
 		}
@@ -222,15 +221,15 @@ public class BarChartBase extends ApplicationFrame {
 		XYSeries rsiEmaUpperSeries = new XYSeries("RSI_EMA_UPPER");
 		XYSeries rsiEmaSeries = new XYSeries("RSI_EMA");
 		XYSeries rsiEmaLowerSeries = new XYSeries("RSI_EMA_LOWER");
-		Indicator indicator = new Indicator(14);
+		Indicators indicator = new Indicators();
 
 		for(Bar bar : this.barList){
 			indicator.addValue(bar.getClose());
 			
-			if(Double.NaN != indicator.getRsi()){
-				rsiEmaUpperSeries.add(bar.getDate().getTime(), RSI_UPPER);
+			if(!Double.isNaN(indicator.getRsi())){
+				rsiEmaUpperSeries.add(bar.getDate().getTime(), AlgoSetting.RSI_UPPER);
 				rsiEmaSeries.add(bar.getDate().getTime(), indicator.getRsi());
-				rsiEmaLowerSeries.add(bar.getDate().getTime(), RSI_LOWER);
+				rsiEmaLowerSeries.add(bar.getDate().getTime(), AlgoSetting.RSI_LOWER);
 			}
 		}
 		

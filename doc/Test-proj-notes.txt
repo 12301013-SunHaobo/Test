@@ -11,6 +11,11 @@
 4. ATBarChartBase.java
    show candlestick chart, with ERSI
 
+5. BarCharBase.java
+	draw bar chart, with injected annotations
+	
+6. Indicators.java
+	includes all indicators under formula	
 
 -----------------
 -- IB

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicator;
+import modules.at.formula.Indicators;
 import modules.at.model.Bar;
 import utils.Formatter;
 import utils.TimeUtil;
@@ -34,7 +34,7 @@ public class TestSMA {
         MASelfImpl ma = new MASelfImpl(13);
         for(Bar bar : barList){
         	ma.addPrice(bar.getClose());
-        	System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
+        	System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(ma.getValue()));
         	
         }
     	
@@ -44,7 +44,7 @@ public class TestSMA {
     private static void testDailyMAByMathLib() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
     	int length = 14;
-    	Indicator indicator = new Indicator(length);
+    	Indicators indicator = new Indicators();
         for(Bar bar : barList){
         	indicator.addValue(bar.getClose());
         	System.out.println(bar+" SMA("+length+")="+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast()));
@@ -66,7 +66,7 @@ public class TestSMA {
         for(Bar bar : barList){
         	ma.addPrice(bar.getClose());
         	//System.out.println(bar+","+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
-        	System.out.println(bar.getId()+","+Formatter.DECIMAL_FORMAT.format(ma.getAvg()));
+        	System.out.println(bar.getId()+","+Formatter.DECIMAL_FORMAT.format(ma.getValue()));
         	
         }
     	

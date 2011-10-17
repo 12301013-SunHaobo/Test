@@ -10,7 +10,7 @@ import modules.at.formula.ma.EMASelfImpl;
  * @author r
  *
  */
-public class RsiEmaSelfImpl {
+public class RsiEmaSelfImpl implements Rsi{
     private int length;
     private final Queue<GL> rsiQ = new LinkedList<GL>(); // store recent 13 GL
 

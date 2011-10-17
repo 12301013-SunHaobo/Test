@@ -3,30 +3,30 @@ package modules.at.analyze;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.ui.RefineryUtilities;
-
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicator;
+import modules.at.formula.Indicators;
+import modules.at.formula.IndicatorsRule;
 import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.visual.BarChartBase;
+
+import org.jfree.ui.RefineryUtilities;
+
 import utils.Formatter;
 
 public class TestAuto {
 
 	// change begin
 	static String STOCK_CODE = "qqq";
-	static String DATE_STR = "20110923";
-	static String TIME_STR = "223948";
-	static String TICK_FILENAME = DATE_STR + "-" + "223948" + ".txt";
+	static String DATE_STR = "20111014";//"20110923";
+	static String TIME_STR = "200153";//"223948";
+	static String TICK_FILENAME = DATE_STR + "-" + TIME_STR + ".txt";
 	// change end
 
-	static int length = 14;
-	public static double rsiUpper = 70;
-	public static double rsiLower = 30;
+	
 	/**
 	 * @param args
 	 * @throws Exception
@@ -40,8 +40,8 @@ public class TestAuto {
 		barchartBase.setVisible(true);
 	}
 
-	static Position position = new Position(); //qty
-	static double CUT_LOSS = - 0.05; //absolute loss, not %
+	static final double CUT_LOSS = - 0.05; //absolute loss, not %
+	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
 	private static List<Trade> auto() throws Exception {
 		String nazTickOutputDateStr = DATE_STR;// change for new date
@@ -49,16 +49,16 @@ public class TestAuto {
 		// change end -> for new date
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
-		Indicator indicator = new Indicator(14);
+		Indicators indicators = new Indicators();
 		
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
-			indicator.addValue(bar.getClose());
-			double rsi = indicator.getRsi();
+			indicators.addValue(bar.getClose());//update indicators
+			
 			double price = bar.getClose();
 			long time = bar.getDate().getTime();
 			
-			Trade trade = decide(rsi, price, time, position);
+			Trade trade = decide(indicators, price, time);
 			if(trade != null){
 				tradeList.add(trade);
 			}
@@ -66,6 +66,7 @@ public class TestAuto {
 		printTrades(tradeList);
 		return tradeList;
 	}
+
 
 	
 	/**
@@ -79,7 +80,8 @@ public class TestAuto {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Trade decide(double rsi, double price, long time, Position position) throws Exception{
+	private static Trade decide(Indicators indicators, double price, long time) throws Exception{
+		Position position = Position.getInstance();
 		int pQty = position.getQty();
 		Trade trade = null;
 		TradeTimeLot tradeLot = getTradeLot(time);
@@ -87,10 +89,26 @@ public class TestAuto {
 			case PreTrade :
 				break;
 			case InTrade :
-				//cut loss checking, including short|long
+				//lock profit & cut loss checking, including short|long
 				if(pQty!=0){
-					//double profitPer = (price-position.getPrice())*(pQty>0?1:-1)/position.getPrice();
 					double tmpPnL = (price - position.getPrice())*pQty;
+					
+					//lock profit checking
+					if(!Double.isNaN(LOCK_PROFIT)){
+						if(tmpPnL < LOCK_PROFIT){
+							trade = new Trade(price, -1 * pQty, time, Trade.Type.LockProfit);
+							position.setPosition(0, price);
+							LOCK_PROFIT = Double.NaN;
+							break;
+						} else {//increase LOCK_PROFIT
+							LOCK_PROFIT = Math.max(LOCK_PROFIT, tmpPnL+CUT_LOSS);
+						}
+					} else {
+						if(tmpPnL > 0){
+							LOCK_PROFIT = Math.max(0, tmpPnL+CUT_LOSS);
+						}
+					}
+					//cut loss checking
 					if(tmpPnL < CUT_LOSS){
 						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
 						position.setPosition(0, price);
@@ -100,7 +118,7 @@ public class TestAuto {
 				}
 				
 				
-				if(rsi>rsiUpper){
+				if(Rule.Trend.Down.equals(IndicatorsRule.predict(indicators))){
 					if (pQty == 0){//short
 						trade = new Trade(price, -1, time, Trade.Type.Short);
 						position.setPosition(pQty - 1, price);
@@ -110,7 +128,7 @@ public class TestAuto {
 					} else {//pQty<0?
 						//keep short position
 					}
-				} else if(rsi<rsiLower) {
+				} else if(Rule.Trend.Up.equals(IndicatorsRule.predict(indicators))) {
 					if (pQty == 0){//long
 						trade = new Trade(price, 1, time, Trade.Type.Long);
 						position.setPosition(pQty + 1, price);

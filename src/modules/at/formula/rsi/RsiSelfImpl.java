@@ -3,7 +3,7 @@ package modules.at.formula.rsi;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class RsiSelfImpl {
+public class RsiSelfImpl implements Rsi{
     private int length;
     private final Queue<GL> rQ = new LinkedList<GL>(); // store recent 13 GL
 
@@ -32,7 +32,7 @@ public class RsiSelfImpl {
         }
     }
 
-    public double calculate() {
+    public double getValue() {
         if(rQ.size()<length){
             return -1;
         }

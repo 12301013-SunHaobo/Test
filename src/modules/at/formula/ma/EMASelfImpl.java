@@ -6,7 +6,7 @@ package modules.at.formula.ma;
  * @author r
  *
  */
-public class EMASelfImpl {
+public class EMASelfImpl implements MA{
 	private final int length; // how many bars to calculate
 	private double preEma = Double.NaN;
 	private double curEma = Double.NaN;       
@@ -15,9 +15,9 @@ public class EMASelfImpl {
 	
 	private int barCounter = 0;
 	
-	public EMASelfImpl(int period) {
-		assert period > 0 : "Period must be a positive integer";
-		this.length = period;
+	public EMASelfImpl(int length) {
+		assert length > 0 : "Period must be a positive integer";
+		this.length = length;
 	}
 
 	public void addPrice(double price) {

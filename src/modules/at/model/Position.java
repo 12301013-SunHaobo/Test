@@ -1,18 +1,28 @@
 package modules.at.model;
 
+/**
+ * Singleton Position class
+ * 
+ *
+ */
 public class Position {
+	
+	private static Position instance;
+	
 	int qty;
 	double price;
 
-	public Position() {
+	private Position() {
 		super();
 		this.qty = 0;
 		this.price = 0;
 	}
-	public Position(int qty, double price) {
-		super();
-		this.qty = qty;
-		this.price = price;
+
+	public static synchronized Position getInstance(){
+		if(instance == null){
+			instance = new Position();
+		}
+		return instance;
 	}
 	
 	public void setPosition(int qty, double price){
