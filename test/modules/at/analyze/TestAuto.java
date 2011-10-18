@@ -7,6 +7,7 @@ import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
 import modules.at.formula.IndicatorsRule;
+import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
@@ -15,40 +16,55 @@ import modules.at.visual.BarChartBase;
 
 import org.jfree.ui.RefineryUtilities;
 
+import utils.FileUtil;
 import utils.Formatter;
+import utils.GlobalSetting;
 
 public class TestAuto {
 
-	// change begin
-	static String STOCK_CODE = "qqq";
-	static String DATE_STR = "20111014";//"20110923";
-	static String TIME_STR = "200153";//"223948";
-	static String TICK_FILENAME = DATE_STR + "-" + TIME_STR + ".txt";
-	// change end
 
+	
+	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
+	
 	
 	/**
 	 * @param args
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		List<Trade> tradeList = auto();
+		testOneDay();
+		//testAllDays();
+	}
+
+	private static void testOneDay() throws Exception{
+		String stockCode = "qqq";//qqq, tna, tza 
+		String[] dateTimeArr = new String[] {"20111014", "200153"};
 		
-		BarChartBase barchartBase = new BarChartBase(STOCK_CODE,DATE_STR, TIME_STR, tradeList);
+		List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
+		System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
+		printTrades(tradeList);
+		
+		BarChartBase barchartBase = new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
 		barchartBase.pack();
 		RefineryUtilities.centerFrameOnScreen(barchartBase);
 		barchartBase.setVisible(true);
 	}
-
-	static final double CUT_LOSS = - 0.05; //absolute loss, not %
-	static final double PROFIT_LOSS = - 0.05; //absolute loss from previous profit  
 	
-	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
+	private static void testAllDays() throws Exception{
+		String stockCode = "tza";//qqq, tna, tza 
+		List<String[]> dateTimeArrList = getInputParams(stockCode);
+		
+		for(String[] dateTimeArr : dateTimeArrList){
+			List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
+			System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
+			printTrades(tradeList);
+			//break;
+		}
+	}
 	
-	private static List<Trade> auto() throws Exception {
-		String nazTickOutputDateStr = DATE_STR;// change for new date
-		List<Tick> tickList = HistoryLoader.getNazHistTicks(STOCK_CODE, TICK_FILENAME, nazTickOutputDateStr);
-		// change end -> for new date
+	private static List<Trade> auto(String stockCode, String dateStr, String timeStr) throws Exception {
+		String tickFileName = dateStr + "-" + timeStr + ".txt";
+		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateStr);
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
 		Indicators indicators = new Indicators();
@@ -60,12 +76,11 @@ public class TestAuto {
 			double price = bar.getClose();
 			long time = bar.getDate().getTime();
 			
-			Trade trade = decide(indicators, price, time);
+			Trade trade = decide(indicators, price, time, dateStr);
 			if(trade != null){
 				tradeList.add(trade);
 			}
 		}
-		printTrades(tradeList);
 		return tradeList;
 	}
 
@@ -82,18 +97,19 @@ public class TestAuto {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Trade decide(Indicators indicators, double price, long time) throws Exception{
+	private static Trade decide(Indicators indicators, double price, long time, String dateStr) throws Exception{
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
+		double tmpPnL = (price - position.getPrice())*pQty;
+
 		Trade trade = null;
-		TradeTimeLot tradeLot = getTradeLot(time);
+		TradeTimeLot tradeLot = getTradeLot(time, dateStr);
 		switch (tradeLot){
 			case PreTrade :
 				break;
 			case InTrade :
 				//lock profit & cut loss checking, including short|long
 				if(pQty!=0){
-					double tmpPnL = (price - position.getPrice())*pQty;
 					
 					//lock profit checking
 					if(!Double.isNaN(LOCK_PROFIT)){
@@ -103,18 +119,17 @@ public class TestAuto {
 							LOCK_PROFIT = Double.NaN;
 							break;
 						} else {//increase LOCK_PROFIT
-							LOCK_PROFIT = Math.max(LOCK_PROFIT, tmpPnL+PROFIT_LOSS);
+							LOCK_PROFIT = Math.max(LOCK_PROFIT, tmpPnL+AlgoSetting.PROFIT_LOSS);
 						}
 					} else {
 						if(tmpPnL > 0){
-							LOCK_PROFIT = Math.max(0, tmpPnL+PROFIT_LOSS);
+							LOCK_PROFIT = Math.max(0, tmpPnL+AlgoSetting.PROFIT_LOSS);
 						}
 					}
 					//cut loss checking
-					if(tmpPnL < CUT_LOSS){
+					if(tmpPnL < AlgoSetting.CUT_LOSS){
 						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
 						position.setPosition(0, price);
-						System.out.println(trade+":"+tmpPnL);
 						break;
 					}
 				}
@@ -153,6 +168,9 @@ public class TestAuto {
 			default: 
 				break;
 		}
+		if(trade!=null && trade.getId()%2==0){
+			trade.setPnl(tmpPnL);
+		}
 		return trade;
 	}
 	
@@ -163,11 +181,11 @@ public class TestAuto {
 	enum TradeTimeLot {
 		PreTrade, InTrade, WrapUp, AfterTrade
 	}
-	private static TradeTimeLot getTradeLot(long time) throws Exception{
+	private static TradeTimeLot getTradeLot(long time, String dateStr) throws Exception{
 
-		long inTradeBegin = Formatter.DEFAULT_DATETIME_FORMAT.parse(DATE_STR+"-09:45:00").getTime();
-		long inTradeEnd = Formatter.DEFAULT_DATETIME_FORMAT.parse(DATE_STR+"-15:45:00").getTime();
-		long marketClose = Formatter.DEFAULT_DATETIME_FORMAT.parse(DATE_STR+"-16:00:00").getTime();
+		long inTradeBegin = Formatter.DEFAULT_DATETIME_FORMAT.parse(dateStr+"-09:45:00").getTime();
+		long inTradeEnd = Formatter.DEFAULT_DATETIME_FORMAT.parse(dateStr+"-15:45:00").getTime();
+		long marketClose = Formatter.DEFAULT_DATETIME_FORMAT.parse(dateStr+"-16:00:00").getTime();
 		
 		if(time<inTradeBegin){
 			return TradeTimeLot.PreTrade;
@@ -184,10 +202,22 @@ public class TestAuto {
 	private static void printTrades(List<Trade> tradeList){
 		double pnL = 0;
 		for(Trade trade : tradeList){
-			System.out.println(trade);
-			pnL = pnL + (trade.getPrice() * trade.getQty());
+			//System.out.println(trade);
+			pnL = pnL + (trade.getPrice() * trade.getQty()*(-1));
 		}
-		System.out.println("Total pnL : "+pnL);
+		System.out.println("Total pnL : "+Formatter.DECIMAL_FORMAT.format(pnL));
+	}
+	
+	//return List of array like: {20111014,200153}
+	private static List<String[]> getInputParams(String stockCode){
+		List<String[]> inputParams = new ArrayList<String[]>();
+		String dir = GlobalSetting.TEST_HOME+"/data/naz/tick/output/"+stockCode;
+		List<String> fileNames = FileUtil.getAllFileNames(dir);
+		for(String fileName : fileNames) {
+			String[] dateTimeArr = fileName.split("-|\\.|txt");
+			inputParams.add(dateTimeArr);
+		}
+		return inputParams;
 	}
 
 }

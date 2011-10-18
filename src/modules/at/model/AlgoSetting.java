@@ -14,6 +14,7 @@ public class AlgoSetting {
 	public static final int MA_FAST_LENGTH = 5;
 	public static final int MA_SLOW_LENGTH = 13;
 	
-	
-	
+	//Cut loss & lock profit
+	public static final double CUT_LOSS = - 0.05; //absolute price loss, not %
+	public static final double PROFIT_LOSS = - 0.05; //absolute price loss from previous profit  	
 }

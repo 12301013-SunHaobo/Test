@@ -21,6 +21,8 @@ public class Trade {
 	private long dateTime;
 	private Type type;
 	
+	private double pnl = Double.NaN;
+	
 	private List<String> reasonList = new ArrayList<String>();//reasons about this trade
 	
 	public Trade(double price, int qty, long dateTime, Type type) {
@@ -40,6 +42,7 @@ public class Trade {
 				"qty=" + qty + ", " +
 				"dateTime=" + Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(dateTime))+", "+
 				"reasons: " + listReasons() +
+				(Double.isNaN(pnl)?"":Formatter.DECIMAL_FORMAT.format(pnl))+
 				"]";
 	}
 	public int getId() {
@@ -71,6 +74,14 @@ public class Trade {
 	}
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public double getPnl() {
+		return pnl;
+	}
+
+	public void setPnl(double pnl) {
+		this.pnl = pnl;
 	}
 
 	public String listReasons(){

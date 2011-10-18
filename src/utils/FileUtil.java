@@ -109,4 +109,15 @@ public class FileUtil {
 			destFolder.mkdirs();
 		}
 	}
+	
+	public static List<String> getAllFileNames(String dir){
+		List<String> fileNames = new ArrayList<String>();
+		File dirFolder = new File(dir);
+		if(dirFolder.exists()){
+			for(File file : dirFolder.listFiles()) {
+				fileNames.add(file.getName());
+			}
+		}
+		return fileNames;
+	}
 }
