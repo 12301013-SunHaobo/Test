@@ -7,6 +7,18 @@ public class IndicatorsRule {
 
 	//predict direction in near future
 	public static Rule.Trend predict(Indicators indicators){
+		
+		return rsiSimpleUpperLowerBand(indicators);
+	}
+	
+	
+	private static Rule.Trend maSimpleCross(Indicators indicators){
+		//TODO: implement ma cross
+		return null;
+	}
+	
+	
+	private static Rule.Trend rsiSimpleUpperLowerBand(Indicators indicators){
 		double rsi = indicators.getRsi();
 
 		//all indicators must be valid numbers
@@ -21,4 +33,7 @@ public class IndicatorsRule {
 		
 		return Rule.Trend.NA;
 	}
+	
+	
+	
 }
