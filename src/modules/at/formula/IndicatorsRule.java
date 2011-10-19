@@ -17,17 +17,19 @@ public class IndicatorsRule {
     //predict direction in near future
 	public Pattern.Trend predictTrend(){
 		
+		Pattern.Trend trend = Pattern.Trend.NA;
 		int weightedTrend = 0;
 		for(Pattern pattern : this.patternList) {
 			weightedTrend = weightedTrend + pattern.getWeightedTrend();
 		}
 		
 		if(weightedTrend > 0){
-			return Pattern.Trend.Up;
+			trend = Pattern.Trend.Up;
 		} else if(weightedTrend < 0) {
-			return Pattern.Trend.Down;
+			trend = Pattern.Trend.Down;
 		}
-		return Pattern.Trend.NA;
+		System.out.println("trend:"+trend);
+		return trend;
 	}
 
 	public void setPatternList(List<Pattern> patternList) {
