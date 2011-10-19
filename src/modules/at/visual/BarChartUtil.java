@@ -44,7 +44,7 @@ public class BarChartUtil {
 		
 		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
 				//""+trade.getPrice(),
-				trade.getId()+":"+trade.getType().toString()+" "+trade.getPrice(),
+				trade.getId()+":"+trade.getType().toString()+" "+trade.getPrice()+"X"+trade.getQty(),
 				//Formatter.DEFAULT_TIME_FORMAT.format(trade.getDateTime()),
 				trade.getDateTime(), trade.getPrice(), angle);
 		xypointerannotation.setTextAnchor(TextAnchor.BOTTOM_LEFT);
