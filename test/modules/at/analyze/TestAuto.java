@@ -1,6 +1,7 @@
 package modules.at.analyze;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import modules.at.feed.convert.TickToBarConverter;
@@ -14,7 +15,6 @@ import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternMA;
-import modules.at.pattern.PatternRsi;
 import modules.at.visual.BarChartBase;
 
 import org.jfree.ui.RefineryUtilities;
@@ -87,7 +87,6 @@ public class TestAuto {
 		for (Bar bar : barList) {
 			indicators.addValue(bar.getClose());//update indicators 
 			System.out.println("time="+Formatter.DEFAULT_DATETIME_FORMAT.format(bar.getDate())+", price="+Formatter.DECIMAL_FORMAT.format(bar.getClose()));
-			
 			double price = bar.getClose();
 			long time = bar.getDate().getTime();
 			
@@ -95,6 +94,7 @@ public class TestAuto {
 			if(trade != null){
 				tradeList.add(trade);
 			}
+			System.out.println("-------------------------------------------");
 		}
 		return tradeList;
 	}
@@ -113,6 +113,11 @@ public class TestAuto {
 	 * @throws Exception
 	 */
 	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
+		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
+		if("20111018-10:03:59".equals(tmpTimeStr)){
+			System.out.println();
+		}
+		
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
 		double tmpPnL = (price - position.getPrice())*pQty;
@@ -149,24 +154,18 @@ public class TestAuto {
 					}
 				}
 				
-				
-				if(Pattern.Trend.Down.equals(indicatorsRule.predictTrend())){
-					if (pQty == 0){//short
-						trade = new Trade(price, -1, time, Trade.Type.Short);
-						position.setPosition(pQty - 1, price);
-					} else if(pQty>0){//sell
-						trade = new Trade(price, -1, time, Trade.Type.Sell);
-						position.setPosition(pQty - 1, price);
+				Pattern.Trend trend = indicatorsRule.predictTrend();
+				if(Pattern.Trend.Down.equals(trend)){
+					if (pQty >= 0){//short
+						trade = new Trade(price, (-1*pQty)-1, time, Trade.Type.Short);
+						position.setPosition(pQty+(-1*pQty)-1, price);
 					} else {//pQty<0?
 						//keep short position
 					}
-				} else if(Pattern.Trend.Up.equals(indicatorsRule.predictTrend())) {
-					if (pQty == 0){//long
-						trade = new Trade(price, 1, time, Trade.Type.Long);
-						position.setPosition(pQty + 1, price);
-					} else if(pQty <0){//cover short
-						trade = new Trade(price, 1, time, Trade.Type.CoverShort);
-						position.setPosition(pQty + 1, price);
+				} else if(Pattern.Trend.Up.equals(trend)) {
+					if (pQty <= 0){//long
+						trade = new Trade(price, (-1*pQty)+1, time, Trade.Type.Long);
+						position.setPosition(pQty + (-1*pQty)+1, price);
 					} else{//pQty>0?
 						//keep long position
 					}
@@ -183,7 +182,7 @@ public class TestAuto {
 			default: 
 				break;
 		}
-		if(trade!=null && trade.getId()%2==0){
+		if(trade!=null){
 			trade.setPnl(tmpPnL);
 		}
 		return trade;
