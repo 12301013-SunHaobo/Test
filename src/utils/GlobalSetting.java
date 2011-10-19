@@ -32,6 +32,14 @@ public class GlobalSetting {
 			return null;
 		}
 	}
+	
+	public static boolean isAtHome(){
+		if ("r".equals(System.getProperty("user.name", "not set"))) {
+			return true;
+		} 
+		return false;
+		
+	}
 
 	public static void main(String args[]) {
 		System.out.println(TEST_HOME);
