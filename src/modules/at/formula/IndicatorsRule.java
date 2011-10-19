@@ -2,18 +2,27 @@ package modules.at.formula;
 
 import modules.at.analyze.Rule;
 import modules.at.model.AlgoSetting;
+import modules.at.pattern.PatternMA;
 
 public class IndicatorsRule {
 
-	//predict direction in near future
+    private PatternMA patternMA;
+    
+	public IndicatorsRule(PatternMA patternMA) {
+        super();
+        this.patternMA = patternMA;
+    }
+
+
+    //predict direction in near future
 	public static Rule.Trend predict(Indicators indicators){
 		
 		return rsiSimpleUpperLowerBand(indicators);
 	}
 	
 	
-	private static Rule.Trend maSimpleCross(Indicators indicators){
-		//TODO: implement ma cross
+	private static Rule.Trend maSimpleCross(PatternMA patternMA){
+		
 		return null;
 	}
 	

@@ -1,5 +1,7 @@
 package modules.at.formula;
 
+import java.util.Observable;
+
 import modules.at.formula.rsi.RsiEmaSelfImpl;
 import modules.at.model.AlgoSetting;
 
@@ -13,14 +15,14 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
  * @author r
  *
  */
-public class Indicators {
+public class Indicators extends Observable {
 
 	private DescriptiveStatistics ds4MAFast;//for MA fast
 	private DescriptiveStatistics ds4MASlow;//for MA slow
 	private DescriptiveStatistics ds4BB;//DescriptiveStatistics for BB
 	private RsiEmaSelfImpl rsi;
 	
-	//for internal calculation only
+	//for internal calculation only, tracks how many bars are added
 	private int barAdded = 0;
 	
 	public Indicators() {
@@ -37,6 +39,9 @@ public class Indicators {
 		this.ds4MASlow.addValue(price);
 		this.ds4BB.addValue(price);
 		this.rsi.addPrice(price);
+		//notify observers
+        setChanged();
+        notifyObservers();
 	}
 	
 	//MA
@@ -81,8 +86,6 @@ public class Indicators {
 		}
 		return rsi.getValue();
 	}
-	
-
 	
 	//value is not the same as in TOS, but has same direction, same time at high/low
 	public double getStdDev(){

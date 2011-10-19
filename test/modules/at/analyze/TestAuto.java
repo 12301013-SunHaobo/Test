@@ -12,10 +12,7 @@ import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
-import modules.at.visual.BarChartBase;
-
-import org.jfree.ui.RefineryUtilities;
-
+import modules.at.pattern.PatternMA;
 import utils.FileUtil;
 import utils.Formatter;
 import utils.GlobalSetting;
@@ -42,12 +39,14 @@ public class TestAuto {
 		
 		List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
 		System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-		printTrades(tradeList);
+		printTrades(tradeList, false);
 		
+		/*
 		BarChartBase barchartBase = new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
 		barchartBase.pack();
 		RefineryUtilities.centerFrameOnScreen(barchartBase);
 		barchartBase.setVisible(true);
+		*/
 	}
 	
 	private static void testAllDays() throws Exception{
@@ -57,7 +56,7 @@ public class TestAuto {
 		for(String[] dateTimeArr : dateTimeArrList){
 			List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
 			System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-			printTrades(tradeList);
+			printTrades(tradeList, true);
 			//break;
 		}
 	}
@@ -68,6 +67,8 @@ public class TestAuto {
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
 		Indicators indicators = new Indicators();
+		PatternMA patternMA = new PatternMA();
+		indicators.addObserver(patternMA);
 		
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
@@ -199,10 +200,12 @@ public class TestAuto {
 	
 
 	
-	private static void printTrades(List<Trade> tradeList){
+	private static void printTrades(List<Trade> tradeList, boolean printDetail){
 		double pnL = 0;
 		for(Trade trade : tradeList){
-			//System.out.println(trade);
+		    if(printDetail){
+		        System.out.println(trade);
+		    }
 			pnL = pnL + (trade.getPrice() * trade.getQty()*(-1));
 		}
 		System.out.println("Total pnL : "+Formatter.DECIMAL_FORMAT.format(pnL));
