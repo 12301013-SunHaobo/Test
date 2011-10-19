@@ -56,7 +56,7 @@ public class PatternMA extends AbstractPattern{
         this.maSlowList.add(maSlow);;
         preDiff = curDiff;
         curDiff = maFast - maSlow;
-    	System.out.println("preDiff:"+preDiff+", curDiff:"+preDiff);
+    	System.out.println("preDiff:"+preDiff+", curDiff:"+curDiff);
         
     }
 
@@ -66,6 +66,7 @@ public class PatternMA extends AbstractPattern{
 		switch (ct){
 			case FastCrossUp : this.trend = Trend.Up; break;
 			case FastCrossDown : this.trend = Trend.Down; break;
+			case NoCross : this.trend = Trend.NA; break;
 		}
 		return this.trend;
 	}
