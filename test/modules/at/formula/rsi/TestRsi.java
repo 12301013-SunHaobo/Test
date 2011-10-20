@@ -20,7 +20,7 @@ public class TestRsi {
         long b1 = System.currentTimeMillis();
         Rsi rsi = new RsiSelfImpl(14);
         for(Bar bar : barList){
-            rsi.addPrice(bar.getClose());
+            rsi.addValue(bar.getClose());
             System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(rsi.getValue()));
         }
         

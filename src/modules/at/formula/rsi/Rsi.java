@@ -1,6 +1,6 @@
 package modules.at.formula.rsi;
 
 public interface Rsi {
-	public void addPrice(double price);
+	public void addValue(double price);
 	public double getValue();
 }

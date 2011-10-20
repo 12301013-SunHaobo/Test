@@ -46,7 +46,7 @@ public class TestSMA {
     	int length = 14;
     	Indicators indicator = new Indicators();
         for(Bar bar : barList){
-        	indicator.addValue(bar.getClose());
+        	indicator.addBar(bar);
         	System.out.println(bar+" SMA("+length+")="+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast()));
         	
         }

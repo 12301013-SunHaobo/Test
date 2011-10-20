@@ -23,7 +23,7 @@ public class TestRsiEma {
         long b1 = System.currentTimeMillis();
         RsiEmaSelfImpl rsi = new RsiEmaSelfImpl(14);
         for(Bar bar : barList){
-            rsi.addPrice(bar.getClose());
+            rsi.addValue(bar.getClose());
             System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(rsi.getValue()));
         }
         

@@ -14,19 +14,18 @@ public class TestIndicator {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		test1();
+		testBB();
 	}
 	
-	private static void test1() throws Exception{
+	private static void testBB() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
         Indicators indicator = new Indicators();
         for(Bar bar : barList){
-        	indicator.addValue(bar.getClose());
+        	indicator.addBar(bar);
         	//System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(indicator.getVolatilityStdDev()));
         	System.out.println(
         			Formatter.DISPLAY_DEFAULT_DATE_FORMAT.format(bar.getDate())+","+bar.getClose()+","+
         			"SMA("+AlgoSetting.MA_FAST_LENGTH+")="+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast())+","+
-        			"StdDev("+AlgoSetting.BB_LENGTH+")="+Formatter.DECIMAL_FORMAT.format(indicator.getStdDev())+","+
         			"BB("+AlgoSetting.BB_LENGTH+")=("+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast())+","+
         					Formatter.DECIMAL_FORMAT.format(indicator.getBBLower())+","+
         					Formatter.DECIMAL_FORMAT.format(indicator.getBBUpper())+")"

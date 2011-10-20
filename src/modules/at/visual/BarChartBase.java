@@ -42,6 +42,11 @@ public class BarChartBase extends ApplicationFrame {
 	private static final boolean SHOW_MA_FAST = true; 
 	private static final boolean SHOW_MA_SLOW = true;
 	
+	private static final boolean SHOW_RSI = false;
+	
+	private static final boolean SHOW_STO_K = true;
+	private static final boolean SHOW_STO_D = false;
+	
 	private String stockCode;
 	private String dateStr;
 	private String tickFileName;
@@ -157,14 +162,35 @@ public class BarChartBase extends ApplicationFrame {
 	private XYPlot createLowerIndicatorPlot(){
 		ValueAxis timeAxis = new DateAxis("Time");
         NumberAxis valueAxis = new NumberAxis("Value");
-        XYDataset dataset = createLowerRSIEMAIndicatorXYDataset();
+        XYDataset dataset = createRSIEMAIndicatorXYDataset();
         XYPlot xyplot = new XYPlot(dataset, timeAxis, valueAxis, null);
         
-		StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
-		xyItemRenderer.setSeriesPaint(0, Color.blue);//RSI upper band
-		xyItemRenderer.setSeriesPaint(1, Color.gray);//RSI
-		xyItemRenderer.setSeriesPaint(2, Color.blue);//RSI lower band
-		xyplot.setRenderer(xyItemRenderer);
+        int datasetIdx = 0;
+        //RSI indicator
+        if(SHOW_RSI){
+			StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
+			xyItemRenderer.setSeriesPaint(0, Color.blue);//RSI upper band
+			xyItemRenderer.setSeriesPaint(1, Color.gray);//RSI
+			xyItemRenderer.setSeriesPaint(2, Color.blue);//RSI lower band
+			xyplot.setRenderer(xyItemRenderer);
+        }else if(SHOW_STO_K){
+        	datasetIdx++;
+			XYDataset stoDataset = createStoKIndicatorXYDataset();
+			xyplot.setDataset(datasetIdx, stoDataset);
+			StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
+			
+			int seriesIdx = 0;
+			xyItemRenderer.setSeriesPaint(seriesIdx++, Color.blue);//Sto upper band
+			if(SHOW_STO_K){
+				xyItemRenderer.setSeriesPaint(seriesIdx++, Color.red);//Sto K
+			}
+			if(SHOW_STO_D){
+				xyItemRenderer.setSeriesPaint(seriesIdx++, Color.pink);//Sto D
+			}
+			xyItemRenderer.setSeriesPaint(seriesIdx++, Color.blue);//Sto lower band
+			xyplot.setRenderer(datasetIdx, xyItemRenderer);
+        	
+        }
 		
 		xyplot.setDomainCrosshairVisible(true);
 		xyplot.setRangeCrosshairVisible(true);
@@ -237,7 +263,7 @@ public class BarChartBase extends ApplicationFrame {
 
 	
 	//create RSI_EMA dataset
-	private XYDataset createLowerRSIEMAIndicatorXYDataset() {
+	private XYDataset createRSIEMAIndicatorXYDataset() {
 		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
 		xyseriescollection.addSeries(getXYSeries(SeriesType.RsiUpper, barList));
 		xyseriescollection.addSeries(getXYSeries(SeriesType.Rsi, barList));
@@ -245,60 +271,50 @@ public class BarChartBase extends ApplicationFrame {
 		return xyseriescollection;
 	}
 	
+	//create StoK dataset
+	private XYDataset createStoKIndicatorXYDataset() {
+		XYSeriesCollection xyseriescollection = new XYSeriesCollection();
+		xyseriescollection.addSeries(getXYSeries(SeriesType.StoUpper, barList));
+		if(SHOW_STO_K){
+			xyseriescollection.addSeries(getXYSeries(SeriesType.StoK, barList));
+		}
+		if(SHOW_STO_D){
+			xyseriescollection.addSeries(getXYSeries(SeriesType.StoD, barList));
+		}
+		xyseriescollection.addSeries(getXYSeries(SeriesType.StoLower, barList));
+		return xyseriescollection;
+	}
 
 	enum SeriesType {
 		RsiUpper, Rsi, RsiLower,
 		BBUpper, BBMiddle, BBLower,
-		MAFast, MASlow
+		MAFast, MASlow,
+		StoK, StoD, StoUpper, StoLower
 	}
 	private XYSeries getXYSeries(SeriesType seriesType, List<Bar> barList){
 		XYSeries series = new XYSeries(seriesType.toString());
 		Indicators indicator = new Indicators();
 		
 		for(Bar bar : this.barList){
-			indicator.addValue(bar.getClose());
+			indicator.addBar(bar);
+			double indicatorVal = Double.NaN;
 			switch (seriesType) {
-				case RsiUpper:
-					series.add(bar.getDate().getTime(), AlgoSetting.RSI_UPPER);
-					break;
-				case Rsi:
-					if(!Double.isNaN(indicator.getRsi())){
-						series.add(bar.getDate().getTime(), indicator.getRsi());
-					}
-					break;
-				case RsiLower:
-					series.add(bar.getDate().getTime(), AlgoSetting.RSI_LOWER);
-					break;
-	
-				case BBUpper:
-					if(!Double.isNaN(indicator.getBBUpper())){
-						series.add(bar.getDate().getTime(), indicator.getBBUpper());
-					}
-					break;
-				case BBMiddle:
-					if(!Double.isNaN(indicator.getBBMiddle())){
-						series.add(bar.getDate().getTime(), indicator.getBBMiddle());
-					}	
-					break;
-				case BBLower:
-					if(!Double.isNaN(indicator.getBBLower())){
-						series.add(bar.getDate().getTime(), indicator.getBBLower());
-					}
-					break;
-	
-				case MAFast:
-					if(!Double.isNaN(indicator.getSMAFast())){
-						series.add(bar.getDate().getTime(), indicator.getSMAFast());
-					}
-					break;
-				case MASlow:
-					if(!Double.isNaN(indicator.getSMASlow())){
-						series.add(bar.getDate().getTime(), indicator.getSMASlow());
-					}
-					break;
-	
-				default:
-					break;
+				case RsiUpper: indicatorVal = AlgoSetting.RSI_UPPER; break;
+				case Rsi: indicatorVal = indicator.getRsi(); break;
+				case RsiLower: indicatorVal = AlgoSetting.RSI_LOWER; break;
+				case BBUpper: indicatorVal = indicator.getBBUpper(); break;
+				case BBMiddle: indicatorVal = indicator.getBBMiddle(); break;
+				case BBLower: indicatorVal = indicator.getBBLower(); break;
+				case MAFast: indicatorVal = indicator.getSMAFast(); break;
+				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
+				case StoK: indicatorVal = indicator.getStochasticK(); break;
+				case StoD: indicatorVal = indicator.getStochasticD(); break;
+				case StoUpper: indicatorVal = AlgoSetting.STOCHASTIC_UPPER; break;
+				case StoLower: indicatorVal = AlgoSetting.STOCHASTIC_LOWER; break;
+				default:break;
+			}
+			if(!Double.isNaN(indicatorVal)){
+				series.add(bar.getDate().getTime(), indicatorVal);
 			}
 		}
 		return series;

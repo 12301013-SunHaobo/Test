@@ -13,7 +13,7 @@ public class RsiSelfImpl implements Rsi{
         this.length = length;
     }
 
-    public void addPrice(double price) {
+    public void addValue(double price) {
         GL gl = null;
         if (prePrice == -1) {
             gl = new GL(0, 0);

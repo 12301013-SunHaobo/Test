@@ -14,6 +14,12 @@ public class AlgoSetting {
 	public static final int MA_FAST_LENGTH = 5;
 	public static final int MA_SLOW_LENGTH = 13;
 	
+	//Stochastic
+	public static final int STOCHASTIC_K_LENGTH = 10;
+	public static final int STOCHASTIC_D_LENGTH = 3;
+	public static final double STOCHASTIC_UPPER = 80;
+	public static final double STOCHASTIC_LOWER = 20;
+	
 	//Cut loss & lock profit
 	public static final double CUT_LOSS = - 0.05; //absolute price loss, not %
 	public static final double PROFIT_LOSS = - 0.05; //absolute price loss from previous profit  	
@@ -21,4 +27,5 @@ public class AlgoSetting {
 	//Pattern weight
 	public static final int PATTERN_WEIGHT_MA = 1;
 	public static final int PATTERN_WEIGHT_RSI = 1;
+	public static final int PATTERN_WEIGHT_STO = 1;
 }

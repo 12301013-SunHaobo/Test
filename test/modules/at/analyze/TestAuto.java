@@ -14,7 +14,7 @@ import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.pattern.Pattern;
-import modules.at.pattern.PatternMA;
+import modules.at.pattern.PatternSto;
 import modules.at.visual.BarChartBase;
 
 import org.jfree.ui.RefineryUtilities;
@@ -63,8 +63,9 @@ public class TestAuto {
 	
 	private static List<Pattern> getPatternList(){
 		List<Pattern> patternList = new ArrayList<Pattern>();
-		patternList.add(new PatternMA());
+		//patternList.add(new PatternMA());
 		//patternList.add(new PatternRsi());
+		patternList.add(new PatternSto());
 		return patternList;
 		
 	}
@@ -85,7 +86,7 @@ public class TestAuto {
 		
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
-			indicators.addValue(bar.getClose());//update indicators 
+			indicators.addBar(bar);//update indicators 
 			System.out.println("time="+Formatter.DEFAULT_DATETIME_FORMAT.format(bar.getDate())+", price="+Formatter.DECIMAL_FORMAT.format(bar.getClose()));
 			double price = bar.getClose();
 			long time = bar.getDate().getTime();

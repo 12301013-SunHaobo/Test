@@ -27,7 +27,7 @@ public class RsiEmaSelfImpl implements Rsi{
         lossEma = new EMASelfImpl(length);
     }
 
-    public void addPrice(double price) {
+    public void addValue(double price) {
     	//gain, loss
         GL gl = null;
         if (prePrice == -1) {

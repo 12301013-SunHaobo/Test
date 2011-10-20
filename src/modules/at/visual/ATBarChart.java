@@ -212,7 +212,7 @@ public class ATBarChart extends ApplicationFrame {
 		Indicators indicator = new Indicators();
 
 		for(Bar bar : this.barList){
-			indicator.addValue(bar.getClose());
+			indicator.addBar(bar);
 			
 			if(!Double.isNaN(indicator.getBBUpper())
 					&& !Double.isNaN(indicator.getBBLower())
@@ -241,7 +241,7 @@ public class ATBarChart extends ApplicationFrame {
 		Indicators indicator = new Indicators();
 
 		for(Bar bar : this.barList){
-			indicator.addValue(bar.getClose());
+			indicator.addBar(bar);
 			
 			if(!Double.isNaN(indicator.getRsi())){
 				rsiEmaUpperSeries.add(bar.getDate().getTime(), 70D);
