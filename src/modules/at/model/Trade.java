@@ -41,7 +41,7 @@ public class Trade {
 				"price=" + price + ", " +
 				"qty=" + qty + ", " +
 				"dateTime=" + Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(dateTime))+", "+
-				"reasons: " + listReasons() +
+				"reasons: " + listReasons() +", "+
 				(Double.isNaN(pnl)?"":Formatter.DECIMAL_FORMAT.format(pnl))+
 				"]";
 	}

@@ -17,4 +17,8 @@ public class AlgoSetting {
 	//Cut loss & lock profit
 	public static final double CUT_LOSS = - 0.05; //absolute price loss, not %
 	public static final double PROFIT_LOSS = - 0.05; //absolute price loss from previous profit  	
+	
+	//Pattern weight
+	public static final int PATTERN_WEIGHT_MA = 1;
+	public static final int PATTERN_WEIGHT_RSI = 1;
 }

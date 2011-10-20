@@ -1,47 +1,43 @@
 package modules.at.formula;
 
-import modules.at.analyze.Rule;
-import modules.at.model.AlgoSetting;
-import modules.at.pattern.PatternMA;
+import java.util.ArrayList;
+import java.util.List;
+
+import modules.at.pattern.Pattern;
 
 public class IndicatorsRule {
 
-    private PatternMA patternMA;
+    private List<Pattern> patternList;
     
-	public IndicatorsRule(PatternMA patternMA) {
+	public IndicatorsRule() {
         super();
-        this.patternMA = patternMA;
+        this.patternList = new ArrayList<Pattern>();
     }
 
-
     //predict direction in near future
-	public static Rule.Trend predict(Indicators indicators){
+	public Pattern.Trend predictTrend(){
 		
-		return rsiSimpleUpperLowerBand(indicators);
-	}
-	
-	
-	private static Rule.Trend maSimpleCross(PatternMA patternMA){
+		Pattern.Trend trend = Pattern.Trend.NA;
+		int weightedTrend = 0;
+		for(Pattern pattern : this.patternList) {
+			weightedTrend = weightedTrend + pattern.getWeightedTrend();
+		}
 		
-		return null;
+		if(weightedTrend > 0){
+			trend = Pattern.Trend.Up;
+		} else if(weightedTrend < 0) {
+			trend = Pattern.Trend.Down;
+		}
+		System.out.println("trend:"+trend);
+		return trend;
 	}
-	
-	
-	private static Rule.Trend rsiSimpleUpperLowerBand(Indicators indicators){
-		double rsi = indicators.getRsi();
 
-		//all indicators must be valid numbers
-		if(!Double.isNaN(rsi)){
-		
-			if(rsi>AlgoSetting.RSI_UPPER){
-				return Rule.Trend.Down;
-			} else if(rsi<AlgoSetting.RSI_LOWER){
-				return Rule.Trend.Up;
-			}
-		}		
-		
-		return Rule.Trend.NA;
+	public void setPatternList(List<Pattern> patternList) {
+		this.patternList = patternList;
 	}
+	
+	
+
 	
 	
 	

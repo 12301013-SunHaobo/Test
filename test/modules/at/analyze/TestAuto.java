@@ -1,6 +1,7 @@
 package modules.at.analyze;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import modules.at.feed.convert.TickToBarConverter;
@@ -12,22 +13,20 @@ import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
+import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternMA;
+import modules.at.visual.BarChartBase;
+
+import org.jfree.ui.RefineryUtilities;
+
 import utils.FileUtil;
 import utils.Formatter;
 import utils.GlobalSetting;
 
 public class TestAuto {
 
-
-	
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	
-	/**
-	 * @param args
-	 * @throws Exception
-	 */
 	public static void main(String[] args) throws Exception {
 		testOneDay();
 		//testAllDays();
@@ -35,18 +34,19 @@ public class TestAuto {
 
 	private static void testOneDay() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		String[] dateTimeArr = new String[] {"20111014", "200153"};
+		String[] dateTimeArr = new String[] {"20111018", "200248"};
 		
 		List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
-		System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-		printTrades(tradeList, false);
+		System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
+		printTrades(tradeList, true);
 		
-		/*
-		BarChartBase barchartBase = new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
-		barchartBase.pack();
-		RefineryUtilities.centerFrameOnScreen(barchartBase);
-		barchartBase.setVisible(true);
-		*/
+		if(GlobalSetting.isAtHome()){
+			BarChartBase barchartBase = new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
+			barchartBase.pack();
+			RefineryUtilities.centerFrameOnScreen(barchartBase);
+			barchartBase.setVisible(true);
+		}
+		
 	}
 	
 	private static void testAllDays() throws Exception{
@@ -61,26 +61,40 @@ public class TestAuto {
 		}
 	}
 	
+	private static List<Pattern> getPatternList(){
+		List<Pattern> patternList = new ArrayList<Pattern>();
+		patternList.add(new PatternMA());
+		//patternList.add(new PatternRsi());
+		return patternList;
+		
+	}
+	
 	private static List<Trade> auto(String stockCode, String dateStr, String timeStr) throws Exception {
 		String tickFileName = dateStr + "-" + timeStr + ".txt";
 		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateStr);
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
 		Indicators indicators = new Indicators();
-		PatternMA patternMA = new PatternMA();
-		indicators.addObserver(patternMA);
+		List<Pattern> patternList = getPatternList();
+		for(Pattern pattern : patternList){
+			indicators.addObserver(pattern);
+		}
+		IndicatorsRule indicatorsRule = new IndicatorsRule();
+		indicatorsRule.setPatternList(patternList);
+		
 		
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
-			indicators.addValue(bar.getClose());//update indicators
-			
+			indicators.addValue(bar.getClose());//update indicators 
+			System.out.println("time="+Formatter.DEFAULT_DATETIME_FORMAT.format(bar.getDate())+", price="+Formatter.DECIMAL_FORMAT.format(bar.getClose()));
 			double price = bar.getClose();
 			long time = bar.getDate().getTime();
 			
-			Trade trade = decide(indicators, price, time, dateStr);
+			Trade trade = decide(indicatorsRule, price, time, dateStr);
 			if(trade != null){
 				tradeList.add(trade);
 			}
+			System.out.println("-------------------------------------------");
 		}
 		return tradeList;
 	}
@@ -98,7 +112,12 @@ public class TestAuto {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Trade decide(Indicators indicators, double price, long time, String dateStr) throws Exception{
+	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
+		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
+		if("20111018-10:03:59".equals(tmpTimeStr)){
+			System.out.println();
+		}
+		
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
 		double tmpPnL = (price - position.getPrice())*pQty;
@@ -135,24 +154,18 @@ public class TestAuto {
 					}
 				}
 				
-				
-				if(Rule.Trend.Down.equals(IndicatorsRule.predict(indicators))){
-					if (pQty == 0){//short
-						trade = new Trade(price, -1, time, Trade.Type.Short);
-						position.setPosition(pQty - 1, price);
-					} else if(pQty>0){//sell
-						trade = new Trade(price, -1, time, Trade.Type.Sell);
-						position.setPosition(pQty - 1, price);
+				Pattern.Trend trend = indicatorsRule.predictTrend();
+				if(Pattern.Trend.Down.equals(trend)){
+					if (pQty >= 0){//short
+						trade = new Trade(price, (-1*pQty)-1, time, Trade.Type.Short);
+						position.setPosition(pQty+(-1*pQty)-1, price);
 					} else {//pQty<0?
 						//keep short position
 					}
-				} else if(Rule.Trend.Up.equals(IndicatorsRule.predict(indicators))) {
-					if (pQty == 0){//long
-						trade = new Trade(price, 1, time, Trade.Type.Long);
-						position.setPosition(pQty + 1, price);
-					} else if(pQty <0){//cover short
-						trade = new Trade(price, 1, time, Trade.Type.CoverShort);
-						position.setPosition(pQty + 1, price);
+				} else if(Pattern.Trend.Up.equals(trend)) {
+					if (pQty <= 0){//long
+						trade = new Trade(price, (-1*pQty)+1, time, Trade.Type.Long);
+						position.setPosition(pQty + (-1*pQty)+1, price);
 					} else{//pQty>0?
 						//keep long position
 					}
@@ -169,7 +182,7 @@ public class TestAuto {
 			default: 
 				break;
 		}
-		if(trade!=null && trade.getId()%2==0){
+		if(trade!=null){
 			trade.setPnl(tmpPnL);
 		}
 		return trade;

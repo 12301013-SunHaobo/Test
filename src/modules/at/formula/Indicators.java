@@ -39,7 +39,7 @@ public class Indicators extends Observable {
 		this.ds4MASlow.addValue(price);
 		this.ds4BB.addValue(price);
 		this.rsi.addPrice(price);
-		//notify observers
+		//notify observers: PatternMA, PatternRsi ...
         setChanged();
         notifyObservers();
 	}

@@ -3,18 +3,27 @@ package modules.at.pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
+
+import utils.Formatter;
 
 import modules.at.formula.Indicators;
+import modules.at.model.AlgoSetting;
 
-public class PatternMA implements Observer{
-    
+/**
+ * Observes Indicators 
+ *
+ */
+public class PatternMA extends AbstractPattern{
+	
     public static enum CrossType {
         FastCrossUp, FastCrossDown, NoCross
     }
 
+    //diff = maFast - maSlow
     private double preDiff;
     private double curDiff;
+    
+    private Trend trend;
     
     private List<Double> maFastList;
     private List<Double> maSlowList;
@@ -23,6 +32,7 @@ public class PatternMA implements Observer{
         super();
         this.preDiff = Double.NaN;
         this.curDiff = Double.NaN;
+        this.trend = Trend.NA;
         this.maFastList = new ArrayList<Double>();
         this.maSlowList = new ArrayList<Double>();
     }
@@ -46,6 +56,26 @@ public class PatternMA implements Observer{
         this.maSlowList.add(maSlow);;
         preDiff = curDiff;
         curDiff = maFast - maSlow;
+    	System.out.println("preDiff:"+preDiff+", curDiff:"+curDiff);
+        
     }
+
+	@Override
+	public Trend getTrend() {
+		CrossType ct = getCrossType();
+		switch (ct){
+			case FastCrossUp : this.trend = Trend.Up; break;
+			case FastCrossDown : this.trend = Trend.Down; break;
+			case NoCross : this.trend = Trend.NA; break;
+		}
+		return this.trend;
+	}
+
+	@Override
+	public int getWeight() {
+		return AlgoSetting.PATTERN_WEIGHT_MA;
+	}
+
+
     
 }
