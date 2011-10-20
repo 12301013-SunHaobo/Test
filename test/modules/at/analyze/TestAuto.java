@@ -158,15 +158,15 @@ public class TestAuto {
 				Pattern.Trend trend = indicatorsRule.predictTrend();
 				if(Pattern.Trend.Down.equals(trend)){
 					if (pQty >= 0){//short
-						trade = new Trade(price, (-1*pQty)-1, time, Trade.Type.Short);
-						position.setPosition(pQty+(-1*pQty)-1, price);
+						trade = new Trade(price, (-1*pQty)-AlgoSetting.TRADE_UNIT, time, Trade.Type.Short);
+						position.setPosition(pQty+(-1*pQty)-AlgoSetting.TRADE_UNIT, price);
 					} else {//pQty<0?
 						//keep short position
 					}
 				} else if(Pattern.Trend.Up.equals(trend)) {
 					if (pQty <= 0){//long
-						trade = new Trade(price, (-1*pQty)+1, time, Trade.Type.Long);
-						position.setPosition(pQty + (-1*pQty)+1, price);
+						trade = new Trade(price, (-1*pQty)+AlgoSetting.TRADE_UNIT, time, Trade.Type.Long);
+						position.setPosition(pQty + (-1*pQty)+AlgoSetting.TRADE_UNIT, price);
 					} else{//pQty>0?
 						//keep long position
 					}
