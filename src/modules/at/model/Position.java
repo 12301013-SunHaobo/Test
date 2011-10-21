@@ -11,11 +11,15 @@ public class Position {
 	
 	int qty;
 	double price;
+	
+	//absolute cut price relative to price, e.g cutLossTotal = 10, then cut if (curPrice-this.price)*qty< cutLossTotal
+	double cutWinLossTotal;
 
 	private Position() {
 		super();
 		this.qty = 0;
 		this.price = 0;
+		this.cutWinLossTotal = AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL;
 	}
 
 	public static synchronized Position getInstance(){
@@ -42,4 +46,14 @@ public class Position {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
+	public double getCutWinLossTotal() {
+		return cutWinLossTotal;
+	}
+
+	public void setCutWinLossTotal(double cutWinLossTotal) {
+		this.cutWinLossTotal = cutWinLossTotal;
+	}
+
+
 }

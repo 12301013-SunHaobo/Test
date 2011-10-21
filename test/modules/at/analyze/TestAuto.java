@@ -115,7 +115,7 @@ public class TestAuto {
 	 */
 	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
 		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
-		if("20111018-10:03:59".equals(tmpTimeStr)){
+		if("20111018-09:51:58".equals(tmpTimeStr)){
 			System.out.println();
 		}
 		
@@ -132,29 +132,19 @@ public class TestAuto {
 				//lock profit & cut loss checking, including short|long
 				if(pQty!=0){
 					
-					//lock profit checking
-					if(!Double.isNaN(LOCK_PROFIT)){
-						if(tmpPnL < LOCK_PROFIT){
-							trade = new Trade(price, -1 * pQty, time, Trade.Type.LockProfit);
-							position.setPosition(0, price);
-							LOCK_PROFIT = Double.NaN;
-							break;
-						} else {//increase LOCK_PROFIT
-							LOCK_PROFIT = Math.max(LOCK_PROFIT, tmpPnL+AlgoSetting.PROFIT_LOSS);
-						}
-					} else {
-						if(tmpPnL > 0){
-							LOCK_PROFIT = Math.max(0, tmpPnL+AlgoSetting.PROFIT_LOSS);
-						}
-					}
-					//cut loss checking
-					if(tmpPnL < AlgoSetting.CUT_LOSS){
+					//cut win/loss
+					if(tmpPnL < position.getCutWinLossTotal()){
 						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
 						position.setPosition(0, price);
+						position.setCutWinLossTotal(AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 						break;
+					} else {
+						//increase cut win/loss level
+						position.setCutWinLossTotal(tmpPnL+AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 					}
+
 				}
-				
+
 				Pattern.Trend trend = indicatorsRule.predictTrend();
 				if(Pattern.Trend.Down.equals(trend)){
 					if (pQty >= 0){//short

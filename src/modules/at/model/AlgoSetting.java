@@ -3,7 +3,7 @@ package modules.at.model;
 public class AlgoSetting {
 
     //trade unit, how many shares in one trade unit
-    public static final int TRADE_UNIT = 100;
+    public static final int TRADE_UNIT = 1;
 
 	//RSI
 	public static final int RSI_LENGTH = 14;
@@ -24,8 +24,8 @@ public class AlgoSetting {
 	public static final double STOCHASTIC_LOWER = 20;
 	
 	//Cut loss & lock profit
-	public static final double CUT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss, not %
-	public static final double PROFIT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss from previous profit  	
+	public static final double INIT_CUT_WIN_LOSS_TOTAL = - 0.05; //absolute total cut win/loss, priceDiff * Qty 
+	//public static final double PROFIT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss from previous profit  	
 	
 	//Pattern weight
 	public static final int PATTERN_WEIGHT_MA = 1;

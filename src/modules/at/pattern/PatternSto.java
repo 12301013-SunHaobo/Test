@@ -57,7 +57,9 @@ public class PatternSto extends AbstractPattern{
 		CrossType ct = getCrossType();
 		switch (ct){
 			case UpperCrossUp : this.trend = Trend.Up; break;
+			case UpperCrossDown : this.trend = Trend.Down; break;
 			case LowerCrossDown : this.trend = Trend.Down; break;
+			case LowerCrossUp : this.trend = Trend.Up; break;
 			case NoCross : this.trend = Trend.NA; break;
 		}
 		return this.trend;
