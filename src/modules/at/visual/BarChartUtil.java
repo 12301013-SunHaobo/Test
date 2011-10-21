@@ -47,10 +47,10 @@ public class BarChartUtil {
 				trade.getId()+":"+trade.getType().toString()+" "+trade.getPrice()+"X"+trade.getQty(),
 				//Formatter.DEFAULT_TIME_FORMAT.format(trade.getDateTime()),
 				trade.getDateTime(), trade.getPrice(), angle);
-		xypointerannotation.setTextAnchor(TextAnchor.BOTTOM_LEFT);
+		xypointerannotation.setTextAnchor(TextAnchor.CENTER_RIGHT);
 		xypointerannotation.setPaint(paint);
 		xypointerannotation.setArrowPaint(paint);
-		xypointerannotation.setBaseRadius(50);//the distance from point to arrow end
+		xypointerannotation.setBaseRadius(25);//the distance from point to arrow end
 		xypointerannotation.setTipRadius(5);//the distance from point to arrow head
 
 		return xypointerannotation;
