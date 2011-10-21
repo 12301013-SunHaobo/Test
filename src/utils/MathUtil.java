@@ -35,7 +35,7 @@ public class MathUtil {
 	 * @param totalInts
 	 * @return
 	 */
-	public static List<Long> getUniqueRandomIntSet(long start, long end, Random random, int totalInts) {
+	public static List<Long> getUniqueRandomLongSet(long start, long end, Random random, int totalInts) {
 		List<Long> wholeList = new ArrayList<Long>();
 		
 		for(long i=start; i<=end; i++){
@@ -46,4 +46,18 @@ public class MathUtil {
 		Collections.sort(resultList);
 		return resultList;
 	}	
+
+    public static List<Integer> getUniqueRandomIntSet(int start, int end, Random random, int totalInts) {
+        List<Integer> wholeList = new ArrayList<Integer>();
+
+        for (int i = start; i <= end; i++) {
+            wholeList.add(i);
+        }
+        Collections.shuffle(wholeList, random);
+        List<Integer> resultList = wholeList.subList(0, totalInts);
+        Collections.sort(resultList);
+        return resultList;
+    }
+	
+	
 }	

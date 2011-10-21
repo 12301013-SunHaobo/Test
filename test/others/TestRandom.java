@@ -31,7 +31,7 @@ public class TestRandom {
 	private static void testGetUniqueRandomIntList(){
 		Random random = new Random();
 		
-		List<Long> resultList = MathUtil.getUniqueRandomIntSet(1000,4600,random,10);
+		List<Integer> resultList = MathUtil.getUniqueRandomIntSet(1000,4600,random,10);
 		System.out.println(resultList.toString());
 		
 //		for(Integer i : resultList){

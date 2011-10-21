@@ -49,7 +49,7 @@ public class CreateServerMockSSSTicks {
 		for (long tmpStartTime = startTime.getTime(); tmpStartTime < endTime.getTime(); tmpStartTime = tmpStartTime + MOCK_TIME_SLOT) {
 			List<Tick> timeSlotTickList = getTimeSlotTickList(new Date(tmpStartTime), tickList);
 			Random random = new Random();
-			List<Long> randomList = MathUtil.getUniqueRandomIntSet(
+			List<Long> randomList = MathUtil.getUniqueRandomLongSet(
 					tmpStartTime+1,tmpStartTime + MOCK_TIME_SLOT-1,random,timeSlotTickList.size());
 			for(int i=0;i<timeSlotTickList.size();i++){
 				Tick tmpTick = timeSlotTickList.get(i);
