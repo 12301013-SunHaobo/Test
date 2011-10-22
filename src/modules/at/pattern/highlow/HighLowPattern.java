@@ -29,7 +29,10 @@ public class HighLowPattern {
 
 	//1 is older then 2
 	/**
+	 * always show high, low alternatively
 	 * Match to find (high,low,high,low) or (low,high,low,high) sets, by wanted Types 
+	 * high, low1, low2, high -> high, min(low1,low2), high
+	 * 
 	 */
 	public List<HighLowMatch> match(List<Point> highLowPointList, Set<Type> wantedTypes) throws Exception{
 

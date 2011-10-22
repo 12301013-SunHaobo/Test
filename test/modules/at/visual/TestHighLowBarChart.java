@@ -45,7 +45,7 @@ import org.jfree.ui.TextAnchor;
 
 import utils.Formatter;
 
-public class ATBarChart extends ApplicationFrame {
+public class TestHighLowBarChart extends ApplicationFrame {
 
 	//change begin
 	static String STOCK_CODE = "qqq";
@@ -57,7 +57,7 @@ public class ATBarChart extends ApplicationFrame {
 	
 	private List<Bar> barList = null;
 	
-	public ATBarChart(String s) {
+	public TestHighLowBarChart(String s) {
 		super(s);
 		//init barList
 		this.barList = getBarList();
@@ -70,7 +70,7 @@ public class ATBarChart extends ApplicationFrame {
 	}
 
 	public static void main(String args[]) {
-		ATBarChart candlestickchartdemo1 = new ATBarChart(STOCK_CODE+":"+TICK_FILENAME);
+		TestHighLowBarChart candlestickchartdemo1 = new TestHighLowBarChart(STOCK_CODE+":"+TICK_FILENAME);
 		candlestickchartdemo1.pack();
 		RefineryUtilities.centerFrameOnScreen(candlestickchartdemo1);
 		candlestickchartdemo1.setVisible(true);
@@ -265,9 +265,10 @@ public class ATBarChart extends ApplicationFrame {
 		Paint paint = Color.black;
 		if(Point.Type.LOW.equals(point.getType())){
 			angle = Math.PI/2;
-			paint = Color.white;
+			paint = Color.red;
 		}
 		
+		/*
 		if(isNoise(point)){
 			if(Point.Type.HIGH.equals(point.getType())){
 				paint = Color.green;
@@ -275,6 +276,7 @@ public class ATBarChart extends ApplicationFrame {
 				paint = Color.cyan;
 			}
 		}
+		*/
 		
 		//System.out.println(Formatter.DEFAULT_TIME_FORMAT.format(point.getDateTime())+" "+paint.toString());
 		
@@ -390,8 +392,8 @@ public class ATBarChart extends ApplicationFrame {
 			return true;
 		}
 
-		private ATBarChart getOuterType() {
-			return ATBarChart.this;
+		private TestHighLowBarChart getOuterType() {
+			return TestHighLowBarChart.this;
 		}
 		
 		
