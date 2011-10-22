@@ -2,6 +2,7 @@ package utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ public class WebUtil {
 
 			URL url = new URL(urlStr);
 			URLConnection uc = url.openConnection();
-			uc.setReadTimeout(60000);
+			uc.setReadTimeout(5*60*1000);
 			BufferedReader in = new BufferedReader(new InputStreamReader(uc
 					.getInputStream(), encoding));
 			String line;
@@ -70,7 +71,9 @@ public class WebUtil {
 	    if (offset != contentLength) {
 	      throw new IOException("Only read " + offset + " bytes; Expected " + contentLength + " bytes");
 	    }
-
+		
+	    FileUtil.createFolderIfNotExist(fileName);
+	    
 	    FileOutputStream out = new FileOutputStream(fileName);
 	    out.write(data);
 	    out.flush();
