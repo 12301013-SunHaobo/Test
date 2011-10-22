@@ -11,18 +11,16 @@ public class GetPicNTitles {
 
 	private static int censoredTotalPgNo = 11036;
 	private static int uncensoredTotalPgNo = 718;
-	
-	private static String ROOT_PIC_DIR="D:/downloads/pics";
-	
+
 	public static void main(String[] args) throws Exception {
 		long b0 = System.currentTimeMillis();
 		
-		String category = "";//熟女, censored, uncensored
+		String category = "";//熟女, censored, uncensored <-------------------- change here
 		
 		//submit tasks for downloading mp3
 		BoundedExecutor be = new BoundedExecutor(10);
 		
-		for(int i=1;i<=172;i++){//1-72
+		for(int i=1;i<=172;i++){//1-72 <-------------------- change here
 			TPic tpic = new TPic(category, i);
 			try {
 				be.submit(tpic);
