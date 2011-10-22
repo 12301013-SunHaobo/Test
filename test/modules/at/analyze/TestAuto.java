@@ -66,7 +66,7 @@ public class TestAuto {
 	
 	/**
 	 * loop through all dates, test 10 tiems / day, 
-	 * avg pnl = e.g: 0.036592727, 0.011640455, -0.025676818, 0.0146508
+	 * avg pnl = e.g: 0.036592727, 0.011640455, -0.025676818, 0.0146508, 0.019521932
 	 * 
 	 */
 	private static void testRandom() throws Exception {
