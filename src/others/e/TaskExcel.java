@@ -30,8 +30,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import others.e.model.Iciba;
 import others.e.model.Word;
 import others.e.model.Xr;
-import others.utils.BoundedExecutor;
 import others.utils.FileUtil;
+import utils.BoundedExecutor;
 
 public class TaskExcel {
 	private static final String INPUT_FILE="GW-list-full.txt"; //"GW-list.txt"; //"GW-list-full.txt";

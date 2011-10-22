@@ -27,7 +27,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import others.utils.BoundedExecutor;
+import utils.BoundedExecutor;
 
 public class TestCrawler {
 	static String INPUT_FILE="GW-list-full.txt";
