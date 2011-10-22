@@ -30,14 +30,14 @@ public class TestAuto {
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
 	public static void main(String[] args) throws Exception {
-		//testOneDay();
+		testOneDay();
 		//testAllDays();
-	    testRandom();
+	    //testRandom();
 	}
 
 	private static void testOneDay() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		String[] dateTimeArr = new String[] {"20111018", "200248"};
+		String[] dateTimeArr = new String[] {"20111021", "200115"};
 		
 		List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
 		System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
@@ -113,7 +113,7 @@ public class TestAuto {
 		List<Pattern> patternList = new ArrayList<Pattern>();
 		//patternList.add(new PatternMA());
 		//patternList.add(new PatternRsi());
-		patternList.add(new PatternSto());
+		//patternList.add(new PatternSto());
 		return patternList;
 		
 	}
@@ -260,7 +260,7 @@ public class TestAuto {
 		    }
 			pnL = pnL + (trade.getPrice() * trade.getQty()*(-1));
 		}
-		//System.out.println("Total pnL : "+Formatter.DECIMAL_FORMAT.format(pnL));
+		System.out.println("Total pnL : "+Formatter.DECIMAL_FORMAT.format(pnL));
 		return pnL;
 	}
 	

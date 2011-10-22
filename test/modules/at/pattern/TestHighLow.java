@@ -1,4 +1,4 @@
-package modules.at.analyze;
+package modules.at.pattern;
 
 import java.util.HashMap;
 import java.util.HashSet;
