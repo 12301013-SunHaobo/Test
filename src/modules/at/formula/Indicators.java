@@ -35,12 +35,9 @@ public class Indicators extends Observable {
 	private DescriptiveStatistics ds4StoKLow;//for stochastic K low
 	private DescriptiveStatistics ds4StoD;//for stochastic D, saves K
 	private double stoK = Double.NaN;
-	
-	/**
-	 * for HighLow pattern
-	 */
-	private double curHigh = Double.NaN;
-	private double curLow = Double.NaN;
+
+	//current bar
+	private Bar curBar;
 	
 	//for internal calculation only, tracks how many bars are added
 	private int barAdded = 0;
@@ -57,6 +54,7 @@ public class Indicators extends Observable {
 	}
 	
 	public void addBar(Bar bar){
+		this.curBar = bar;
 		this.ds4MAFast.addValue(bar.getClose());
 		this.ds4MASlow.addValue(bar.getClose());
 		this.ds4BB.addValue(bar.getClose());
@@ -131,6 +129,10 @@ public class Indicators extends Observable {
 			return Double.NaN;
 		}
 		return this.ds4StoD.getSum()/AlgoSetting.STOCHASTIC_D_LENGTH;
+	}
+
+	public Bar getCurBar() {
+		return curBar;
 	}
 
 }
