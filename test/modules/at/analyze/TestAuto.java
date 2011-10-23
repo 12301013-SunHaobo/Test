@@ -15,7 +15,7 @@ import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.pattern.Pattern;
-import modules.at.pattern.PatternSto;
+import modules.at.pattern.PatternHighLow;
 import modules.at.visual.BarChartBase;
 
 import org.jfree.ui.RefineryUtilities;
@@ -114,6 +114,7 @@ public class TestAuto {
 		//patternList.add(new PatternMA());
 		//patternList.add(new PatternRsi());
 		//patternList.add(new PatternSto());
+		patternList.add(new PatternHighLow());
 		return patternList;
 		
 	}
@@ -147,6 +148,9 @@ public class TestAuto {
 		}
 		return tradeList;
 	}
+	
+	
+	
 
 
 	
