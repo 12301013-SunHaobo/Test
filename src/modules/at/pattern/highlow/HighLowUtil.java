@@ -8,7 +8,7 @@ import java.util.Set;
 import modules.at.model.Bar;
 import modules.at.model.Point;
 
-public class HighLowPattern {
+public class HighLowUtil {
 
 	public static enum Type {
 		HighHighLowHigh, //up 

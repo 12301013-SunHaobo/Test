@@ -2,6 +2,8 @@ package modules.at.pattern;
 
 import java.util.Observable;
 
+import modules.at.formula.Indicators;
+
 public class PatternHighLow extends AbstractPattern {
 
 	@Override
@@ -16,6 +18,7 @@ public class PatternHighLow extends AbstractPattern {
 
 	@Override
 	public void update(Observable o, Object arg) {
+        Indicators indicators = (Indicators)o;
 
 	}
 

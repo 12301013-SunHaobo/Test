@@ -3,7 +3,7 @@ package modules.at.pattern.highlow;
 import java.util.List;
 
 import modules.at.model.Point;
-import modules.at.pattern.highlow.HighLowPattern.Type;
+import modules.at.pattern.highlow.HighLowUtil.Type;
 
 
 /**
@@ -15,7 +15,7 @@ import modules.at.pattern.highlow.HighLowPattern.Type;
 public class HighLowMatch {
 	
 	private List<Point> matchList;
-	private HighLowPattern.Type type;
+	private HighLowUtil.Type type;
 	
 	public HighLowMatch(List<Point> matchList, Type type) {
 		super();
@@ -28,10 +28,10 @@ public class HighLowMatch {
 	public void setMatchList(List<Point> matchList) {
 		this.matchList = matchList;
 	}
-	public HighLowPattern.Type getType() {
+	public HighLowUtil.Type getType() {
 		return type;
 	}
-	public void setType(HighLowPattern.Type type) {
+	public void setType(HighLowUtil.Type type) {
 		this.type = type;
 	}
 	

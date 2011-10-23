@@ -1,6 +1,6 @@
 package modules.at.pattern;
 
-import modules.at.pattern.highlow.HighLowPattern;
+import modules.at.pattern.highlow.HighLowUtil;
 
 public class TestHighLowPattern {
 
@@ -38,7 +38,7 @@ public class TestHighLowPattern {
 	}
 	
 	private static void printOut(double high1, double high2, double low1, double low2){
-		System.out.println("high1="+high1+", high2="+high2+", low1="+low1+", low2="+low2+", type="+HighLowPattern.getType(high1, high2, low1, low2));
+		System.out.println("high1="+high1+", high2="+high2+", low1="+low1+", low2="+low2+", type="+HighLowUtil.getType(high1, high2, low1, low2));
 	}
 
 }

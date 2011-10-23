@@ -21,7 +21,7 @@ import modules.at.model.Bar;
 import modules.at.model.Point;
 import modules.at.model.Point.Type;
 import modules.at.model.Tick;
-import modules.at.pattern.highlow.HighLowPattern;
+import modules.at.pattern.highlow.HighLowUtil;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -169,7 +169,7 @@ public class TestHighLowBarChart extends ApplicationFrame {
 		List<XYPointerAnnotation> annoList = new ArrayList<XYPointerAnnotation>();
 		List<Point> highLowPointList = null;
 		try {
-			highLowPointList = HighLowPattern.findHighLowPoints(this.barList);
+			highLowPointList = HighLowUtil.findHighLowPoints(this.barList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

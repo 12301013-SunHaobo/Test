@@ -36,6 +36,11 @@ public class Indicators extends Observable {
 	private DescriptiveStatistics ds4StoD;//for stochastic D, saves K
 	private double stoK = Double.NaN;
 	
+	/**
+	 * for HighLow pattern
+	 */
+	private double curHigh = Double.NaN;
+	private double curLow = Double.NaN;
 	
 	//for internal calculation only, tracks how many bars are added
 	private int barAdded = 0;
@@ -61,6 +66,8 @@ public class Indicators extends Observable {
 		this.ds4StoKLow.addValue(bar.getLow());
 		this.stoK = (bar.getClose() - ds4StoKLow.getMin())/(ds4StoKHigh.getMax() - ds4StoKLow.getMin()) * 100;
 		this.ds4StoD.addValue(this.stoK);
+		//highLow pattern
+		
 		this.barAdded++;
 		//notify observers: PatternMA, PatternRsi ...
         setChanged();
