@@ -31,6 +31,7 @@ public class AlgoSetting {
 	public static final int PATTERN_WEIGHT_MA = 1;
 	public static final int PATTERN_WEIGHT_RSI = 1;
 	public static final int PATTERN_WEIGHT_STO = 1;
+	public static final int PATTERN_WEIGHT_HL = 1;
 	
 	//PatternHighLow
 	public static final int HIGH_LOW_LIST_LENGTH =2000;//2 is the min useful size

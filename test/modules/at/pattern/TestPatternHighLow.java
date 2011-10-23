@@ -22,7 +22,7 @@ public class TestPatternHighLow {
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	private static PatternHighLow patternHighLow = new PatternHighLow();
+	private static PatternHighLow patternHighLow = new PatternHighLow(3);
 	
 	public static void main(String[] args) throws Exception {
 		testOneDay();

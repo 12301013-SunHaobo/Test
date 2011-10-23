@@ -10,13 +10,18 @@ import modules.at.model.Point;
 
 public class PatternHighLow extends AbstractPattern {
 
-	private LinkedList<Point> highList;
-	private LinkedList<Point> lowList;
+	private int highLowListLength = AlgoSetting.HIGH_LOW_LIST_LENGTH;
+	private LinkedList<Point> highList = new LinkedList<Point>();
+	private LinkedList<Point> lowList = new LinkedList<Point>();
 	
 	public PatternHighLow() {
 		super();
-		this.highList = new LinkedList<Point>();
-		this.lowList = new LinkedList<Point>();
+	}
+	public PatternHighLow(int highLowListLength) {
+		super();
+		if( this.highLowListLength < highLowListLength){
+			this.highLowListLength = highLowListLength;
+		}
 	}
 
 	@Override
@@ -26,7 +31,7 @@ public class PatternHighLow extends AbstractPattern {
 
 	@Override
 	public int getWeight() {
-		return 0;
+		return AlgoSetting.PATTERN_WEIGHT_HL;
 	}
 
 	@Override
@@ -112,7 +117,7 @@ public class PatternHighLow extends AbstractPattern {
 	}
 
 	private void addToHighLowList(LinkedList<Point> list, Point point){
-		if(list.size() == AlgoSetting.HIGH_LOW_LIST_LENGTH){
+		if(list.size() == this.highLowListLength){
 			list.remove();
 		}
 		list.add(point);

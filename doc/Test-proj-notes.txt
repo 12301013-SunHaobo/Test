@@ -18,6 +18,11 @@
 	includes all indicators under formula	
 
 -----------------
+-- testing
+1. TestPatternHighLow.java // mark all high/low and display in bar chart
+
+
+-----------------
 -- IB
 1. demo TWS can practice http://individuals.interactivebrokers.com/en/pagemap/pagemap_demo.php
    then launch D:\tools\IB_API_9_65\Java\run.bat
