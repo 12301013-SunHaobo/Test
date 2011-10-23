@@ -22,6 +22,7 @@ public class Point {
 	
 	public Point(Type type, Date dateTime, double price) {
 		super();
+		this.id = ++idSeq;
 		this.type = type;
 		this.dateTime = dateTime;
 		this.price = price;
@@ -38,10 +39,6 @@ public class Point {
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId() {
-		this.id = ++idSeq;
 	}
 
 	public Date getDateTime() {
