@@ -138,7 +138,7 @@ public class HighLowUtil {
 				if(Trend.UPFLAT.equals(highTrend) 
 						|| Trend.UP.equals(highTrend)
 						|| Trend.INITFLAT.equals(highTrend)){
-					prePointHigh.setId();
+					//prePointHigh.setId();
 					highLowList.add(prePointHigh);
 					prePointHigh = new Point(Point.Type.HIGH, bar.getDate(), bar.getHigh());
 				} else {
@@ -166,7 +166,7 @@ public class HighLowUtil {
 				if(Trend.DOWNFLAT.equals(lowTrend) 
 						|| Trend.DOWN.equals(lowTrend)
 						|| Trend.INITFLAT.equals(lowTrend)){
-					prePointLow.setId();
+					//prePointLow.setId();
 					highLowList.add(prePointLow);
 					prePointLow = new Point(Point.Type.LOW, bar.getDate(), bar.getLow());
 				} else {
@@ -185,11 +185,11 @@ public class HighLowUtil {
 			}
 			
 		}
-		initPointNext(highLowList);
+		initPointNextLinks(highLowList);
 		return highLowList;
 	}
 	
-	private static void initPointNext(List<Point> pointList) throws Exception{
+	private static void initPointNextLinks(List<Point> pointList) throws Exception{
 		Point curPoint = pointList.get(0);
 		for(int i=1;i<pointList.size();i++) {
 			Point tmpPoint = pointList.get(i);
