@@ -17,12 +17,6 @@ public class PatternHighLow extends AbstractPattern {
 	public PatternHighLow() {
 		super();
 	}
-	public PatternHighLow(int highLowListLength) {
-		super();
-		if( this.highLowListLength < highLowListLength){
-			this.highLowListLength = highLowListLength;
-		}
-	}
 
 	@Override
 	public Trend getTrend() {
