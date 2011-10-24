@@ -36,6 +36,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import utils.GlobalSetting;
+
 public class BarChartBase extends ApplicationFrame {
 
 	private static final boolean SHOW_BB = false;;
@@ -71,6 +73,12 @@ public class BarChartBase extends ApplicationFrame {
 		chartpanel.setMouseWheelEnabled(true);
 		chartpanel.setPreferredSize(new Dimension(1500, 700));//window (width, height)
 		setContentPane(chartpanel);
+		//only display at home
+		if(GlobalSetting.isAtHome()){
+            this.pack();
+            RefineryUtilities.centerFrameOnScreen(this);
+            this.setVisible(true);
+		}
 	}
 
 	//Test BarCahrtBase.java
@@ -79,10 +87,7 @@ public class BarChartBase extends ApplicationFrame {
 		String dateStr = "20111014";
 		String timeStr = "200153";
 		List<Trade> tradeList = new ArrayList<Trade>();
-		BarChartBase barchartBase = new BarChartBase(stockCode,dateStr, timeStr, tradeList);
-		barchartBase.pack();
-		RefineryUtilities.centerFrameOnScreen(barchartBase);
-		barchartBase.setVisible(true);
+		new BarChartBase(stockCode,dateStr, timeStr, tradeList);
 	}
 
 	private JFreeChart createChart() {

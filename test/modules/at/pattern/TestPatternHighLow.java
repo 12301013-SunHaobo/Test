@@ -36,12 +36,7 @@ public class TestPatternHighLow {
 		System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
 		printTrades(tradeList, true);
 		
-		if(GlobalSetting.isAtHome()){
-			BarChartBase barchartBase = new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
-			barchartBase.pack();
-			RefineryUtilities.centerFrameOnScreen(barchartBase);
-			barchartBase.setVisible(true);
-		}
+		new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
 	}
 	
 	private static List<Trade> auto(String stockCode, String dateStr, String timeStr) throws Exception {

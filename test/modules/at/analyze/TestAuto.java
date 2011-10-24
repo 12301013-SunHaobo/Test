@@ -43,12 +43,7 @@ public class TestAuto {
 		System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
 		printTrades(tradeList, true);
 		
-		if(GlobalSetting.isAtHome()){
-			BarChartBase barchartBase = new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
-			barchartBase.pack();
-			RefineryUtilities.centerFrameOnScreen(barchartBase);
-			barchartBase.setVisible(true);
-		}
+		new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
 		
 	}
 	

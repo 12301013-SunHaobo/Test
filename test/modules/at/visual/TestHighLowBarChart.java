@@ -44,6 +44,7 @@ import org.jfree.ui.RefineryUtilities;
 import org.jfree.ui.TextAnchor;
 
 import utils.Formatter;
+import utils.GlobalSetting;
 
 public class TestHighLowBarChart extends ApplicationFrame {
 
@@ -70,10 +71,12 @@ public class TestHighLowBarChart extends ApplicationFrame {
 	}
 
 	public static void main(String args[]) {
-		TestHighLowBarChart candlestickchartdemo1 = new TestHighLowBarChart(STOCK_CODE+":"+TICK_FILENAME);
-		candlestickchartdemo1.pack();
-		RefineryUtilities.centerFrameOnScreen(candlestickchartdemo1);
-		candlestickchartdemo1.setVisible(true);
+	    if(GlobalSetting.isAtHome()){
+    		TestHighLowBarChart candlestickchartdemo1 = new TestHighLowBarChart(STOCK_CODE+":"+TICK_FILENAME);
+    		candlestickchartdemo1.pack();
+    		RefineryUtilities.centerFrameOnScreen(candlestickchartdemo1);
+    		candlestickchartdemo1.setVisible(true);
+	    }
 	}
 
 	private JFreeChart createChart() {
