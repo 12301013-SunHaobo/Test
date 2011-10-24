@@ -42,9 +42,10 @@ public class PatternHighLow extends AbstractPattern {
 	}
 
 	/**
+	 * Point movement
 	 * Only UPFLAT->DOWN & UP->DOWN , the last point need to be added to highPointList
 	 */
-	private enum HighLowTrend { 
+	private enum PointMovement { 
 		DOWN, UP, DOWNFLAT, UPFLAT, 
 		INITFLAT //the very first initial point 
 	}
@@ -52,8 +53,8 @@ public class PatternHighLow extends AbstractPattern {
 	private Point prePointHigh = null;
 	private Point prePointLow = null;
 	
-	private HighLowTrend highTrend = HighLowTrend.INITFLAT;
-	private HighLowTrend lowTrend = HighLowTrend.INITFLAT;
+	private PointMovement highTrend = PointMovement.INITFLAT;
+	private PointMovement lowTrend = PointMovement.INITFLAT;
 	
 	private void addBar(Bar bar) {
 		if(prePointHigh == null && prePointLow == null){
@@ -66,23 +67,22 @@ public class PatternHighLow extends AbstractPattern {
 		if (bar.getHigh() > prePointHigh.getPrice()) {
 			prePointHigh.setDateTime(bar.getDate());
 			prePointHigh.setPrice(bar.getHigh());
-			highTrend = HighLowTrend.UP;
+			highTrend = PointMovement.UP;
 		} else if (bar.getHigh() < prePointHigh.getPrice()) {
-			if (HighLowTrend.UPFLAT.equals(highTrend) || HighLowTrend.UP.equals(highTrend) || HighLowTrend.INITFLAT.equals(highTrend)) {
+			if (PointMovement.UPFLAT.equals(highTrend) || PointMovement.UP.equals(highTrend) || PointMovement.INITFLAT.equals(highTrend)) {
 				// prePointHigh.setId();
-				//this.highList.add(prePointHigh);
 				addToHighLowList(this.highList, prePointHigh);
 				prePointHigh = new Point(Point.Type.HIGH, bar.getDate(), bar.getHigh());
 			} else {
 				prePointHigh.setDateTime(bar.getDate());
 				prePointHigh.setPrice(bar.getHigh());
 			}
-			highTrend = HighLowTrend.DOWN;
+			highTrend = PointMovement.DOWN;
 		} else {
-			if (HighLowTrend.UP.equals(highTrend)) {
-				highTrend = HighLowTrend.UPFLAT;
-			} else if (HighLowTrend.DOWN.equals(highTrend)) {
-				highTrend = HighLowTrend.DOWNFLAT;
+			if (PointMovement.UP.equals(highTrend)) {
+				highTrend = PointMovement.UPFLAT;
+			} else if (PointMovement.DOWN.equals(highTrend)) {
+				highTrend = PointMovement.DOWNFLAT;
 			}
 			prePointHigh.setDateTime(bar.getDate());
 			prePointHigh.setPrice(bar.getHigh());
@@ -93,23 +93,22 @@ public class PatternHighLow extends AbstractPattern {
 			prePointLow.setDateTime(bar.getDate());
 			prePointLow.setPrice(bar.getLow());
 
-			lowTrend = HighLowTrend.DOWN;
+			lowTrend = PointMovement.DOWN;
 		} else if (bar.getLow() > prePointLow.getPrice()) {
-			if (HighLowTrend.DOWNFLAT.equals(lowTrend) || HighLowTrend.DOWN.equals(lowTrend) || HighLowTrend.INITFLAT.equals(lowTrend)) {
+			if (PointMovement.DOWNFLAT.equals(lowTrend) || PointMovement.DOWN.equals(lowTrend) || PointMovement.INITFLAT.equals(lowTrend)) {
 				// prePointLow.setId();
-				//this.lowList.add(prePointLow);
 				addToHighLowList(this.lowList, prePointLow);
 				prePointLow = new Point(Point.Type.LOW, bar.getDate(), bar.getLow());
 			} else {
 				prePointLow.setDateTime(bar.getDate());
 				prePointLow.setPrice(bar.getLow());
 			}
-			lowTrend = HighLowTrend.UP;
+			lowTrend = PointMovement.UP;
 		} else {
-			if (HighLowTrend.UP.equals(lowTrend)) {
-				lowTrend = HighLowTrend.UPFLAT;
-			} else if (HighLowTrend.DOWN.equals(lowTrend)) {
-				lowTrend = HighLowTrend.DOWNFLAT;
+			if (PointMovement.UP.equals(lowTrend)) {
+				lowTrend = PointMovement.UPFLAT;
+			} else if (PointMovement.DOWN.equals(lowTrend)) {
+				lowTrend = PointMovement.DOWNFLAT;
 			}
 			prePointLow.setDateTime(bar.getDate());
 			prePointLow.setPrice(bar.getLow());
