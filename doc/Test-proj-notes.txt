@@ -20,7 +20,8 @@
 -----------------
 -- testing
 1. TestPatternHighLow.java // mark all high/low and display in bar chart
-
+2. TestHighLowBarChar.java //[deprecated]Independent testing class, finding all high/low points, mark and show in chart
+3. HighLowUtil.java //to be deprecated, methods are moved to PatternHighLow.java
 
 -----------------
 -- IB
