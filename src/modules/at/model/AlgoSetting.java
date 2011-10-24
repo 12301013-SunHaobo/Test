@@ -35,5 +35,6 @@ public class AlgoSetting {
 	
 	//PatternHighLow
 	public static final int HIGH_LOW_LIST_LENGTH =2000;//2 is the min useful size
+	public static final boolean ALTERNATIVE_HIGH_LOW_POINTS = true; //high low alternatively
 	
 }

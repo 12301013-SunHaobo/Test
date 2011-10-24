@@ -49,10 +49,11 @@ public class PatternHighLow extends AbstractPattern {
 		DOWN, UP, DOWNFLAT, UPFLAT, 
 		INITFLAT //the very first initial point 
 	}
-	
+	//tmp pre points
 	private Point prePointHigh = null;
 	private Point prePointLow = null;
 	
+	//latest point movement
 	private PointMovement highTrend = PointMovement.INITFLAT;
 	private PointMovement lowTrend = PointMovement.INITFLAT;
 	
@@ -114,14 +115,23 @@ public class PatternHighLow extends AbstractPattern {
 			prePointLow.setPrice(bar.getLow());
 		}
 	}
-
+	
+	//limit highlow list length
 	private void addToHighLowList(LinkedList<Point> list, Point point){
-		if(list.size() == this.highLowListLength){
+		list.add(point);
+		if(list.size() > this.highLowListLength){
 			list.remove();
 		}
-		list.add(point);
 	}
 
+
+
+	
+	
+	
+	
+	
+	
 	//for testing
 	public LinkedList<Point> getHighList() {
 		return highList;
