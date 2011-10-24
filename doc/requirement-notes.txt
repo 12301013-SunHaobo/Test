@@ -1,0 +1,10 @@
+1. beat this target 
+10/21/2011 qqq,
+  buy: -1, sell: 1 
+  57.13 buy 1
+  57.55 sell 2
+  56.9 buy 2
+  57.16 sell 1
+total pnl: 1.33  
+
+2. 
