@@ -5,4 +5,7 @@
 4. in the middle of changing BarChartBase.java (only draw base chart, by specified date time)
 
 5. Create PatternHighLow
+--------------------------------------------
+6. draw lines in chart
+7. math package to calculate lines
  

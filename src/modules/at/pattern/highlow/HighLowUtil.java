@@ -199,9 +199,6 @@ public class HighLowUtil {
 		curPoint.setNext(null);
 	}	
 	
-	
-
-
 	public static Type getType(double high1, double high2, double low1, double low2){
 		if(high1 < high2 && low1 < low2){
 			return Type.HighHighLowHigh;
@@ -227,8 +224,6 @@ public class HighLowUtil {
 		return Type.NA;
 	}
 	
-	
-	
 	private void printList(List<Point> pointList){
 		Point tmpP = pointList.get(0);
 		while(tmpP.getNext()!=null){
@@ -237,4 +232,11 @@ public class HighLowUtil {
 		}
 		System.out.println(tmpP);		
 	}
+	
+	
+	
+	
+	
+	
+	
 }
