@@ -44,6 +44,7 @@ public class BarChartBase extends ApplicationFrame {
 	private static final boolean SHOW_MA_FAST = true; 
 	private static final boolean SHOW_MA_SLOW = true;
 	
+	//RSI | STO in lower panel
 	private static final boolean SHOW_RSI = false;
 	
 	private static final boolean SHOW_STO_K = true;
