@@ -2,6 +2,25 @@ The following samples are worth taking a look
 
 SuperDemo.java  // << ----------------  UI to access all charts -------------------------------------------->>
 
+--------------------
+LineChartDemo6.java //has independent dots
+LineChartDemo7.java //has independent dots, another style
+XYStepRendererDemo2.java //mark with only number
+PieChartDemo1.java //good annotation
+NormalDistrubutionDemo2.java //annotation rectangle background
+RegressionDemo1.java //regression line
+XYSeriesDemo3.java //range area
+EventFrequencyDemo1.java //different dot types
+HideSeriesDemo3.java //circles
+XYBoxAnnotationDemo1.java //multiple boxes areas
+XYPolygonAnnotationDemo1.java //polygon area
+CategoryMarkerDemo1.java //vertical line marker
+PlotOrientationDemo2.java //section of line
+
+
+
+
+--------------------
 AnnotationDemo2.java //can annotate the point in chart
 BarChartDemo10.java //dynamic bar, changing height in chart
 CandlestickChartDemo1.java //candlestick
@@ -35,7 +54,6 @@ TranslateDemo1.java  // time series with horizontal sliding bar
 WindChartDemo1.java  // point has arrow direction
 XYPointerAnnotationDemo1.java // point with annotation
 XYTaskDatasetDemo2.java //has 2 chart, zoom in/out together
-
 
 
 
