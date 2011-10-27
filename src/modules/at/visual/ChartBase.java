@@ -1,13 +1,24 @@
 package modules.at.visual;
 
 import java.awt.Dimension;
+import java.util.Date;
 import java.util.List;
+
+import modules.at.model.Bar;
+import modules.at.model.visual.VChart;
+import modules.at.model.visual.VPlot;
+import modules.at.model.visual.VXY;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.DefaultHighLowDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
@@ -15,43 +26,86 @@ import utils.GlobalSetting;
 
 public class ChartBase extends ApplicationFrame {
 
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-	
-	public ChartBase(ChartData chartData) {
-		super("Chart");
-		JFreeChart jfreechart = createChart(chartData);
-		ChartPanel chartpanel = new ChartPanel(jfreechart);
-		chartpanel.setMouseWheelEnabled(true);
-		chartpanel.setPreferredSize(new Dimension(1500, 700));//window (width, height)
-		setContentPane(chartpanel);
-		//only display at home
-		if(GlobalSetting.isAtHome()){
+    public ChartBase(VChart vChart) {
+        super("Chart");
+        JFreeChart jfreechart = createChart(vChart);
+        ChartPanel chartpanel = new ChartPanel(jfreechart);
+        chartpanel.setMouseWheelEnabled(true);
+        
+        //window (width,height)
+        chartpanel.setPreferredSize(new Dimension(1500, 700));
+        setContentPane(chartpanel);
+        // only display at home
+        if (GlobalSetting.isAtHome()) {
             this.pack();
             RefineryUtilities.centerFrameOnScreen(this);
             this.setVisible(true);
-		}
-	}
+        }
+    }
 
+    private JFreeChart createChart(VChart vChart) {
+        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date/Time"));
+        combineddomainxyplot.setDomainPannable(true);
 
+        // loop through chartData plot list
+        List<VPlot> plotList = vChart.getPlotList();
+        for (VPlot vPlot : plotList) {
+//            combineddomainxyplot.add(vPlot, vPlot.getWeight());
+        }
+        JFreeChart jfreechart = new JFreeChart(vChart.getTitle(), JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot,
+                true);
+        // jfreechart.setBackgroundPaint(Color.white);
+        // ChartUtilities.applyCurrentTheme(jfreechart); //gray background
+        return jfreechart;
+    }
 
-	private JFreeChart createChart(ChartData chartData) {
-		CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date/Time"));
-		combineddomainxyplot.setDomainPannable(true);
-		
-		//loop through chartData plot list
-		List<XYPlot> plotList = chartData.getPlotList();
-		List<Integer> plotWeightList = chartData.getPlotWeightList();
-		for(int i=0;i<plotList.size();i++){
-			combineddomainxyplot.add(plotList.get(i),plotWeightList.get(i));//weight is relative size of panel height
-		}
-		JFreeChart jfreechart = new JFreeChart(chartData.getChartTitle(), JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, true);
-		//jfreechart.setBackgroundPaint(Color.white);
-		//ChartUtilities.applyCurrentTheme(jfreechart); //gray background
-		return jfreechart;
-	}
+    private XYPlot vplot2XYPlot(VPlot vPlot) {
+        XYPlot xyplot = new XYPlot();
+        ValueAxis timeAxis = new DateAxis("Time");
+        NumberAxis valueAxis = new NumberAxis("Value");
+        
+        List<List<VXY>> xyLists = vPlot.getXyLists();
+        for(List<VXY> xyList : xyLists) {
+            
+            xyplot.setDataset(0, xydataset);
+            xyplot.setRenderer(0, renderer);
+        }
 
+    }
 
+    
+    
+    
+    private XYSeries vxyList2XYSeries(List<VXY> vxyList) {
+        XYSeries xySeries = new XYSeries("series1");
+        for(VXY vxy : vxyList){
+            xySeries.add(vxy.getX(), vxy.getY());
+        }
+        return xySeries;
+        
+    }
+    
+    private XYDataset barList2Dataset(List<Bar> barList) {
+        int dataSize = barList.size();
+        Date dateArr[] = new Date[dataSize];
+        double highArr[] = new double[dataSize];
+        double lowArr[] = new double[dataSize];
+        double openArr[] = new double[dataSize];
+        double closeArr[] = new double[dataSize];
+        double volumeArr[] = new double[dataSize];
 
-
+        Bar tmpBar = null;
+        for (int i = 0; i < dataSize; i++) {
+            tmpBar = barList.get(i);
+            dateArr[i] = tmpBar.getDate();
+            highArr[i] = tmpBar.getHigh();
+            lowArr[i] = tmpBar.getLow();
+            openArr[i] = tmpBar.getOpen();
+            closeArr[i] = tmpBar.getClose();
+            volumeArr[i] = tmpBar.getVolume();
+        }
+        return new DefaultHighLowDataset("Series 1", dateArr, highArr, lowArr, openArr, closeArr, volumeArr);
+    }
 }

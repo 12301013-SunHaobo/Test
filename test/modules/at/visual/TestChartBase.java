@@ -21,11 +21,11 @@ public class TestChartBase {
 		ChartData chartData = new ChartData(stockCode, dateStr, timeStr);
 		
 		
-		chartData.setTotalPlots(totalPlots);
-		chartData.addXYSeries(plotIdx, seriesIdx, xySeries, color);
-		chartData.addAnnotation(plotIdx, seriesIdx, annotations, attributes);
+//		chartData.setTotalPlots(totalPlots);
+//		chartData.addXYSeries(plotIdx, seriesIdx, xySeries, color);
+//		chartData.addAnnotation(plotIdx, seriesIdx, annotations, attributes);
 		
-		new ChartBase(chartData);
+//		new ChartBase(chartData);
 	}
 	
 	
