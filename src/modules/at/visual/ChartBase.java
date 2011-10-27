@@ -1,5 +1,6 @@
 package modules.at.visual;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import modules.at.model.Bar;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
+import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
 
 import org.jfree.chart.ChartPanel;
@@ -16,9 +18,11 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
@@ -52,7 +56,7 @@ public class ChartBase extends ApplicationFrame {
         // loop through chartData plot list
         List<VPlot> plotList = vChart.getPlotList();
         for (VPlot vPlot : plotList) {
-//            combineddomainxyplot.add(vPlot, vPlot.getWeight());
+            combineddomainxyplot.add(vplot2XYPlot(vPlot), vPlot.getWeight());
         }
         JFreeChart jfreechart = new JFreeChart(vChart.getTitle(), JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot,
                 true);
@@ -61,18 +65,26 @@ public class ChartBase extends ApplicationFrame {
         return jfreechart;
     }
 
-    private XYPlot vplot2XYPlot(VPlot vPlot) {
+    private XYPlot vplot2XYPlot(VPlot vplot) {
         XYPlot xyplot = new XYPlot();
         ValueAxis timeAxis = new DateAxis("Time");
         NumberAxis valueAxis = new NumberAxis("Value");
-        
-        List<List<VXY>> xyLists = vPlot.getXyLists();
-        for(List<VXY> xyList : xyLists) {
-            
-            xyplot.setDataset(0, xydataset);
-            xyplot.setRenderer(0, renderer);
+        xyplot.setDomainAxis(timeAxis);
+        xyplot.setRangeAxis(valueAxis);
+        int seriesIdx = 0;
+        for(VSeries vseries : vplot.getVseriesList()){
+        	seriesIdx++;
+        	XYSeriesCollection xydataset = new XYSeriesCollection();
+        	XYSeries xyseries = vxyList2XYSeries(vseries.getVxyList());
+        	xydataset.addSeries(xyseries);
+        	StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
+        	xyItemRenderer.setSeriesPaint(0, Color.blue);
+        	
+        	xyplot.setDataset(seriesIdx, xydataset);
+        	xyplot.setRenderer(seriesIdx, xyItemRenderer);
         }
-
+        
+        return xyplot;
     }
 
     

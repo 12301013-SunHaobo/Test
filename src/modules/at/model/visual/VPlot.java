@@ -3,21 +3,26 @@ package modules.at.model.visual;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * A group of VSeries, e.g one panel
+ *
+ */
 public class VPlot {
     
     private int weight;//relative height in proportion in panel
     
-    private List<List<VXY>> xyLists = new ArrayList<List<VXY>>();
+    private List<VSeries> vseriesList = new ArrayList<VSeries>();
 
-    public List<List<VXY>> getXyLists() {
-        return xyLists;
-    }
+	public List<VSeries> getVseriesList() {
+		return vseriesList;
+	}
 
-    public void setXyLists(List<List<VXY>> xyLists) {
-        this.xyLists = xyLists;
-    }
+	public void setVseriesList(List<VSeries> vseriesList) {
+		this.vseriesList = vseriesList;
+	}
 
-    public int getWeight() {
+	public int getWeight() {
         return weight;
     }
 
