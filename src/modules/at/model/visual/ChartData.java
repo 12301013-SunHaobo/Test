@@ -1,4 +1,4 @@
-package modules.at.visual;
+package modules.at.model.visual;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
+import modules.at.visual.BarChartUtil;
 
 import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.axis.DateAxis;

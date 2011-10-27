@@ -7,6 +7,9 @@ import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.model.Bar;
 import modules.at.model.Tick;
+import modules.at.model.visual.VChart;
+import modules.at.model.visual.VPlot;
+import modules.at.model.visual.VSeries;
 
 public class TestChartBase {
 
@@ -18,14 +21,19 @@ public class TestChartBase {
 	 */
 
 	public static void main(String args[]) {
-		ChartData chartData = new ChartData(stockCode, dateStr, timeStr);
-		
-		
-//		chartData.setTotalPlots(totalPlots);
-//		chartData.addXYSeries(plotIdx, seriesIdx, xySeries, color);
-//		chartData.addAnnotation(plotIdx, seriesIdx, annotations, attributes);
-		
-//		new ChartBase(chartData);
+	    VChart vchart = new VChart();
+	    
+	    List<Bar> barList = getBarList();
+	    vchart.setBarList(barList);	    
+	    
+	    //bar plot0
+	    VPlot vplot = new VPlot();
+	    List<VSeries> vseriesList = new ArrayList<VSeries>();
+	    vplot.setVseriesList(vseriesList);
+	    
+	    //plot1
+	    
+	    
 	}
 	
 	

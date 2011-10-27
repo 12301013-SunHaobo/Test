@@ -56,36 +56,15 @@ public class ChartBase extends ApplicationFrame {
         // loop through chartData plot list
         List<VPlot> plotList = vChart.getPlotList();
         for (VPlot vPlot : plotList) {
-            combineddomainxyplot.add(vplot2XYPlot(vPlot), vPlot.getWeight());
+            combineddomainxyplot.add(vPlot.toXYPlot(), vPlot.getWeight());
         }
-        JFreeChart jfreechart = new JFreeChart(vChart.getTitle(), JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot,
-                true);
+        JFreeChart jfreechart = new JFreeChart(vChart.getTitle(), JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot,true);
         // jfreechart.setBackgroundPaint(Color.white);
         // ChartUtilities.applyCurrentTheme(jfreechart); //gray background
         return jfreechart;
     }
 
-    private XYPlot vplot2XYPlot(VPlot vplot) {
-        XYPlot xyplot = new XYPlot();
-        ValueAxis timeAxis = new DateAxis("Time");
-        NumberAxis valueAxis = new NumberAxis("Value");
-        xyplot.setDomainAxis(timeAxis);
-        xyplot.setRangeAxis(valueAxis);
-        int seriesIdx = 0;
-        for(VSeries vseries : vplot.getVseriesList()){
-        	seriesIdx++;
-        	XYSeriesCollection xydataset = new XYSeriesCollection();
-        	XYSeries xyseries = vxyList2XYSeries(vseries.getVxyList());
-        	xydataset.addSeries(xyseries);
-        	StandardXYItemRenderer xyItemRenderer = new StandardXYItemRenderer();
-        	xyItemRenderer.setSeriesPaint(0, Color.blue);
-        	
-        	xyplot.setDataset(seriesIdx, xydataset);
-        	xyplot.setRenderer(seriesIdx, xyItemRenderer);
-        }
-        
-        return xyplot;
-    }
+
 
     
     
