@@ -26,15 +26,38 @@ public class TestChartBase {
 	    List<Bar> barList = getBarList();
 	    vchart.setBarList(barList);	    
 	    
-	    //bar plot0
-	    VPlot vplot = new VPlot();
-	    List<VSeries> vseriesList = new ArrayList<VSeries>();
-	    vplot.setVseriesList(vseriesList);
+	    /**
+	     * bar plot0
+	     */
+	    VPlot vplotBar = new VPlot();
+	    VSeries vseries = new VSeries(null, barList, java.awt.Color.red);
+	    vplotBar.addSeries(vseries);
+	    vchart.addPlot(vplotBar);	    
 	    
-	    //plot1
+	    /**
+	     * indicators plot1
+	     */
+	    //MA plot
+	    VPlot vplotIndicator = new VPlot();
+	    vplotIndicator.addSeries(new VSeries(BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
+	    vplotIndicator.addSeries(new VSeries(BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+	    vchart.addPlot(vplotIndicator);
+
+	    //RSI plot
+	    VPlot vplotRsi = new VPlot();
+	    vplotRsi.addSeries(new VSeries(BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.green));
+	    vchart.addPlot(vplotRsi);
 	    
 	    
+	    new ChartBase(vchart);
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	// get bar list

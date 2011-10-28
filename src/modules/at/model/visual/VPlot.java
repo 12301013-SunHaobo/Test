@@ -15,7 +15,7 @@ import org.jfree.chart.plot.XYPlot;
  */
 public class VPlot {
     
-    private int weight;//relative height in proportion in panel
+    private int weight = 1;//relative height in proportion in panel
     
     private List<VSeries> vseriesList = new ArrayList<VSeries>();
 
@@ -24,6 +24,7 @@ public class VPlot {
         XYPlot xyplot = new XYPlot();
         ValueAxis timeAxis = new DateAxis("Time");
         NumberAxis valueAxis = new NumberAxis("Value");
+        valueAxis.setAutoRangeIncludesZero(false);
         xyplot.setDomainAxis(timeAxis);
         xyplot.setRangeAxis(valueAxis);
 
@@ -50,5 +51,9 @@ public class VPlot {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+    
+    public void addSeries(VSeries vseries){
+    	this.vseriesList.add(vseries);
     }
 }

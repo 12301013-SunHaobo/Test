@@ -36,4 +36,7 @@ public class VChart {
         this.barList = barList;
     }
 
+    public void addPlot(VPlot vplot){
+    	this.plotList.add(vplot);
+    }
 }

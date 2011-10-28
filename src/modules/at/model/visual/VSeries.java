@@ -5,7 +5,9 @@ import java.util.List;
 
 import modules.at.model.Bar;
 
+import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
@@ -65,13 +67,18 @@ public class VSeries {
                 }
             }
             xyseriescollection.addSeries(series);
+            return xyseriescollection;
         }
         return null;
     }
 
-    public StandardXYItemRenderer getRenderer(){
-        StandardXYItemRenderer renderer = new StandardXYItemRenderer();
-        //renderer.setSeriesPaint(0, Color.blue);
+    public XYItemRenderer getRenderer(){
+    	XYItemRenderer renderer;
+    	if(this.barList!=null){
+    		renderer = new CandlestickRenderer();
+    	} else {
+        	renderer = new StandardXYItemRenderer();
+    	}
         renderer.setSeriesPaint(0, this.color);
         return renderer;
     }
