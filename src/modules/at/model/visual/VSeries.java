@@ -24,10 +24,11 @@ public class VSeries {
     private List<Bar> barList;
     private java.awt.Color color;
 
+    private String legendTitle;
 
-
-    public VSeries(List<VXY> vxyList, List<Bar> barList, java.awt.Color color) {
+    public VSeries(String legendTitle, List<VXY> vxyList, List<Bar> barList, java.awt.Color color) {
         super();
+        this.legendTitle = legendTitle;
         this.vxyList = vxyList;
         this.barList = barList;
         this.color = color;
@@ -57,10 +58,10 @@ public class VSeries {
                 closeArr[i] = tmpBar.getClose();
                 volumeArr[i] = tmpBar.getVolume();
             }
-            return new DefaultHighLowDataset("Series 1", dateArr, highArr, lowArr, openArr, closeArr, volumeArr);
+            return new DefaultHighLowDataset(this.legendTitle, dateArr, highArr, lowArr, openArr, closeArr, volumeArr);
         } else if (this.vxyList != null) {
             XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-            XYSeries series = new XYSeries("Series 1");
+            XYSeries series = new XYSeries(this.legendTitle);
             for(VXY vxy : this.vxyList){
                 if(!Double.isNaN(vxy.getY())){
                     series.add(vxy.getX(), vxy.getY());

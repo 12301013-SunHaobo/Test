@@ -10,6 +10,7 @@ import modules.at.model.Tick;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.model.visual.VSeries;
+import modules.at.model.visual.VXY;
 
 public class TestChartBase {
 
@@ -24,28 +25,31 @@ public class TestChartBase {
 	    VChart vchart = new VChart();
 	    
 	    List<Bar> barList = getBarList();
+//	    for(Bar bar : barList) {
+//	    	System.out.println(bar+" time="+bar.getDate().getTime());
+//	    }
 	    vchart.setBarList(barList);	    
 	    
 	    /**
 	     * bar plot0
 	     */
-	    VPlot vplotBar = new VPlot();
-	    VSeries vseries = new VSeries(null, barList, java.awt.Color.red);
-	    vplotBar.addSeries(vseries);
+	    VPlot vplotBar = new VPlot(4);
+	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
+	    vplotBar.addSeries(new VSeries("mark", getAnalysisVXYList(), null, java.awt.Color.blue));
 	    vchart.addPlot(vplotBar);	    
 	    
 	    /**
 	     * indicators plot1
 	     */
 	    //MA plot
-	    VPlot vplotIndicator = new VPlot();
-	    vplotIndicator.addSeries(new VSeries(BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
-	    vplotIndicator.addSeries(new VSeries(BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+	    VPlot vplotIndicator = new VPlot(1);
+	    vplotIndicator.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
+	    vplotIndicator.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
 	    vchart.addPlot(vplotIndicator);
 
 	    //RSI plot
-	    VPlot vplotRsi = new VPlot();
-	    vplotRsi.addSeries(new VSeries(BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.green));
+	    VPlot vplotRsi = new VPlot(1);
+	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.green));
 	    vchart.addPlot(vplotRsi);
 	    
 	    
@@ -55,7 +59,12 @@ public class TestChartBase {
 	
 	
 	
-	
+	private static List<VXY> getAnalysisVXYList(){
+		List<VXY> vxyList = new ArrayList<VXY>();
+		vxyList.add(new VXY(1318599059100L, 57.9));
+		vxyList.add(new VXY(1318599598000L, 58.1));
+		return vxyList;
+	}
 	
 	
 	

@@ -17,6 +17,42 @@ import org.jfree.ui.TextAnchor;
 
 public class BarChartUtil {
 
+
+	enum SeriesType {
+		RsiUpper, Rsi, RsiLower,
+		BBUpper, BBMiddle, BBLower,
+		MAFast, MASlow,
+		StoK, StoD, StoUpper, StoLower
+	}
+	public static List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
+		List<VXY> vxyList = new ArrayList<VXY>();
+		Indicators indicator = new Indicators();
+		
+		for(Bar bar : barList){
+			indicator.addBar(bar);
+			double indicatorVal = Double.NaN;
+			switch (seriesType) {
+				case RsiUpper: indicatorVal = AlgoSetting.RSI_UPPER; break;
+				case Rsi: indicatorVal = indicator.getRsi(); break;
+				case RsiLower: indicatorVal = AlgoSetting.RSI_LOWER; break;
+				case BBUpper: indicatorVal = indicator.getBBUpper(); break;
+				case BBMiddle: indicatorVal = indicator.getBBMiddle(); break;
+				case BBLower: indicatorVal = indicator.getBBLower(); break;
+				case MAFast: indicatorVal = indicator.getSMAFast(); break;
+				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
+				case StoK: indicatorVal = indicator.getStochasticK(); break;
+				case StoD: indicatorVal = indicator.getStochasticD(); break;
+				case StoUpper: indicatorVal = AlgoSetting.STOCHASTIC_UPPER; break;
+				case StoLower: indicatorVal = AlgoSetting.STOCHASTIC_LOWER; break;
+				default:break;
+			}
+			if(!Double.isNaN(indicatorVal)){
+				vxyList.add(new VXY(bar.getDate().getTime(), indicatorVal));
+			}
+		}
+		return vxyList;
+	}	
+	
 	
 	//from tradeList to annotationList
 	public static List<XYPointerAnnotation> getTradeAnnotationList(List<Trade> tradeList){
@@ -62,40 +98,6 @@ public class BarChartUtil {
 	}
 
 	
-	enum SeriesType {
-		RsiUpper, Rsi, RsiLower,
-		BBUpper, BBMiddle, BBLower,
-		MAFast, MASlow,
-		StoK, StoD, StoUpper, StoLower
-	}
-	public static List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
-		List<VXY> vxyList = new ArrayList<VXY>();
-		Indicators indicator = new Indicators();
-		
-		for(Bar bar : barList){
-			indicator.addBar(bar);
-			double indicatorVal = Double.NaN;
-			switch (seriesType) {
-				case RsiUpper: indicatorVal = AlgoSetting.RSI_UPPER; break;
-				case Rsi: indicatorVal = indicator.getRsi(); break;
-				case RsiLower: indicatorVal = AlgoSetting.RSI_LOWER; break;
-				case BBUpper: indicatorVal = indicator.getBBUpper(); break;
-				case BBMiddle: indicatorVal = indicator.getBBMiddle(); break;
-				case BBLower: indicatorVal = indicator.getBBLower(); break;
-				case MAFast: indicatorVal = indicator.getSMAFast(); break;
-				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
-				case StoK: indicatorVal = indicator.getStochasticK(); break;
-				case StoD: indicatorVal = indicator.getStochasticD(); break;
-				case StoUpper: indicatorVal = AlgoSetting.STOCHASTIC_UPPER; break;
-				case StoLower: indicatorVal = AlgoSetting.STOCHASTIC_LOWER; break;
-				default:break;
-			}
-			if(!Double.isNaN(indicatorVal)){
-				vxyList.add(new VXY(bar.getDate().getTime(), indicatorVal));
-			}
-		}
-		return vxyList;
-	}	
 	
 	
 }

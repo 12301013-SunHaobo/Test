@@ -45,7 +45,7 @@ public class ChartBase extends ApplicationFrame {
     }
 
     private JFreeChart createChart(VChart vChart) {
-        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date/Time"));
+        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date-Time"));
         combineddomainxyplot.setDomainPannable(true);
 
         // loop through chartData plot list

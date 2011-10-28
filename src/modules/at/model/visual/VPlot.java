@@ -19,8 +19,12 @@ public class VPlot {
     
     private List<VSeries> vseriesList = new ArrayList<VSeries>();
 
-    
-    public XYPlot toXYPlot(){
+    public VPlot(int weight) {
+		super();
+		this.weight = weight;
+	}
+
+	public XYPlot toXYPlot(){
         XYPlot xyplot = new XYPlot();
         ValueAxis timeAxis = new DateAxis("Time");
         NumberAxis valueAxis = new NumberAxis("Value");
