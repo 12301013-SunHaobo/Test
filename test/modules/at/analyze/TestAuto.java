@@ -14,12 +14,11 @@ import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
+import modules.at.model.visual.VChart;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternHighLow;
+import modules.at.pattern.PatternSto;
 import modules.at.visual.MySampleChartBase;
-
-import org.jfree.ui.RefineryUtilities;
-
 import utils.FileUtil;
 import utils.Formatter;
 import utils.GlobalSetting;
@@ -39,9 +38,19 @@ public class TestAuto {
 		String stockCode = "qqq";//qqq, tna, tza 
 		String[] dateTimeArr = new String[] {"20111021", "200115"};
 		
-		List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
+		String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
+		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[0]);
+		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
+
+		List<Trade> tradeList = auto(dateTimeArr[0], barList);
 		System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
 		printTrades(tradeList, true);
+		
+		
+		//show chart
+	    VChart vchart = new VChart();
+	    vchart.setBarList(barList);	   
+		
 		
 		new MySampleChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
 		
@@ -52,7 +61,11 @@ public class TestAuto {
 		List<String[]> dateTimeArrList = getInputParams(stockCode);
 		
 		for(String[] dateTimeArr : dateTimeArrList){
-			List<Trade> tradeList = auto(stockCode, dateTimeArr[0], dateTimeArr[1]);
+			String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
+			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[0]);
+			List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
+			
+			List<Trade> tradeList = auto(dateTimeArr[0], barList);
 			System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
 			printTrades(tradeList, true);
 			//break;
@@ -108,16 +121,13 @@ public class TestAuto {
 		List<Pattern> patternList = new ArrayList<Pattern>();
 		//patternList.add(new PatternMA());
 		//patternList.add(new PatternRsi());
-		//patternList.add(new PatternSto());
+		patternList.add(new PatternSto());
 		patternList.add(new PatternHighLow());
 		return patternList;
 		
 	}
 	
-	private static List<Trade> auto(String stockCode, String dateStr, String timeStr) throws Exception {
-		String tickFileName = dateStr + "-" + timeStr + ".txt";
-		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateStr);
-		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
+	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
 
 		Indicators indicators = new Indicators();
 		List<Pattern> patternList = getPatternList();
