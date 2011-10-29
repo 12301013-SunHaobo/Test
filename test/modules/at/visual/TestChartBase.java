@@ -10,6 +10,7 @@ import modules.at.model.Tick;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.model.visual.VSeries;
+import modules.at.model.visual.VXY;
 
 public class TestChartBase {
 
@@ -26,17 +27,33 @@ public class TestChartBase {
 	    List<Bar> barList = getBarList();
 	    vchart.setBarList(barList);	    
 	    
-	    //bar plot0
-	    VPlot vplot = new VPlot();
-	    List<VSeries> vseriesList = new ArrayList<VSeries>();
-	    vplot.setVseriesList(vseriesList);
+	    /**
+	     * bar plot0
+	     */
+	    VPlot vplotBar = new VPlot(4);
+	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
+	    vplotBar.addAnnotation(BarChartUtil.getLine(1318599059100L, 57.9, 1318599598000L, 58.1));
+	    vchart.addPlot(vplotBar);	    
 	    
-	    //plot1
+	    /**
+	     * indicators plot1
+	     */
+	    //MA plot
+	    VPlot vplotIndicator = new VPlot(1);
+	    vplotIndicator.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
+	    vplotIndicator.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+	    vchart.addPlot(vplotIndicator);
+
+	    //RSI plot
+	    VPlot vplotRsi = new VPlot(1);
+	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
+	    vchart.addPlot(vplotRsi);
 	    
 	    
+	    new ChartBase(vchart);
 	}
-	
-	
+
+
 	// get bar list
 	private static List<Bar> getBarList() {
 		String tickFileName = dateStr + "-" + timeStr+".txt";

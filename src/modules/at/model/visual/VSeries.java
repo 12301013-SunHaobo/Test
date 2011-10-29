@@ -1,11 +1,14 @@
 package modules.at.model.visual;
 
+import java.awt.Color;
 import java.util.Date;
 import java.util.List;
 
 import modules.at.model.Bar;
 
+import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
@@ -18,14 +21,18 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class VSeries {
 
+    private String legendTitle;
     private List<VXY> vxyList;
     private List<Bar> barList;
-    private java.awt.Color color;
-
-
-
-    public VSeries(List<VXY> vxyList, List<Bar> barList, java.awt.Color color) {
+    private Color color;
+    
+    public VSeries(
+    		String legendTitle, 
+    		List<VXY> vxyList, 
+    		List<Bar> barList, 
+    		Color color) {
         super();
+        this.legendTitle = legendTitle;
         this.vxyList = vxyList;
         this.barList = barList;
         this.color = color;
@@ -55,23 +62,28 @@ public class VSeries {
                 closeArr[i] = tmpBar.getClose();
                 volumeArr[i] = tmpBar.getVolume();
             }
-            return new DefaultHighLowDataset("Series 1", dateArr, highArr, lowArr, openArr, closeArr, volumeArr);
+            return new DefaultHighLowDataset(this.legendTitle, dateArr, highArr, lowArr, openArr, closeArr, volumeArr);
         } else if (this.vxyList != null) {
             XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-            XYSeries series = new XYSeries("Series 1");
+            XYSeries series = new XYSeries(this.legendTitle);
             for(VXY vxy : this.vxyList){
                 if(!Double.isNaN(vxy.getY())){
                     series.add(vxy.getX(), vxy.getY());
                 }
             }
             xyseriescollection.addSeries(series);
+            return xyseriescollection;
         }
         return null;
     }
 
-    public StandardXYItemRenderer getRenderer(){
-        StandardXYItemRenderer renderer = new StandardXYItemRenderer();
-        //renderer.setSeriesPaint(0, Color.blue);
+    public XYItemRenderer getRenderer(){
+    	XYItemRenderer renderer;
+    	if(this.barList!=null){
+    		renderer = new CandlestickRenderer();
+    	} else {
+        	renderer = new StandardXYItemRenderer();
+    	}
         renderer.setSeriesPaint(0, this.color);
         return renderer;
     }

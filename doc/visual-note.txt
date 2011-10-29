@@ -15,7 +15,7 @@ HideSeriesDemo3.java //circles
 XYBoxAnnotationDemo1.java //multiple boxes areas
 XYPolygonAnnotationDemo1.java //polygon area
 CategoryMarkerDemo1.java //vertical line marker
-PlotOrientationDemo2.java //section of line
+PlotOrientationDemo2.java //section of line; XYShapeAnnotation, XYLineAnnotation
 
 
 

@@ -4,8 +4,10 @@
 
 package modules.at.visual;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,11 +22,15 @@ import modules.at.model.Trade;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.annotations.XYPointerAnnotation;
+import org.jfree.chart.annotations.XYPolygonAnnotation;
+import org.jfree.chart.annotations.XYShapeAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
+import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
@@ -34,11 +40,13 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.Layer;
 import org.jfree.ui.RefineryUtilities;
+import org.jfree.ui.TextAnchor;
 
 import utils.GlobalSetting;
 
-public class BarChartBase extends ApplicationFrame {
+public class MySampleChartBase extends ApplicationFrame {
 
 	private static final boolean SHOW_BB = false;;
 	private static final boolean SHOW_MA_FAST = true; 
@@ -59,7 +67,7 @@ public class BarChartBase extends ApplicationFrame {
 	private List<Bar> barList;
 	private List<XYPointerAnnotation> annotationList;
 	
-	public BarChartBase(String stockCode, String dateStr, String timeStr, List<Trade> tradeList) {
+	public MySampleChartBase(String stockCode, String dateStr, String timeStr, List<Trade> tradeList) {
 		super(stockCode+":"+dateStr + "-" + timeStr+".txt");
 
 		this.stockCode = stockCode;
@@ -88,7 +96,7 @@ public class BarChartBase extends ApplicationFrame {
 		String dateStr = "20111014";
 		String timeStr = "200153";
 		List<Trade> tradeList = new ArrayList<Trade>();
-		new BarChartBase(stockCode,dateStr, timeStr, tradeList);
+		new MySampleChartBase(stockCode,dateStr, timeStr, tradeList);
 	}
 
 	private JFreeChart createChart() {
@@ -114,11 +122,6 @@ public class BarChartBase extends ApplicationFrame {
 		xyplot.setRenderer(new CandlestickRenderer());
 		 
 		xyplot.setDomainPannable(true);
-		
-		//add annotations
-		for (XYPointerAnnotation anno : this.annotationList){
-			xyplot.addAnnotation(anno);
-		}
 		
 		int datasetIdx = 0;
 		//BB indicator
@@ -161,8 +164,57 @@ public class BarChartBase extends ApplicationFrame {
 		numberaxis.setUpperMargin(0.1);//upper margin
 		numberaxis.setLowerMargin(0.1);//lower margin
 		
+		//add annotations begin
+		//pointer annotation
+		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
+				"XYPoint anno", 1318599419000D, 57.9917D, -Math.PI*3/4);
+		xypointerannotation.setTextAnchor(TextAnchor.CENTER_RIGHT);
+		xypointerannotation.setPaint(Color.black);
+		xypointerannotation.setArrowPaint(Color.black);
+		xypointerannotation.setBaseRadius(25);//the distance from point to arrow end
+		xypointerannotation.setTipRadius(5);//the distance from point to arrow head
+		xyplot.addAnnotation(xypointerannotation);
+		
+		//rectangle area annotation
+		XYShapeAnnotation xyshapeannotation = new XYShapeAnnotation(
+				new java.awt.geom.Rectangle2D.Double(1318599059000D, 57.886, 600*1000D, 0.09D), 
+				BarChartUtil.DASH_STROKE, Color.blue);
+		xyplot.addAnnotation(xyshapeannotation);
+		
+		//polygon area annotation(clockwise)
+		XYPolygonAnnotation xypolygonannotation = new XYPolygonAnnotation(new double[] {
+				1318599059000D, 57.82D, 
+				1318599179000D, 57.92D, 
+				1318599358000D, 57.94D, 
+				1318599479000D, 57.81D,
+				1318599598000D, 57.95D
+			}, BarChartUtil.BASIC_STOKE, Color.blue, null);
+		xyplot.addAnnotation(xypolygonannotation);
+		
+		//line annotation
+		XYLineAnnotation xylineannotation = new XYLineAnnotation(1318599059000D, 57.986D, 1318599419000D, 57.786D);
+		xyplot.addAnnotation(xylineannotation);
+
+		//interval
+		//xyplot.addDomainMarker(new IntervalMarker(1318599059000D, 1318599598000D), Layer.BACKGROUND);//domain=x
+		//xyplot.addRangeMarker(new IntervalMarker(57.786D, 57.986D), Layer.BACKGROUND);//range=y; not working? answer: start<end
+		
+		//add annotations end
+		
 		return xyplot;
 	}
+	/*
+	Bar [id=1, date=2011/10/14, o=57.83, h=57.89, l=57.82, c=57.886] time=1318599059000
+	Bar [id=2, date=2011/10/14, o=57.89, h=57.92, l=57.87, c=57.89] time=1318599118000
+	Bar [id=3, date=2011/10/14, o=57.89, h=57.94, l=57.8699, c=57.92] time=1318599179000
+	Bar [id=4, date=2011/10/14, o=57.92, h=57.97, l=57.92, c=57.95] time=1318599239000
+	Bar [id=5, date=2011/10/14, o=57.95, h=58.0, l=57.94, c=57.99] time=1318599299000
+	Bar [id=6, date=2011/10/14, o=58.0, h=58.03, l=57.99, c=57.99] time=1318599358000
+	Bar [id=7, date=2011/10/14, o=57.99, h=57.99, l=57.892, c=57.892] time=1318599419000
+	Bar [id=8, date=2011/10/14, o=57.89, h=57.95, l=57.89, c=57.95] time=1318599479000
+	Bar [id=9, date=2011/10/14, o=57.94, h=58.0, l=57.94, c=57.971] time=1318599538000
+	Bar [id=10, date=2011/10/14, o=57.979, h=57.9917, l=57.97, c=57.9887] time=1318599598000	
+	*/
 	
 	//lower indicator plot : RSI_EMA
 	private XYPlot createLowerIndicatorPlot(){

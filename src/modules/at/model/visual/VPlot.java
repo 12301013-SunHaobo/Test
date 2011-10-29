@@ -3,6 +3,7 @@ package modules.at.model.visual;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
@@ -15,15 +16,21 @@ import org.jfree.chart.plot.XYPlot;
  */
 public class VPlot {
     
-    private int weight;//relative height in proportion in panel
+    private int weight = 1;//relative height in proportion in panel
     
     private List<VSeries> vseriesList = new ArrayList<VSeries>();
-
+    private List<XYAnnotation> annotationList = new ArrayList<XYAnnotation>();
     
-    public XYPlot toXYPlot(){
+    public VPlot(int weight) {
+		super();
+		this.weight = weight;
+	}
+
+	public XYPlot toXYPlot(){
         XYPlot xyplot = new XYPlot();
         ValueAxis timeAxis = new DateAxis("Time");
         NumberAxis valueAxis = new NumberAxis("Value");
+        valueAxis.setAutoRangeIncludesZero(false);
         xyplot.setDomainAxis(timeAxis);
         xyplot.setRangeAxis(valueAxis);
 
@@ -31,6 +38,10 @@ public class VPlot {
             VSeries vseries = vseriesList.get(i);
             xyplot.setDataset(i, vseries.toXYDataset());
             xyplot.setRenderer(i, vseries.getRenderer());
+        }
+        
+        for(int i=0;i<annotationList.size();i++){
+        	xyplot.addAnnotation(annotationList.get(i));
         }
         return xyplot;
     }
@@ -50,5 +61,13 @@ public class VPlot {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+    
+    public void addSeries(VSeries vseries){
+    	this.vseriesList.add(vseries);
+    }
+    
+    public void addAnnotation(XYAnnotation anno){
+    	this.annotationList.add(anno);
     }
 }
