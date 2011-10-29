@@ -40,6 +40,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.Layer;
 import org.jfree.ui.RefineryUtilities;
+import org.jfree.ui.TextAnchor;
 
 import utils.GlobalSetting;
 
@@ -164,9 +165,16 @@ public class BarChartBase extends ApplicationFrame {
 		numberaxis.setLowerMargin(0.1);//lower margin
 		
 		//add annotations begin
-		for (XYPointerAnnotation anno : this.annotationList){
-			xyplot.addAnnotation(anno);
-		}
+		//pointer annotation
+		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
+				"XYPoint anno", 1318599419000D, 57.9917D, -Math.PI*3/4);
+		xypointerannotation.setTextAnchor(TextAnchor.CENTER_RIGHT);
+		xypointerannotation.setPaint(Color.black);
+		xypointerannotation.setArrowPaint(Color.black);
+		xypointerannotation.setBaseRadius(25);//the distance from point to arrow end
+		xypointerannotation.setTipRadius(5);//the distance from point to arrow head
+		xyplot.addAnnotation(xypointerannotation);
+		
 		//rectangle area annotation
 		XYShapeAnnotation xyshapeannotation = new XYShapeAnnotation(
 				new java.awt.geom.Rectangle2D.Double(1318599059000D, 57.886, 600*1000D, 0.09D), 
