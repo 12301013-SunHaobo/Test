@@ -13,7 +13,9 @@ import modules.at.model.Bar;
 import modules.at.model.Trade;
 import modules.at.model.visual.VXY;
 
+import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.annotations.XYPointerAnnotation;
+import org.jfree.chart.annotations.XYPolygonAnnotation;
 import org.jfree.ui.TextAnchor;
 
 public class BarChartUtil {
@@ -22,11 +24,52 @@ public class BarChartUtil {
 	public static Stroke DASH_STROKE = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{ 10.0f }, 0.0f);
 	public static Stroke BASIC_STOKE = new BasicStroke();
 	
+	//transparency alpha : 255 means completely opaque, 0 means transparent
+	public static Color getColor(Color color, int alpha) {
+		return new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+	}
 
+	public enum PointEnd {
+		TOP_LEFT, TOP, TOP_RIGHT,
+		LEFT, RIGHT,
+		BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT
+	}
+	public static XYPointerAnnotation getPointer(String label, double x, double y, PointEnd pt){
+		double angle = 0;
+		switch (pt) {
+			case TOP_LEFT : angle = -Math.PI*3/4; break;
+			case TOP : angle = Math.PI/2; break;
+			case TOP_RIGHT : angle = -Math.PI/4; break;
+			case LEFT : angle = -Math.PI; break;
+			case RIGHT : angle = 0; break;
+			case BOTTOM_LEFT : angle = Math.PI*3/4; break;
+			case BOTTOM : angle = Math.PI/2; break;
+			case BOTTOM_RIGHT : angle = Math.PI/4; break;
+		}
+		
+		XYPointerAnnotation anno = new XYPointerAnnotation(
+				label, x, y, angle);
+		anno.setTextAnchor(TextAnchor.CENTER_RIGHT);
+		anno.setPaint(Color.black);
+		anno.setArrowPaint(Color.black);
+		anno.setBaseRadius(25);//the distance from point to arrow end
+		anno.setTipRadius(5);//the distance from point to arrow head
+		return anno;
+	}
+	
+	//line annotation
+	public static XYLineAnnotation getLine(double x1, double y1, double x2, double y2){
+		return new XYLineAnnotation(x1, y1, x2, y2);
+	}
+	//polygon annotation
+	public static XYPolygonAnnotation getPolygon(double[] xyPairArr, Color color){
+		return new XYPolygonAnnotation(xyPairArr, BarChartUtil.BASIC_STOKE, color, null);
+	}
+	
 	/**
 	 *Utility for indicator VXY lists
 	 */
-	enum SeriesType {
+	public enum SeriesType {
 		RsiUpper, Rsi, RsiLower,
 		BBUpper, BBMiddle, BBLower,
 		MAFast, MASlow,

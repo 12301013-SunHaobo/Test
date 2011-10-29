@@ -32,7 +32,8 @@ public class TestChartBase {
 	     */
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
-	    vplotBar.addSeries(new VSeries("mark", getAnalysisVXYList(), null, java.awt.Color.blue));
+	    //vplotBar.addSeries(new VSeries("mark", getAnalysisVXYList(), null, java.awt.Color.blue));
+	    vplotBar.addAnnotation(BarChartUtil.getLine(1318599059100L, 57.9, 1318599598000L, 58.1));
 	    vchart.addPlot(vplotBar);	    
 	    
 	    /**
@@ -52,14 +53,8 @@ public class TestChartBase {
 	    
 	    new ChartBase(vchart);
 	}
-	
-	private static List<VXY> getAnalysisVXYList(){
-		List<VXY> vxyList = new ArrayList<VXY>();
-		vxyList.add(new VXY(1318599059100L, 57.9));
-		vxyList.add(new VXY(1318599598000L, 58.1));
-		return vxyList;
-	}
-	
+
+
 	// get bar list
 	private static List<Bar> getBarList() {
 		String tickFileName = dateStr + "-" + timeStr+".txt";

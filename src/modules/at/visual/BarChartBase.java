@@ -7,6 +7,7 @@ package modules.at.visual;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -181,7 +182,6 @@ public class BarChartBase extends ApplicationFrame {
 		xyplot.addAnnotation(xyshapeannotation);
 		
 		//polygon area annotation(clockwise)
-		
 		XYPolygonAnnotation xypolygonannotation = new XYPolygonAnnotation(new double[] {
 				1318599059000D, 57.82D, 
 				1318599179000D, 57.92D, 
