@@ -16,7 +16,7 @@ import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternHighLow;
-import modules.at.visual.BarChartBase;
+import modules.at.visual.MySampleChartBase;
 
 import org.jfree.ui.RefineryUtilities;
 
@@ -43,7 +43,7 @@ public class TestAuto {
 		System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
 		printTrades(tradeList, true);
 		
-		new BarChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
+		new MySampleChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
 		
 	}
 	

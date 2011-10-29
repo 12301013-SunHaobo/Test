@@ -32,7 +32,6 @@ public class TestChartBase {
 	     */
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
-	    //vplotBar.addSeries(new VSeries("mark", getAnalysisVXYList(), null, java.awt.Color.blue));
 	    vplotBar.addAnnotation(BarChartUtil.getLine(1318599059100L, 57.9, 1318599598000L, 58.1));
 	    vchart.addPlot(vplotBar);	    
 	    
@@ -47,7 +46,7 @@ public class TestChartBase {
 
 	    //RSI plot
 	    VPlot vplotRsi = new VPlot(1);
-	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.green));
+	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
 	    vchart.addPlot(vplotRsi);
 	    
 	    

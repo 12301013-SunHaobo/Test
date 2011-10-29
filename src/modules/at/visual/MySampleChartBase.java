@@ -46,7 +46,7 @@ import org.jfree.ui.TextAnchor;
 
 import utils.GlobalSetting;
 
-public class BarChartBase extends ApplicationFrame {
+public class MySampleChartBase extends ApplicationFrame {
 
 	private static final boolean SHOW_BB = false;;
 	private static final boolean SHOW_MA_FAST = true; 
@@ -67,7 +67,7 @@ public class BarChartBase extends ApplicationFrame {
 	private List<Bar> barList;
 	private List<XYPointerAnnotation> annotationList;
 	
-	public BarChartBase(String stockCode, String dateStr, String timeStr, List<Trade> tradeList) {
+	public MySampleChartBase(String stockCode, String dateStr, String timeStr, List<Trade> tradeList) {
 		super(stockCode+":"+dateStr + "-" + timeStr+".txt");
 
 		this.stockCode = stockCode;
@@ -96,7 +96,7 @@ public class BarChartBase extends ApplicationFrame {
 		String dateStr = "20111014";
 		String timeStr = "200153";
 		List<Trade> tradeList = new ArrayList<Trade>();
-		new BarChartBase(stockCode,dateStr, timeStr, tradeList);
+		new MySampleChartBase(stockCode,dateStr, timeStr, tradeList);
 	}
 
 	private JFreeChart createChart() {
