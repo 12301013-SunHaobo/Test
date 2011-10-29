@@ -1,7 +1,9 @@
 package modules.at.visual;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +14,18 @@ import modules.at.model.Trade;
 import modules.at.model.visual.VXY;
 
 import org.jfree.chart.annotations.XYPointerAnnotation;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.ui.TextAnchor;
 
 public class BarChartUtil {
 
+	//dash stroke
+	public static Stroke DASH_STROKE = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{ 10.0f }, 0.0f);
+	public static Stroke BASIC_STOKE = new BasicStroke();
+	
 
+	/**
+	 *Utility for indicator VXY lists
+	 */
 	enum SeriesType {
 		RsiUpper, Rsi, RsiLower,
 		BBUpper, BBMiddle, BBLower,
@@ -52,7 +60,21 @@ public class BarChartUtil {
 		}
 		return vxyList;
 	}	
+
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// unnecessary methods below
 	
 	//from tradeList to annotationList
 	public static List<XYPointerAnnotation> getTradeAnnotationList(List<Trade> tradeList){
@@ -62,9 +84,6 @@ public class BarChartUtil {
 		}
 		return annotationList;
 	}
-	
-	
-	
 	
 	//create one annotation by a point
 	public static XYPointerAnnotation createAnnotation(Trade trade){

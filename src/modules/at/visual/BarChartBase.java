@@ -23,6 +23,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.annotations.XYPointerAnnotation;
+import org.jfree.chart.annotations.XYPolygonAnnotation;
 import org.jfree.chart.annotations.XYShapeAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -121,8 +122,6 @@ public class BarChartBase extends ApplicationFrame {
 		 
 		xyplot.setDomainPannable(true);
 		
-
-		
 		int datasetIdx = 0;
 		//BB indicator
 		if(SHOW_BB){
@@ -178,16 +177,27 @@ public class BarChartBase extends ApplicationFrame {
 		//rectangle area annotation
 		XYShapeAnnotation xyshapeannotation = new XYShapeAnnotation(
 				new java.awt.geom.Rectangle2D.Double(1318599059000D, 57.886, 600*1000D, 0.09D), 
-				new BasicStroke(1.0F), Color.blue);
+				BarChartUtil.DASH_STROKE, Color.blue);
 		xyplot.addAnnotation(xyshapeannotation);
+		
+		//polygon area annotation(clockwise)
+		
+		XYPolygonAnnotation xypolygonannotation = new XYPolygonAnnotation(new double[] {
+				1318599059000D, 57.82D, 
+				1318599179000D, 57.92D, 
+				1318599358000D, 57.94D, 
+				1318599479000D, 57.81D,
+				1318599598000D, 57.95D
+			}, BarChartUtil.BASIC_STOKE, Color.blue, null);
+		xyplot.addAnnotation(xypolygonannotation);
+		
 		//line annotation
 		XYLineAnnotation xylineannotation = new XYLineAnnotation(1318599059000D, 57.986D, 1318599419000D, 57.786D);
 		xyplot.addAnnotation(xylineannotation);
 
 		//interval
-		xyplot.addDomainMarker(new IntervalMarker(1318599059000D, 1318599598000D), Layer.BACKGROUND);//domain=x
-		xyplot.addRangeMarker(new IntervalMarker(57.786D, 57.986D), Layer.BACKGROUND);//range=y; not working? answer: start<end
-		
+		//xyplot.addDomainMarker(new IntervalMarker(1318599059000D, 1318599598000D), Layer.BACKGROUND);//domain=x
+		//xyplot.addRangeMarker(new IntervalMarker(57.786D, 57.986D), Layer.BACKGROUND);//range=y; not working? answer: start<end
 		
 		//add annotations end
 		

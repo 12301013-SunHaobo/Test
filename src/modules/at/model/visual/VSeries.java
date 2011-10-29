@@ -1,5 +1,6 @@
 package modules.at.model.visual;
 
+import java.awt.Color;
 import java.util.Date;
 import java.util.List;
 
@@ -20,13 +21,16 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class VSeries {
 
+    private String legendTitle;
     private List<VXY> vxyList;
     private List<Bar> barList;
-    private java.awt.Color color;
-
-    private String legendTitle;
-
-    public VSeries(String legendTitle, List<VXY> vxyList, List<Bar> barList, java.awt.Color color) {
+    private Color color;
+    
+    public VSeries(
+    		String legendTitle, 
+    		List<VXY> vxyList, 
+    		List<Bar> barList, 
+    		Color color) {
         super();
         this.legendTitle = legendTitle;
         this.vxyList = vxyList;

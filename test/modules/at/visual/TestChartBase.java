@@ -25,9 +25,6 @@ public class TestChartBase {
 	    VChart vchart = new VChart();
 	    
 	    List<Bar> barList = getBarList();
-//	    for(Bar bar : barList) {
-//	    	System.out.println(bar+" time="+bar.getDate().getTime());
-//	    }
 	    vchart.setBarList(barList);	    
 	    
 	    /**
@@ -56,18 +53,12 @@ public class TestChartBase {
 	    new ChartBase(vchart);
 	}
 	
-	
-	
-	
 	private static List<VXY> getAnalysisVXYList(){
 		List<VXY> vxyList = new ArrayList<VXY>();
 		vxyList.add(new VXY(1318599059100L, 57.9));
 		vxyList.add(new VXY(1318599598000L, 58.1));
 		return vxyList;
 	}
-	
-	
-	
 	
 	// get bar list
 	private static List<Bar> getBarList() {
