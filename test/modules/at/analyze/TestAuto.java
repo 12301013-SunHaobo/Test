@@ -15,10 +15,16 @@ import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
+import modules.at.model.visual.VPlot;
+import modules.at.model.visual.VSeries;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternHighLow;
 import modules.at.pattern.PatternSto;
-import modules.at.visual.MySampleChartBase;
+import modules.at.visual.BarChartUtil;
+import modules.at.visual.ChartBase;
+
+import org.jfree.chart.annotations.XYAnnotation;
+
 import utils.FileUtil;
 import utils.Formatter;
 import utils.GlobalSetting;
@@ -48,12 +54,36 @@ public class TestAuto {
 		
 		
 		//show chart
-	    VChart vchart = new VChart();
-	    vchart.setBarList(barList);	   
-		
-		
-		new MySampleChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
-		
+	    VChart vchart = new VChart(tickFileName);
+	    
+	    /**
+	     * bar plot0
+	     */
+	    VPlot vplotBar = new VPlot(4);
+	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
+	    vplotBar.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
+	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
+	    vplotBar.addAnnotations(tradeAnnoList);
+	    vchart.addPlot(vplotBar);	    
+	    
+//	    /**
+//	     * indicators plot1
+//	     */
+//	    //MA plot
+//	    VPlot vplotIndicator = new VPlot(1);
+//	    vplotIndicator.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
+//	    vplotIndicator.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+//	    vchart.addPlot(vplotIndicator);
+
+	    //RSI plot
+	    VPlot vplotRsi = new VPlot(1);
+	    vplotRsi.addSeries(new VSeries("RsiUpper", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
+	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
+	    vplotRsi.addSeries(new VSeries("RsiLower", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiLower, barList), null, java.awt.Color.red));
+	    vchart.addPlot(vplotRsi);
+	    
+	    new ChartBase(vchart);
+	    
 	}
 	
 	private static void testAllDays() throws Exception{

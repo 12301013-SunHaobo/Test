@@ -22,10 +22,9 @@ public class TestChartBase {
 	 */
 
 	public static void main(String args[]) {
-	    VChart vchart = new VChart();
+	    VChart vchart = new VChart("TestChartBase.java");
 	    
 	    List<Bar> barList = getBarList();
-	    vchart.setBarList(barList);	    
 	    
 	    /**
 	     * bar plot0

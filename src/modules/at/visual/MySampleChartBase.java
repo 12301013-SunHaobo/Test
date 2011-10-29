@@ -4,10 +4,8 @@
 
 package modules.at.visual;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +20,7 @@ import modules.at.model.Trade;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.annotations.XYPolygonAnnotation;
@@ -30,7 +29,6 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
-import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
@@ -40,7 +38,6 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.Layer;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.ui.TextAnchor;
 
@@ -65,7 +62,7 @@ public class MySampleChartBase extends ApplicationFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private List<Bar> barList;
-	private List<XYPointerAnnotation> annotationList;
+	private List<XYAnnotation> annotationList;
 	
 	public MySampleChartBase(String stockCode, String dateStr, String timeStr, List<Trade> tradeList) {
 		super(stockCode+":"+dateStr + "-" + timeStr+".txt");
@@ -75,7 +72,7 @@ public class MySampleChartBase extends ApplicationFrame {
 		this.tickFileName = dateStr + "-" + timeStr+".txt";
 		//init barList
 		this.barList = getBarList();
-		this.annotationList = BarChartUtil.getTradeAnnotationList(tradeList);
+		this.annotationList = BarChartUtil.trade2AnnotationList(tradeList);
 		
 		JFreeChart jfreechart = createChart();
 		ChartPanel chartpanel = new ChartPanel(jfreechart);

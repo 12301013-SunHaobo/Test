@@ -2,7 +2,6 @@ package modules.at.visual;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Paint;
 import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,7 @@ import modules.at.model.Bar;
 import modules.at.model.Trade;
 import modules.at.model.visual.VXY;
 
+import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.annotations.XYPolygonAnnotation;
@@ -29,29 +29,29 @@ public class BarChartUtil {
 		return new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 
-	public enum PointEnd {
+	public enum PointTo {
 		TOP_LEFT, TOP, TOP_RIGHT,
 		LEFT, RIGHT,
 		BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT
 	}
-	public static XYPointerAnnotation getPointer(String label, double x, double y, PointEnd pt){
+	public static XYPointerAnnotation getPointer(String label, double x, double y, PointTo pt, Color color){
 		double angle = 0;
 		switch (pt) {
-			case TOP_LEFT : angle = -Math.PI*3/4; break;
+			case TOP_LEFT : angle = Math.PI/4; break;
 			case TOP : angle = Math.PI/2; break;
-			case TOP_RIGHT : angle = -Math.PI/4; break;
-			case LEFT : angle = -Math.PI; break;
-			case RIGHT : angle = 0; break;
-			case BOTTOM_LEFT : angle = Math.PI*3/4; break;
-			case BOTTOM : angle = Math.PI/2; break;
-			case BOTTOM_RIGHT : angle = Math.PI/4; break;
+			case TOP_RIGHT : angle = Math.PI*3/4; break;
+			case LEFT : angle = 0; break;
+			case RIGHT : angle = Math.PI; break;
+			case BOTTOM_LEFT : angle = -Math.PI/4; break;
+			case BOTTOM : angle = -Math.PI/2; break;
+			case BOTTOM_RIGHT : angle = -Math.PI*3/4; break;
 		}
 		
 		XYPointerAnnotation anno = new XYPointerAnnotation(
 				label, x, y, angle);
 		anno.setTextAnchor(TextAnchor.CENTER_RIGHT);
-		anno.setPaint(Color.black);
-		anno.setArrowPaint(Color.black);
+		anno.setPaint(color);
+		anno.setArrowPaint(color);
 		anno.setBaseRadius(25);//the distance from point to arrow end
 		anno.setTipRadius(5);//the distance from point to arrow head
 		return anno;
@@ -105,58 +105,39 @@ public class BarChartUtil {
 	}	
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// unnecessary methods below
-	
 	//from tradeList to annotationList
-	public static List<XYPointerAnnotation> getTradeAnnotationList(List<Trade> tradeList){
-		List<XYPointerAnnotation> annotationList = new ArrayList<XYPointerAnnotation>();
+	public static List<XYAnnotation> trade2AnnotationList(List<Trade> tradeList){
+		List<XYAnnotation> annotationList = new ArrayList<XYAnnotation>();
 		for(Trade trade : tradeList) {
 			annotationList.add(createAnnotation(trade));
 		}
 		return annotationList;
 	}
 	
-	//create one annotation by a point
+	//create one annotation by a trade
 	public static XYPointerAnnotation createAnnotation(Trade trade){
 		//default is for high
-		double angle = -Math.PI*3/4;
-		Paint paint = Color.black;
+		PointTo pointTo = PointTo.BOTTOM_RIGHT;
+		Color color = Color.black;
+		
 		if(trade.getQty()>0){
-			angle = Math.PI*3/4;
-			paint = Color.blue;
+			pointTo = PointTo.TOP_RIGHT;
+			color = Color.blue;
 		}
 		
 		//highlight cutloss to read color
 		if(Trade.Type.CutLoss.equals(trade.getType())){
-			paint = Color.red;
+			color = Color.red;
 		}
 		
 		//System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(trade.getDateTime()))+" "+paint.toString());
-		
-		XYPointerAnnotation xypointerannotation = new XYPointerAnnotation(
+
+		return getPointer(
 				//""+trade.getPrice(),
 				trade.getId()+":"+trade.getType().toString()+" "+trade.getPrice()+"X"+trade.getQty(),
 				//Formatter.DEFAULT_TIME_FORMAT.format(trade.getDateTime()),
-				trade.getDateTime(), trade.getPrice(), angle);
-		xypointerannotation.setTextAnchor(TextAnchor.CENTER_RIGHT);
-		xypointerannotation.setPaint(paint);
-		xypointerannotation.setArrowPaint(paint);
-		xypointerannotation.setBaseRadius(25);//the distance from point to arrow end
-		xypointerannotation.setTipRadius(5);//the distance from point to arrow head
-
-		return xypointerannotation;
+				trade.getDateTime(), trade.getPrice(), pointTo, color
+				);
 	}
 
 	

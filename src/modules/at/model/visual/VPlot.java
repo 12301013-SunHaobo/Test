@@ -1,6 +1,7 @@
 package modules.at.model.visual;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.jfree.chart.annotations.XYAnnotation;
@@ -70,4 +71,9 @@ public class VPlot {
     public void addAnnotation(XYAnnotation anno){
     	this.annotationList.add(anno);
     }
+    
+    public void addAnnotations(Collection<XYAnnotation> annos){
+    	this.annotationList.addAll(annos);
+    }
+    
 }

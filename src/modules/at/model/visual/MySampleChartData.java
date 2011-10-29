@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import modules.at.feed.convert.TickToBarConverter;
-import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
-import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.visual.BarChartUtil;
 
+import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -27,7 +25,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class ChartData {
+public class MySampleChartData {
 	
 	
 	
@@ -44,7 +42,7 @@ public class ChartData {
 	private List<Integer> plotWeightList = new ArrayList<Integer>();
 
 	private List<Bar> barList;
-	private List<XYPointerAnnotation> annotationList;
+	private List<XYAnnotation> annotationList;
 
 	///////////////////////////////////////
 	private static final boolean SHOW_BB = false;;
@@ -58,7 +56,7 @@ public class ChartData {
 	private static final boolean SHOW_STO_D = false;
 
 	
-	public ChartData(String stockCode, String dateStr, String timeStr){
+	public MySampleChartData(String stockCode, String dateStr, String timeStr){
 		this.stockCode = stockCode;
 		this.dateStr = dateStr;
 		this.tickFileName = dateStr + "-" + timeStr+".txt";
@@ -68,7 +66,7 @@ public class ChartData {
 	
 	public void loadData() {
 		List<Trade> tradeList = new ArrayList<Trade>();
-		this.annotationList = BarChartUtil.getTradeAnnotationList(tradeList);
+		this.annotationList = BarChartUtil.trade2AnnotationList(tradeList);
 		plotList.add(createCandlestickPlot());
 		plotWeightList.add(4);
 		
@@ -107,7 +105,7 @@ public class ChartData {
 		xyplot.setDomainPannable(true);
 
 		// add annotations
-		for (XYPointerAnnotation anno : this.annotationList) {
+		for (XYAnnotation anno : this.annotationList) {
 			xyplot.addAnnotation(anno);
 		}
 
