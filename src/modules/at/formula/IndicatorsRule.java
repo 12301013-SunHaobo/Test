@@ -28,7 +28,7 @@ public class IndicatorsRule {
 		} else if(weightedTrend < 0) {
 			trend = Pattern.Trend.Down;
 		}
-		System.out.println("trend:"+trend);
+		//System.out.println("trend:"+trend);
 		return trend;
 	}
 

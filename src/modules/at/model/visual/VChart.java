@@ -8,7 +8,11 @@ public class VChart {
     private String title;
     private List<VPlot> plotList = new ArrayList<VPlot>();
 
-    public VChart(String title) {
+    public VChart() {
+		super();
+	}
+
+	public VChart(String title) {
 		super();
 		this.title = title;
 	}

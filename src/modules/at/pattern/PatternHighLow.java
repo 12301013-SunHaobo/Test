@@ -14,10 +14,6 @@ public class PatternHighLow extends AbstractPattern {
 	private LinkedList<Point> highList = new LinkedList<Point>();
 	private LinkedList<Point> lowList = new LinkedList<Point>();
 	
-	public PatternHighLow() {
-		super();
-	}
-
 	@Override
 	public Trend getTrend() {
 		return Trend.NA;
@@ -117,14 +113,6 @@ public class PatternHighLow extends AbstractPattern {
 			list.remove();
 		}
 	}
-
-
-
-	
-	
-	
-	
-	
 	
 	//for testing
 	public LinkedList<Point> getHighList() {

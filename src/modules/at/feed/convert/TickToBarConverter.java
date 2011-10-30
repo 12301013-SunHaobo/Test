@@ -1,6 +1,6 @@
 package modules.at.feed.convert;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import modules.at.model.Bar;
@@ -17,7 +17,7 @@ public class TickToBarConverter {
 	//static int timeFrame = 60 * 1000; // milliseconds
 
 	public static List<Bar> convert(List<Tick> tickList, int timeFrame) {
-		List<Bar> barList = new LinkedList<Bar>();
+		List<Bar> barList = new ArrayList<Bar>();
 
 		long curTimeLot = -1;
 

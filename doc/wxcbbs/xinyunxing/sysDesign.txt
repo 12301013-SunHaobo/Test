@@ -1,0 +1,29 @@
+1. PRICER: 基本上就是SUB 到BROKER的API,,GET QUOTE,,,GET POSITION
+
+这个算是最容易的,,通常API都有EXAMPLE,,选一个自己会的就搞定,,
+
+PRICER需要把数据PUBLISH到QUEUE,,这一段要自己写,,
+
+2. MESSAGING QUEUE: 基本上就是,DISTRIBUTE MSG,,但一定要有PUB/SUB双向,,
+
+这个也算是最容易的,,开源的/免费的一大堆,,,SERVER BASED的比较容易完成,,
+
+3. DECISION CUBE: 
+
+A. 洗桶一开始的时候需要LOAD PRE-CONDITION,,你可能有很多的STRATEGY,,你需要决定今天用哪个,,用最新的BACKTEST数据,,偶现在还只能手工选,,
+
+B. 一旦STRATEGY LOAD后,,SUB 到MSG QUEUE, 读PRICER PUB的数据,并保持在内存中,,每收到一个TICK,,就需要执行一遍算法,,
+
+C. STRATEGY找到买入/卖出信号后,,PUB一个信号到QUEUE
+
+4. EXECUTION/ALERT: 基本上就是SUB到QUEUE上,,如果收到BUY/SELL信号,,就CALL BROKER的API或送一个SMS/EMAIL到手机,,
+
+5. STRATEGY: 必须是一种PLUGIN,,因为你需要单独BACKTEST
+
+6. BACKTEST TOOL: 就是每天收盘后计算每个STRATEGY的状况,,
+
+7. POSITION/RISK MONITOR: 最好是单独的模块,,即使是你已经BACKTEST了N+M遍你的STRATEGY,你也不知道FAT FINGER会不会发生,,你可以写一个单独的STRATEGY,,跟#5的功能是一样的,,
+
+基本上的说,,你的90%的时间都会花在#5 和 #6上,,,
+
+不过偶们微波派木有那末FANCY,,每天收盘前每个STRATEGY RUN一遍,,就搞定,,

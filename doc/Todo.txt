@@ -6,6 +6,8 @@
 
 5. Create PatternHighLow
 --------------------------------------------
-6. draw lines in chart
 7. math package to calculate lines
 8. use correlation to scan stocks avg 1-5 days ahead of qqq avg
+9. http://ta-lib.org/function.html, list useful patterns and implement
+10. implement FixedLengthQueue.java, TestFixedLengthQueue.java
+11. engulf need more testing

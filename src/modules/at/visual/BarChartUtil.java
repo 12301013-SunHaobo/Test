@@ -10,7 +10,12 @@ import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Trade;
+import modules.at.model.visual.VChart;
+import modules.at.model.visual.VPlot;
+import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
+import modules.at.pattern.Pattern.Trend;
+import modules.at.pattern.PatternEngulfing.Engulf;
 
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYLineAnnotation;
@@ -104,6 +109,34 @@ public class BarChartUtil {
 		return vxyList;
 	}	
 
+	//from tradeList to annotationList
+	public static List<XYAnnotation> engulf2AnnotationList(List<Engulf> engulfList){
+		List<XYAnnotation> annotationList = new ArrayList<XYAnnotation>();
+		for(Engulf engulf : engulfList) {
+			annotationList.add(createAnnotation(engulf));
+		}
+		return annotationList;
+	}	
+	//create one annotation by a engulf
+	public static XYPointerAnnotation createAnnotation(Engulf engulf){
+		//default is for high
+		PointTo pointTo = PointTo.BOTTOM_RIGHT;
+		Color color = Color.black;
+		
+		if(Trend.Up.equals(engulf.getTrend())){
+			pointTo = PointTo.TOP_RIGHT;
+			color = Color.blue;
+		}
+		
+		//System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(trade.getDateTime()))+" "+paint.toString());
+
+		return getPointer(
+				//""+trade.getPrice(),
+				"engulf",
+				//Formatter.DEFAULT_TIME_FORMAT.format(trade.getDateTime()),
+				engulf.getBar().getDate().getTime(), engulf.getBar().getClose(), pointTo, color
+				);
+	}
 	
 	//from tradeList to annotationList
 	public static List<XYAnnotation> trade2AnnotationList(List<Trade> tradeList){
@@ -113,7 +146,6 @@ public class BarChartUtil {
 		}
 		return annotationList;
 	}
-	
 	//create one annotation by a trade
 	public static XYPointerAnnotation createAnnotation(Trade trade){
 		//default is for high
@@ -141,6 +173,35 @@ public class BarChartUtil {
 	}
 
 	
-	
+	public static VChart createBasicChart(List<Bar> barList){
+		VChart vchart = new VChart();
+	    /**
+	     * bar plot0, always first one.
+	     */
+	    VPlot vplotBar = new VPlot(4);
+	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
+	    //vplotBar.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
+	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
+	    vplotBar.addSeries(new VSeries("BBMiddle",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
+	    vplotBar.addSeries(new VSeries("BBLower",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBLower, barList), null, java.awt.Color.gray));
+	    
+	    vchart.addPlot(vplotBar);	
+	    
+		/*
+	    //MA plot
+	    VPlot vplotIndicator = new VPlot(1);
+	    vplotIndicator.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
+	    vplotIndicator.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+	    vchart.addPlot(vplotIndicator);
+	    */
+
+	    //RSI plot
+	    VPlot vplotRsi = new VPlot(1);
+	    vplotRsi.addSeries(new VSeries("RsiUpper", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
+	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
+	    vplotRsi.addSeries(new VSeries("RsiLower", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiLower, barList), null, java.awt.Color.red));
+	    vchart.addPlot(vplotRsi);
+	    return vchart;
+	}
 	
 }
