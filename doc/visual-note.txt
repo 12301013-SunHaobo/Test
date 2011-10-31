@@ -1,3 +1,7 @@
+-- sample codes:
+http://www.java2s.com/Code/Java/Chart/CatalogChart.htm
+
+
 The following samples are worth taking a look
 
 SuperDemo.java  // << ----------------  UI to access all charts -------------------------------------------->>

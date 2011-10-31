@@ -34,7 +34,7 @@ public class ChartBase extends ApplicationFrame {
         chartpanel.setMouseWheelEnabled(true);
         
         //window (width,height)
-        chartpanel.setPreferredSize(new Dimension(1500, 700));
+        chartpanel.setPreferredSize(new Dimension(1800, 900));//(1500, 700),(2000, 933),
         setContentPane(chartpanel);
         // only display at home
         if (GlobalSetting.isAtHome()) {

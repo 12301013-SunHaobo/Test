@@ -1,12 +1,13 @@
 package modules.at.pattern;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
-import modules.at.model.Point;
+import modules.at.model.visual.PatternMarker;
 
 /**
  * bearish Engulfing reversal is recognized if:
@@ -20,6 +21,8 @@ public class PatternEngulfing extends AbstractPattern {
 	private int engulfTmpListLength = 21;
 	private LinkedList<Engulf> engulfList = new LinkedList<Engulf>();
 	private LinkedList<Bar> tmpBarsList = new LinkedList<Bar>(); //last 3 bars(including currently added) to determin
+	
+	private List<PatternMarker> patternMarkerList = new ArrayList<PatternMarker>();
 	
 	private Trend trend;
 	@Override
@@ -72,7 +75,13 @@ public class PatternEngulfing extends AbstractPattern {
 					this.trend = Trend.NA; //not engulfing
 				}
 				if(Trend.Up.equals(this.trend) || Trend.Down.equals(this.trend)){
-					engulfList.add(new Engulf(curBar, this.trend));
+					PatternMarker pm = new PatternMarker();
+					pm.addBar(bar0);
+					pm.addBar(bar1);
+					pm.addBar(curBar);
+					pm.setTrend(this.trend);
+					patternMarkerList.add(pm);
+					//engulfList.add(new Engulf(curBar, this.trend));
 				}
 			}
 		}
@@ -112,6 +121,9 @@ public class PatternEngulfing extends AbstractPattern {
 		}
 	}
 	
+	public List<PatternMarker> getPatternMarkerList(){
+		return this.patternMarkerList;
+	}
 	
 	//for testing
 	public LinkedList<Engulf> getEngulfList() {

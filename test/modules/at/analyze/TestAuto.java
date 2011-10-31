@@ -1,7 +1,6 @@
 package modules.at.analyze;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -14,6 +13,7 @@ import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
+import modules.at.model.visual.PatternMarker;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
@@ -32,10 +32,10 @@ import utils.MathUtil;
 public class TestAuto {
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
-	static List<Pattern> patternList;
+	static List<Pattern> patternList = new ArrayList<Pattern>();
 	
 	public static void main(String[] args) throws Exception {
-		patternList = initPatternList();
+		initPatternList();
 		testOneDay();
 		//testAllDays();
 	    //testRandom();
@@ -57,29 +57,29 @@ public class TestAuto {
 		//add trade info to chart
 	    VChart vchart = BarChartUtil.createBasicChart(barList);
         VPlot vplotBar = vchart.getPlotList().get(0);	    
-	    //List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
+	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
+	    vplotBar.addAnnotations(tradeAnnoList);
         
 		PatternEngulfing pe = (PatternEngulfing)patternList.get(0);
 		List<Engulf> engulfList = pe.getEngulfList();
 		for(Engulf e : engulfList){
 			System.out.println(e);
 		}
-        List<XYAnnotation> engulfAnnoList = BarChartUtil.engulf2AnnotationList(pe.getEngulfList());
-	    vplotBar.addAnnotations(engulfAnnoList);
+		//add pattern markers to plotBar
+        for(PatternMarker pm : pe.getPatternMarkerList()){
+        	vplotBar.addAnnotation(pm.toAnno());
+        }
 	    
 	    new ChartBase(vchart);
 	    
 	}
 	
-	private static List<Pattern> initPatternList(){
-		List<Pattern> patternList = new ArrayList<Pattern>();
+	private static void initPatternList(){
 		//patternList.add(new PatternMA());
 		//patternList.add(new PatternRsi());
 		//patternList.add(new PatternSto());
 		//patternList.add(new PatternHighLow());
 		patternList.add(new PatternEngulfing());
-		return patternList;
-		
 	}
 	
 	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
@@ -125,10 +125,10 @@ public class TestAuto {
 	 * @throws Exception
 	 */
 	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
-		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
-		if("20111018-09:51:58".equals(tmpTimeStr)){
-			System.out.println();
-		}
+//		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
+//		if("20111018-09:51:58".equals(tmpTimeStr)){
+//			System.out.println();
+//		}
 		
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
@@ -153,7 +153,6 @@ public class TestAuto {
 						//increase cut win/loss level
 						position.setCutWinLossTotal(tmpPnL+AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 					}
-
 				}
 
 				Pattern.Trend trend = indicatorsRule.predictTrend();

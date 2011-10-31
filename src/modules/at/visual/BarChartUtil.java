@@ -28,6 +28,8 @@ public class BarChartUtil {
 	//dash stroke
 	public static Stroke DASH_STROKE = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{ 10.0f }, 0.0f);
 	public static Stroke BASIC_STOKE = new BasicStroke();
+	public static Stroke CANDLESTICK_BAR_STROKE = new BasicStroke(0.5f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, null, 0.0f);
+	public static Stroke MARKER_STROKE = new BasicStroke(0.5f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, null, 0.0f);
 	
 	//transparency alpha : 255 means completely opaque, 0 means transparent
 	public static Color getColor(Color color, int alpha) {

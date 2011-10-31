@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import modules.at.model.Bar;
+import modules.at.visual.BarChartUtil;
 
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
@@ -80,7 +81,16 @@ public class VSeries {
     public XYItemRenderer getRenderer(){
     	XYItemRenderer renderer;
     	if(this.barList!=null){
-    		renderer = new CandlestickRenderer();
+    		CandlestickRenderer c = new CandlestickRenderer();
+    		c.setUpPaint(Color.green);
+    		c.setDownPaint(Color.red);
+    		c.setUseOutlinePaint(true);
+    		c.setOutlinePaint(Color.black);
+    		
+    		c.setSeriesStroke(0, BarChartUtil.CANDLESTICK_BAR_STROKE);
+    		//c.setCandleWidth(width)
+    		c.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
+    		renderer = c; 
     	} else {
         	renderer = new StandardXYItemRenderer();
     	}

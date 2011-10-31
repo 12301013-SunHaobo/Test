@@ -9,6 +9,7 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.ui.RectangleInsets;
 
 /**
  * 
@@ -34,6 +35,17 @@ public class VPlot {
         valueAxis.setAutoRangeIncludesZero(false);
         xyplot.setDomainAxis(timeAxis);
         xyplot.setRangeAxis(valueAxis);
+
+        valueAxis.setLowerMargin(0.02);
+        valueAxis.setUpperMargin(0.02);
+
+        //not working
+        //timeAxis.setLowerMargin(0);
+        //timeAxis.setUpperMargin(0);
+        //xyplot.setAxisOffset(new RectangleInsets(4, 4, 4, 4));
+        //below is working
+        
+        
 
         for(int i=0;i<vseriesList.size();i++){
             VSeries vseries = vseriesList.get(i);
