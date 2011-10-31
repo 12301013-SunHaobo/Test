@@ -85,16 +85,14 @@ public class VSeries {
     		c.setUpPaint(Color.green);
     		c.setDownPaint(Color.red);
     		c.setUseOutlinePaint(true);
-    		c.setOutlinePaint(Color.black);
-    		
-    		c.setSeriesStroke(0, BarChartUtil.CANDLESTICK_BAR_STROKE);
-    		//c.setCandleWidth(width)
+    		c.setSeriesOutlinePaint(0, Color.black);
     		c.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
     		renderer = c; 
     	} else {
         	renderer = new StandardXYItemRenderer();
     	}
         renderer.setSeriesPaint(0, this.color);
+        renderer.setSeriesStroke(0, BarChartUtil.BASIC_STOKE);
         return renderer;
     }
     
