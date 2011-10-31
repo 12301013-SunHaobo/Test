@@ -145,7 +145,7 @@ public class TestAuto {
 						position.setPosition(0, price);
 						position.setCutWinLossTotal(AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 						break;
-					} else if(tmpPnL <){
+					} else if(tmpPnL >=0){
 						//increase cut win/loss level
 						position.setCutWinLossTotal(tmpPnL+AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 					}
