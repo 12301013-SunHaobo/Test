@@ -19,7 +19,6 @@ import modules.at.model.visual.PatternMarker;
 public class PatternEngulfing extends AbstractPattern {
 
 	private int engulfTmpListLength = 21;
-	private LinkedList<Engulf> engulfList = new LinkedList<Engulf>();
 	private LinkedList<Bar> tmpBarsList = new LinkedList<Bar>(); //last 3 bars(including currently added) to determin
 	
 	private List<PatternMarker> patternMarkerList = new ArrayList<PatternMarker>();
@@ -124,9 +123,5 @@ public class PatternEngulfing extends AbstractPattern {
 	public List<PatternMarker> getPatternMarkerList(){
 		return this.patternMarkerList;
 	}
-	
-	//for testing
-	public LinkedList<Engulf> getEngulfList() {
-		return engulfList;
-	}
+
 }
