@@ -5,12 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jfree.chart.annotations.XYAnnotation;
-import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.ui.RectangleInsets;
 
 /**
  * 

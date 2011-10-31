@@ -1,6 +1,7 @@
 package modules.at.analyze;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +19,6 @@ import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternEngulfing;
-import modules.at.pattern.PatternEngulfing.Engulf;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -52,7 +52,7 @@ public class TestAuto {
 		//get tradeList
 		List<Trade> tradeList = auto(dateTimeArr[0], barList);
 		//System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-		//printTrades(tradeList, true);
+		printTrades(tradeList, true);
 		
 		//add trade info to chart
 	    VChart vchart = BarChartUtil.createBasicChart(barList);
@@ -60,11 +60,7 @@ public class TestAuto {
 	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
 	    vplotBar.addAnnotations(tradeAnnoList);
         
-		PatternEngulfing pe = (PatternEngulfing)patternList.get(0);
-		List<Engulf> engulfList = pe.getEngulfList();
-		for(Engulf e : engulfList){
-			System.out.println(e);
-		}
+	    PatternEngulfing pe = (PatternEngulfing)patternList.get(0);
 		//add pattern markers to plotBar
         for(PatternMarker pm : pe.getPatternMarkerList()){
         	vplotBar.addAnnotation(pm.toAnno());
@@ -125,10 +121,10 @@ public class TestAuto {
 	 * @throws Exception
 	 */
 	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
-//		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
-//		if("20111018-09:51:58".equals(tmpTimeStr)){
-//			System.out.println();
-//		}
+		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
+		if("20111028-11:27:59".equals(tmpTimeStr)){
+			System.out.println();
+		}
 		
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
@@ -149,7 +145,7 @@ public class TestAuto {
 						position.setPosition(0, price);
 						position.setCutWinLossTotal(AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 						break;
-					} else {
+					} else if(tmpPnL <){
 						//increase cut win/loss level
 						position.setCutWinLossTotal(tmpPnL+AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 					}

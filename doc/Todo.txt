@@ -11,3 +11,8 @@
 9. http://ta-lib.org/function.html, list useful patterns and implement
 10. implement FixedLengthQueue.java, TestFixedLengthQueue.java
 11. engulf need more testing
+
+
+--------------------------------------------
+-- fix bugs
+1. cut win/loss is wrong
