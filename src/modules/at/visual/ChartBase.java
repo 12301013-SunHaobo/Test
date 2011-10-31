@@ -41,7 +41,8 @@ public class ChartBase extends ApplicationFrame {
         // only display at home
         if (GlobalSetting.isAtHome()) {
             this.pack();
-            RefineryUtilities.centerFrameOnScreen(this);
+            //RefineryUtilities.centerFrameOnScreen(this);//center on screen
+            RefineryUtilities.positionFrameOnScreen(this, 0.01, 0.01);//a little top and left
             this.setVisible(true);
         }
     }
