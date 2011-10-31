@@ -157,7 +157,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
     private double autoWidthFactor = 4.5 / 7;
 
     /** The minimum gap between one candle and the next */
-    private double autoWidthGap = 0.0;
+    private double autoWidthGap = 0.0;//orig=0.0
 
     /** The candle width. */
     private double candleWidth;
@@ -750,7 +750,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
             xxWidth *= this.autoWidthFactor;
             xxWidth = Math.min(xxWidth, this.maxCandleWidth);
             volumeWidth = Math.max(Math.min(1, this.maxCandleWidth), xxWidth);
-            stickWidth = Math.max(Math.min(3, this.maxCandleWidth), xxWidth);
+            stickWidth = Math.max(Math.min(1, this.maxCandleWidth), xxWidth);//orig=3
         }
 
         Paint p = getItemPaint(series, item);
