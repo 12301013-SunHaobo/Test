@@ -9,20 +9,40 @@ package modules.at.model;
  */
 public class FixedLengthQueue {
 	private Object[] array;
-	private int start, end, cur;
+	private int head=0;
+	private int tail=-1;
+	private int size=0;
 	
-	public FixedLengthQueue(int maxsize) {
-		array = new Object[maxsize];
-		start = 0;
-		end = 0;
+	public FixedLengthQueue(int fixedSize) {
+		array = new Object[fixedSize];
 	}
 
-
-	public void insert(Object o) {
-		
-		
+	//add to tail
+	public void add(Object o) {
+	    if(size<array.length){
+	        size++;
+	    }
+	    tail++;
+	    tail = tail%array.length;
+        array[tail] = o;
+        if(tail==head && size==array.length){
+            head = ++head%array.length;
+        }
 	}
 
+	//remove from head
+	public void remove(){
+	    if(size>0){
+    	    head = ++head%array.length;
+    	    size--;
+	    }
+	}
 	
+	public Object get(int i){
+	    return array[(head+i)%array.length];
+	}
 	
+	public int size(){
+	    return this.size;
+	}
 }
