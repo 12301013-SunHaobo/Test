@@ -2,6 +2,7 @@ package modules.at.visual;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,12 @@ import org.jfree.ui.TextAnchor;
 
 public class BarChartUtil {
 
-	//dash stroke
+	//font
+	public static Font DEFAULT_FONT = new Font("SansSerif", Font.PLAIN, 9);
+	
+	//stroke
 	public static Stroke DASH_STROKE = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{ 10.0f }, 0.0f);
-	public static Stroke BASIC_STOKE = new BasicStroke();
+	public static Stroke BASIC_STOKE = new BasicStroke(0.5f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, null, 0.0f);
 	public static Stroke CANDLESTICK_BAR_STROKE = new BasicStroke(0.5f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, null, 0.0f);
 	public static Stroke MARKER_STROKE = new BasicStroke(0.5f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, null, 0.0f);
 	
@@ -57,6 +61,9 @@ public class BarChartUtil {
 		XYPointerAnnotation anno = new XYPointerAnnotation(
 				label, x, y, angle);
 		anno.setTextAnchor(TextAnchor.CENTER_RIGHT);
+		anno.setArrowStroke(BASIC_STOKE);
+		anno.setOutlineVisible(true);//outline rectangle visible
+		anno.setFont(DEFAULT_FONT);
 		anno.setPaint(color);
 		anno.setArrowPaint(color);
 		anno.setBaseRadius(25);//the distance from point to arrow end
