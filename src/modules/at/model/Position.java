@@ -9,7 +9,7 @@ public class Position {
 	
 	private static Position instance;
 	
-	int qty;
+	int qty; //- short, + long
 	double price;
 	
 	//absolute cut price relative to price, e.g cutLossTotal = 10, then cut if (curPrice-this.price)*qty< cutLossTotal
