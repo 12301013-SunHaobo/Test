@@ -8,6 +8,7 @@ import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.RectangleInsets;
 
@@ -30,22 +31,19 @@ public class VPlot {
 
 	public XYPlot toXYPlot(){
         XYPlot xyplot = new XYPlot();
+        
+        NumberAxis numberAxis = new NumberAxis("Value");
+        numberAxis.setLowerMargin(0.02);
+        numberAxis.setUpperMargin(0.02);
+        numberAxis.setAutoRangeIncludesZero(false);
+        xyplot.setRangeAxis(numberAxis);
+
+        /** below is set by @link ChartBase.createChart(VChart vChart) for all plots
         ValueAxis timeAxis = new DateAxis("Time");
-        NumberAxis valueAxis = new NumberAxis("Value");
-        valueAxis.setAutoRangeIncludesZero(false);
+        timeAxis.setLowerMargin(0.0);
+        timeAxis.setUpperMargin(0.0);
         xyplot.setDomainAxis(timeAxis);
-        xyplot.setRangeAxis(valueAxis);
-
-        valueAxis.setLowerMargin(0.02);
-        valueAxis.setUpperMargin(0.02);
-
-        //not working
-        //timeAxis.setLowerMargin(0);
-        //timeAxis.setUpperMargin(0);
-        //xyplot.setAxisOffset(new RectangleInsets(4, 4, 4, 4));
-        //below is working
-        
-        
+        */
 
         for(int i=0;i<vseriesList.size();i++){
             VSeries vseries = vseriesList.get(i);

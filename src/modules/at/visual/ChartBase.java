@@ -19,6 +19,7 @@ import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.RefineryUtilities;
 
 import utils.GlobalSetting;
@@ -30,6 +31,7 @@ public class ChartBase extends ApplicationFrame {
     public ChartBase(VChart vChart) {
         super("Chart");
         JFreeChart jfreechart = createChart(vChart);
+        //jfreechart.setPadding(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
         ChartPanel chartpanel = new ChartPanel(jfreechart);
         chartpanel.setMouseWheelEnabled(true);
         
@@ -45,7 +47,10 @@ public class ChartBase extends ApplicationFrame {
     }
 
     private JFreeChart createChart(VChart vChart) {
-        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(new DateAxis("Date-Time"));
+    	DateAxis timeAxis = new DateAxis("Date-Time");
+        timeAxis.setLowerMargin(0.0);
+        timeAxis.setUpperMargin(0.0);
+        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(timeAxis);
         combineddomainxyplot.setDomainPannable(true);
 
         // loop through chartData plot list
