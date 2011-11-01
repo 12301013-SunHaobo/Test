@@ -9,17 +9,13 @@ public class Position {
 	
 	private static Position instance;
 	
-	int qty; //- short, + long
-	double price;
-	
-	//absolute cut price relative to price, e.g cutLossTotal = 10, then cut if (curPrice-this.price)*qty< cutLossTotal
-	double cutWinLossTotal;
+	private int qty = 0; //- short, + long
+	private double entryPrice = Double.NaN;
 
+	private double stopLossPrice = Double.NaN;
+	
 	private Position() {
 		super();
-		this.qty = 0;
-		this.price = 0;
-		this.cutWinLossTotal = AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL;
 	}
 
 	public static synchronized Position getInstance(){
@@ -29,9 +25,29 @@ public class Position {
 		return instance;
 	}
 	
-	public void setPosition(int qty, double price){
+	public void updateStopPrice(double curPrice){
+		if(this.qty>0){//keep increasing cut loss price for lone
+			if(Double.isNaN(stopLossPrice)){
+				this.stopLossPrice = 0;
+			}
+			this.stopLossPrice = Math.max(curPrice*(1-AlgoSetting.CUT_LOSS), this.stopLossPrice);
+		} else if(this.qty<0){//keep decreasing for short
+			if(Double.isNaN(stopLossPrice)){
+				this.stopLossPrice = Double.MAX_VALUE;
+			}
+			this.stopLossPrice = Math.min(curPrice*(1+AlgoSetting.CUT_LOSS), this.stopLossPrice);
+		} else {//qty==0
+			this.stopLossPrice = Double.NaN;
+		}
+	}
+	
+	
+	
+	public void setPosition(int qty, double entryPrice){
 		this.qty = qty;
-		this.price = price;
+		this.entryPrice = entryPrice;
+		this.stopLossPrice = Double.NaN;
+		updateStopPrice(entryPrice);
 	}
 	
 	public int getQty() {
@@ -41,19 +57,28 @@ public class Position {
 		this.qty = qty;
 	}
 	public double getPrice() {
-		return price;
+		return entryPrice;
 	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public double getCutWinLossTotal() {
-		return cutWinLossTotal;
+	public void setPrice(double entryPrice) {
+		this.entryPrice = entryPrice;
 	}
 
-	public void setCutWinLossTotal(double cutWinLossTotal) {
-		this.cutWinLossTotal = cutWinLossTotal;
+	public double getEntryPrice() {
+		return entryPrice;
 	}
+
+	public void setEntryPrice(double entryPrice) {
+		this.entryPrice = entryPrice;
+	}
+
+	public double getStopLossPrice() {
+		return stopLossPrice;
+	}
+
+	public void setStopLossPrice(double stopLossPrice) {
+		this.stopLossPrice = stopLossPrice;
+	}
+
 
 
 }
