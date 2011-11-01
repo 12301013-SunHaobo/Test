@@ -19,6 +19,7 @@ import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternEngulfing;
+import modules.at.pattern.PatternMA;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -55,7 +56,7 @@ public class TestAuto {
 		//get tradeList
 		List<Trade> tradeList = auto(dateTimeArr[0], barList);
 		//System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-		printTrades(tradeList, false);
+		printTrades(tradeList, true);
 		
 		//add trade info to chart
 	    VChart vchart = BarChartUtil.createBasicChart(barList);
@@ -143,13 +144,13 @@ public class TestAuto {
 				break;
 			case InTrade :
 				//lock profit & cut loss checking, including short|long
-				if(pQty>0){
+				if(pQty>0){//cut loss for long
 					if(price<stopPrice){
 						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
 						position.setPosition(0, price);
 						break;
 					}
-				}else if(pQty<0){
+				}else if(pQty<0){//cut loss for short
 					if(price>stopPrice){
 						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
 						position.setPosition(0, price);
