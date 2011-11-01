@@ -122,13 +122,15 @@ public class TestAuto {
 	 */
 	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
 		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
-		if("20111028-11:27:59".equals(tmpTimeStr)){
+		if("20111028-10:41:46".equals(tmpTimeStr)){
 			System.out.println();
 		}
 		
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
-		double tmpPnL = (price - position.getPrice())*pQty;
+		double stopPrice = position.getStopLossPrice();
+		System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+
+				", stopPrice="+Formatter.DECIMAL_FORMAT4.format(stopPrice));
 
 		Trade trade = null;
 		TradeTimeLot tradeLot = getTradeLot(time, dateStr);
@@ -137,17 +139,17 @@ public class TestAuto {
 				break;
 			case InTrade :
 				//lock profit & cut loss checking, including short|long
-				if(pQty!=0){
-					
-					//cut win/loss
-					if(tmpPnL < position.getCutWinLossTotal()){
+				if(pQty>0){
+					if(price<stopPrice){
 						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
 						position.setPosition(0, price);
-						position.setCutWinLossTotal(AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
 						break;
-					} else if(tmpPnL >=0){
-						//increase cut win/loss level
-						position.setCutWinLossTotal(tmpPnL+AlgoSetting.INIT_CUT_WIN_LOSS_TOTAL);
+					}
+				}else if(pQty<0){
+					if(price>stopPrice){
+						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
+						position.setPosition(0, price);
+						break;
 					}
 				}
 
@@ -180,8 +182,9 @@ public class TestAuto {
 				break;
 		}
 		if(trade!=null){
-			trade.setPnl(tmpPnL);
+			trade.setPnl(0);//TODO: is this necessary?
 		}
+		position.updateStopPrice(price);
 		return trade;
 	}
 	
