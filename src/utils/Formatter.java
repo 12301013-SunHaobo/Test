@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 public class Formatter {
 	public static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#0.00");
+	public static DecimalFormat DECIMAL_FORMAT4 = new DecimalFormat("#0.0000");
 	
     //public static DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmmss");
 	public static DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
