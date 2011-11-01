@@ -43,8 +43,11 @@ public class TestAuto {
 
 	private static void testOneDay() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		//String[] dateTimeArr = new String[] {"20111021", "200115"};
-		String[] dateTimeArr = new String[] {"20111028", "200140"};
+		//String[] dateTimeArr = new String[] {"20111020", "200115"};
+		//String[] dateTimeArr = new String[] {"20111028", "200140"};
+		//String[] dateTimeArr = new String[] {"20111019", "200101"};
+		String[] dateTimeArr = new String[] {"20111020", "200135"};
+		
 		//get barList
 		String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
 		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[0]);
@@ -52,7 +55,7 @@ public class TestAuto {
 		//get tradeList
 		List<Trade> tradeList = auto(dateTimeArr[0], barList);
 		//System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-		printTrades(tradeList, true);
+		printTrades(tradeList, false);
 		
 		//add trade info to chart
 	    VChart vchart = BarChartUtil.createBasicChart(barList);
@@ -123,14 +126,15 @@ public class TestAuto {
 	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
 		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
 		if("20111028-10:41:46".equals(tmpTimeStr)){
-			System.out.println();
+			//System.out.println();
 		}
 		
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
 		double stopPrice = position.getStopLossPrice();
-		System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+
-				", stopPrice="+Formatter.DECIMAL_FORMAT4.format(stopPrice));
+//		System.out.println(
+//				Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+
+//				", stopPrice="+Formatter.DECIMAL_FORMAT4.format(stopPrice));
 
 		Trade trade = null;
 		TradeTimeLot tradeLot = getTradeLot(time, dateStr);
@@ -212,7 +216,7 @@ public class TestAuto {
 	}
 	
 	private static void testAllDays() throws Exception{
-		String stockCode = "tza";//qqq, tna, tza 
+		String stockCode = "qqq";//qqq, tna, tza 
 		List<String[]> dateTimeArrList = getInputParams(stockCode);
 		
 		for(String[] dateTimeArr : dateTimeArrList){
@@ -222,7 +226,7 @@ public class TestAuto {
 			
 			List<Trade> tradeList = auto(dateTimeArr[0], barList);
 			System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-			printTrades(tradeList, true);
+			printTrades(tradeList, false);
 			//break;
 		}
 	}
