@@ -24,8 +24,6 @@ public class AlgoSetting {
 	public static final double STOCHASTIC_LOWER = 20;
 	
 	//Cut loss & lock profit
-	@Deprecated
-	public static final double INIT_CUT_WIN_LOSS_TOTAL = - 0.05; //absolute total cut win/loss, priceDiff * Qty 
 	//public static final double CUT_WIN = 0.001; //increase percentage % to cut win
 	public static final double CUT_LOSS = 0.005; //drop percentage % to cut loss
 	
