@@ -3,8 +3,8 @@ package modules.at.analyze;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
+import modules.at.TradeUtil;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
@@ -24,11 +24,10 @@ import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
 import org.jfree.chart.annotations.XYAnnotation;
+import org.jfree.chart.renderer.xy.CandlestickRenderer;
+import org.jfree.ui.Layer;
 
-import utils.FileUtil;
 import utils.Formatter;
-import utils.GlobalSetting;
-import utils.MathUtil;
 
 public class TestAuto {
 
@@ -39,7 +38,6 @@ public class TestAuto {
 		initPatternList();
 		testOneDay();
 		//testAllDays();
-	    //testRandom();
 	}
 
 	private static void testOneDay() throws Exception{
@@ -47,7 +45,8 @@ public class TestAuto {
 		//String[] dateTimeArr = new String[] {"20111020", "200115"};
 		//String[] dateTimeArr = new String[] {"20111028", "200140"};
 		//String[] dateTimeArr = new String[] {"20111019", "200101"};
-		String[] dateTimeArr = new String[] {"20111020", "200135"};
+		//String[] dateTimeArr = new String[] {"20111020", "200135"};
+		String[] dateTimeArr = new String[] {"20111101", "200252"};
 		
 		//get barList
 		String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
@@ -56,30 +55,20 @@ public class TestAuto {
 		//get tradeList
 		List<Trade> tradeList = auto(dateTimeArr[0], barList);
 		//System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-		printTrades(tradeList, true);
+		TradeUtil.printTrades(tradeList, true);
 		
-		//add trade info to chart
-	    VChart vchart = BarChartUtil.createBasicChart(barList);
-        VPlot vplotBar = vchart.getPlotList().get(0);	    
-	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
-	    vplotBar.addAnnotations(tradeAnnoList);
-        
-	    PatternEngulfing pe = (PatternEngulfing)patternList.get(0);
-		//add pattern markers to plotBar
-        for(PatternMarker pm : pe.getPatternMarkerList()){
-        	vplotBar.addAnnotation(pm.toAnno());
-        }
-	    
+		//display chart with trade and mark info
+		VChart vchart = createMarkedChart(barList, tradeList, patternList);
 	    new ChartBase(vchart);
 	    
 	}
 	
 	private static void initPatternList(){
-		//patternList.add(new PatternMA());
+		patternList.add(new PatternMA());
 		//patternList.add(new PatternRsi());
 		//patternList.add(new PatternSto());
 		//patternList.add(new PatternHighLow());
-		patternList.add(new PatternEngulfing());
+		//patternList.add(new PatternEngulfing());
 	}
 	
 	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
@@ -108,10 +97,6 @@ public class TestAuto {
 		return tradeList;
 	}
 	
-	
-	
-
-
 	
 	/**
 	 * position.qty==0: long, short, 
@@ -218,7 +203,7 @@ public class TestAuto {
 	
 	private static void testAllDays() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		List<String[]> dateTimeArrList = getInputParams(stockCode);
+		List<String[]> dateTimeArrList = TradeUtil.getInputParams(stockCode);
 		
 		for(String[] dateTimeArr : dateTimeArrList){
 			String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
@@ -227,80 +212,31 @@ public class TestAuto {
 			
 			List<Trade> tradeList = auto(dateTimeArr[0], barList);
 			System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-			printTrades(tradeList, false);
+			TradeUtil.printTrades(tradeList, false);
 			//break;
 		}
 	}
 	
-	private static double printTrades(List<Trade> tradeList, boolean printDetail){
-		double pnL = 0;
-		for(Trade trade : tradeList){
-		    if(printDetail){
-		        System.out.println(trade);
-		    }
-			pnL = pnL + (trade.getPrice() * trade.getQty()*(-1));
-		}
-		System.out.println("Total pnL : "+Formatter.DECIMAL_FORMAT.format(pnL));
-		return pnL;
+
+	private static VChart createMarkedChart(List<Bar> barList, List<Trade> tradeList, List<Pattern> patternList){
+	    VChart vchart = BarChartUtil.createBasicChart(barList);
+        VPlot vplotBar = vchart.getPlotList().get(0);	
+        //add trade annotations
+	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
+	    vplotBar.addAnnotations(tradeAnnoList);
+	    CandlestickRenderer barRenderer = (CandlestickRenderer)vplotBar.getVseriesList().get(0).getRenderer();//bar renderer, first plot, first series
+		//add pattern markers to plotBar
+	    for(Pattern p : patternList){
+	    	if(p instanceof PatternEngulfing){
+			    PatternEngulfing pe = (PatternEngulfing)p;
+		        for(PatternMarker pm : pe.getPatternMarkerList()){
+		        	barRenderer.addAnnotation(pm.toAnno(),Layer.BACKGROUND);
+		        }
+	    	}
+	    }
+        return vchart;
 	}
 	
-	//return List of array like: {20111014,200153}
-	private static List<String[]> getInputParams(String stockCode){
-		List<String[]> inputParams = new ArrayList<String[]>();
-		String dir = GlobalSetting.TEST_HOME+"/data/naz/tick/output/"+stockCode;
-		List<String> fileNames = FileUtil.getAllFileNames(dir);
-		for(String fileName : fileNames) {
-			String[] dateTimeArr = fileName.split("-|\\.|txt");
-			inputParams.add(dateTimeArr);
-		}
-		return inputParams;
-	}
 
-	
-	//testing
-	/**
-	 * loop through all dates, test 10 tiems / day, 
-	 * avg pnl = e.g: 0.036592727, 0.011640455, -0.025676818, 0.0146508, 0.019521932
-	 * 
-	 */
-	private static void testRandom() throws Exception {
-	    
-        String stockCode = "qqq";// qqq, tna, tza
-        List<String[]> dateTimeArrList = getInputParams(stockCode);
-
-        for(int n4all=0; n4all<50; n4all++){
-            double tmpPnL4AllDays = 0;
-            int testTimes4OneDay = 20;
-            for (String[] dateTimeArr : dateTimeArrList) {
-                double totalPnL = 0;
-                String dateStr = dateTimeArr[0];
-                String timeStr = dateTimeArr[1];
-                String tickFileName = dateStr + "-" + timeStr + ".txt";
-    
-                // loop testTimes for one date
-                for (int j = 0; j < testTimes4OneDay; j++) {
-                    List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateStr);
-                    List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
-    
-                    List<Integer> selectedIdxs = MathUtil.getUniqueRandomIntSet(0, barList.size()-1, new Random(), 102);
-                    List<Trade> tradeList = new ArrayList<Trade>();
-                    for (int i = 0; i < selectedIdxs.size(); i++) {
-                        Bar bar = barList.get(selectedIdxs.get(i));
-                        if (i % 2 == 0) {
-                            tradeList.add(new Trade(bar.getClose(), 1, bar.getDate().getTime(), Trade.Type.Long));
-                        } else {
-                            tradeList.add(new Trade(bar.getClose(), -1, bar.getDate().getTime(), Trade.Type.Sell));
-                        }
-                    }
-                    double pnL = printTrades(tradeList, false);
-                    totalPnL = totalPnL + pnL;
-                }
-                double avgPnL4OneDay = (totalPnL / testTimes4OneDay);
-                //System.out.println(tickFileName + " X " + testTimes4OneDay + ", avg pnl=" + avgPnL4OneDay);
-                tmpPnL4AllDays+=avgPnL4OneDay;
-            }
-            System.out.println("--------------- > 4AllDays avg pnl="+(tmpPnL4AllDays/dateTimeArrList.size()));
-        }       
-	}
 	
 }
