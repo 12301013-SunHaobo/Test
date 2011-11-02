@@ -10,11 +10,12 @@
 7. math package to calculate lines
 8. use correlation to scan stocks avg 1-5 days ahead of qqq avg
 9. http://ta-lib.org/function.html, list useful patterns and implement
-10. engulfing marker covered bars, change it to background
-
+11. support/resistance pattern
+12. ma turn direction detection
 
 --------------------------------------------
 -- fixed bugs --
 1. cut win/loss is wrong(fixed by %)
 10. implement FixedLengthQueue.java, TestFixedLengthQueue.java(done)
 11. engulf need more testing(done)
+10. engulfing marker covered bars, change it to background
