@@ -19,7 +19,7 @@ import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternEngulfing;
-import modules.at.pattern.PatternMA;
+import modules.at.pattern.PatternMACross;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -64,7 +64,7 @@ public class TestAuto {
 	}
 	
 	private static void initPatternList(){
-		patternList.add(new PatternMA());
+		patternList.add(new PatternMACross());
 		//patternList.add(new PatternRsi());
 		//patternList.add(new PatternSto());
 		//patternList.add(new PatternHighLow());
