@@ -4,15 +4,17 @@
 
 4. in the middle of changing BarChartBase.java (only draw base chart, by specified date time)
 
-5. Create PatternHighLow
 --------------------------------------------
+-- todo or bugs ----
+5. Create PatternHighLow
 7. math package to calculate lines
 8. use correlation to scan stocks avg 1-5 days ahead of qqq avg
 9. http://ta-lib.org/function.html, list useful patterns and implement
-10. implement FixedLengthQueue.java, TestFixedLengthQueue.java
-11. engulf need more testing
+10. engulfing marker covered bars, change it to background
 
 
 --------------------------------------------
--- fix bugs
-1. cut win/loss is wrong
+-- fixed bugs --
+1. cut win/loss is wrong(fixed by %)
+10. implement FixedLengthQueue.java, TestFixedLengthQueue.java(done)
+11. engulf need more testing(done)
