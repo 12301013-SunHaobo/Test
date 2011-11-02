@@ -13,7 +13,7 @@ import modules.at.model.AlgoSetting;
  * Observes Indicators 
  *
  */
-public class PatternMA extends AbstractPattern{
+public class PatternMACross extends AbstractPattern{
 	
     public static enum CrossType {
         FastCrossUp, FastCrossDown, NoCross
@@ -28,7 +28,7 @@ public class PatternMA extends AbstractPattern{
     private List<Double> maFastList;
     private List<Double> maSlowList;
     
-    public PatternMA() {
+    public PatternMACross() {
         super();
         this.preDiff = Double.NaN;
         this.curDiff = Double.NaN;
