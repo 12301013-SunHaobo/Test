@@ -12,6 +12,7 @@
 9. http://ta-lib.org/function.html, list useful patterns and implement
 11. support/resistance pattern
 12. ma turn direction detection
+13. find out every pattern pros and cons
 
 --------------------------------------------
 -- fixed bugs --
@@ -19,3 +20,8 @@
 10. implement FixedLengthQueue.java, TestFixedLengthQueue.java(done)
 11. engulf need more testing(done)
 10. engulfing marker covered bars, change it to background
+
+
+-------------------------------------------
+--
+patternMATurnAround (good for big trend, bad for swing)
