@@ -7,6 +7,7 @@ import java.util.List;
 import modules.at.model.Bar;
 import modules.at.visual.BarChartUtil;
 
+import org.jfree.chart.annotations.XYPolygonAnnotation;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -14,6 +15,7 @@ import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.Layer;
 
 /**
  * 
@@ -26,6 +28,8 @@ public class VSeries {
     private List<VXY> vxyList;
     private List<Bar> barList;
     private Color color;
+	private XYItemRenderer renderer;
+
     
     public VSeries(
     		String legendTitle, 
@@ -79,20 +83,21 @@ public class VSeries {
     }
 
     public XYItemRenderer getRenderer(){
-    	XYItemRenderer renderer;
-    	if(this.barList!=null){
-    		CandlestickRenderer c = new CandlestickRenderer();
-    		c.setUpPaint(Color.green);
-    		c.setDownPaint(Color.red);
-    		c.setUseOutlinePaint(true);
-    		c.setSeriesOutlinePaint(0, Color.black);
-    		c.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
-    		renderer = c; 
-    	} else {
-        	renderer = new StandardXYItemRenderer();
+    	if(renderer==null){
+	    	if(this.barList!=null){
+	    		CandlestickRenderer c = new CandlestickRenderer();
+	    		c.setUpPaint(Color.green);
+	    		c.setDownPaint(Color.red);
+	    		c.setUseOutlinePaint(true);
+	    		c.setSeriesOutlinePaint(0, Color.black);
+	    		c.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
+	    		renderer = c; 
+	    	} else {
+	        	renderer = new StandardXYItemRenderer();
+	    	}
+	        renderer.setSeriesPaint(0, this.color);
+	        renderer.setSeriesStroke(0, BarChartUtil.BASIC_STOKE);
     	}
-        renderer.setSeriesPaint(0, this.color);
-        renderer.setSeriesStroke(0, BarChartUtil.BASIC_STOKE);
         return renderer;
     }
     
