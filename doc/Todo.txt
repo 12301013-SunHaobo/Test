@@ -13,6 +13,7 @@
 11. support/resistance pattern
 12. ma turn direction detection
 13. find out every pattern pros and cons
+14. create a test to find all vertexes in a series
 
 --------------------------------------------
 -- fixed bugs --
