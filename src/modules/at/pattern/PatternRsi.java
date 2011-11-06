@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
+import modules.at.model.visual.BarsMarker;
 
 public class PatternRsi extends AbstractPattern {
 	
@@ -45,5 +46,11 @@ public class PatternRsi extends AbstractPattern {
 	@Override
 	public int getWeight() {
 		return AlgoSetting.PATTERN_WEIGHT_RSI;
+	}
+
+	@Override
+	public List<BarsMarker> getPatternMarkerList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

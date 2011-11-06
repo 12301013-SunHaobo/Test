@@ -230,9 +230,8 @@ public class TestAuto {
 	    for(Pattern p : patternList){
 	    	if(p instanceof PatternEngulfing 
 	    			|| p instanceof PatternHighLow){
-			    PatternEngulfing pe = (PatternEngulfing)p;
-		        for(BarsMarker pm : pe.getPatternMarkerList()){
-		        	barRenderer.addAnnotation(pm.toAnno(),Layer.BACKGROUND);
+		        for(BarsMarker bm : p.getPatternMarkerList()){
+		        	barRenderer.addAnnotation(bm.toAnno(),Layer.BACKGROUND);
 		        }
 	    	}
 	    }

@@ -1,9 +1,11 @@
 package modules.at.pattern;
 
+import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
+import modules.at.model.visual.BarsMarker;
 
 /**
  * Observes Indicators 
@@ -68,6 +70,12 @@ public class PatternSto extends AbstractPattern{
 	@Override
 	public int getWeight() {
 		return AlgoSetting.PATTERN_WEIGHT_STO;
+	}
+
+	@Override
+	public List<BarsMarker> getPatternMarkerList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

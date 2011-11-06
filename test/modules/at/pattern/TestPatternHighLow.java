@@ -11,12 +11,9 @@ import modules.at.model.Bar;
 import modules.at.model.Point;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
+import modules.at.pattern.PatternHighLow.HighLowVertex;
 import modules.at.visual.MySampleChartBase;
-
-import org.jfree.ui.RefineryUtilities;
-
 import utils.Formatter;
-import utils.GlobalSetting;
 
 public class TestPatternHighLow {
 
@@ -52,13 +49,13 @@ public class TestPatternHighLow {
 			indicators.addBar(bar);//update indicators 
 		}
 		//generate all high/low trades
-		LinkedList<Point> highList = patternHighLow.getHighList();
-		LinkedList<Point> lowList = patternHighLow.getLowList();
-		for(Point point : highList){
-			tradeList.add(new Trade(point.getPrice(), -1, point.getDateTime().getTime(), Trade.Type.Short));
+		LinkedList<HighLowVertex> highList = patternHighLow.getHighList();
+		LinkedList<HighLowVertex> lowList = patternHighLow.getLowList();
+		for(HighLowVertex point : highList){
+			tradeList.add(new Trade(point.getPrice(), -1, point.getBar().getDate().getTime(), Trade.Type.Short));
 		}
-		for(Point point : lowList){
-			tradeList.add(new Trade(point.getPrice(), 1, point.getDateTime().getTime(), Trade.Type.Long));
+		for(HighLowVertex point : lowList){
+			tradeList.add(new Trade(point.getPrice(), 1, point.getBar().getDate().getTime(), Trade.Type.Long));
 		}
 		
 		return tradeList;

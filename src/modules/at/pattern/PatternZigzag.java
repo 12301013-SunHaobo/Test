@@ -7,6 +7,7 @@ import java.util.Observable;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
+import modules.at.model.visual.BarsMarker;
 
 /**
  * Observes Indicators 
@@ -89,6 +90,13 @@ public class PatternZigzag extends AbstractPattern{
 		public void setSwingType(SwingType swingType) {
 			this.swingType = swingType;
 		}
+	}
+
+
+	@Override
+	public List<BarsMarker> getPatternMarkerList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
     
 }
