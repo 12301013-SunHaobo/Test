@@ -11,7 +11,7 @@ import modules.at.visual.BarChartUtil;
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYPolygonAnnotation;
 
-public class PatternMarker {
+public class BarsMarker {
 	
 	//the bars that formed this pattern
 	Trend trend = Trend.NA;
