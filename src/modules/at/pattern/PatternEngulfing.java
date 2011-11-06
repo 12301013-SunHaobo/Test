@@ -7,7 +7,7 @@ import java.util.Observable;
 
 import modules.at.formula.Indicators;
 import modules.at.model.Bar;
-import modules.at.model.visual.PatternMarker;
+import modules.at.model.visual.BarsMarker;
 
 /**
  * bearish Engulfing reversal is recognized if:
@@ -21,7 +21,7 @@ public class PatternEngulfing extends AbstractPattern {
 	private int engulfTmpListLength = 21;
 	private LinkedList<Bar> tmpBarsList = new LinkedList<Bar>(); //last 3 bars(including currently added) to determin
 	
-	private List<PatternMarker> patternMarkerList = new ArrayList<PatternMarker>();
+	private List<BarsMarker> patternMarkerList = new ArrayList<BarsMarker>();
 	
 	private Trend trend;
 	@Override
@@ -74,7 +74,7 @@ public class PatternEngulfing extends AbstractPattern {
 					this.trend = Trend.NA; //not engulfing
 				}
 				if(Trend.Up.equals(this.trend) || Trend.Down.equals(this.trend)){
-					PatternMarker pm = new PatternMarker();
+					BarsMarker pm = new BarsMarker();
 					pm.addBar(bar0);
 					pm.addBar(bar1);
 					pm.addBar(curBar);
@@ -120,7 +120,7 @@ public class PatternEngulfing extends AbstractPattern {
 		}
 	}
 	
-	public List<PatternMarker> getPatternMarkerList(){
+	public List<BarsMarker> getPatternMarkerList(){
 		return this.patternMarkerList;
 	}
 

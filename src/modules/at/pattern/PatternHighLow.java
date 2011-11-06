@@ -1,18 +1,23 @@
 package modules.at.pattern;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Point;
+import modules.at.model.visual.BarsMarker;
 
 public class PatternHighLow extends AbstractPattern {
 
 	private int highLowListLength = AlgoSetting.HIGH_LOW_LIST_LENGTH;
 	private LinkedList<Point> highList = new LinkedList<Point>();
 	private LinkedList<Point> lowList = new LinkedList<Point>();
+	
+	private List<BarsMarker> patternMarkerList = new ArrayList<BarsMarker>();
 	
 	@Override
 	public Trend getTrend() {
@@ -123,7 +128,12 @@ public class PatternHighLow extends AbstractPattern {
 		return lowList;
 	}
 
-	
+	public List<BarsMarker> getPatternMarkerList(){
+		if(this.patternMarkerList==null){
+			
+		}
+		return this.patternMarkerList;	
+	}
 	
 }
 

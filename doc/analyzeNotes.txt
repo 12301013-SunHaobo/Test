@@ -1,0 +1,15 @@
+1. MA cross,
+	pros: good for 单向大波，
+	cons: bad for 快速震荡
+	
+2. BB (http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:bollinger_bands)
+	pros: good for 快速震荡，
+	cons: bad for 单向
+	2.1 in uptrend tags, dip below ma is buy signal before next tag
+	2.2 can walking the bands during a strong uptrend
+	2.3 SMA sometimes act as support
+	2.4 combine with CCI 
+	
+3. Zigzag,
+	
+ 

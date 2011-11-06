@@ -14,12 +14,12 @@ import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
-import modules.at.model.visual.PatternMarker;
+import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternEngulfing;
-import modules.at.pattern.PatternMACross;
+import modules.at.pattern.PatternHighLow;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -59,15 +59,16 @@ public class TestAuto {
 		
 		//display chart with trade and mark info
 		VChart vchart = createMarkedChart(barList, tradeList, patternList);
+		vchart.setTitle(tickFileName);
 	    new ChartBase(vchart);
 	    
 	}
 	
 	private static void initPatternList(){
-		patternList.add(new PatternMACross());
+		//patternList.add(new PatternMACross());
 		//patternList.add(new PatternRsi());
 		//patternList.add(new PatternSto());
-		//patternList.add(new PatternHighLow());
+		patternList.add(new PatternHighLow());
 		//patternList.add(new PatternEngulfing());
 	}
 	
@@ -227,9 +228,10 @@ public class TestAuto {
 	    CandlestickRenderer barRenderer = (CandlestickRenderer)vplotBar.getVseriesList().get(0).getRenderer();//bar renderer, first plot, first series
 		//add pattern markers to plotBar
 	    for(Pattern p : patternList){
-	    	if(p instanceof PatternEngulfing){
+	    	if(p instanceof PatternEngulfing 
+	    			|| p instanceof PatternHighLow){
 			    PatternEngulfing pe = (PatternEngulfing)p;
-		        for(PatternMarker pm : pe.getPatternMarkerList()){
+		        for(BarsMarker pm : pe.getPatternMarkerList()){
 		        	barRenderer.addAnnotation(pm.toAnno(),Layer.BACKGROUND);
 		        }
 	    	}

@@ -36,7 +36,7 @@ public class ChartBase extends ApplicationFrame {
         chartpanel.setMouseWheelEnabled(true);
         
         //window (width,height)
-        chartpanel.setPreferredSize(new Dimension(1800, 900));//(1500, 700),(2000, 933),
+        chartpanel.setPreferredSize(new Dimension(2000, 900));//(1500, 700),(2000, 933),
         setContentPane(chartpanel);
         // only display at home
         if (GlobalSetting.isAtHome()) {
@@ -48,7 +48,7 @@ public class ChartBase extends ApplicationFrame {
     }
 
     private JFreeChart createChart(VChart vChart) {
-    	DateAxis timeAxis = new DateAxis("Date-Time");
+    	DateAxis timeAxis = new DateAxis("Date-Time : "+vChart.getTitle());
         timeAxis.setLowerMargin(0.0);
         timeAxis.setUpperMargin(0.0);
         CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(timeAxis);

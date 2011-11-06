@@ -14,7 +14,8 @@
 12. ma turn direction detection
 13. find out every pattern pros and cons
 14. create a test to find all vertexes in a series
-
+15. google: different indicators pros and cons
+16. draw lines, crop in window, (NTH, dash dot in extension)
 --------------------------------------------
 -- fixed bugs --
 1. cut win/loss is wrong(fixed by %)
