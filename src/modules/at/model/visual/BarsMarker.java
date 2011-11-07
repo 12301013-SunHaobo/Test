@@ -1,24 +1,16 @@
 package modules.at.model.visual;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import modules.at.model.Bar;
-import modules.at.pattern.Pattern.Trend;
-import modules.at.visual.BarChartUtil;
 
-import org.jfree.chart.annotations.XYAnnotation;
-import org.jfree.chart.annotations.XYPolygonAnnotation;
+public class BarsMarker extends VMarker{
 
-public class BarsMarker {
-	
-	//the bars that formed this pattern
-	Trend trend = Trend.NA;
 	private List<Bar> barList = new ArrayList<Bar>();
 
-	public XYAnnotation toAnno() {
-
+	@Override
+	protected double[] getVertexes() {
 		if (barList.size() > 0) {
 			Bar tmpBar = barList.get(0);
 			double left = tmpBar.getDate().getTime()-5*1000;
@@ -39,26 +31,11 @@ public class BarsMarker {
 					right, bottom,
 					left, bottom
 			};
-
-			Color color = Color.green;
-			if(Trend.Up.equals(this.trend)){
-				color = Color.black;
-			}else if(Trend.Down.equals(this.trend)){
-				color = Color.red;
-			}
-			return new XYPolygonAnnotation(vertexes, BarChartUtil.MARKER_STROKE, color, null);
+			return vertexes;
 		}
 		return null;
 	}
-
-	public Trend getTrend() {
-		return trend;
-	}
-
-	public void setTrend(Trend trend) {
-		this.trend = trend;
-	}
-
+	
 	public List<Bar> getBarList() {
 		return barList;
 	}

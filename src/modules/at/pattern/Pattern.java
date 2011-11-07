@@ -3,7 +3,7 @@ package modules.at.pattern;
 import java.util.List;
 import java.util.Observer;
 
-import modules.at.model.visual.BarsMarker;
+import modules.at.model.visual.VMarker;
 
 public interface Pattern extends Observer{
 	
@@ -14,5 +14,5 @@ public interface Pattern extends Observer{
 	public Trend getTrend(); 
 	public int getWeightedTrend();
 	public int getWeight();
-	public List<BarsMarker> getPatternMarkerList();
+	public List<VMarker> getPatternMarkerList();
 }

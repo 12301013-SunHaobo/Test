@@ -14,8 +14,8 @@ import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
-import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VChart;
+import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternEngulfing;
@@ -230,8 +230,8 @@ public class TestAuto {
 	    for(Pattern p : patternList){
 	    	if(p instanceof PatternEngulfing 
 	    			|| p instanceof PatternHighLow){
-		        for(BarsMarker bm : p.getPatternMarkerList()){
-		        	barRenderer.addAnnotation(bm.toAnno(),Layer.BACKGROUND);
+		        for(VMarker m : p.getPatternMarkerList()){
+		        	barRenderer.addAnnotation(m.toAnno(),Layer.BACKGROUND);
 		        }
 	    	}
 	    }

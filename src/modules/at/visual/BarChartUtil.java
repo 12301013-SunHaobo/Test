@@ -192,7 +192,7 @@ public class BarChartUtil {
 //	    vplotBar.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
 //	    vplotBar.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
 	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
-	    vplotBar.addSeries(new VSeries("BBMiddle",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
+	    vplotBar.addSeries(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
 	    vplotBar.addSeries(new VSeries("BBLower",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBLower, barList), null, java.awt.Color.gray));
 	    
 	    vchart.addPlot(vplotBar);	
@@ -208,7 +208,7 @@ public class BarChartUtil {
 	    //RSI plot
 	    VPlot vplotRsi = new VPlot(1);
 	    vplotRsi.addSeries(new VSeries("RsiUpper", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
-	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
+	    vplotRsi.addSeries(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
 	    vplotRsi.addSeries(new VSeries("RsiLower", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiLower, barList), null, java.awt.Color.red));
 	    vchart.addPlot(vplotRsi);
 	    return vchart;

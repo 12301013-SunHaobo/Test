@@ -7,7 +7,7 @@ import java.util.Observable;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
-import modules.at.model.visual.BarsMarker;
+import modules.at.model.visual.VMarker;
 
 /**
  * Observes Indicators 
@@ -94,7 +94,7 @@ public class PatternZigzag extends AbstractPattern{
 
 
 	@Override
-	public List<BarsMarker> getPatternMarkerList() {
+	public List<VMarker> getPatternMarkerList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

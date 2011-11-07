@@ -1,6 +1,6 @@
 1. MA cross,
 	pros: good for 单向大波，
-	cons: bad for 快速震荡
+	cons: bad for 快速震荡, loss quickly
 	
 2. BB (http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:bollinger_bands)
 	pros: good for 快速震荡，
@@ -12,4 +12,22 @@
 	
 3. Zigzag,
 	
+ 
+ 
+Strategy1:
+1. follow MA(14), to move cut winLoss, 
+2. high/low interval>5 bars(Todo)
+3. 
+
+1. in channel(ignore 2% exceeding channel)? buy support, sell resistance
+2. break channel (MA turn down, lower high)? short at BBUpper
+3. 
+
+1. MA6<MA14, MA14 up, is still uptrend.
+
+
+
+
+
+
  

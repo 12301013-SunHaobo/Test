@@ -8,9 +8,8 @@ import java.util.Observable;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
-import modules.at.model.Point;
 import modules.at.model.visual.BarsMarker;
-import modules.at.pattern.PatternZigzag.SwingType;
+import modules.at.model.visual.VMarker;
 
 public class PatternHighLow extends AbstractPattern {
 
@@ -18,7 +17,7 @@ public class PatternHighLow extends AbstractPattern {
 	private LinkedList<HighLowVertex> highList = new LinkedList<HighLowVertex>();
 	private LinkedList<HighLowVertex> lowList = new LinkedList<HighLowVertex>();
 	
-	private List<BarsMarker> patternMarkerList = new ArrayList<BarsMarker>();
+	private List<VMarker> patternMarkerList = new ArrayList<VMarker>();
 	
 	@Override
 	public Trend getTrend() {
@@ -115,7 +114,7 @@ public class PatternHighLow extends AbstractPattern {
 	}
 
 
-	public List<BarsMarker> getPatternMarkerList(){
+	public List<VMarker> getPatternMarkerList(){
 		if(this.patternMarkerList.size()==0){
 			for(HighLowVertex vertex : highList){
 				BarsMarker pm = new BarsMarker();

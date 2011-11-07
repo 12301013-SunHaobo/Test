@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import utils.Formatter;
-
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
-import modules.at.model.visual.BarsMarker;
+import modules.at.model.visual.VMarker;
 
 /**
  * Observes Indicators 
@@ -78,7 +76,7 @@ public class PatternMACross extends AbstractPattern{
 	}
 
 	@Override
-	public List<BarsMarker> getPatternMarkerList() {
+	public List<VMarker> getPatternMarkerList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
