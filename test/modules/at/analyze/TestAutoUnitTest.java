@@ -5,6 +5,9 @@ import modules.at.model.Position;
 
 import utils.Formatter;
 
+/**
+ * Test moving up/down stops
+ */
 public class TestAutoUnitTest extends TestCase{
 
     private static double[] ascArr = new double[]{

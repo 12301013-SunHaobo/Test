@@ -34,11 +34,7 @@ public class TestApacheMath {
     	PearsonsCorrelation p = new PearsonsCorrelation();
     	System.out.println("correlation(x,y)="+p.correlation(x, y));
     	System.out.println("correlation(x,z)="+p.correlation(x, z));
-    	
-    	
     }
-    
-    
     
     private static void testSimpleRegression2() {
         SimpleRegression r = new SimpleRegression();

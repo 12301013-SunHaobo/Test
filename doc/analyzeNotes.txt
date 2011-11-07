@@ -1,3 +1,6 @@
+--------------------------------------------------
+---- useful SimpleRegression, PearsonsCorrelation
+
 1. MA cross,
 	pros: good for 单向大波，
 	cons: bad for 快速震荡, loss quickly
@@ -23,8 +26,11 @@ Strategy1:
 2. break channel (MA turn down, lower high)? short at BBUpper
 3. 
 
-1. MA6<MA14, MA14 up, is still uptrend.
+1. MA6<MA14, MA14 up, is still considered uptrend.
+2. determine current mode asap?(How)
 
+indicator:
+method: previous 3 in trend or swing?
 
 
 
