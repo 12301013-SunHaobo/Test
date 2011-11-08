@@ -189,7 +189,7 @@ public class BarChartUtil {
 	     */
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
-//	    vplotBar.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
+	    vplotBar.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
 //	    vplotBar.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
 	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
 	    vplotBar.addSeries(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));

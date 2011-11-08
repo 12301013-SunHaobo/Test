@@ -68,7 +68,7 @@ public class TestAuto {
 		//patternList.add(new PatternMACross());
 		//patternList.add(new PatternRsi());
 		//patternList.add(new PatternSto());
-		patternList.add(new PatternHighLow());
+		//patternList.add(new PatternHighLow());
 		//patternList.add(new PatternEngulfing());
 	}
 	
