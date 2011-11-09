@@ -20,6 +20,7 @@ import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternEngulfing;
 import modules.at.pattern.PatternHighLow;
+import modules.at.pattern.PatternS1;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -70,6 +71,7 @@ public class TestAuto {
 		//patternList.add(new PatternSto());
 		//patternList.add(new PatternHighLow());
 		//patternList.add(new PatternEngulfing());
+		patternList.add(new PatternS1());
 	}
 	
 	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
@@ -229,7 +231,8 @@ public class TestAuto {
 		//add pattern markers to plotBar
 	    for(Pattern p : patternList){
 	    	if(p instanceof PatternEngulfing 
-	    			|| p instanceof PatternHighLow){
+    			|| p instanceof PatternHighLow
+    			|| p instanceof PatternS1){
 		        for(VMarker m : p.getPatternMarkerList()){
 		        	barRenderer.addAnnotation(m.toAnno(),Layer.BACKGROUND);
 		        }
