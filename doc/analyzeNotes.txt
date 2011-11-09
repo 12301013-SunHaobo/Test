@@ -31,6 +31,13 @@ Strategy1:
 
 indicator:
 method: previous 3 in trend or swing?
+How to find mode change asap? 震荡 or 趋势?
+震荡时间段长度？
+
+振幅相对前3个比例 = curBarLength/avg(3)
+
+
+
 
 
 
