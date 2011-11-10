@@ -23,6 +23,8 @@ public class Indicators extends Observable {
 	private DescriptiveStatistics ds4BB;//DescriptiveStatistics for BB
 	private RsiEmaSelfImpl rsi;
 	
+	private DescriptiveStatistics ds4MAUpperShadow;//MA of upper shadow
+	
 	/**
 	 * for stochastic
 	 * %K = (Current Close - Lowest Low)/(Highest High - Lowest Low) * 100
@@ -51,6 +53,8 @@ public class Indicators extends Observable {
 		this.ds4StoKHigh = new DescriptiveStatistics(AlgoSetting.STOCHASTIC_K_LENGTH);
 		this.ds4StoKLow = new DescriptiveStatistics(AlgoSetting.STOCHASTIC_K_LENGTH);
 		this.ds4StoD = new DescriptiveStatistics(AlgoSetting.STOCHASTIC_D_LENGTH);
+		//my invented
+		this.ds4MAUpperShadow = new DescriptiveStatistics(AlgoSetting.MA_UPPER_SHADOW_LENGTH);
 	}
 	
 	public void addBar(Bar bar){
@@ -65,6 +69,9 @@ public class Indicators extends Observable {
 		this.stoK = (bar.getClose() - ds4StoKLow.getMin())/(ds4StoKHigh.getMax() - ds4StoKLow.getMin()) * 100;
 		this.ds4StoD.addValue(this.stoK);
 		//highLow pattern
+		
+		//my invented
+		this.ds4MAUpperShadow.addValue(bar.getHigh()-Math.max(bar.getOpen(), bar.getClose()));
 		
 		this.barAdded++;
 		//notify observers: PatternMA, PatternRsi ...
@@ -130,6 +137,15 @@ public class Indicators extends Observable {
 		}
 		return this.ds4StoD.getSum()/AlgoSetting.STOCHASTIC_D_LENGTH;
 	}
+	
+	//my invented
+	public double getMAUpperShadow() {
+		if(this.ds4MAUpperShadow.getN()<AlgoSetting.MA_UPPER_SHADOW_LENGTH){
+			return Double.NaN;
+		}
+		return this.ds4MAUpperShadow.getSum()/AlgoSetting.MA_UPPER_SHADOW_LENGTH;
+	}
+	
 
 	public Bar getCurBar() {
 		return curBar;

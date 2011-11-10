@@ -31,6 +31,8 @@ import org.jfree.ui.Layer;
 import utils.Formatter;
 
 public class TestAuto {
+	
+	static String[] dateTimeArr = initDateTimeArr();
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	static List<Pattern> patternList = new ArrayList<Pattern>();
@@ -43,16 +45,11 @@ public class TestAuto {
 
 	private static void testOneDay() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		//String[] dateTimeArr = new String[] {"20111020", "200115"};
-		//String[] dateTimeArr = new String[] {"20111028", "200140"};
-		//String[] dateTimeArr = new String[] {"20111019", "200101"};
-		//String[] dateTimeArr = new String[] {"20111020", "200135"};
-		String[] dateTimeArr = new String[] {"20111101", "200252"};
 		
 		//get barList
 		String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
 		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[0]);
-		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
+		List<Bar> barList = TickToBarConverter.convert(tickList, AlgoSetting.BAR_TIME_PERIOD);
 		//get tradeList
 		List<Trade> tradeList = auto(dateTimeArr[0], barList);
 		//System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
@@ -65,14 +62,7 @@ public class TestAuto {
 	    
 	}
 	
-	private static void initPatternList(){
-		//patternList.add(new PatternMACross());
-		//patternList.add(new PatternRsi());
-		//patternList.add(new PatternSto());
-		//patternList.add(new PatternHighLow());
-		//patternList.add(new PatternEngulfing());
-		patternList.add(new PatternS1());
-	}
+
 	
 	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
 
@@ -241,6 +231,52 @@ public class TestAuto {
         return vchart;
 	}
 	
-
+	private static void initPatternList(){
+		//patternList.add(new PatternMACross());
+		//patternList.add(new PatternRsi());
+		//patternList.add(new PatternSto());
+		//patternList.add(new PatternHighLow());
+		//patternList.add(new PatternEngulfing());
+		//patternList.add(new PatternS1());
+	}
 	
+	private static String[] initDateTimeArr(){
+		return new String[] {
+				"20110915", "194819"
+				//"20110916", "195420"
+				//"20110919", "205230"
+				//"20110920", "212519"
+				//"20110922", "200738"
+				//"20110923", "223948"
+				//"20110926", "200301"
+				//"20110927", "200425"
+				//"20110928", "220751"
+				//"20110929", "202100"
+				//"20110930", "205736"
+				//"20111003", "224038"
+				//"20111004", "195804"
+				//"20111007", "001654"
+				//"20111011", "200137"
+				//"20111012", "200149"
+				//"20111013", "200134"
+				//"20111014", "200153"
+				//"20111017", "200114"
+				//"20111018", "200248"
+				//"20111020", "200135"
+				//"20111021", "200115"
+				//"20111024", "200203"
+				//"20111025", "200332"
+				//"20111026", "200246"
+				//"20111027", "200154"
+				//"20111028", "200140"
+				//"20111031", "200117"
+				//"20111101", "200252"
+				//"20111102", "200117"
+				//"20111103", "200218"
+				//"20111104", "200117"
+				//"20111107", "200117"
+				//"20111108", "200141"
+				};
+
+	}
 }

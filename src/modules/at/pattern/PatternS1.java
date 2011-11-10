@@ -42,7 +42,7 @@ public class PatternS1 extends AbstractPattern {
 	
 	private void checkStar(Bar curBar){
 		double per = Math.abs(curBar.getOpen()-curBar.getClose())/Math.abs(curBar.getHigh()-curBar.getLow()); 
-		if(per<0.05){
+		if(per<0.20){
 			BarsMarker pm = new BarsMarker();
 			pm.addBar(curBar);
 			pm.setTrend(Trend.Down);
