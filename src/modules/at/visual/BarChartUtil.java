@@ -87,6 +87,7 @@ public class BarChartUtil {
 		RsiUpper, Rsi, RsiLower,
 		BBUpper, BBMiddle, BBLower,
 		MAFast, MASlow,
+		MAUpperShadow,
 		StoK, StoD, StoUpper, StoLower
 	}
 	public static List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
@@ -105,6 +106,7 @@ public class BarChartUtil {
 				case BBLower: indicatorVal = indicator.getBBLower(); break;
 				case MAFast: indicatorVal = indicator.getSMAFast(); break;
 				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
+				case MAUpperShadow: indicatorVal =  indicator.getMAUpperShadow(); break;
 				case StoK: indicatorVal = indicator.getStochasticK(); break;
 				case StoD: indicatorVal = indicator.getStochasticD(); break;
 				case StoUpper: indicatorVal = AlgoSetting.STOCHASTIC_UPPER; break;
@@ -189,14 +191,21 @@ public class BarChartUtil {
 	     */
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
-	    vplotBar.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
+	    vplotBar.addSeries(new VSeries("MAFast("+AlgoSetting.MA_FAST_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
 //	    vplotBar.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
 	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
 	    vplotBar.addSeries(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
 	    vplotBar.addSeries(new VSeries("BBLower",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBLower, barList), null, java.awt.Color.gray));
 	    
 	    vchart.addPlot(vplotBar);	
-	    
+
+	    /*
+	    //my invention UpperShadow
+	    VPlot vplotIndicator = new VPlot(1);
+	    vplotIndicator.addSeries(new VSeries("MAUpperShadow",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAUpperShadow, barList), null, java.awt.Color.red));
+	    vchart.addPlot(vplotIndicator);
+	    */
+
 		/*
 	    //MA plot
 	    VPlot vplotIndicator = new VPlot(1);
@@ -205,12 +214,14 @@ public class BarChartUtil {
 	    vchart.addPlot(vplotIndicator);
 	    */
 
+	    
 	    //RSI plot
 	    VPlot vplotRsi = new VPlot(1);
 	    vplotRsi.addSeries(new VSeries("RsiUpper", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
 	    vplotRsi.addSeries(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
 	    vplotRsi.addSeries(new VSeries("RsiLower", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiLower, barList), null, java.awt.Color.red));
 	    vchart.addPlot(vplotRsi);
+
 	    return vchart;
 	}
 	

@@ -2,6 +2,8 @@ package modules.at.model;
 
 public class AlgoSetting {
 
+	public static final int BAR_TIME_PERIOD = 1 * 60 * 1000 ; //milliseconds
+	
     //trade unit, how many shares in one trade unit
     public static final int TRADE_UNIT = 1;
 
@@ -22,6 +24,9 @@ public class AlgoSetting {
 	public static final int STOCHASTIC_D_LENGTH = 3;
 	public static final double STOCHASTIC_UPPER = 80;
 	public static final double STOCHASTIC_LOWER = 20;
+	
+	//my invented
+	public static final int MA_UPPER_SHADOW_LENGTH = 3;
 	
 	//Cut loss & lock profit
 	//public static final double CUT_WIN = 0.001; //increase percentage % to cut win
