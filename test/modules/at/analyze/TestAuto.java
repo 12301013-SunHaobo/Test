@@ -237,7 +237,7 @@ public class TestAuto {
 		//patternList.add(new PatternSto());
 		//patternList.add(new PatternHighLow());
 		//patternList.add(new PatternEngulfing());
-		//patternList.add(new PatternS1());
+		patternList.add(new PatternS1());
 	}
 	
 	private static String[] initDateTimeArr(){

@@ -18,7 +18,7 @@ public class PatternS1 extends AbstractPattern {
 	public void update(Observable o, Object arg) {
 		Indicators indicators = (Indicators)o;
 		Bar curBar = indicators.getCurBar();
-		checkStar(curBar);
+		//checkStar(curBar);
 		
 	}
 
@@ -39,7 +39,18 @@ public class PatternS1 extends AbstractPattern {
 	}
 
 
+	/**
+	 * 
+	 * Check MA turning point
+	 */
+	private void checkMATurn(Bar curBar){
+		
+	}
 	
+	
+	/**
+	 * check if body/total<0.20
+	 */
 	private void checkStar(Bar curBar){
 		double per = Math.abs(curBar.getOpen()-curBar.getClose())/Math.abs(curBar.getHigh()-curBar.getLow()); 
 		if(per<0.20){
