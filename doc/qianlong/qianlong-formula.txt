@@ -1,0 +1,5 @@
+Ret1=2*(boll.[uboll](20)-boll.[dboll](20))/(boll.[uboll](20)+boll.[dboll](20))>(5/100)
+
+
+
+
