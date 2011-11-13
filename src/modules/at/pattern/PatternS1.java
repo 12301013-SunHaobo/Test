@@ -42,6 +42,7 @@ public class PatternS1 extends AbstractPattern {
 	/**
 	 * 
 	 * Check MA turning point
+	 * 1. 距前一个turning point要超过 20个bars
 	 */
 	private void checkMATurn(Bar curBar){
 		
