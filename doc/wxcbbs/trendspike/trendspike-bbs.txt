@@ -1,0 +1,24 @@
+两年前开始进入市场，今年利润首次突破7位数，不包含10几万的手续费。纪念下。来源: trendspike 于 08-11-25 07:06:09
+in the last two years, the max drawdown is less than 1% excluding the error from my code in Jan this year. I usually have one or two losing days in one months, and the loss is usually recovered in the next two days. 
+the loss is due to complacency of straight win since sept.1. will be more cautious in the future. always make the same mistake, that is, more aggressive after no-losing days for many weeks then followed by a severe hit.来源: trendspike 于 08-11-20 09:33:21 
+机器交易软件今年共让我损失40000刀。一月份由此小数点算错，由于我编程时忘了整数，浮动小数文件读取得差百(difference between atoi and atof), 那次无端输25000.今天是因为昨天毕盘时,机器突然帮我买进40万的股票,当时报侥幸,没有对冲.今天开盘就输6000多.现在也没查出是什么原因机器突然买进那么多股票的.看来机器交易问题多多呀.来源: trendspike 于 08-11-11 11:22:39 
+since this month made the record for my two-years trading experience, I thus briefly post the trading result here. In October, the system opened over 4000 positions in total which resulted roughly 30% profit with no losing days. The system was started two years ago, so far no losing month, even almost no losing weeks (except very few i still remember).trendspike 于 08-10-31 11:10:43 
+我的研究表明，所以书上写着的指标，最高盈利不超过千分之一，二。其中最好的指标是MACD.但它也不超过千分之二。来源: trendspike 于 08-12-12 08:13:23
+手续费很贵。每天都要1，2千，不管赢还是输 [大千股坛] - trendspike(0 bytes ) (18 reads)2008-12-02
+ 几分钟进出一次. [大千股坛] - trendspike(0 bytes ) (17 reads)2008-12-02
+ 交易方法无所谓对错。错的是输钱。我也不用书上那些统计。我有自己的指标。 来源: trendspike 于 08-12-12 08:20:31 	
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+

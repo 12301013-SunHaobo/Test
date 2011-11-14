@@ -17,7 +17,7 @@ public class AlgoSetting {
 	
 	//MA
 	public static final int MA_FAST_LENGTH = 5;
-	public static final int MA_SLOW_LENGTH = 13;
+	public static final int MA_SLOW_LENGTH = 14;
 	
 	//Stochastic
 	public static final int STOCHASTIC_K_LENGTH = 10;
