@@ -2,3 +2,4 @@
 ->page 24 first line;
 ->page 28 the dangers
 ->page 35 PROBLEM: External versus Internal Control
+->page 40 physical skills as well as mental skills
