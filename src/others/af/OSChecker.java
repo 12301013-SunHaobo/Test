@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import others.utils.WebUtil;
+import utils.WebUtil;
 
 public class OSChecker implements Callable<String>{
 

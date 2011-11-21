@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 import others.e.model.Iciba;
 import others.e.model.Mw;
 import others.e.model.Word;
-import others.utils.WebUtil;
+import utils.WebUtil;
 
 public class TPhone implements Callable<String>{
 	

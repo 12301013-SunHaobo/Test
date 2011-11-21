@@ -28,6 +28,7 @@ public class WebUtil {
 
 			URL url = new URL(urlStr);
 			URLConnection uc = url.openConnection();
+			uc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");//some sites require this, otherwise 403 error
 			uc.setReadTimeout(5*60*1000);
 			BufferedReader in = new BufferedReader(new InputStreamReader(uc
 					.getInputStream(), encoding));

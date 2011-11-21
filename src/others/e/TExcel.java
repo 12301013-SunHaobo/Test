@@ -7,7 +7,7 @@ import others.e.model.Iciba;
 import others.e.model.Mw;
 import others.e.model.Word;
 import others.e.model.Wwo;
-import others.utils.WebUtil;
+import utils.WebUtil;
 
 public class TExcel implements Callable<String>{
 	

@@ -3,7 +3,7 @@ package others.e.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import others.utils.WebUtil;
+import utils.WebUtil;
 
 public class Wwo {
 	
