@@ -51,6 +51,7 @@ public class WebUtil {
 		}
 		URL u = new URL(urlStr);
 	    URLConnection uc = u.openConnection();
+	    uc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");//some sites require this, otherwise 403 error
 	    String contentType = uc.getContentType();
 	    int contentLength = uc.getContentLength();
 	    if (contentType.startsWith("text/") || contentLength == -1) {

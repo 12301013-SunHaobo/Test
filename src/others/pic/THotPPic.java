@@ -23,31 +23,30 @@ public class THotPPic {
 
 
 	public static void main(String[] args) throws Exception{
-		THotPPic t = new THotPPic("", 3);
+		THotPPic t = new THotPPic("uncensored", 3);
 		t.call();
 	}
 	
 	public String call() throws Exception {
-		String pageUrl = getPageUrl(this.category, this.pageNo);
-		String page = WebUtil.getPageSource("http://jav.hotporndl.com/category/uncensored/page/26", encoding);
-
+		//String pageUrl = getPageUrl(this.category, this.pageNo);
+		String pageUrl = "http://jav.hotporndl.com/category/"+this.category+"/page/"+this.pageNo;
+		String page = WebUtil.getPageSource(pageUrl, encoding);
 		System.out.println(page);
-		if(true) return null;
 		
-		String dataTablePattern1 = "<div class=\"entry\">.*?<br />";
+		//String dataTablePattern1 = "<p><a href=\"http://jav.hotporndl.com/wp-content/uploads.*?<p align";
+		String dataTablePattern1 = "src=\"http:.*?<p align";
 		
         List<String> dataTableList = RegUtil.getMatchedStrings(page, dataTablePattern1);
-        System.out.println(category+","+pageNo+", has "+dataTableList.size()+" pics.");
+		
         for(String str : dataTableList){
-        	//<img onload="NcodeImageResizer.createOn(this);" src="http://litejav.com/wp-content/uploads/2011/09/DVD1CWPBD-50.jpg" alt="DVD1CWPBD 50 [CWPBD 50] キャットウォーク ポイズン 50 : AIKA (ブルーレイ版)"  title="[CWPBD 50] キャットウォーク ポイズン 50 : AIKA (ブルーレイ版)" /><br />
+        	str = str.replaceAll("<p> <object.*?</object>", "");
         	List<String> imgUrlList = RegUtil.getMatchedStrings(str, "src=.*?jpg");
         	String tmpImgUrl = imgUrlList.get(0);
         	String imgUrl =tmpImgUrl.replaceAll("src|=|\"", "");
-        	//System.out.println(str);
-        	String title = str.substring(str.indexOf("[")+1, str.indexOf("]")).replace(" ", "_");
-        	//System.out.println("-----------");
-        	//System.out.println(str);
-        	//System.out.println(url+","+title);
+
+        	str = str.replaceFirst("<p>.*?</p>", "").replaceAll("\r|\n|<p>", "").replaceAll("\\|", " ");
+        	String title = str.substring(0, 25);
+        	
         	String fileName = ROOT_PIC_DIR+"/"+this.category+"/"+title+".jpg";
         	if(!(new File(fileName)).exists()){
 	        	try {

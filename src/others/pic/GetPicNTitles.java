@@ -21,7 +21,7 @@ public class GetPicNTitles {
 		BoundedExecutor be = new BoundedExecutor(10);
 		
 		for(int i=1;i<=172;i++){//1-72 <-------------------- change here
-			TPic tpic = new TPic(category, i);
+			TLiteJav tpic = new TLiteJav(category, i);
 			try {
 				be.submit(tpic);
 				System.out.println(category+", "+i+", submitted.");

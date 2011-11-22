@@ -7,15 +7,15 @@ import java.util.concurrent.Callable;
 import utils.RegUtil;
 import utils.WebUtil;
 
-public class TPic implements Callable<String>{
+public class TLiteJav implements Callable<String>{
 	
 	private static String encoding = "UTF-8";
-	private static String ROOT_PIC_DIR="D:/downloads/pics";
+	private static String ROOT_PIC_DIR="D:/downloads/liteJav/pics";
 	
 	private String category;
 	private int pageNo;
 	
-	public TPic(String category, int pageNo) {
+	public TLiteJav(String category, int pageNo) {
 		super();
 		this.category = category;
 		this.pageNo = pageNo;
