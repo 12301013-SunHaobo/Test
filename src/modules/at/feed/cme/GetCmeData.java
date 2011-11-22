@@ -100,4 +100,34 @@ public class GetCmeData {
 		return tickList;
 	}	
 	
+	
+/**
+
+<option value="16">3:00:00 PM-3:59:59 PM</option>
+<option value="17">4:00:00 PM-4:59:59 PM</option>
+<option value="18">5:00:00 PM-5:59:59 PM</option>
+<option value="19">6:00:00 PM-6:59:59 PM</option>
+<option value="20">7:00:00 PM-7:59:59 PM</option>
+<option value="21">8:00:00 PM-8:59:59 PM</option>
+<option value="22">9:00:00 PM-9:59:59 PM</option>
+<option value="23">10:00:00 PM-10:59:59 PM</option>
+<option value="24">11:00:00 PM-11:59:59 PM</option>
+<option value="101">12:00:00 AM-12:59:59 AM</option>
+<option value="102">1:00:00 AM-1:59:59 AM</option>
+<option value="103">2:00:00 AM-2:59:59 AM</option>
+<option value="104">3:00:00 AM-3:59:59 AM</option>
+<option value="105">4:00:00 AM-4:59:59 AM</option>
+<option value="106">5:00:00 AM-5:59:59 AM</option>
+<option value="107">6:00:00 AM-6:59:59 AM</option>
+<option value="108">7:00:00 AM-7:59:59 AM</option>
+<option value="109">8:00:00 AM-8:59:59 AM</option>
+<option value="110">9:00:00 AM-9:59:59 AM</option>
+<option value="111">10:00:00 AM-10:59:59 AM</option>
+<option value="112">11:00:00 AM-11:59:59 AM</option>
+<option value="113">12:00:00 PM-12:59:59 PM</option>
+<option value="114">1:00:00 PM-1:59:59 PM</option>
+<option value="115">2:00:00 PM-2:59:59 PM</option>
+<option value="116">3:00:00 PM-3:59:59 PM</option>
+<option value="-1">Full Trade Day</option>	
+ */
 }
