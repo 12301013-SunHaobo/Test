@@ -1,0 +1,18 @@
+--breakout strategy (ES E-Mini S&P 500  15min bar chart, BollingerBand(20,2), Bollinger Percent B(20,2) )--
+LongEntry:
+	1. Bar closes above Bollinger Bands
+	
+LongExit:
+	1. 10% of Average Daily Range
+	2. Bar closes INSIDE Bollinger Band
+
+ShortEntry:
+	1. Close BELOW Bollinger Bands
+
+Feature: High Reward Ratio, Average profit much bigger than average loss
+Winning Percentage: approx. 40%
+
+
+
+
+	

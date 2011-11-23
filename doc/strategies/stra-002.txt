@@ -1,0 +1,19 @@
+http://www.youtube.com/watch?v=S8br7mqjYts&feature=fvwrel
+--bollinger bands strategy ()--
+LongEntry:
+	1. swing low below 21
+		a. stop below entry
+		b. exit 3 to 1
+
+ShortEntry:
+	1. swing high above 21
+		a. stop above entry
+		b. exit 3 to 1
+
+Feature: 
+Winning Percentage: 
+
+
+
+
+	
