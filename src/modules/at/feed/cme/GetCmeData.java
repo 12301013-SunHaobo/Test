@@ -14,6 +14,10 @@ import utils.WebUtil;
 
 public class GetCmeData {
 
+    private static final int[] timeSlotArr = new int[]{
+        16, 17, 18, 19, 20, 21, 22, 23, 24,
+        101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116
+    };
 	/**
 	 * time slots
 	 * 16-24 inclusive
@@ -37,23 +41,15 @@ public class GetCmeData {
 		long reqTime = Formatter.DATETIME_FORMAT_SSS.parse(dateStr).getTime();
 		
 		List<String> allTicks = new ArrayList<String>();
-		for (int timeSlot = 16; timeSlot <= 24; timeSlot++) {
-			List<String> oneTimeSlotTickList = getOneTimeSlot(reqTime, timeSlot);
-			if(oneTimeSlotTickList.size()>0){
-				allTicks.add(oneTimeSlotTickList.get(0));
-				allTicks.add(oneTimeSlotTickList.get(oneTimeSlotTickList.size()-1));
-				allTicks.add("----"+timeSlot);
-			}
-			System.out.println("finished timeslot "+timeSlot);
-		}
-		for (int timeSlot = 101; timeSlot <= 116; timeSlot++) {
-			List<String> oneTimeSlotTickList = getOneTimeSlot(reqTime, timeSlot);
-			if(oneTimeSlotTickList.size()>0){
-				allTicks.add(oneTimeSlotTickList.get(0));
-				allTicks.add(oneTimeSlotTickList.get(oneTimeSlotTickList.size()-1));
-				allTicks.add("----"+timeSlot);
-			}
-			System.out.println("finished timeslot "+timeSlot);
+		for(int i=0;i<timeSlotArr.length;i++){
+		    int timeSlot = timeSlotArr[i];
+            List<String> oneTimeSlotTickList = getOneTimeSlot(reqTime, timeSlot);
+            if(oneTimeSlotTickList.size()>0){
+                allTicks.add(oneTimeSlotTickList.get(0));
+                allTicks.add(oneTimeSlotTickList.get(oneTimeSlotTickList.size()-1));
+            }
+            allTicks.add("----"+timeSlot+"--end--");
+            System.out.println("finished timeslot "+timeSlot);
 		}
 		/*
 		for(String tick : allTicks){
