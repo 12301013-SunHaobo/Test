@@ -8,7 +8,6 @@ import modules.at.TradeUtil;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
-import modules.at.formula.IndicatorsRule;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Position;
@@ -20,7 +19,11 @@ import modules.at.model.visual.VPlot;
 import modules.at.pattern.Pattern;
 import modules.at.pattern.PatternEngulfing;
 import modules.at.pattern.PatternHighLow;
+import modules.at.pattern.PatternMACross;
 import modules.at.pattern.PatternS1;
+import modules.at.stg.SampleStrategy;
+import modules.at.stg.Strategy;
+import modules.at.stg.Strategy.Decision;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -30,12 +33,14 @@ import org.jfree.ui.Layer;
 
 import utils.Formatter;
 
-public class TestAuto {
+public class TestStrategyAuto {
 	
 	static String[] dateTimeArr = initDateTimeArr();
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	static List<Pattern> patternList = new ArrayList<Pattern>();
+	
+	static Strategy strategy = new SampleStrategy();
 	
 	public static void main(String[] args) throws Exception {
 		initPatternList();
@@ -67,21 +72,13 @@ public class TestAuto {
 	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
 
 		Indicators indicators = new Indicators();
-		for(Pattern pattern : patternList){
-			indicators.addObserver(pattern);
-		}
-		IndicatorsRule indicatorsRule = new IndicatorsRule();
-		indicatorsRule.setPatternList(patternList);
-		
 		
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
 			indicators.addBar(bar);//update indicators 
 			//System.out.println("TestAuto:time="+Formatter.DEFAULT_DATETIME_FORMAT.format(bar.getDate())+", price="+Formatter.DECIMAL_FORMAT.format(bar.getClose()));
-			double price = bar.getClose();
-			long time = bar.getDate().getTime();
 			
-			Trade trade = decide(indicatorsRule, price, time, dateStr);
+			Trade trade = decide(indicators, dateStr);
 			if(trade != null){
 				tradeList.add(trade);
 			}
@@ -102,7 +99,11 @@ public class TestAuto {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Trade decide(IndicatorsRule indicatorsRule, double price, long time, String dateStr) throws Exception{
+	private static Trade decide(Indicators indicators, String dateStr) throws Exception{
+		strategy.update(indicators);//update strategy
+		Bar bar = indicators.getCurBar();
+		double price = bar.getClose();
+		long time = bar.getDate().getTime();
 		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
 		if("20111028-10:41:46".equals(tmpTimeStr)){
 			//System.out.println();
@@ -136,7 +137,7 @@ public class TestAuto {
 					}
 				}
 
-				Pattern.Trend trend = indicatorsRule.predictTrend();
+				Strategy.Decision decision = strategy.getDecision();
 				if(Pattern.Trend.Down.equals(trend)){
 					if (pQty >= 0){//short
 						trade = new Trade(price, (-1*pQty)-AlgoSetting.TRADE_UNIT, time, Trade.Type.Short);
@@ -171,7 +172,30 @@ public class TestAuto {
 		return trade;
 	}
 	
-	
+	/**
+	 * return null means don't do anything
+	 * 
+	 */
+	private static Trade processDecision(Position position, Strategy.Decision decision){
+		int pQty = position.getQty();
+			if (pQty >= 0){//short
+				if(Decision.LongEntry.equals(trend)){
+				trade = new Trade(price, (-1*pQty)-AlgoSetting.TRADE_UNIT, time, Trade.Type.Short);
+				position.setPosition(pQty+(-1*pQty)-AlgoSetting.TRADE_UNIT, price);
+				
+			} else {//pQty<0?
+				//keep short position
+			}
+		} else if(Pattern.Trend.Up.equals(trend)) {
+			if (pQty <= 0){//long
+				trade = new Trade(price, (-1*pQty)+AlgoSetting.TRADE_UNIT, time, Trade.Type.Long);
+				position.setPosition(pQty + (-1*pQty)+AlgoSetting.TRADE_UNIT, price);
+			} else{//pQty>0?
+				//keep long position
+			}
+		}
+		return null;
+	}
 	
 	
 	// time range of trade
@@ -232,12 +256,12 @@ public class TestAuto {
 	}
 	
 	private static void initPatternList(){
-		//patternList.add(new PatternMACross());
+		patternList.add(new PatternMACross());
 		//patternList.add(new PatternRsi());
 		//patternList.add(new PatternSto());
 		//patternList.add(new PatternHighLow());
 		//patternList.add(new PatternEngulfing());
-		patternList.add(new PatternS1());
+		//patternList.add(new PatternS1());
 	}
 	
 	private static String[] initDateTimeArr(){
