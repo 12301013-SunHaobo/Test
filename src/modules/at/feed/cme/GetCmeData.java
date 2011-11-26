@@ -48,8 +48,8 @@ public class GetCmeData {
                 allTicks.add(oneTimeSlotTickList.get(0));
                 allTicks.add(oneTimeSlotTickList.get(oneTimeSlotTickList.size()-1));
             }
-            allTicks.add("----"+timeSlot+"--end--");
-            System.out.println("finished timeslot "+timeSlot);
+            allTicks.add("----"+timeSlot+"--end------------------------------------------has "+oneTimeSlotTickList.size()+" ticks");
+            System.out.println("finished timeslot "+timeSlot+", "+oneTimeSlotTickList.size()+" ticks");
 		}
 		/*
 		for(String tick : allTicks){
