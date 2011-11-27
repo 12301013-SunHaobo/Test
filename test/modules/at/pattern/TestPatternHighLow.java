@@ -52,10 +52,10 @@ public class TestPatternHighLow {
 		LinkedList<HighLowVertex> highList = patternHighLow.getHighList();
 		LinkedList<HighLowVertex> lowList = patternHighLow.getLowList();
 		for(HighLowVertex point : highList){
-			tradeList.add(new Trade(point.getPrice(), -1, point.getBar().getDate().getTime(), Trade.Type.Short));
+			tradeList.add(new Trade(point.getPrice(), -1, point.getBar().getDate().getTime(), Trade.Type.ShortEntry));
 		}
 		for(HighLowVertex point : lowList){
-			tradeList.add(new Trade(point.getPrice(), 1, point.getBar().getDate().getTime(), Trade.Type.Long));
+			tradeList.add(new Trade(point.getPrice(), 1, point.getBar().getDate().getTime(), Trade.Type.LongEntry));
 		}
 		
 		return tradeList;

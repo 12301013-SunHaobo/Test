@@ -48,4 +48,10 @@ public class AlgoSetting {
 	public static final int ENGULF_LIST_LENGTH =500;//saves all engulfing bars
 	
 	
+	//trade direction
+	public static final TradeDirection TRADE_DIRECTION = TradeDirection.LongOnly;
+	public enum TradeDirection {
+		LongOnly, ShortOnly, Both
+	}
+	
 }

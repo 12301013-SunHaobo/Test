@@ -9,6 +9,7 @@ import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
+import modules.at.model.AlgoSetting.TradeDirection;
 import modules.at.model.Bar;
 import modules.at.model.Position;
 import modules.at.model.Tick;
@@ -16,11 +17,6 @@ import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
-import modules.at.pattern.Pattern;
-import modules.at.pattern.PatternEngulfing;
-import modules.at.pattern.PatternHighLow;
-import modules.at.pattern.PatternMACross;
-import modules.at.pattern.PatternS1;
 import modules.at.stg.SampleStrategy;
 import modules.at.stg.Strategy;
 import modules.at.stg.Strategy.Decision;
@@ -38,12 +34,10 @@ public class TestStrategyAuto {
 	static String[] dateTimeArr = initDateTimeArr();
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
-	static List<Pattern> patternList = new ArrayList<Pattern>();
 	
 	static Strategy strategy = new SampleStrategy();
 	
 	public static void main(String[] args) throws Exception {
-		initPatternList();
 		testOneDay();
 		//testAllDays();
 	}
@@ -61,7 +55,7 @@ public class TestStrategyAuto {
 		TradeUtil.printTrades(tradeList, true);
 		
 		//display chart with trade and mark info
-		VChart vchart = createMarkedChart(barList, tradeList, patternList);
+		VChart vchart = createMarkedChart(barList, tradeList, strategy.getDecisionMarkerList());
 		vchart.setTitle(tickFileName);
 	    new ChartBase(vchart);
 	    
@@ -112,8 +106,7 @@ public class TestStrategyAuto {
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
 		double stopPrice = position.getStopLossPrice();
-//		System.out.println(
-//				Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+
+//		System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+
 //				", stopPrice="+Formatter.DECIMAL_FORMAT4.format(stopPrice));
 
 		Trade trade = null;
@@ -138,21 +131,7 @@ public class TestStrategyAuto {
 				}
 
 				Strategy.Decision decision = strategy.getDecision();
-				if(Pattern.Trend.Down.equals(trend)){
-					if (pQty >= 0){//short
-						trade = new Trade(price, (-1*pQty)-AlgoSetting.TRADE_UNIT, time, Trade.Type.Short);
-						position.setPosition(pQty+(-1*pQty)-AlgoSetting.TRADE_UNIT, price);
-					} else {//pQty<0?
-						//keep short position
-					}
-				} else if(Pattern.Trend.Up.equals(trend)) {
-					if (pQty <= 0){//long
-						trade = new Trade(price, (-1*pQty)+AlgoSetting.TRADE_UNIT, time, Trade.Type.Long);
-						position.setPosition(pQty + (-1*pQty)+AlgoSetting.TRADE_UNIT, price);
-					} else{//pQty>0?
-						//keep long position
-					}
-				}
+				trade = processDecision(position, decision, bar);
 				break;
 			case WrapUp :
 				if(pQty != 0){
@@ -176,8 +155,28 @@ public class TestStrategyAuto {
 	 * return null means don't do anything
 	 * 
 	 */
-	private static Trade processDecision(Position position, Strategy.Decision decision){
+	private static Trade processDecision(Position position, Strategy.Decision decision, Bar bar){
+		Trade trade = null;
+		
 		int pQty = position.getQty();
+	
+		if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.LongOnly)){
+			if(pQty==0 && Decision.LongEntry.equals(decision)){
+				trade = new Trade(bar.getClose(), AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.LongEntry);
+			} else if(pQty>0 && Decision.LongExit.equals(decision)){
+				trade = new Trade(bar.getClose(), -1*pQty*AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.LongExit);
+			}
+		}else if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.ShortOnly)){
+			if(pQty==0 && Decision.ShortEntry.equals(decision)){
+				trade = new Trade(bar.getClose(), -1*AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.ShortEntry);
+			} else if(pQty<0 && Decision.ShortExit.equals(decision)){
+				trade = new Trade(bar.getClose(), -1*pQty*AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.ShortExit);
+			}
+		}else if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.Both)){
+			
+		}
+		
+		/*
 			if (pQty >= 0){//short
 				if(Decision.LongEntry.equals(trend)){
 				trade = new Trade(price, (-1*pQty)-AlgoSetting.TRADE_UNIT, time, Trade.Type.Short);
@@ -193,8 +192,8 @@ public class TestStrategyAuto {
 			} else{//pQty>0?
 				//keep long position
 			}
-		}
-		return null;
+		}*/
+		return trade;
 	}
 	
 	
@@ -235,7 +234,7 @@ public class TestStrategyAuto {
 	}
 	
 
-	private static VChart createMarkedChart(List<Bar> barList, List<Trade> tradeList, List<Pattern> patternList){
+	private static VChart createMarkedChart(List<Bar> barList, List<Trade> tradeList, List<VMarker> decisionMarkerList){
 	    VChart vchart = BarChartUtil.createBasicChart(barList);
         VPlot vplotBar = vchart.getPlotList().get(0);	
         //add trade annotations
@@ -243,26 +242,13 @@ public class TestStrategyAuto {
 	    vplotBar.addAnnotations(tradeAnnoList);
 	    CandlestickRenderer barRenderer = (CandlestickRenderer)vplotBar.getVseriesList().get(0).getRenderer();//bar renderer, first plot, first series
 		//add pattern markers to plotBar
-	    for(Pattern p : patternList){
-	    	if(p instanceof PatternEngulfing 
-    			|| p instanceof PatternHighLow
-    			|| p instanceof PatternS1){
-		        for(VMarker m : p.getPatternMarkerList()){
-		        	barRenderer.addAnnotation(m.toAnno(),Layer.BACKGROUND);
-		        }
-	    	}
-	    }
+        for(VMarker m : decisionMarkerList){
+        	barRenderer.addAnnotation(m.toAnno(),Layer.BACKGROUND);
+        }
         return vchart;
 	}
 	
-	private static void initPatternList(){
-		patternList.add(new PatternMACross());
-		//patternList.add(new PatternRsi());
-		//patternList.add(new PatternSto());
-		//patternList.add(new PatternHighLow());
-		//patternList.add(new PatternEngulfing());
-		//patternList.add(new PatternS1());
-	}
+
 	
 	private static String[] initDateTimeArr(){
 		return new String[] {

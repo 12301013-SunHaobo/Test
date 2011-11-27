@@ -53,9 +53,9 @@ public class TestRandomTrade {
                     for (int i = 0; i < selectedIdxs.size(); i++) {
                         Bar bar = barList.get(selectedIdxs.get(i));
                         if (i % 2 == 0) {
-                            tradeList.add(new Trade(bar.getClose(), 1, bar.getDate().getTime(), Trade.Type.Long));
+                            tradeList.add(new Trade(bar.getClose(), 1, bar.getDate().getTime(), Trade.Type.LongEntry));
                         } else {
-                            tradeList.add(new Trade(bar.getClose(), -1, bar.getDate().getTime(), Trade.Type.Sell));
+                            tradeList.add(new Trade(bar.getClose(), -1, bar.getDate().getTime(), Trade.Type.LongExit));
                         }
                     }
                     double pnL = TradeUtil.printTrades(tradeList, false);

@@ -10,8 +10,8 @@ public class Trade {
 	private static int idSeq = 0; //sequence number to count how many trades are created
 	
 	public enum Type {
-		Long, Sell, 
-		Short, CoverShort, 
+		LongEntry, LongExit, 
+		ShortEntry, ShortExit, 
 		LockProfit, CutLoss, 
 		WrapUp  
 	}
