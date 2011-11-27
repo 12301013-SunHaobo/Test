@@ -40,8 +40,8 @@ public class Trade {
 				"type="+type+", " +
 				"price=" + price + ", " +
 				"qty=" + qty + ", " +
-				"dateTime=" + Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(dateTime))+", "+
-				"reasons: " + listReasons() +", "+
+				//"dateTime=" + Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(dateTime))+", "+
+				//"reasons: " + listReasons() +", "+
 				(Double.isNaN(pnl)?"":Formatter.DECIMAL_FORMAT.format(pnl))+
 				"]";
 	}

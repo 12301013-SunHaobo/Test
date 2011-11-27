@@ -13,9 +13,18 @@ public class TradeUtil {
 	
 	public static double printTrades(List<Trade> tradeList, boolean printDetail){
 		double pnL = 0;
+		double entryCost = 0;
+		double exitGain = 0;
 		for(Trade trade : tradeList){
 		    if(printDetail){
-		        System.out.println(trade);
+		        System.out.print(trade);
+		        if(Trade.Type.LongEntry.equals(trade.getType())){
+		        	entryCost = trade.getPrice() * trade.getQty()*(-1);
+		        }else if(Trade.Type.LongExit.equals(trade.getType())){
+		        	exitGain = trade.getPrice() * trade.getQty()*(-1);
+		        	System.out.print(" --> pnl= "+Formatter.DECIMAL_FORMAT.format(entryCost+exitGain));
+		        }
+		        System.out.println();
 		    }
 			pnL = pnL + (trade.getPrice() * trade.getQty()*(-1));
 		}

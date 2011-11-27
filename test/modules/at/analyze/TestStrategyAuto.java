@@ -163,8 +163,10 @@ public class TestStrategyAuto {
 		if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.LongOnly)){
 			if(pQty==0 && Decision.LongEntry.equals(decision)){
 				trade = new Trade(bar.getClose(), AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.LongEntry);
+				position.setPosition(pQty+1*AlgoSetting.TRADE_UNIT, bar.getClose());
 			} else if(pQty>0 && Decision.LongExit.equals(decision)){
 				trade = new Trade(bar.getClose(), -1*pQty*AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.LongExit);
+				position.setPosition(0, bar.getClose());
 			}
 		}else if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.ShortOnly)){
 			if(pQty==0 && Decision.ShortEntry.equals(decision)){

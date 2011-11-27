@@ -13,7 +13,7 @@ public class BarsMarker extends VMarker{
 	protected double[] getVertexes() {
 		if (barList.size() > 0) {
 			Bar tmpBar = barList.get(0);
-			double left = tmpBar.getDate().getTime()-50*1000;
+			double left = tmpBar.getDate().getTime()-30*1000;
 			double top = tmpBar.getHigh();
 			double bottom = tmpBar.getLow();
 			for (Bar bar : barList) {
@@ -23,7 +23,7 @@ public class BarsMarker extends VMarker{
 			top += 0.01;
 			bottom -= 0.01;
 			tmpBar = barList.get(barList.size()-1);
-			double right = tmpBar.getDate().getTime()+50*1000;
+			double right = tmpBar.getDate().getTime()+30*1000;
 			
 			double[] vertexes = new double[]{
 					left,top,
