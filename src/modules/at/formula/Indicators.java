@@ -20,6 +20,7 @@ public class Indicators extends Observable {
 
 	private DescriptiveStatistics ds4MAFast;//for MA fast
 	private DescriptiveStatistics ds4MASlow;//for MA slow
+	private DescriptiveStatistics ds4MA3;//for MA 3
 	private DescriptiveStatistics ds4BB;//DescriptiveStatistics for BB
 	private RsiEmaSelfImpl rsi;
 	
@@ -48,6 +49,7 @@ public class Indicators extends Observable {
 		super();
 		this.ds4MAFast = new DescriptiveStatistics(AlgoSetting.MA_FAST_LENGTH);
 		this.ds4MASlow = new DescriptiveStatistics(AlgoSetting.MA_SLOW_LENGTH);
+		this.ds4MA3 = new DescriptiveStatistics(AlgoSetting.MA_3_LENGTH);
 		this.ds4BB = new DescriptiveStatistics(AlgoSetting.BB_LENGTH);
 		this.rsi = new RsiEmaSelfImpl(AlgoSetting.RSI_LENGTH);
 		this.ds4StoKHigh = new DescriptiveStatistics(AlgoSetting.STOCHASTIC_K_LENGTH);
@@ -61,6 +63,7 @@ public class Indicators extends Observable {
 		this.curBar = bar;
 		this.ds4MAFast.addValue(bar.getClose());
 		this.ds4MASlow.addValue(bar.getClose());
+		this.ds4MA3.addValue(bar.getClose());
 		this.ds4BB.addValue(bar.getClose());
 		this.rsi.addValue(bar.getClose());
 		//stochastic
@@ -85,6 +88,12 @@ public class Indicators extends Observable {
 			return Double.NaN;
 		}
 		return ds4MASlow.getSum()/AlgoSetting.MA_SLOW_LENGTH;
+	}
+	public double getSMA3(){
+		if(this.barAdded<AlgoSetting.MA_3_LENGTH){
+			return Double.NaN;
+		}
+		return ds4MA3.getSum()/AlgoSetting.MA_3_LENGTH;
 	}
 
 	public double getSMAFast(){

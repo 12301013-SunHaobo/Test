@@ -16,6 +16,12 @@
 	
 6. Indicators.java
 	includes all indicators under formula	
+	
+7. TestStrategyAuto.java
+	test individual strategies
+		
+8. TestPatternAuto.java (deprecated)
+	to be deprecated. (to be replaced by TestStrategyAuto.java)
 
 -----------------
 -- testing

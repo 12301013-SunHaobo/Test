@@ -17,7 +17,7 @@ import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
-import modules.at.stg.SampleStrategy;
+import modules.at.stg.MAFastStrategy;
 import modules.at.stg.Strategy;
 import modules.at.stg.Strategy.Decision;
 import modules.at.visual.BarChartUtil;
@@ -35,7 +35,7 @@ public class TestStrategyAuto {
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	static Strategy strategy = new SampleStrategy();
+	static Strategy strategy = new MAFastStrategy();
 	
 	public static void main(String[] args) throws Exception {
 		testOneDay();

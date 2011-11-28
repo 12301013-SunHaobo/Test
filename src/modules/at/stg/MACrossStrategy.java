@@ -9,7 +9,7 @@ import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
 import modules.at.pattern.Pattern.Trend;
 
-public class SampleStrategy implements Strategy {
+public class MACrossStrategy implements Strategy {
 
     public static enum CrossType {
         FastCrossUp, FastCrossDown, NoCross

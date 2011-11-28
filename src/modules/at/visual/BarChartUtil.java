@@ -86,7 +86,7 @@ public class BarChartUtil {
 	public enum SeriesType {
 		RsiUpper, Rsi, RsiLower,
 		BBUpper, BBMiddle, BBLower,
-		MAFast, MASlow,
+		MAFast, MASlow, MA3,
 		MAUpperShadow,
 		StoK, StoD, StoUpper, StoLower
 	}
@@ -106,6 +106,7 @@ public class BarChartUtil {
 				case BBLower: indicatorVal = indicator.getBBLower(); break;
 				case MAFast: indicatorVal = indicator.getSMAFast(); break;
 				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
+				case MA3: indicatorVal =  indicator.getSMA3(); break;
 				case MAUpperShadow: indicatorVal =  indicator.getMAUpperShadow(); break;
 				case StoK: indicatorVal = indicator.getStochasticK(); break;
 				case StoD: indicatorVal = indicator.getStochasticD(); break;
@@ -192,7 +193,8 @@ public class BarChartUtil {
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
 	    vplotBar.addSeries(new VSeries("MAFast("+AlgoSetting.MA_FAST_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
-	    vplotBar.addSeries(new VSeries("MASlow("+AlgoSetting.MA_SLOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+//	    vplotBar.addSeries(new VSeries("MASlow("+AlgoSetting.MA_SLOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+//	    vplotBar.addSeries(new VSeries("MA3("+AlgoSetting.MA_3_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MA3, barList), null, java.awt.Color.red));
 //	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
 //	    vplotBar.addSeries(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
 //	    vplotBar.addSeries(new VSeries("BBLower",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBLower, barList), null, java.awt.Color.gray));
