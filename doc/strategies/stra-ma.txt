@@ -1,0 +1,11 @@
+LongEntry:
+    1. turning up
+    2. 3rd short swing turning up,
+    
+    
+
+ShortEntry:
+    1. 
+
+Feature: 
+Winning Percentage: 
