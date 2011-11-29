@@ -17,7 +17,7 @@ import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
-import modules.at.stg.MAFastStrategy;
+import modules.at.stg.MAStrategy;
 import modules.at.stg.Strategy;
 import modules.at.stg.Strategy.Decision;
 import modules.at.visual.BarChartUtil;
@@ -35,7 +35,8 @@ public class TestStrategyAuto {
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	static Strategy strategy = new MAFastStrategy();
+	static Strategy strategy = new MAStrategy();
+	//static Strategy strategy = new MACrossStrategy();
 	
 	public static void main(String[] args) throws Exception {
 		testOneDay();
@@ -223,16 +224,18 @@ public class TestStrategyAuto {
 		String stockCode = "qqq";//qqq, tna, tza 
 		List<String[]> dateTimeArrList = TradeUtil.getInputParams(stockCode);
 		
+		double totalDaysPnL = 0;
 		for(String[] dateTimeArr : dateTimeArrList){
 			String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
 			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[0]);
 			List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 			
 			List<Trade> tradeList = auto(dateTimeArr[0], barList);
-			System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-			TradeUtil.printTrades(tradeList, false);
+			System.out.print(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]+"; ");
+			totalDaysPnL += TradeUtil.printTrades(tradeList, false);
 			//break;
 		}
+		System.out.println("totalDaysPnL = "+Formatter.DECIMAL_FORMAT.format(totalDaysPnL));
 	}
 	
 
@@ -255,7 +258,7 @@ public class TestStrategyAuto {
 	private static String[] initDateTimeArr(){
 		return new String[] {
 				//"20110915", "194819"
-				"20110916", "195420"
+				//"20110916", "195420"
 				//"20110919", "205230"
 				//"20110920", "212519"
 				//"20110922", "200738"
@@ -264,7 +267,7 @@ public class TestStrategyAuto {
 				//"20110927", "200425"
 				//"20110928", "220751"
 				//"20110929", "202100"
-				//"20110930", "205736"
+				"20110930", "205736"
 				//"20111003", "224038"
 				//"20111004", "195804"
 				//"20111007", "001654"
