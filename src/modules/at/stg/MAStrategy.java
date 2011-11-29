@@ -5,8 +5,9 @@ import java.util.List;
 
 import modules.at.formula.Indicators;
 import modules.at.model.Bar;
-import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
+import modules.at.model.visual.VXY;
+import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
 
 public class MAStrategy implements Strategy {
@@ -48,16 +49,14 @@ public class MAStrategy implements Strategy {
 
 		if(!TurningType.NA.equals(maTrend)){
 			if(Decision.LongEntry.equals(this.decision)||Decision.LongExit.equals(this.decision)){
-				BarsMarker pm = new BarsMarker();
-				pm.addBar(this.bar1);
-				pm.addBar(this.bar2);
-				pm.addBar(curBar);
+				VXYsMarker m = new VXYsMarker();
 				if(Decision.LongEntry.equals(this.decision)){
-					pm.setTrend(Pattern.Trend.Up);
+					m.setTrend(Pattern.Trend.Up);
 				}else if(Decision.LongExit.equals(this.decision)){
-					pm.setTrend(Pattern.Trend.Down);
+					m.setTrend(Pattern.Trend.Down);
 				}
-				this.decisionMarkerList.add(pm);
+				m.addVxy(new VXY(this.bar2.getDate().getTime(), this.bar2.getLow()));
+				this.decisionMarkerList.add(m);
 			}
 		}
 
