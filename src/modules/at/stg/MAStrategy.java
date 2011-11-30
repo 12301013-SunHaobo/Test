@@ -25,8 +25,8 @@ public class MAStrategy implements Strategy {
     
 	@Override
 	public Decision getDecision() {
-		return this.decision;
-		//return Decision.NA;
+		//return this.decision;
+		return Decision.NA;
 	}
 
 	@Override
@@ -55,7 +55,8 @@ public class MAStrategy implements Strategy {
 				}else if(Decision.LongExit.equals(this.decision)){
 					m.setTrend(Pattern.Trend.Down);
 				}
-				m.addVxy(new VXY(this.bar2.getDate().getTime(), this.bar2.getLow()));
+				m.addVxy(new VXY(this.bar2.getDate().getTime(), this.ma2)); 
+						//this.bar2.getLow()));
 				this.decisionMarkerList.add(m);
 			}
 		}

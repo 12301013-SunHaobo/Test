@@ -31,7 +31,7 @@ import utils.Formatter;
 
 public class TestStrategyAuto {
 	
-	static String[] dateTimeArr = initDateTimeArr();
+	static String[][] dateTimeArr = initDateTimeArr();
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
@@ -47,18 +47,25 @@ public class TestStrategyAuto {
 		String stockCode = "qqq";//qqq, tna, tza 
 		
 		//get barList
-		String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
-		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[0]);
-		List<Bar> barList = TickToBarConverter.convert(tickList, AlgoSetting.BAR_TIME_PERIOD);
-		//get tradeList
-		List<Trade> tradeList = auto(dateTimeArr[0], barList);
-		//System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
-		TradeUtil.printTrades(tradeList, true);
-		
-		//display chart with trade and mark info
-		VChart vchart = createMarkedChart(barList, tradeList, strategy.getDecisionMarkerList());
-		vchart.setTitle(tickFileName);
-	    new ChartBase(vchart);
+		for(int i=0;i<dateTimeArr.length;i++){
+			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
+			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[i][0]);
+			List<Bar> barList = TickToBarConverter.convert(tickList, AlgoSetting.BAR_TIME_PERIOD);
+			//get tradeList
+			List<Trade> tradeList = auto(dateTimeArr[i][0], barList);
+			System.out.print(stockCode + ":" + dateTimeArr[i][0] + "-" + dateTimeArr[i][1]+", ");
+			TradeUtil.printTrades(tradeList, true);
+			
+			//display chart with trade and mark info
+			VChart vchart = createMarkedChart(barList, tradeList, strategy.getDecisionMarkerList());
+			vchart.setTitle(tickFileName);
+			
+			boolean saveToFile = true;//save to file | display
+		    ChartBase cb = new ChartBase(vchart, !saveToFile);
+		    if(saveToFile){
+		    	cb.saveToFile("D:/user/stock/us/screen-snapshot/MAStrategy/"+i+"_"+dateTimeArr[i][0]+".png");
+		    }	
+		}
 	    
 	}
 	
@@ -255,42 +262,36 @@ public class TestStrategyAuto {
 	
 
 	
-	private static String[] initDateTimeArr(){
-		return new String[] {
-				//"20110915", "194819"
-				//"20110916", "195420"
-				//"20110919", "205230"
-				//"20110920", "212519"
-				//"20110922", "200738"
-				//"20110923", "223948"
-				//"20110926", "200301"
-				//"20110927", "200425"
-				//"20110928", "220751"
-				//"20110929", "202100"
-				"20110930", "205736"
-				//"20111003", "224038"
-				//"20111004", "195804"
-				//"20111007", "001654"
-				//"20111011", "200137"
-				//"20111012", "200149"
-				//"20111013", "200134"
-				//"20111014", "200153"
-				//"20111017", "200114"
-				//"20111018", "200248"
-				//"20111020", "200135"
-				//"20111021", "200115"
-				//"20111024", "200203"
-				//"20111025", "200332"
-				//"20111026", "200246"
-				//"20111027", "200154"
-				//"20111028", "200140"
-				//"20111031", "200117"
-				//"20111101", "200252"
-				//"20111102", "200117"
-				//"20111103", "200218"
-				//"20111104", "200117"
-				//"20111107", "200117"
-				//"20111108", "200141"
+	private static String[][] initDateTimeArr(){
+		//sanple format: "20110915", "194819"
+		return new String[][] {
+				{"20110928", "220751"},
+				{"20111118", "200223"},
+				{"20111017", "200114"},
+				{"20110922", "200738"},
+				{"20111125", "200037"},
+				{"20111117", "200308"},
+				{"20111025", "200332"},
+				{"20111128", "200121"},
+				{"20110930", "205736"},
+				{"20111020", "200135"},
+				{"20110927", "200425"},
+				{"20111014", "200153"},
+				{"20111123", "200120"},
+				{"20111124", "200133"},
+				{"20111109", "200435"},
+				{"20110929", "202100"},
+				{"20110923", "223948"},
+				{"20111122", "200102"},
+				{"20111031", "200117"},
+				{"20111102", "200117"},
+				{"20110920", "212519"},
+				{"20111028", "200140"},
+				{"20111114", "200132"},
+				{"20111012", "200149"},
+				{"20110915", "194819"},
+				{"20111101", "200252"}
+
 				};
 
 	}

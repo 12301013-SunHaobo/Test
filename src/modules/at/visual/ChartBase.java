@@ -1,25 +1,19 @@
 package modules.at.visual;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
-import modules.at.model.Bar;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
-import modules.at.model.visual.VXY;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
-import org.jfree.data.xy.DefaultHighLowDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.RefineryUtilities;
 
 import utils.GlobalSetting;
@@ -28,18 +22,29 @@ public class ChartBase extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
 
-    public ChartBase(VChart vChart) {
+    //(1500, 700),(2000, 933),
+	private int width = 1800;
+	private int height = 900;
+	
+    private JFreeChart chart = null;
+    
+    public ChartBase(VChart vChart){
+    	this(vChart, true);
+    }
+    
+    public ChartBase(VChart vChart, boolean visible) {
         super("Chart");
         JFreeChart jfreechart = createChart(vChart);
+        this.chart = jfreechart;
         //jfreechart.setPadding(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
         ChartPanel chartpanel = new ChartPanel(jfreechart);
         chartpanel.setMouseWheelEnabled(true);
         
         //window (width,height)
-        chartpanel.setPreferredSize(new Dimension(1800, 900));//(1500, 700),(2000, 933),
+        chartpanel.setPreferredSize(new Dimension(1800, 900));
         setContentPane(chartpanel);
         // only display at home
-        if (GlobalSetting.isAtHome()) {
+        if (visible && GlobalSetting.isAtHome()) {
             this.pack();
             //RefineryUtilities.centerFrameOnScreen(this);//center on screen
             RefineryUtilities.positionFrameOnScreen(this, 0.01, 0.01);//a little top and left
@@ -65,4 +70,16 @@ public class ChartBase extends ApplicationFrame {
         return jfreechart;
     }
 
+    
+    public void saveToFile(String fileName){
+    	if(this.chart==null){
+    		System.err.println("chart is null, not saved to " + fileName);
+    		return;
+    	}
+		try {
+			ChartUtilities.saveChartAsPNG(new File(fileName), chart, this.width, this.height);//width-14, height-78
+		} catch (IOException e) {
+			System.err.println("Problem occurred creating chart to "+fileName);
+		}
+    }
 }
