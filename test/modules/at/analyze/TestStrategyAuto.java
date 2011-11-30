@@ -39,8 +39,11 @@ public class TestStrategyAuto {
 	//static Strategy strategy = new MACrossStrategy();
 	
 	public static void main(String[] args) throws Exception {
+		long b0 = System.currentTimeMillis();
 		testOneDay();
 		//testAllDays();
+		long e0 = System.currentTimeMillis();
+		System.out.println("total time used: "+ (b0-e0));
 	}
 
 	private static void testOneDay() throws Exception{
@@ -60,8 +63,8 @@ public class TestStrategyAuto {
 			VChart vchart = createMarkedChart(barList, tradeList, strategy.getDecisionMarkerList());
 			vchart.setTitle(tickFileName);
 			
-			boolean saveToFile = true;//save to file | display
-		    ChartBase cb = new ChartBase(vchart, !saveToFile);
+			boolean saveToFile = false;//save to file | display
+		    ChartBase cb = new ChartBase(vchart, !saveToFile && dateTimeArr.length==1);
 		    if(saveToFile){
 		    	cb.saveToFile("D:/user/stock/us/screen-snapshot/MAStrategy/"+i+"_"+dateTimeArr[i][0]+".png");
 		    }	
