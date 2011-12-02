@@ -1,7 +1,7 @@
 LongEntry:
     1. turning up
     2. 3rd short swing turning up,
-    
+    3. use both 5min Bar chart ma and 1 min bar chart ma(todo:) 
     
 
 ShortEntry:

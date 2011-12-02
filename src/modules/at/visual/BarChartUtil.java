@@ -7,9 +7,12 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
+import modules.at.feed.convert.TickToBarConverter;
+import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
+import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
@@ -193,6 +196,18 @@ public class BarChartUtil {
 	     */
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
+	    
+	    //test begin
+		List<Tick> tickList = null;
+		try {
+			tickList = HistoryLoader.getNazHistTicks("qqq", "20110928-220751.txt", "20110928");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*AlgoSetting.BAR_TIME_PERIOD);
+		vplotBar.addSeries(new VSeries("Bar", null, barList2, java.awt.Color.red));
+	    //test end
+	    
 //	    vplotBar.addSeries(new VSeries("MAFast("+AlgoSetting.MA_FAST_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
 //	    vplotBar.addSeries(new VSeries("MASlow("+AlgoSetting.MA_SLOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
 //	    vplotBar.addSeries(new VSeries("MA3("+AlgoSetting.MA_3_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MA3, barList), null, java.awt.Color.red));
