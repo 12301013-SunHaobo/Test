@@ -89,7 +89,7 @@ public class BarChartUtil {
 	public enum SeriesType {
 		RsiUpper, Rsi, RsiLower,
 		BBUpper, BBMiddle, BBLower,
-		MAFast, MASlow, MA3, MALow,
+		MAFast, MASlow, MA3, MALow, MAHigh,
 		MAUpperShadow,
 		StoK, StoD, StoUpper, StoLower
 	}
@@ -110,6 +110,7 @@ public class BarChartUtil {
 				case MAFast: indicatorVal = indicator.getSMAFast(); break;
 				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
 				case MA3: indicatorVal =  indicator.getSMA3(); break;
+				case MAHigh: indicatorVal =  indicator.getSMAHigh(); break;
 				case MALow: indicatorVal =  indicator.getSMALow(); break;
 				case MAUpperShadow: indicatorVal =  indicator.getMAUpperShadow(); break;
 				case StoK: indicatorVal = indicator.getStochasticK(); break;
@@ -206,12 +207,14 @@ public class BarChartUtil {
 		}
 		List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*AlgoSetting.BAR_TIME_PERIOD);
 		//vplotBar.addSeries(new VSeries("Bar", null, barList2, java.awt.Color.red));
-	    vplotBar.addSeries(new VSeries("5MALow("+AlgoSetting.MA_LOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow, barList2), null, java.awt.Color.gray));
+		vplotBar.addSeries(new VSeries("5min-MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh, barList2), null, java.awt.Color.gray));
+	    vplotBar.addSeries(new VSeries("5min-MALow("+AlgoSetting.MA_LOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow, barList2), null, java.awt.Color.gray));
 	    //test end
 	    
 //	    vplotBar.addSeries(new VSeries("MAFast("+AlgoSetting.MA_FAST_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
 //	    vplotBar.addSeries(new VSeries("MASlow("+AlgoSetting.MA_SLOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
 	    vplotBar.addSeries(new VSeries("MA3("+AlgoSetting.MA_3_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MA3, barList), null, java.awt.Color.green));
+//	    vplotBar.addSeries(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh, barList), null, java.awt.Color.red));
 	    vplotBar.addSeries(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow, barList), null, java.awt.Color.red));
 //	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
 //	    vplotBar.addSeries(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
