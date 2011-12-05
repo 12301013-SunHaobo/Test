@@ -7,15 +7,14 @@ import java.util.List;
 import modules.at.model.Bar;
 import modules.at.visual.BarChartUtil;
 
-import org.jfree.chart.annotations.XYPolygonAnnotation;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.Layer;
+import org.jfree.util.ShapeUtilities;
 
 /**
  * 
@@ -29,6 +28,7 @@ public class VSeries {
     private List<Bar> barList;
     private Color color;
 	private XYItemRenderer renderer;
+	private boolean shapeVisible = false;
 
     
     public VSeries(
@@ -41,6 +41,16 @@ public class VSeries {
         this.vxyList = vxyList;
         this.barList = barList;
         this.color = color;
+    }
+    
+    public VSeries(
+    		String legendTitle, 
+    		List<VXY> vxyList, 
+    		List<Bar> barList, 
+    		Color color,
+    		boolean shapeVisible) {
+    	this(legendTitle, vxyList, barList, color);
+        this.shapeVisible = shapeVisible;
     }
 
     public XYDataset toXYDataset() {
@@ -93,7 +103,14 @@ public class VSeries {
 	    		c.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
 	    		renderer = c; 
 	    	} else {
-	        	renderer = new StandardXYItemRenderer();
+	    		XYLineAndShapeRenderer x = new XYLineAndShapeRenderer(true, this.shapeVisible);
+	    		x.setSeriesShapesVisible(0, this.shapeVisible);
+	    		//x.setBaseShape(ShapeUtilities.createDiamond(4F));
+	    		//StandardXYItemRenderer s = new StandardXYItemRenderer();
+	        	//s.setBaseShapesVisible(this.shapeVisible);
+	        	//s.setBaseShape(ShapeUtilities.createDiamond(4F));
+	        	
+	        	renderer = x; 
 	    	}
 	        renderer.setSeriesPaint(0, this.color);
 	        renderer.setSeriesStroke(0, BarChartUtil.BASIC_STOKE);

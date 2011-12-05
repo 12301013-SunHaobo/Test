@@ -21,8 +21,11 @@ public class Indicators extends Observable {
 	private DescriptiveStatistics ds4MAFast;//for MA fast
 	private DescriptiveStatistics ds4MASlow;//for MA slow
 	private DescriptiveStatistics ds4MA3;//for MA 3
+	private DescriptiveStatistics ds4MAHL;//for MA (H+L)/2
+	private DescriptiveStatistics ds4MAHigh2;//for (H+L)/2 + 2(H-(H+L)/2) =(3H-L)/2
 	private DescriptiveStatistics ds4MAHigh;//for MA of High
 	private DescriptiveStatistics ds4MALow;//for MA of Low
+	private DescriptiveStatistics ds4MALow2;//for (H+L)/2 - 2((H+L)/2-L)=(3L-H)/2
 	
 	private DescriptiveStatistics ds4BB;//DescriptiveStatistics for BB
 	private RsiEmaSelfImpl rsi;
@@ -53,8 +56,11 @@ public class Indicators extends Observable {
 		this.ds4MAFast = new DescriptiveStatistics(AlgoSetting.MA_FAST_LENGTH);
 		this.ds4MASlow = new DescriptiveStatistics(AlgoSetting.MA_SLOW_LENGTH);
 		this.ds4MA3 = new DescriptiveStatistics(AlgoSetting.MA_3_LENGTH);
+		this.ds4MAHL = new DescriptiveStatistics(AlgoSetting.MA_HL_LENGTH);
+		this.ds4MAHigh2 = new DescriptiveStatistics(AlgoSetting.MA_HIGH2_LENGTH);
 		this.ds4MAHigh = new DescriptiveStatistics(AlgoSetting.MA_HIGH_LENGTH);
 		this.ds4MALow = new DescriptiveStatistics(AlgoSetting.MA_LOW_LENGTH);
+		this.ds4MALow2 = new DescriptiveStatistics(AlgoSetting.MA_LOW2_LENGTH);
 		this.ds4BB = new DescriptiveStatistics(AlgoSetting.BB_LENGTH);
 		this.rsi = new RsiEmaSelfImpl(AlgoSetting.RSI_LENGTH);
 		this.ds4StoKHigh = new DescriptiveStatistics(AlgoSetting.STOCHASTIC_K_LENGTH);
@@ -68,9 +74,12 @@ public class Indicators extends Observable {
 		this.curBar = bar;
 		this.ds4MAFast.addValue(bar.getClose());
 		this.ds4MASlow.addValue(bar.getClose());
-		this.ds4MA3.addValue(bar.getClose());
+		this.ds4MA3.addValue(bar.getLow());
+		this.ds4MAHL.addValue((bar.getHigh()+bar.getLow())/2);
+		this.ds4MAHigh2.addValue((3*bar.getHigh()-bar.getLow())/2);
 		this.ds4MAHigh.addValue(bar.getHigh());
 		this.ds4MALow.addValue(bar.getLow());
+		this.ds4MALow2.addValue((3*bar.getLow()-bar.getHigh())/2);
 		this.ds4BB.addValue(bar.getClose());
 		this.rsi.addValue(bar.getClose());
 		//stochastic
@@ -108,6 +117,18 @@ public class Indicators extends Observable {
 		}
 		return ds4MA3.getSum()/AlgoSetting.MA_3_LENGTH;
 	}
+	public double getSMAHL(){
+		if(this.barAdded<AlgoSetting.MA_HL_LENGTH){
+			return Double.NaN;
+		}
+		return ds4MAHL.getSum()/AlgoSetting.MA_HL_LENGTH;
+	}
+	public double getSMAHigh2(){
+		if(this.barAdded<AlgoSetting.MA_HIGH2_LENGTH){
+			return Double.NaN;
+		}
+		return ds4MAHigh2.getSum()/AlgoSetting.MA_HIGH2_LENGTH;
+	}
 	public double getSMAHigh(){
 		if(this.barAdded<AlgoSetting.MA_HIGH_LENGTH){
 			return Double.NaN;
@@ -119,6 +140,12 @@ public class Indicators extends Observable {
 			return Double.NaN;
 		}
 		return ds4MALow.getSum()/AlgoSetting.MA_LOW_LENGTH;
+	}
+	public double getSMALow2(){
+		if(this.barAdded<AlgoSetting.MA_LOW2_LENGTH){
+			return Double.NaN;
+		}
+		return ds4MALow2.getSum()/AlgoSetting.MA_LOW2_LENGTH;
 	}
 
 	

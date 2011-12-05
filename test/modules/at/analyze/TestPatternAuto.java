@@ -213,7 +213,9 @@ public class TestPatternAuto {
 	
 
 	private static VChart createMarkedChart(List<Bar> barList, List<Trade> tradeList, List<Pattern> patternList){
-	    VChart vchart = BarChartUtil.createBasicChart(barList);
+		List<List<Bar>> barLists = new ArrayList<List<Bar>>();
+		barLists.add(barList);
+	    VChart vchart = BarChartUtil.createBasicChart(barLists);
         VPlot vplotBar = vchart.getPlotList().get(0);	
         //add trade annotations
 	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);

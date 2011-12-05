@@ -53,14 +53,19 @@ public class TestStrategyAuto {
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
 			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[i][0]);
+			List<List<Bar>> barLists = new ArrayList<List<Bar>>();
 			List<Bar> barList = TickToBarConverter.convert(tickList, AlgoSetting.BAR_TIME_PERIOD);
+			List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*AlgoSetting.BAR_TIME_PERIOD);
+			barLists.add(barList);
+			barLists.add(barList2);
+			
 			//get tradeList
 			List<Trade> tradeList = auto(dateTimeArr[i][0], barList);
 			System.out.print(stockCode + ":" + dateTimeArr[i][0] + "-" + dateTimeArr[i][1]+", ");
 			TradeUtil.printTrades(tradeList, true);
 			
 			//display chart with trade and mark info
-			VChart vchart = createMarkedChart(barList, tradeList, strategy.getDecisionMarkerList());
+			VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList());
 			vchart.setTitle(tickFileName);
 			
 			boolean saveToFile = false;//save to file | display
@@ -249,8 +254,8 @@ public class TestStrategyAuto {
 	}
 	
 
-	private static VChart createMarkedChart(List<Bar> barList, List<Trade> tradeList, List<VMarker> decisionMarkerList){
-	    VChart vchart = BarChartUtil.createBasicChart(barList);
+	private static VChart createMarkedChart(List<List<Bar>> barLists, List<Trade> tradeList, List<VMarker> decisionMarkerList){
+	    VChart vchart = BarChartUtil.createBasicChart(barLists);
         VPlot vplotBar = vchart.getPlotList().get(0);	
         //add trade annotations
 	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
@@ -294,7 +299,6 @@ public class TestStrategyAuto {
 //				{"20111012", "200149"},
 //				{"20110915", "194819"},
 //				{"20111101", "200252"}
-
 				};
 
 	}
