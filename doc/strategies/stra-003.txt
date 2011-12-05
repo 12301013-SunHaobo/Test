@@ -1,0 +1,36 @@
+http://www.traderslaboratory.com/forums/day-trading-scalping/9288-help-detecting-short-few-minute-one.html
+
+
+There is a simple process....
+Open for example EUR/USD in two time frames
+
+a) 15 minute
+b) 5 minute
+Add MACD indicator in both charts
+
+If You see that the 15 minute chart is heading down.
+wait for the crossover in the 5 minute chart of the MACD
+Once it has crossed over...enter with a sell order by market
+and give it a limit of 10 pips and a stop loss of 20 pips
+
+Similarly if the market moves up
+wait for a crossover in the 5 minute chart
+
+This is a very patient game and only enter at the crossover.
+
+8 out of 10 times you will be successfull...
+
+Try it out...and let me know if you are successfull.
+---------------------------------------------
+A range is characterized by a failure of higher highs and lower lows, and looking for price swings almost like a sin wave. 
+
+
+
+
+
+
+
+
+
+
+
