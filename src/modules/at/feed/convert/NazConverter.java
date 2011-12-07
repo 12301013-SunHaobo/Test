@@ -28,7 +28,7 @@ public class NazConverter {
 	public static Tick toTick(String row, String dateStr, DateFormat df) throws Exception {
 		String[] strArr = row.split(",");
 		Date date = df.parse(dateStr+"-"+strArr[0]);
-		double price = Double.parseDouble(strArr[1]);
+		double price = Double.parseDouble(strArr[1].replaceAll("X", ""));//some data has X in number
 		int volume = Integer.parseInt(strArr[2]);
 		Tick tick = new Tick(date, price, volume);
 		return tick;

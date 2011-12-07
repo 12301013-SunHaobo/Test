@@ -48,15 +48,15 @@ public class MAStrategy implements Strategy {
 		}
 
 		if(!TurningType.NA.equals(maTrend)){
-			if(Decision.LongEntry.equals(this.decision)||Decision.LongExit.equals(this.decision)){
-				VXYsMarker m = new VXYsMarker();
-				if(Decision.LongEntry.equals(this.decision)){
-					m.setTrend(Pattern.Trend.Up);
-				}else if(Decision.LongExit.equals(this.decision)){
-					m.setTrend(Pattern.Trend.Down);
-				}
+			VXYsMarker m = new VXYsMarker();
+			if(Decision.LongEntry.equals(this.decision) && this.ma2 < indicators.getSMALow2()){
+				m.setTrend(Pattern.Trend.Up);
+			} else if(Decision.LongExit.equals(this.decision)){
+				//m.setTrend(Pattern.Trend.Down);//TODO: to find LongExit
+			}
+			
+			if(!Pattern.Trend.NA.equals(m.getTrend())){
 				m.addVxy(new VXY(this.bar2.getDate().getTime(), this.ma2)); 
-						//this.bar2.getLow()));
 				this.decisionMarkerList.add(m);
 			}
 		}
