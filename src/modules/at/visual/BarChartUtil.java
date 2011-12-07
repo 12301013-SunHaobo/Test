@@ -216,7 +216,7 @@ public class BarChartUtil {
 //	    vplotBar.addSeries(new VSeries("MA3Low("+AlgoSetting.MA_3_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MA3, barList), null, java.awt.Color.blue));
 	    vplotBar.addSeries(new VSeries("MA4Low("+AlgoSetting.MA_HL_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHL, barList), null, java.awt.Color.cyan));
 	    vplotBar.addSeries(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-//	    vplotBar.addSeries(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh, barList), null, java.awt.Color.red));
+	    vplotBar.addSeries(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh, barList), null, java.awt.Color.red));
 	    vplotBar.addSeries(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow, barList), null, java.awt.Color.red));
 	    vplotBar.addSeries(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow2, barList), null, java.awt.Color.blue));
 //	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
