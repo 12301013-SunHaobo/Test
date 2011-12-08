@@ -117,12 +117,6 @@ public class Indicators extends Observable {
 		}
 		return ds4MA3.getSum()/AlgoSetting.MA_3_LENGTH;
 	}
-	public double getSMAHL(){
-		if(this.barAdded<AlgoSetting.MA_HL_LENGTH){
-			return Double.NaN;
-		}
-		return ds4MAHL.getSum()/AlgoSetting.MA_HL_LENGTH;
-	}
 	public double getSMAHigh2(){
 		if(this.barAdded<AlgoSetting.MA_HIGH2_LENGTH){
 			return Double.NaN;
@@ -134,6 +128,12 @@ public class Indicators extends Observable {
 			return Double.NaN;
 		}
 		return ds4MAHigh.getSum()/AlgoSetting.MA_HIGH_LENGTH;
+	}
+	public double getSMAHL(){
+		if(this.barAdded<AlgoSetting.MA_HL_LENGTH){
+			return Double.NaN;
+		}
+		return ds4MAHL.getSum()/AlgoSetting.MA_HL_LENGTH;
 	}
 	public double getSMALow(){
 		if(this.barAdded<AlgoSetting.MA_LOW_LENGTH){
@@ -147,7 +147,14 @@ public class Indicators extends Observable {
 		}
 		return ds4MALow2.getSum()/AlgoSetting.MA_LOW2_LENGTH;
 	}
-
+	public double getSMAHigh2Diff(){
+		double high2 = this.curBar.getHigh();
+		double hl = getSMAHL();
+		if(Double.isNaN(high2) || Double.isNaN(hl)){
+			return Double.NaN;
+		}
+		return (high2-hl);
+	}
 	
 	//BB
 	public double getBBUpper(){
