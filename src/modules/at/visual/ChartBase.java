@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 
@@ -22,9 +25,9 @@ public class ChartBase extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
 
-    //(1500, 700),(2000, 933),
-	private int width = 1800;
-	private int height = 900;
+    //default:(1800,900); (1500, 700),(2000, 933),
+	private int width = 1810;//
+	private int height = 1000;//
 	
     private JFreeChart chart = null;
     
@@ -36,13 +39,19 @@ public class ChartBase extends ApplicationFrame {
         super("Chart");
         JFreeChart jfreechart = createChart(vChart);
         this.chart = jfreechart;
+        
         //jfreechart.setPadding(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
         ChartPanel chartpanel = new ChartPanel(jfreechart);
         chartpanel.setMouseWheelEnabled(true);
         
         //window (width,height)
-        chartpanel.setPreferredSize(new Dimension(1800, 900));
-        setContentPane(chartpanel);
+        chartpanel.setPreferredSize(new Dimension(1810, 900));//(2200,900)
+        
+        JScrollPane scrollPane = new JScrollPane(chartpanel, 
+        		ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        		ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setPreferredSize(new Dimension(width, height));
+        setContentPane(scrollPane);
         // only display at home
         if (visible && GlobalSetting.isAtHome()) {
             this.pack();
@@ -50,6 +59,8 @@ public class ChartBase extends ApplicationFrame {
             RefineryUtilities.positionFrameOnScreen(this, 0.01, 0.01);//a little top and left
             this.setVisible(true);
         }
+
+        
     }
 
     private JFreeChart createChart(VChart vChart) {
