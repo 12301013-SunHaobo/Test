@@ -153,7 +153,8 @@ public class Indicators extends Observable {
 		if(Double.isNaN(high2) || Double.isNaN(hl)){
 			return Double.NaN;
 		}
-		return (high2-hl);
+		//return (high2-hl);
+		return (curBar.getHigh()-curBar.getLow())*((curBar.getClose()-curBar.getOpen())>0?1:-1);
 	}
 	
 	//BB

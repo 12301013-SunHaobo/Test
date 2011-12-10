@@ -247,7 +247,6 @@ public class BarChartUtil {
 	    //vplotRsi.addSeries(new VSeries("RsiUpper", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
 	    //vplotRsi.addSeries(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
 	    //vplotRsi.addSeries(new VSeries("RsiLower", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiLower, barList), null, java.awt.Color.red));
-	    
 	    vplotRsi.addSeries(new VSeries("MADiff(High2-HL)", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
 	    vchart.addPlot(vplotRsi);
 

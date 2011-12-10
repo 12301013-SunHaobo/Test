@@ -1,0 +1,8 @@
+LongEntry:
+    1. 连续几个下跌bar，突然一个上涨bar; 而且绿bar close>前一个红bar open.
+
+ShortEntry:
+    1. 
+
+Feature: 
+Winning Percentage:
