@@ -36,7 +36,7 @@ public class AlgoSetting {
 	
 	//Cut loss & lock profit
 	//public static final double CUT_WIN = 0.001; //increase percentage % to cut win
-	public static final double CUT_LOSS = 0.005; //drop percentage % to cut loss
+	public static final double CUT_LOSS = 0.001; //drop percentage % to cut loss
 	
 	//public static final double PROFIT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss from previous profit  	
 	

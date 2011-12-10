@@ -39,6 +39,7 @@ public class MAStrategy implements Strategy {
 
 	@Override
 	public void update(Indicators indicators) {
+		this.decision = Decision.NA;//reset decision 
         double curMAHigh = indicators.getSMAHigh();
         double curMALow = indicators.getSMALow();
 		Bar curBar = indicators.getCurBar();
@@ -47,27 +48,28 @@ public class MAStrategy implements Strategy {
 		TurningType maLowTrend = getMALowTrendType(this.maLow1, this.maLow2, curMALow); 
 		
 		switch (maLowTrend){
-			case Up : this.decision = Decision.LongEntry; break;
-			case Down : this.decision = Decision.LongExit; break;
-			case NA : this.decision = Decision.NA; break;
-		}
-
-		if(!TurningType.NA.equals(maLowTrend) || !TurningType.NA.equals(maHighTrend)){
-			
-			if(TurningType.Down.equals(maHighTrend) && this.maHigh2 > indicators.getSMAHigh2()){
-				VXYsMarker m = new VXYsMarker();
-				m.setTrend(Pattern.Trend.Down);
-				//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maHigh2));//turning point 
-				m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
-				//this.decisionMarkerList.add(m);
-			}
-			if(TurningType.Up.equals(maLowTrend) && this.maLow2 < indicators.getSMALow2()){
-				VXYsMarker m = new VXYsMarker();
-				m.setTrend(Pattern.Trend.Up);
-				//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point
-				m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
-				this.decisionMarkerList.add(m);
-			}
+			case Up : 
+				if(this.maLow2 < indicators.getSMALow2()
+						//&& curBar.getClose() < indicators.getSMAHL() 
+						){
+					VXYsMarker m = new VXYsMarker();
+					m.setTrend(Pattern.Trend.Up);
+					//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point
+					m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
+					this.decisionMarkerList.add(m);
+					this.decision = Decision.LongEntry; 
+				}
+				break;
+			case Down : 
+				if(this.maHigh2 > indicators.getSMAHigh2()){
+					VXYsMarker m = new VXYsMarker();
+					m.setTrend(Pattern.Trend.Down);
+					//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maHigh2));//turning point 
+					m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
+					//this.decisionMarkerList.add(m);
+					//this.decision = Decision.LongExit; 
+				}
+				break;
 		}
 
 		//
