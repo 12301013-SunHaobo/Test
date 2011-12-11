@@ -237,6 +237,7 @@ public class TestStrategyAuto {
 		for(String[] dateTimeArr : dateTimeArrList){
 			String tickFileName = dateTimeArr[0] + "-" + dateTimeArr[1] + ".txt";
 			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[0]);
+			
 			List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 			
 			List<Trade> tradeList = auto(dateTimeArr[0], barList);

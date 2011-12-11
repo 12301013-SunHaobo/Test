@@ -168,7 +168,7 @@ public class Indicators extends Observable {
 	public enum SeriesType {
 		RsiUpper, Rsi, RsiLower,
 		BBUpper, BBMiddle, BBLower,
-		MAFast, MASlow, MA3, MAHigh2, MAHigh, MAHL, MALow, MALow2, MAHigh2Diff, MALow2Diff,
+		MAFast, MASlow, MA3, 
 		MAUpperShadow,
 		StoK, StoD, StoUpper, StoLower
 	}	

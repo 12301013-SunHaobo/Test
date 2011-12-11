@@ -154,7 +154,7 @@ public class BarChartUtil {
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
 	    
-	    //test begin
+	    //test begin <-- to overlay another barList2
 	    if(barLists.size()>=2){
 			List<Bar> barList2 = barLists.get(1);
 			//vplotBar.addSeries(new VSeries("Bar", null, barList2, java.awt.Color.red));

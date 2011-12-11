@@ -55,7 +55,8 @@ public class MAStrategy implements Strategy {
 		
 		switch (maLowTrend){
 			case Up : 
-				if(this.maLow2 < indicators.getSMALow2()
+				if(true
+						//this.maLow2 < indicators.getSMALow2()
 						//&& curBar.getClose() < indicators.getSMAHL() 
 						){
 					VXYsMarker m = new VXYsMarker();
