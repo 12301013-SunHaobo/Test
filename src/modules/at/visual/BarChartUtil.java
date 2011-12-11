@@ -7,6 +7,7 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
+import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Trade;
@@ -157,47 +158,27 @@ public class BarChartUtil {
 	    if(barLists.size()>=2){
 			List<Bar> barList2 = barLists.get(1);
 			//vplotBar.addSeries(new VSeries("Bar", null, barList2, java.awt.Color.red));
-			//vplotBar.addSeries(new VSeries("5min-MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.SeriesType.MAHigh, barList2), null, java.awt.Color.gray));
-		    //vplotBar.addSeries(new VSeries("5min-MALow("+AlgoSetting.MA_LOW_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.SeriesType.MALow, barList2), null, java.awt.Color.gray, false));
+			//vplotBar.addSeries(new VSeries("5min-MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.MAHigh, barList2), null, java.awt.Color.gray));
+		    //vplotBar.addSeries(new VSeries("5min-MALow("+AlgoSetting.MA_LOW_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.MALow, barList2), null, java.awt.Color.gray, false));
 	    }
 	    //test end
 	    
-//	    vplotBar.addSeries(new VSeries("MAFast("+AlgoSetting.MA_FAST_LENGTH+")",Indicators.getVXYList(Indicators.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
-//	    vplotBar.addSeries(new VSeries("MASlow("+AlgoSetting.MA_SLOW_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.SeriesType.MASlow, barList), null, java.awt.Color.cyan));
-//	    vplotBar.addSeries(new VSeries("MA3Low("+AlgoSetting.MA_3_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.SeriesType.MA3, barList), null, java.awt.Color.blue));
-	    vplotBar.addSeries(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-	    vplotBar.addSeries(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh, barList), null, java.awt.Color.red));
-	    vplotBar.addSeries(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHL, barList), null, java.awt.Color.cyan));
-	    vplotBar.addSeries(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MALow, barList), null, java.awt.Color.red));
-	    vplotBar.addSeries(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MALow2, barList), null, java.awt.Color.blue));
-//	    vplotBar.addSeries(new VSeries("BBUpper",Indicators.getVXYList(Indicators.SeriesType.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
-//	    vplotBar.addSeries(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",Indicators.getVXYList(Indicators.SeriesType.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
-//	    vplotBar.addSeries(new VSeries("BBLower",Indicators.getVXYList(Indicators.SeriesType.SeriesType.BBLower, barList), null, java.awt.Color.gray));
-	    
+	    //vplotBar.addAllSeries(Indicators.getPlotBarVSeriesList(barList));
+	    vplotBar.addAllSeries(MAStrategy.IndicatorsMA.getPlotBarVSeriesList(barList));
+
 	    vchart.addPlot(vplotBar);	
 
 	    /*
 	    //my invention UpperShadow
 	    VPlot vplotIndicator = new VPlot(1);
-	    vplotIndicator.addSeries(new VSeries("MAUpperShadow",Indicators.getVXYList(Indicators.SeriesType.SeriesType.MAUpperShadow, barList), null, java.awt.Color.red));
+	    vplotIndicator.addSeries(new VSeries("MAUpperShadow",Indicators.getVXYList(Indicators.SeriesType.MAUpperShadow, barList), null, java.awt.Color.red));
 	    vchart.addPlot(vplotIndicator);
 	    */
 
-		/*
-	    //MA plot
-	    VPlot vplotIndicator = new VPlot(1);
-	    vplotIndicator.addSeries(new VSeries("MAFast",Indicators.getVXYList(Indicators.SeriesType.SeriesType.MAFast, barList), null, java.awt.Color.red));
-	    vplotIndicator.addSeries(new VSeries("MASlow", Indicators.getVXYList(Indicators.SeriesType.SeriesType.MASlow, barList), null, java.awt.Color.blue));
-	    vchart.addPlot(vplotIndicator);
-	    */
-
-	    
 	    //RSI plot
 	    VPlot vplotRsi = new VPlot(1);
-	    //vplotRsi.addSeries(new VSeries("RsiUpper", Indicators.getVXYList(Indicators.SeriesType.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
-	    //vplotRsi.addSeries(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.SeriesType.Rsi, barList), null, java.awt.Color.red));
-	    //vplotRsi.addSeries(new VSeries("RsiLower", Indicators.getVXYList(Indicators.SeriesType.SeriesType.RsiLower, barList), null, java.awt.Color.red));
-	    vplotRsi.addSeries(new VSeries("MADiff(High2-HL)", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
+	    //vplotRsi.addAllSeries(Indicators.getPlot1VSeriesList(barList));
+	    vplotRsi.addAllSeries(MAStrategy.IndicatorsMA.getPlot1VSeriesList(barList));
 	    vchart.addPlot(vplotRsi);
 
 	    return vchart;

@@ -228,6 +228,7 @@ public class TestStrategyAuto {
 		return TradeTimeLot.AfterTrade;
 	}
 	
+	//test all days in data/naz/tick/output/qqq
 	private static void testAllDays() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
 		List<String[]> dateTimeArrList = TradeUtil.getInputParams(stockCode);

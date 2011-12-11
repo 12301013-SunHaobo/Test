@@ -7,6 +7,7 @@ import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
+import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
 import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
@@ -229,7 +230,22 @@ public class MAStrategy implements Strategy {
     		}
     		return vxyList;
     	}	    
-    
+    	//Plot0
+    	public static List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
+    		List<VSeries> vseriesList = new ArrayList<VSeries>();
+    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHL, barList), null, java.awt.Color.cyan));
+    		vseriesList.add(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MALow, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MALow2, barList), null, java.awt.Color.blue));
+    		return vseriesList;
+    	}
+    	//Plot1
+    	public static List<VSeries> getPlot1VSeriesList(List<Bar> barList){
+    		List<VSeries> vseriesList = new ArrayList<VSeries>();
+    		vseriesList.add(new VSeries("MADiff(High2-HL)", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
+    		return vseriesList;
+    	}
     
     }
     

@@ -7,7 +7,9 @@ import java.util.Observable;
 import modules.at.formula.rsi.RsiEmaSelfImpl;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
+import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
+import modules.at.stg.MAStrategy;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
@@ -189,14 +191,6 @@ public class Indicators extends Observable {
 				case MAFast: indicatorVal = indicator.getSMAFast(); break;
 				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
 				case MA3: indicatorVal =  indicator.getSMA3(); break;
-				/*
-				case MAHigh2: indicatorVal =  indicator.getSMAHigh2(); break;
-				case MAHigh: indicatorVal =  indicator.getSMAHigh(); break;
-				case MAHL: indicatorVal =  indicator.getSMAHL(); break;
-				case MALow: indicatorVal =  indicator.getSMALow(); break;
-				case MALow2: indicatorVal =  indicator.getSMALow2(); break;
-				case MAHigh2Diff: indicatorVal =  indicator.getSMAHigh2Diff(); break;
-				*/
 				case MAUpperShadow: indicatorVal =  indicator.getMAUpperShadow(); break;
 				case StoK: indicatorVal = indicator.getStochasticK(); break;
 				case StoD: indicatorVal = indicator.getStochasticD(); break;
@@ -211,4 +205,28 @@ public class Indicators extends Observable {
 		}
 		return vxyList;
 	}		
+	
+	//PlotBar
+	public static List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
+		List<VSeries> vseriesList = new ArrayList<VSeries>();
+		vseriesList.add(new VSeries("MAFast("+AlgoSetting.MA_FAST_LENGTH+")",Indicators.getVXYList(Indicators.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
+		vseriesList.add(new VSeries("MASlow("+AlgoSetting.MA_SLOW_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.MASlow, barList), null, java.awt.Color.cyan));
+		vseriesList.add(new VSeries("MA3Low("+AlgoSetting.MA_3_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.MA3, barList), null, java.awt.Color.blue));
+		
+		vseriesList.add(new VSeries("BBUpper",Indicators.getVXYList(Indicators.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
+		vseriesList.add(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",Indicators.getVXYList(Indicators.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
+		vseriesList.add(new VSeries("BBLower",Indicators.getVXYList(Indicators.SeriesType.BBLower, barList), null, java.awt.Color.gray));
+
+		return vseriesList;
+	}
+	//Plot1
+	public static List<VSeries> getPlot1VSeriesList(List<Bar> barList){
+		List<VSeries> vseriesList = new ArrayList<VSeries>();
+		vseriesList.add(new VSeries("RsiUpper", Indicators.getVXYList(Indicators.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
+		vseriesList.add(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.Rsi, barList), null, java.awt.Color.red));
+		vseriesList.add(new VSeries("RsiLower", Indicators.getVXYList(Indicators.SeriesType.RsiLower, barList), null, java.awt.Color.red));
+		return vseriesList;
+	}
+	
+	
 }

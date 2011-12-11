@@ -13,7 +13,6 @@ public interface Strategy {
 		NA
 	}
 	
-	//public void update(Indicators indicators);
 	public void update(Bar bar);
 	public Decision getDecision(); 
 	public List<VMarker> getDecisionMarkerList();
