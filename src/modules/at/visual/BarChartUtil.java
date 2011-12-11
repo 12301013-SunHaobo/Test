@@ -16,7 +16,7 @@ import modules.at.model.visual.VPlot;
 import modules.at.model.visual.VSeries;
 import modules.at.pattern.Pattern.Trend;
 import modules.at.pattern.PatternEngulfing.Engulf;
-import modules.at.stg.MAStrategy;
+import modules.at.stg.StrategyMA;
 
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYLineAnnotation;
@@ -164,7 +164,7 @@ public class BarChartUtil {
 	    //test end
 	    
 	    //vplotBar.addAllSeries(Indicators.getPlotBarVSeriesList(barList));
-	    vplotBar.addAllSeries(MAStrategy.IndicatorsMA.getPlotBarVSeriesList(barList));
+	    vplotBar.addAllSeries(StrategyMA.IndicatorsMA.getPlotBarVSeriesList(barList));
 
 	    vchart.addPlot(vplotBar);	
 
@@ -178,7 +178,7 @@ public class BarChartUtil {
 	    //RSI plot
 	    VPlot vplotRsi = new VPlot(1);
 	    //vplotRsi.addAllSeries(Indicators.getPlot1VSeriesList(barList));
-	    vplotRsi.addAllSeries(MAStrategy.IndicatorsMA.getPlot1VSeriesList(barList));
+	    vplotRsi.addAllSeries(StrategyMA.IndicatorsMA.getPlot1VSeriesList(barList));
 	    vchart.addPlot(vplotRsi);
 
 	    return vchart;

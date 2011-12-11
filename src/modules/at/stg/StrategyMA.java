@@ -14,7 +14,7 @@ import modules.at.pattern.Pattern;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
-public class MAStrategy implements Strategy {
+public class StrategyMA implements Strategy {
 
 	private List<VMarker> decisionMarkerList = new ArrayList<VMarker>();
 	
@@ -55,7 +55,7 @@ public class MAStrategy implements Strategy {
 		
 		switch (maLowTrend){
 			case Up : 
-				if(true
+				if(false
 						//this.maLow2 < indicators.getSMALow2()
 						//&& curBar.getClose() < indicators.getSMAHL() 
 						){
@@ -234,17 +234,17 @@ public class MAStrategy implements Strategy {
     	//Plot0
     	public static List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
-    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh, barList), null, java.awt.Color.red));
-    		vseriesList.add(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHL, barList), null, java.awt.Color.cyan));
-    		vseriesList.add(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MALow, barList), null, java.awt.Color.red));
-    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MALow2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", StrategyMA.IndicatorsMA.getVXYList(StrategyMA.IndicatorsMA.SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
+//    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", StrategyMA.IndicatorsMA.getVXYList(StrategyMA.IndicatorsMA.SeriesType.MAHL, barList), null, java.awt.Color.cyan));
+//    		vseriesList.add(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MALow, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", StrategyMA.IndicatorsMA.getVXYList(StrategyMA.IndicatorsMA.SeriesType.MALow2, barList), null, java.awt.Color.blue));
     		return vseriesList;
     	}
     	//Plot1
     	public static List<VSeries> getPlot1VSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
-    		vseriesList.add(new VSeries("MADiff(High2-HL)", MAStrategy.IndicatorsMA.getVXYList(MAStrategy.IndicatorsMA.SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
+    		vseriesList.add(new VSeries("MADiff(High2-HL)", StrategyMA.IndicatorsMA.getVXYList(StrategyMA.IndicatorsMA.SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
     		return vseriesList;
     	}
     

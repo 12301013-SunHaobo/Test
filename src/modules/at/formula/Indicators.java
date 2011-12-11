@@ -9,7 +9,7 @@ import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
-import modules.at.stg.MAStrategy;
+import modules.at.stg.StrategyMA;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 

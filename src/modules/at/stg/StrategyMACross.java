@@ -8,9 +8,9 @@ import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
 import modules.at.pattern.Pattern.Trend;
-import modules.at.stg.MAStrategy.IndicatorsMA;
+import modules.at.stg.StrategyMA.IndicatorsMA;
 
-public class MACrossStrategy implements Strategy {
+public class StrategyMACross implements Strategy {
 
     public static enum CrossType {
         FastCrossUp, FastCrossDown, NoCross
