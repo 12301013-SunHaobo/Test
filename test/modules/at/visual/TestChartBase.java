@@ -5,12 +5,12 @@ import java.util.List;
 
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
+import modules.at.formula.Indicators;
 import modules.at.model.Bar;
 import modules.at.model.Tick;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.model.visual.VSeries;
-import modules.at.model.visual.VXY;
 
 public class TestChartBase {
 
@@ -39,13 +39,13 @@ public class TestChartBase {
 	     */
 	    //MA plot
 	    VPlot vplotIndicator = new VPlot(1);
-	    vplotIndicator.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
-	    vplotIndicator.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
+	    vplotIndicator.addSeries(new VSeries("MAFast",Indicators.getVXYList(Indicators.SeriesType.MAFast, barList), null, java.awt.Color.red));
+	    vplotIndicator.addSeries(new VSeries("MASlow", Indicators.getVXYList(Indicators.SeriesType.MASlow, barList), null, java.awt.Color.blue));
 	    vchart.addPlot(vplotIndicator);
 
 	    //RSI plot
 	    VPlot vplotRsi = new VPlot(1);
-	    vplotRsi.addSeries(new VSeries("Rsi", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
+	    vplotRsi.addSeries(new VSeries("Rsi", Indicators.getVXYList(Indicators.SeriesType.Rsi, barList), null, java.awt.Color.red));
 	    vchart.addPlot(vplotRsi);
 	    
 	    

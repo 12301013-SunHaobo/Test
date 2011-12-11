@@ -7,7 +7,6 @@ import java.util.List;
 import modules.at.TradeUtil;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.AlgoSetting.TradeDirection;
 import modules.at.model.Bar;
@@ -81,14 +80,10 @@ public class TestStrategyAuto {
 	
 	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
 
-		Indicators indicators = new Indicators();
-		
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
-			indicators.addBar(bar);//update indicators 
 			//System.out.println("TestAuto:time="+Formatter.DEFAULT_DATETIME_FORMAT.format(bar.getDate())+", price="+Formatter.DECIMAL_FORMAT.format(bar.getClose()));
-			
-			Trade trade = decide(indicators, dateStr);
+			Trade trade = decide(bar, dateStr);
 			if(trade != null){
 				tradeList.add(trade);
 			}
@@ -109,9 +104,8 @@ public class TestStrategyAuto {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Trade decide(Indicators indicators, String dateStr) throws Exception{
-		strategy.update(indicators);//update strategy
-		Bar bar = indicators.getCurBar();
+	private static Trade decide(Bar bar, String dateStr) throws Exception{
+		strategy.update(bar);//update strategy
 		double price = bar.getClose();
 		long time = bar.getDate().getTime();
 		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
@@ -122,8 +116,7 @@ public class TestStrategyAuto {
 		Position position = Position.getInstance();
 		int pQty = position.getQty();
 		double stopPrice = position.getStopLossPrice();
-//		System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+
-//				", stopPrice="+Formatter.DECIMAL_FORMAT4.format(stopPrice));
+//		System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+", stopPrice="+Formatter.DECIMAL_FORMAT4.format(stopPrice));
 
 		Trade trade = null;
 		TradeTimeLot tradeLot = getTradeLot(time, dateStr);

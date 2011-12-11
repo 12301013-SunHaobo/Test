@@ -1,10 +1,13 @@
 package modules.at.formula;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.rsi.RsiEmaSelfImpl;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
+import modules.at.model.visual.VXY;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
@@ -17,20 +20,15 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
  *
  */
 public class Indicators extends Observable {
-
-	private DescriptiveStatistics ds4MAFast;//for MA fast
-	private DescriptiveStatistics ds4MASlow;//for MA slow
-	private DescriptiveStatistics ds4MA3;//for MA 3
-	private DescriptiveStatistics ds4MAHL;//for MA (H+L)/2
-	private DescriptiveStatistics ds4MAHigh2;//for (H+L)/2 + 2(H-(H+L)/2) =(3H-L)/2
-	private DescriptiveStatistics ds4MAHigh;//for MA of High
-	private DescriptiveStatistics ds4MALow;//for MA of Low
-	private DescriptiveStatistics ds4MALow2;//for (H+L)/2 - 2((H+L)/2-L)=(3L-H)/2
 	
-	private DescriptiveStatistics ds4BB;//DescriptiveStatistics for BB
-	private RsiEmaSelfImpl rsi;
+	protected DescriptiveStatistics ds4MAFast;//for MA fast
+	protected DescriptiveStatistics ds4MASlow;//for MA slow
+	protected DescriptiveStatistics ds4MA3;//for MA 3
 	
-	private DescriptiveStatistics ds4MAUpperShadow;//MA of upper shadow
+	protected DescriptiveStatistics ds4BB;//DescriptiveStatistics for BB
+	protected RsiEmaSelfImpl rsi;
+	
+	protected DescriptiveStatistics ds4MAUpperShadow;//MA of upper shadow
 	
 	/**
 	 * for stochastic
@@ -40,27 +38,23 @@ public class Indicators extends Observable {
 	 * Highest High = highest high for the look-back period
 	 * %K is multiplied by 100 to move the decimal point two places
 	 */
-	private DescriptiveStatistics ds4StoKHigh;//for stochastic K high
-	private DescriptiveStatistics ds4StoKLow;//for stochastic K low
-	private DescriptiveStatistics ds4StoD;//for stochastic D, saves K
-	private double stoK = Double.NaN;
+	protected DescriptiveStatistics ds4StoKHigh;//for stochastic K high
+	protected DescriptiveStatistics ds4StoKLow;//for stochastic K low
+	protected DescriptiveStatistics ds4StoD;//for stochastic D, saves K
+	protected double stoK = Double.NaN;
 
 	//current bar
-	private Bar curBar;
+	protected Bar curBar;
 	
 	//for internal calculation only, tracks how many bars are added
-	private int barAdded = 0;
+	protected int barAdded = 0;
 	
 	public Indicators() {
 		super();
 		this.ds4MAFast = new DescriptiveStatistics(AlgoSetting.MA_FAST_LENGTH);
 		this.ds4MASlow = new DescriptiveStatistics(AlgoSetting.MA_SLOW_LENGTH);
 		this.ds4MA3 = new DescriptiveStatistics(AlgoSetting.MA_3_LENGTH);
-		this.ds4MAHL = new DescriptiveStatistics(AlgoSetting.MA_HL_LENGTH);
-		this.ds4MAHigh2 = new DescriptiveStatistics(AlgoSetting.MA_HIGH2_LENGTH);
-		this.ds4MAHigh = new DescriptiveStatistics(AlgoSetting.MA_HIGH_LENGTH);
-		this.ds4MALow = new DescriptiveStatistics(AlgoSetting.MA_LOW_LENGTH);
-		this.ds4MALow2 = new DescriptiveStatistics(AlgoSetting.MA_LOW2_LENGTH);
+
 		this.ds4BB = new DescriptiveStatistics(AlgoSetting.BB_LENGTH);
 		this.rsi = new RsiEmaSelfImpl(AlgoSetting.RSI_LENGTH);
 		this.ds4StoKHigh = new DescriptiveStatistics(AlgoSetting.STOCHASTIC_K_LENGTH);
@@ -71,15 +65,12 @@ public class Indicators extends Observable {
 	}
 	
 	public void addBar(Bar bar){
+		this.barAdded++;
 		this.curBar = bar;
+		
 		this.ds4MAFast.addValue(bar.getClose());
 		this.ds4MASlow.addValue(bar.getClose());
 		this.ds4MA3.addValue(bar.getLow());
-		this.ds4MAHL.addValue((bar.getHigh()+bar.getLow())/2);
-		this.ds4MAHigh2.addValue((3*bar.getHigh()-bar.getLow())/2);
-		this.ds4MAHigh.addValue(bar.getHigh());
-		this.ds4MALow.addValue(bar.getLow());
-		this.ds4MALow2.addValue((3*bar.getLow()-bar.getHigh())/2);
 		this.ds4BB.addValue(bar.getClose());
 		this.rsi.addValue(bar.getClose());
 		//stochastic
@@ -91,11 +82,6 @@ public class Indicators extends Observable {
 		
 		//my invented
 		this.ds4MAUpperShadow.addValue(bar.getHigh()-Math.max(bar.getOpen(), bar.getClose()));
-		
-		this.barAdded++;
-		//notify observers: PatternMA, PatternRsi ...
-        setChanged();
-        notifyObservers();
 	}
 	
 	//MA
@@ -116,45 +102,6 @@ public class Indicators extends Observable {
 			return Double.NaN;
 		}
 		return ds4MA3.getSum()/AlgoSetting.MA_3_LENGTH;
-	}
-	public double getSMAHigh2(){
-		if(this.barAdded<AlgoSetting.MA_HIGH2_LENGTH){
-			return Double.NaN;
-		}
-		return ds4MAHigh2.getSum()/AlgoSetting.MA_HIGH2_LENGTH;
-	}
-	public double getSMAHigh(){
-		if(this.barAdded<AlgoSetting.MA_HIGH_LENGTH){
-			return Double.NaN;
-		}
-		return ds4MAHigh.getSum()/AlgoSetting.MA_HIGH_LENGTH;
-	}
-	public double getSMAHL(){
-		if(this.barAdded<AlgoSetting.MA_HL_LENGTH){
-			return Double.NaN;
-		}
-		return ds4MAHL.getSum()/AlgoSetting.MA_HL_LENGTH;
-	}
-	public double getSMALow(){
-		if(this.barAdded<AlgoSetting.MA_LOW_LENGTH){
-			return Double.NaN;
-		}
-		return ds4MALow.getSum()/AlgoSetting.MA_LOW_LENGTH;
-	}
-	public double getSMALow2(){
-		if(this.barAdded<AlgoSetting.MA_LOW2_LENGTH){
-			return Double.NaN;
-		}
-		return ds4MALow2.getSum()/AlgoSetting.MA_LOW2_LENGTH;
-	}
-	public double getSMAHigh2Diff(){
-		double high2 = this.curBar.getHigh();
-		double hl = getSMAHL();
-		if(Double.isNaN(high2) || Double.isNaN(hl)){
-			return Double.NaN;
-		}
-		//return (high2-hl);
-		return (curBar.getHigh()-curBar.getLow())*((curBar.getClose()-curBar.getOpen())>0?1:-1);
 	}
 	
 	//BB
@@ -209,9 +156,59 @@ public class Indicators extends Observable {
 		return this.ds4MAUpperShadow.getSum()/AlgoSetting.MA_UPPER_SHADOW_LENGTH;
 	}
 	
-
 	public Bar getCurBar() {
 		return curBar;
 	}
 
+	/**
+	 *Utility for indicator VXY lists
+	 */
+	public enum SeriesType {
+		RsiUpper, Rsi, RsiLower,
+		BBUpper, BBMiddle, BBLower,
+		MAFast, MASlow, MA3, MAHigh2, MAHigh, MAHL, MALow, MALow2, MAHigh2Diff, MALow2Diff,
+		MAUpperShadow,
+		StoK, StoD, StoUpper, StoLower
+	}	
+	public static List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
+
+		List<VXY> vxyList = new ArrayList<VXY>();
+		Indicators indicator = new Indicators();
+		
+		for(Bar bar : barList){
+			indicator.addBar(bar);
+			double indicatorVal = Double.NaN;
+
+			switch (seriesType) {
+				case RsiUpper: indicatorVal = AlgoSetting.RSI_UPPER; break;
+				case Rsi: indicatorVal = indicator.getRsi(); break;
+				case RsiLower: indicatorVal = AlgoSetting.RSI_LOWER; break;
+				case BBUpper: indicatorVal = indicator.getBBUpper(); break;
+				case BBMiddle: indicatorVal = indicator.getBBMiddle(); break;
+				case BBLower: indicatorVal = indicator.getBBLower(); break;
+				case MAFast: indicatorVal = indicator.getSMAFast(); break;
+				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
+				case MA3: indicatorVal =  indicator.getSMA3(); break;
+				/*
+				case MAHigh2: indicatorVal =  indicator.getSMAHigh2(); break;
+				case MAHigh: indicatorVal =  indicator.getSMAHigh(); break;
+				case MAHL: indicatorVal =  indicator.getSMAHL(); break;
+				case MALow: indicatorVal =  indicator.getSMALow(); break;
+				case MALow2: indicatorVal =  indicator.getSMALow2(); break;
+				case MAHigh2Diff: indicatorVal =  indicator.getSMAHigh2Diff(); break;
+				*/
+				case MAUpperShadow: indicatorVal =  indicator.getMAUpperShadow(); break;
+				case StoK: indicatorVal = indicator.getStochasticK(); break;
+				case StoD: indicatorVal = indicator.getStochasticD(); break;
+				case StoUpper: indicatorVal = AlgoSetting.STOCHASTIC_UPPER; break;
+				case StoLower: indicatorVal = AlgoSetting.STOCHASTIC_LOWER; break;
+				default:break;
+			}
+
+			if(!Double.isNaN(indicatorVal)){
+				vxyList.add(new VXY(bar.getDate().getTime(), indicatorVal));
+			}
+		}
+		return vxyList;
+	}		
 }
