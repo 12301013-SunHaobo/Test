@@ -7,19 +7,17 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
-import modules.at.feed.convert.TickToBarConverter;
-import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
-import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VPlot;
 import modules.at.model.visual.VSeries;
-import modules.at.model.visual.VXY;
 import modules.at.pattern.Pattern.Trend;
 import modules.at.pattern.PatternEngulfing.Engulf;
+import modules.at.stg.Strategy;
+import modules.at.stg.StrategyMA;
 
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYLineAnnotation;
@@ -83,52 +81,6 @@ public class BarChartUtil {
 		return new XYPolygonAnnotation(xyPairArr, BarChartUtil.BASIC_STOKE, color, null);
 	}
 	
-	/**
-	 *Utility for indicator VXY lists
-	 */
-	public enum SeriesType {
-		RsiUpper, Rsi, RsiLower,
-		BBUpper, BBMiddle, BBLower,
-		MAFast, MASlow, MA3, MAHigh2, MAHigh, MAHL, MALow, MALow2, MAHigh2Diff, MALow2Diff,
-		MAUpperShadow,
-		StoK, StoD, StoUpper, StoLower
-	}
-	public static List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
-		List<VXY> vxyList = new ArrayList<VXY>();
-		Indicators indicator = new Indicators();
-		
-		for(Bar bar : barList){
-			indicator.addBar(bar);
-			double indicatorVal = Double.NaN;
-			switch (seriesType) {
-				case RsiUpper: indicatorVal = AlgoSetting.RSI_UPPER; break;
-				case Rsi: indicatorVal = indicator.getRsi(); break;
-				case RsiLower: indicatorVal = AlgoSetting.RSI_LOWER; break;
-				case BBUpper: indicatorVal = indicator.getBBUpper(); break;
-				case BBMiddle: indicatorVal = indicator.getBBMiddle(); break;
-				case BBLower: indicatorVal = indicator.getBBLower(); break;
-				case MAFast: indicatorVal = indicator.getSMAFast(); break;
-				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
-				case MA3: indicatorVal =  indicator.getSMA3(); break;
-				case MAHigh2: indicatorVal =  indicator.getSMAHigh2(); break;
-				case MAHigh: indicatorVal =  indicator.getSMAHigh(); break;
-				case MAHL: indicatorVal =  indicator.getSMAHL(); break;
-				case MALow: indicatorVal =  indicator.getSMALow(); break;
-				case MALow2: indicatorVal =  indicator.getSMALow2(); break;
-				case MAHigh2Diff: indicatorVal =  indicator.getSMAHigh2Diff(); break;
-				case MAUpperShadow: indicatorVal =  indicator.getMAUpperShadow(); break;
-				case StoK: indicatorVal = indicator.getStochasticK(); break;
-				case StoD: indicatorVal = indicator.getStochasticD(); break;
-				case StoUpper: indicatorVal = AlgoSetting.STOCHASTIC_UPPER; break;
-				case StoLower: indicatorVal = AlgoSetting.STOCHASTIC_LOWER; break;
-				default:break;
-			}
-			if(!Double.isNaN(indicatorVal)){
-				vxyList.add(new VXY(bar.getDate().getTime(), indicatorVal));
-			}
-		}
-		return vxyList;
-	}	
 
 	//from tradeList to annotationList
 	public static List<XYAnnotation> engulf2AnnotationList(List<Engulf> engulfList){
@@ -194,7 +146,7 @@ public class BarChartUtil {
 	}
 
 	
-	public static VChart createBasicChart(List<List<Bar>> barLists){
+	public static VChart createBasicChart(Strategy strategy, List<List<Bar>> barLists){
 		List<Bar> barList = barLists.get(0);//main bar list
 		VChart vchart = new VChart();
 	    /**
@@ -203,52 +155,31 @@ public class BarChartUtil {
 	    VPlot vplotBar = new VPlot(4);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
 	    
-	    //test begin
+	    //test begin <-- to overlay another barList2
 	    if(barLists.size()>=2){
 			List<Bar> barList2 = barLists.get(1);
 			//vplotBar.addSeries(new VSeries("Bar", null, barList2, java.awt.Color.red));
-			//vplotBar.addSeries(new VSeries("5min-MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh, barList2), null, java.awt.Color.gray));
-		    //vplotBar.addSeries(new VSeries("5min-MALow("+AlgoSetting.MA_LOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow, barList2), null, java.awt.Color.gray, false));
+			//vplotBar.addSeries(new VSeries("5min-MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.MAHigh, barList2), null, java.awt.Color.gray));
+		    //vplotBar.addSeries(new VSeries("5min-MALow("+AlgoSetting.MA_LOW_LENGTH+")", Indicators.getVXYList(Indicators.SeriesType.MALow, barList2), null, java.awt.Color.gray, false));
 	    }
 	    //test end
 	    
-//	    vplotBar.addSeries(new VSeries("MAFast("+AlgoSetting.MA_FAST_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.magenta));
-//	    vplotBar.addSeries(new VSeries("MASlow("+AlgoSetting.MA_SLOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.cyan));
-//	    vplotBar.addSeries(new VSeries("MA3Low("+AlgoSetting.MA_3_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MA3, barList), null, java.awt.Color.blue));
-	    vplotBar.addSeries(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-	    vplotBar.addSeries(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh, barList), null, java.awt.Color.red));
-	    vplotBar.addSeries(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHL, barList), null, java.awt.Color.cyan));
-	    vplotBar.addSeries(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow, barList), null, java.awt.Color.red));
-	    vplotBar.addSeries(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MALow2, barList), null, java.awt.Color.blue));
-//	    vplotBar.addSeries(new VSeries("BBUpper",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBUpper, barList), null, java.awt.Color.gray));
-//	    vplotBar.addSeries(new VSeries("BB("+AlgoSetting.BB_LENGTH+")",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
-//	    vplotBar.addSeries(new VSeries("BBLower",BarChartUtil.getVXYList(BarChartUtil.SeriesType.BBLower, barList), null, java.awt.Color.gray));
-	    
+	    //vplotBar.addAllSeries(Indicators.getPlotBarVSeriesList(barList));
+	    vplotBar.addAllSeries(strategy.getIndicators().getPlotBarVSeriesList(barList));
+
 	    vchart.addPlot(vplotBar);	
 
 	    /*
 	    //my invention UpperShadow
 	    VPlot vplotIndicator = new VPlot(1);
-	    vplotIndicator.addSeries(new VSeries("MAUpperShadow",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAUpperShadow, barList), null, java.awt.Color.red));
+	    vplotIndicator.addSeries(new VSeries("MAUpperShadow",Indicators.getVXYList(Indicators.SeriesType.MAUpperShadow, barList), null, java.awt.Color.red));
 	    vchart.addPlot(vplotIndicator);
 	    */
 
-		/*
-	    //MA plot
-	    VPlot vplotIndicator = new VPlot(1);
-	    vplotIndicator.addSeries(new VSeries("MAFast",BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAFast, barList), null, java.awt.Color.red));
-	    vplotIndicator.addSeries(new VSeries("MASlow", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MASlow, barList), null, java.awt.Color.blue));
-	    vchart.addPlot(vplotIndicator);
-	    */
-
-	    
 	    //RSI plot
 	    VPlot vplotRsi = new VPlot(1);
-	    //vplotRsi.addSeries(new VSeries("RsiUpper", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiUpper, barList), null, java.awt.Color.red));
-	    //vplotRsi.addSeries(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", BarChartUtil.getVXYList(BarChartUtil.SeriesType.Rsi, barList), null, java.awt.Color.red));
-	    //vplotRsi.addSeries(new VSeries("RsiLower", BarChartUtil.getVXYList(BarChartUtil.SeriesType.RsiLower, barList), null, java.awt.Color.red));
-	    
-	    vplotRsi.addSeries(new VSeries("MADiff(High2-HL)", BarChartUtil.getVXYList(BarChartUtil.SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
+	    //vplotRsi.addAllSeries(Indicators.getPlot1VSeriesList(barList));
+	    vplotRsi.addAllSeries(strategy.getIndicators().getPlot1VSeriesList(barList));
 	    vchart.addPlot(vplotRsi);
 
 	    return vchart;

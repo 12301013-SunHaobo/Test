@@ -8,8 +8,9 @@ import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
 import modules.at.pattern.Pattern.Trend;
+import modules.at.stg.StrategyMA.IndicatorsMA;
 
-public class MACrossStrategy implements Strategy {
+public class StrategyMACross implements Strategy {
 
     public static enum CrossType {
         FastCrossUp, FastCrossDown, NoCross
@@ -22,7 +23,7 @@ public class MACrossStrategy implements Strategy {
     private double curDiff;
     
     private Decision decision;
-    
+    private Indicators indicators = new Indicators(); 
     private Bar preBar;//previous bar
     
 	@Override
@@ -36,7 +37,8 @@ public class MACrossStrategy implements Strategy {
 	}
 
 	@Override
-	public void update(Indicators indicators) {
+	public void update(Bar bar) {
+		this.indicators.addBar(bar);
         double maFast = indicators.getSMAFast();
         double maSlow = indicators.getSMASlow();
         preDiff = curDiff;
@@ -75,4 +77,9 @@ public class MACrossStrategy implements Strategy {
             return CrossType.NoCross;
         }
     }
+
+	@Override
+	public Indicators getIndicators() {
+		return this.indicators;
+	}
 }

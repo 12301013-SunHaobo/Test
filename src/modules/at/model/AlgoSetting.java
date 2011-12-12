@@ -7,15 +7,7 @@ public class AlgoSetting {
     //trade unit, how many shares in one trade unit
     public static final int TRADE_UNIT = 1;
 
-	//RSI
-	public static final int RSI_LENGTH = 14;
-	public static final double RSI_UPPER = 70;
-	public static final double RSI_LOWER = 30;
-	
-	//BB
-	public static final int BB_LENGTH = 14;
-	
-	//MA
+	//MA ------------------------------------------------------
 	public static final int MA_FAST_LENGTH = 5;//default=5
 	public static final int MA_SLOW_LENGTH = 14;//default=14
 	public static final int MA_3_LENGTH = 25; 
@@ -25,18 +17,31 @@ public class AlgoSetting {
 	public static final int MA_LOW_LENGTH = 5;
 	public static final int MA_LOW2_LENGTH = MA_HL_LENGTH;
 	
-	//Stochastic
+	//BB ------------------------------------------------------
+	public static final int BB_LENGTH = 14;
+	
+	//RSI ------------------------------------------------------
+	public static final int RSI_LENGTH = 14;
+	public static final double RSI_UPPER = 70;
+	public static final double RSI_LOWER = 30;
+	
+	//Stochastic ------------------------------------------------------
 	public static final int STOCHASTIC_K_LENGTH = 10;
 	public static final int STOCHASTIC_D_LENGTH = 3;
 	public static final double STOCHASTIC_UPPER = 80;
 	public static final double STOCHASTIC_LOWER = 20;
 	
-	//my invented
+	//Macd ------------------------------------------------------
+	public static final int MACD_MA_FAST_LENGTH = 5; //12
+	public static final int MACD_MA_SLOW_LENGTH = 14; //26
+	public static final int MACD_LENGTH = 9; //9
+	
+	//my invented ------------------------------------------------------
 	public static final int MA_UPPER_SHADOW_LENGTH = 3;
 	
 	//Cut loss & lock profit
 	//public static final double CUT_WIN = 0.001; //increase percentage % to cut win
-	public static final double CUT_LOSS = 0.005; //drop percentage % to cut loss
+	public static final double CUT_LOSS = 0.001; //drop percentage % to cut loss
 	
 	//public static final double PROFIT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss from previous profit  	
 	

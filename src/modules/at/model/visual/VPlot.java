@@ -73,6 +73,9 @@ public class VPlot {
     public void addSeries(VSeries vseries){
     	this.vseriesList.add(vseries);
     }
+    public void addAllSeries(List<VSeries> vseriesList){
+    	this.vseriesList.addAll(vseriesList);
+    }
     
     public void addAnnotation(XYAnnotation anno){
     	this.annotationList.add(anno);
