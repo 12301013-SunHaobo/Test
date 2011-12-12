@@ -16,9 +16,9 @@ import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
-import modules.at.stg.StrategyMA;
 import modules.at.stg.Strategy;
 import modules.at.stg.Strategy.Decision;
+import modules.at.stg.StrategyReversal;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -32,8 +32,10 @@ public class TestStrategyAuto {
 	
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	static Strategy strategy = new StrategyMA();
-	//static Strategy strategy = new MACrossStrategy();
+	static Strategy strategy =
+		new StrategyReversal();
+		//new StrategyMA();
+	    //new MACrossStrategy();
 	
 	public static void main(String[] args) throws Exception {
 		long b0 = System.currentTimeMillis();
@@ -44,8 +46,8 @@ public class TestStrategyAuto {
 
 	private static void testByDates() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		String[][] dateTimeArr = initAllDateTimeArr(stockCode); //all dates under data/naz/tick/output/qqq
-		//String[][] dateTimeArr = initListedDateTimeArr(); //listed dates only
+		//String[][] dateTimeArr = initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		String[][] dateTimeArr = initListedDate(); //listed dates only
 		//get barList
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
@@ -65,7 +67,7 @@ public class TestStrategyAuto {
 			VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList());
 			vchart.setTitle(tickFileName);
 			
-			boolean saveToFile = true;//save to file | display
+			boolean saveToFile = false;//save to file | display
 		    ChartBase cb = new ChartBase(vchart, !saveToFile && dateTimeArr.length==1);
 		    if(saveToFile){
 		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+i+"_"+dateTimeArr[i][0]+".png"; 
@@ -252,7 +254,7 @@ public class TestStrategyAuto {
 	*/
 
 	private static VChart createMarkedChart(List<List<Bar>> barLists, List<Trade> tradeList, List<VMarker> decisionMarkerList){
-	    VChart vchart = BarChartUtil.createBasicChart(barLists);
+	    VChart vchart = BarChartUtil.createBasicChart(strategy, barLists);
         VPlot vplotBar = vchart.getPlotList().get(0);	
         //add trade annotations
 	    List<XYAnnotation> tradeAnnoList = BarChartUtil.trade2AnnotationList(tradeList);
@@ -266,12 +268,12 @@ public class TestStrategyAuto {
 	}
 	
 
-	private static String[][] initAllDateTimeArr(String stockCode) {
+	private static String[][] initAllDates(String stockCode) {
 		List<String[]> dateTimeArrList = TradeUtil.getInputParams(stockCode);
 		return dateTimeArrList.toArray(new String[][]{});
 	}
 	
-	private static String[][] initListedDateTimeArr(){
+	private static String[][] initListedDate(){
 		//sanple format: "20110915", "194819"
 		return new String[][] {
 //				{"20110928", "220751"},
@@ -294,7 +296,7 @@ public class TestStrategyAuto {
 //				{"20111115", "200120"},
 //				{"20111202", "200058"},
 //				{"20110923", "223948"},
-				{"20111128", "200121"},
+//				{"20111128", "200121"},
 //				{"20111021", "200115"},
 //				{"20111007", "001654"},
 //				{"20111014", "200153"},
@@ -326,7 +328,7 @@ public class TestStrategyAuto {
 //				{"20111018", "200248"},
 //				{"20111110", "200140"},
 //				{"20110919", "205230"},
-//				{"20111207", "200059"},
+				{"20111207", "200059"},
 
 
 

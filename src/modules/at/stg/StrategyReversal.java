@@ -14,7 +14,7 @@ import modules.at.pattern.Pattern;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
-public class StrategyMA implements Strategy {
+public class StrategyReversal implements Strategy {
 
 	private List<VMarker> decisionMarkerList = new ArrayList<VMarker>();
 	
@@ -24,6 +24,8 @@ public class StrategyMA implements Strategy {
     
     private double maHigh1 = Double.NaN;
     private double maHigh2 = Double.NaN;
+    
+    
 
     private Bar preBar = null;
     
@@ -47,7 +49,7 @@ public class StrategyMA implements Strategy {
 		this.indicators.addBar(bar);
 		this.decision = Decision.NA;//reset decision 
         double curMAHigh = indicators.getSMAHigh();
-        double curMALow = indicators.getSMALow();
+        double curMALow = indicators.getSMALow2();
 		Bar curBar = indicators.getCurBar();
         //make decision
 		TurningType maHighTrend = getMAHighTrendType(this.maHigh1, this.maHigh2, curMAHigh);
@@ -55,25 +57,27 @@ public class StrategyMA implements Strategy {
 		
 		switch (maLowTrend){
 			case Up : 
-				if(false
-						//this.maLow2 < indicators.getSMALow2()
-						//&& curBar.getClose() < indicators.getSMAHL() 
+				if( 1==1
+					//this.maLow2 < indicators.getSMALow2()
+					//&& curBar.getClose() < indicators.getSMAHL() 
 						){
 					VXYsMarker m = new VXYsMarker();
 					m.setTrend(Pattern.Trend.Up);
-					//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point
-					m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
+					m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point
+					//m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
 					this.decisionMarkerList.add(m);
 					this.decision = Decision.LongEntry; 
 				}
 				break;
 			case Down : 
-				if(this.maHigh2 > indicators.getSMAHigh2()){
+				if(1==1
+						//this.maHigh2 > indicators.getSMAHigh2()
+						){
 					VXYsMarker m = new VXYsMarker();
 					m.setTrend(Pattern.Trend.Down);
-					//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maHigh2));//turning point 
-					m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
-					//this.decisionMarkerList.add(m);
+					m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point 
+					//m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
+					this.decisionMarkerList.add(m);
 					//this.decision = Decision.LongExit; 
 				}
 				break;
@@ -236,19 +240,19 @@ public class StrategyMA implements Strategy {
     	public List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlotBarVSeriesList(barList));
-//    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
+//    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
     		vseriesList.add(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
-    		vseriesList.add(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
-//    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
+//    		vseriesList.add(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
     		return vseriesList;
     	}
     	//Plot1
     	@Override
     	public List<VSeries> getPlot1VSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
-    		//vseriesList.addAll(super.getPlot1VSeriesList(barList));
-    		vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
+    		vseriesList.addAll(super.getPlot1VSeriesList(barList));
+    		//vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
     		return vseriesList;
     	}
     
@@ -259,7 +263,6 @@ public class StrategyMA implements Strategy {
 	public Indicators getIndicators() {
 		return this.indicators;
 	}
-    
     
 
 }

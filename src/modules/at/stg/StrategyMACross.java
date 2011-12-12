@@ -77,4 +77,9 @@ public class StrategyMACross implements Strategy {
             return CrossType.NoCross;
         }
     }
+
+	@Override
+	public Indicators getIndicators() {
+		return this.indicators;
+	}
 }
