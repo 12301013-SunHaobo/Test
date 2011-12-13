@@ -18,7 +18,7 @@ import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
 import modules.at.stg.Strategy;
 import modules.at.stg.Strategy.Decision;
-import modules.at.stg.StrategyReversal;
+import modules.at.stg.StrategyMacd;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -33,7 +33,8 @@ public class TestStrategyAuto {
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
 	static Strategy strategy =
-		new StrategyReversal();
+		new StrategyMacd();
+		//new StrategyReversal();
 		//new StrategyMA();
 	    //new MACrossStrategy();
 	
@@ -73,7 +74,7 @@ public class TestStrategyAuto {
 		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+i+"_"+dateTimeArr[i][0]+".png"; 
 		    	cb.saveToFile(fileName);
 		    	System.out.println(fileName+" is created.");
-		    }	
+		    }
 		}
 	    
 	}
@@ -295,7 +296,7 @@ public class TestStrategyAuto {
 //				{"20111017", "200114"},
 //				{"20111115", "200120"},
 //				{"20111202", "200058"},
-//				{"20110923", "223948"},
+				{"20110923", "223948"},
 //				{"20111128", "200121"},
 //				{"20111021", "200115"},
 //				{"20111007", "001654"},
@@ -328,7 +329,7 @@ public class TestStrategyAuto {
 //				{"20111018", "200248"},
 //				{"20111110", "200140"},
 //				{"20110919", "205230"},
-				{"20111207", "200059"},
+//				{"20111207", "200059"},
 
 
 

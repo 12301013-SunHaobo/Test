@@ -2,7 +2,8 @@ package others.inherit;
 
 public class Parent {
 
-
+	protected String varStr = "inParent";
+	
     public void printName(){
         System.out.println("parent instance");
     }

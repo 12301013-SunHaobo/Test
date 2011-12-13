@@ -14,6 +14,11 @@ import modules.at.pattern.Pattern;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
+/**
+ * To find reversal bar
+ * Not finished yet, just started.
+ *
+ */
 public class StrategyReversal implements Strategy {
 
 	private List<VMarker> decisionMarkerList = new ArrayList<VMarker>();
