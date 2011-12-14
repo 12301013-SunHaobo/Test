@@ -2,6 +2,8 @@ package others.inherit;
 
 public class Parent {
 
+    public static String conStr = "parent const str";
+
 	protected String varStr = "inParent";
 	
     public void printName(){
