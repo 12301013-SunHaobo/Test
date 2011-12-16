@@ -2,6 +2,7 @@ package others.inherit;
 
 public class Child extends Parent {
 
+    public static String conStr = "child const str";
 	//protected String varStr = "inChild"; 
     @Override
     public void printName(){
@@ -14,7 +15,8 @@ public class Child extends Parent {
      */
     public static void main(String[] args) {
         Child c = new Child();
-        c.printName();
+        //c.printName();
+        System.out.println(Child.conStr);
     }
 
 }
