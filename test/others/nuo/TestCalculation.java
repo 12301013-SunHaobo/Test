@@ -21,17 +21,18 @@ public class TestCalculation {
     }
     
     public static void createAllCharts(){
-        double initDeposit = 2500;
-        double rate = 0.013;
-        int totalDays = 360;
+        double initDeposit = 10000;//2500
+        double rate = 0.014;
+        int totalDays = 1000;
     	for(int i=0;i<PERCENTAGES.length;i++){
     		//double percentToCash = 0.5;
     		double percentToCash = PERCENTAGES[i];
         	List<XYSeries> oneChartSeries = new ArrayList<XYSeries>();
     		List<DailyResult> results = calculateOne(initDeposit, rate, totalDays, percentToCash);
-    		oneChartSeries.add(convert(results, "Points_("+Formatter.DECIMAL_FORMAT.format(percentToCash)+")", ConvertType.Points));
-    		oneChartSeries.add(convert(results, "Cash_"+i, ConvertType.Cash));
-    		oneChartSeries.add(convert(results, "PointsGain_"+i, ConvertType.PointsGain));
+    		oneChartSeries.add(convert(results, "Points("+Formatter.DECIMAL_FORMAT.format(percentToCash)+")", ConvertType.Points));
+    		oneChartSeries.add(convert(results, "Cash", ConvertType.Cash));
+    		oneChartSeries.add(convert(results, "PointsGain", ConvertType.PointsGain));
+    		oneChartSeries.add(convert(results, "PointsGain_(-90)", ConvertType.PointsGainBefore90));
     		
             NuoLineChart chart = new NuoLineChart("Calculation[cash%="+Formatter.DECIMAL_FORMAT.format(percentToCash)+"]", oneChartSeries, saveToFile);
             if(saveToFile){
@@ -39,7 +40,7 @@ public class TestCalculation {
 	            chart.toFile(fileName);
 	            System.out.println("Saved to "+fileName);
             }
-            //printOut(results);
+            printOut(results);
     	}
     	
     }
@@ -49,24 +50,11 @@ public class TestCalculation {
         DailyResult preDr = new DailyResult(0, 0, initDeposit, initDeposit);
         dailyResults.add(preDr);
         for(int i=1; i<=totalDays; i++){
-            DailyResult dr = getNextDailyResult(preDr, rate);
-            if(i>GRACE_PERIOD){
-                //deduct the gain on date (n-90)
-                double deduct = dailyResults.get(i-91).getPointsGain();
-                double pointsAfterDeduct = Math.max(dr.getPoints()-deduct, 0);
-                double pointsGainAfterDeduct = 0;
-                if(deduct<preDr.getPoints()){
-                	pointsGainAfterDeduct = dr.getPointsGain();
-                } else if(preDr.getPoints()<=deduct && deduct<(dr.getPoints())){
-                	pointsGainAfterDeduct = dr.getPoints()-deduct;
-                } else {
-                	pointsGainAfterDeduct = 0;
-                }
-                
-                double toCash = pointsGainAfterDeduct*percentToCash;
-                dr.setPoints(pointsAfterDeduct);
-                dr.setCash(dr.getCash()+toCash);
-            }
+        	DailyResult drBefore90 = null;
+        	if(i>=90){
+        		drBefore90 = dailyResults.get(i-90);
+        	}
+            DailyResult dr = getNextDailyResult(preDr, drBefore90, rate, percentToCash);
             dailyResults.add(dr);
             preDr = dr;
         }
@@ -74,26 +62,47 @@ public class TestCalculation {
         return dailyResults;
     }
 
-    private static DailyResult getNextDailyResult(DailyResult dr, double rate){
+    private static DailyResult getNextDailyResult(DailyResult dr, DailyResult dr_90, double rate, double percentToCash){
         int nextNth = dr.getNth()+1;
-        double nextTotal = dr.getPoints()*(1+rate);
         double nextGain = dr.getPoints()*rate;
-        DailyResult newDr = new DailyResult(nextNth, dr.getCash(), nextTotal, nextGain);
+        double nextTotal = dr.getPoints();
+        double nextCash = dr.getCash();
+        if(nextNth<90){
+        	nextTotal += nextGain;
+        } else {
+        	nextCash += nextGain*percentToCash;
+        	nextTotal += nextGain*(1-percentToCash);
+        	if(dr_90!=null){
+        		//nextTotal -= dr_90.getPointsGain();
+        		nextTotal = Math.max(nextTotal - dr_90.getPointsGain(), 0);
+        	}
+        }
+        
+        DailyResult newDr = new DailyResult(nextNth, nextCash, nextTotal, nextGain);
         return newDr;
     }
     
     enum ConvertType {
-    	Cash, Points, PointsGain
+    	Cash, Points, PointsGain, PointsGainBefore90
     }
     private static XYSeries convert(List<DailyResult> results, String legend, ConvertType convertType){
     	//TimeSeries timeseries = new TimeSeries(legend);
     	XYSeries xyseries = new XYSeries(legend);
     	
-    	for(DailyResult dr : results){
+    	for(int i=0;i<results.size();i++){
+    		DailyResult dr = results.get(i);
     		switch (convertType){
     			case Cash:  xyseries.add(dr.getNth(), dr.getCash()); break;
 	    		case Points :  xyseries.add(dr.getNth(), dr.getPoints()); break;
 	    		case PointsGain:  xyseries.add(dr.getNth(), dr.getPointsGain()); break;
+	    		case PointsGainBefore90:
+	    			if(90<=i){
+	    				DailyResult drBefore90 = results.get(i-90);
+	    				xyseries.add(dr.getNth(), drBefore90.getPointsGain());
+	    			}else{
+	    				xyseries.add(dr.getNth(), 0);
+	    			}
+	    			break;
     		}
     	}
     	return xyseries;
@@ -158,7 +167,8 @@ public class TestCalculation {
     }
     
     private static double[] PERCENTAGES = new double[] {
-    	1,0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0
+    	1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1,0
+    	//0
     };
     
     private static void printOut(List<DailyResult> dailyResults){
