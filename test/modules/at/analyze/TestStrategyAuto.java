@@ -18,7 +18,7 @@ import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
 import modules.at.stg.Strategy;
 import modules.at.stg.Strategy.Decision;
-import modules.at.stg.StrategyMacd;
+import modules.at.stg.StrategyMA;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -33,9 +33,9 @@ public class TestStrategyAuto {
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
 	static Strategy strategy =
-		new StrategyMacd();
+		//new StrategyMacd();
 		//new StrategyReversal();
-		//new StrategyMA();
+		new StrategyMA();
 	    //new MACrossStrategy();
 	
 	public static void main(String[] args) throws Exception {
@@ -47,8 +47,8 @@ public class TestStrategyAuto {
 
 	private static void testByDates() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		//String[][] dateTimeArr = initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		String[][] dateTimeArr = initListedDate(); //listed dates only
+		String[][] dateTimeArr = initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		//String[][] dateTimeArr = initListedDate(); //listed dates only
 		//get barList
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
@@ -68,7 +68,7 @@ public class TestStrategyAuto {
 			VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList());
 			vchart.setTitle(tickFileName);
 			
-			boolean saveToFile = false;//save to file | display
+			boolean saveToFile = true;//save to file | display
 		    ChartBase cb = new ChartBase(vchart, !saveToFile && dateTimeArr.length==1);
 		    if(saveToFile){
 		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+i+"_"+dateTimeArr[i][0]+".png"; 

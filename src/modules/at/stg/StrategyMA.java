@@ -236,11 +236,11 @@ public class StrategyMA implements Strategy {
     	public List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlotBarVSeriesList(barList));
-//    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
     		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
     		vseriesList.add(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
     		vseriesList.add(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
-//    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
     		return vseriesList;
     	}
     	//Plot1
