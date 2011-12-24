@@ -13,9 +13,9 @@ public class AlgoSetting {
 	public static final int MA_3_LENGTH = 25; 
 	public static final int MA_HL_LENGTH = 50;
 	public static final int MA_HIGH2_LENGTH = MA_HL_LENGTH;
-	public static final int MA_HIGH_LENGTH = 5;
-	public static final int MA_LOW_LENGTH = 5;
-	public static final int MA_LOW2_LENGTH = MA_HL_LENGTH;
+	public static final int MA_HIGH_LENGTH = 5;//5
+	public static final int MA_LOW_LENGTH = 5; //5
+	public static final int MA_LOW2_LENGTH = MA_HL_LENGTH;//5
 	
 	//BB ------------------------------------------------------
 	public static final int BB_LENGTH = 14;
