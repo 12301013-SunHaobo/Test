@@ -1,8 +1,26 @@
+
+一下条件不相关。可以取交集。
+[先只考虑单边做多。]
 LongEntry:
     1. 连续几个下跌bar，突然一个上涨bar; 而且绿bar close>前一个红bar open.
+    2. 沿趋势方向，连续大幅下跌，逐渐止住。
+    [定量：多少算大幅？和最近bar比，最近平均bar体长度？]
+    [统计：假止跌后，继续向下跌幅多少才真正止跌？以此跌幅作为止损。]
+    [统计：longEntry的上升空间，第一个顶。以此作为止赢。]
+       
+       
+    
+    
+LongExist: 
 
-ShortEntry:
+
+
+	
+/*
+ShortEntry:    
+
+ShortShortExit:
     1. 
-
+*/
 Feature: 
 Winning Percentage:
