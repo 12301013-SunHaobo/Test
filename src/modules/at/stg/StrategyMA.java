@@ -140,6 +140,9 @@ public class StrategyMA implements Strategy {
     	private DescriptiveStatistics ds4MAHigh;//for MA of High
     	private DescriptiveStatistics ds4MALow;//for MA of Low
     	private DescriptiveStatistics ds4MALow2;//for (H+L)/2 - 2((H+L)/2-L)=(3L-H)/2
+    	
+    	public double maxSMALow2Diff = Double.MIN_VALUE;
+    	public double minSMALow2Diff = Double.MAX_VALUE;
 
     	public IndicatorsMA() {
     		super();
@@ -157,6 +160,7 @@ public class StrategyMA implements Strategy {
     		this.ds4MAHigh.addValue(bar.getHigh());
     		this.ds4MALow.addValue(bar.getLow());
     		this.ds4MALow2.addValue((3*bar.getLow()-bar.getHigh())/2);
+    		getSMALow2Diff();//testing
     	}
     	
     	public double getSMAHigh2(){
@@ -189,21 +193,23 @@ public class StrategyMA implements Strategy {
     		}
     		return ds4MALow2.getSum()/AlgoSetting.MA_LOW2_LENGTH;
     	}
-    	public double getSMAHigh2Diff(){
-    		double high2 = this.curBar.getHigh();
-    		double hl = getSMAHL();
-    		if(Double.isNaN(high2) || Double.isNaN(hl)){
+    	public double getSMALow2Diff(){
+    		double low = getSMALow();
+    		double low2 = getSMALow2();
+    		if(Double.isNaN(low) || Double.isNaN(low2)){
     			return Double.NaN;
     		}
-    		//return (high2-hl);
-    		return (curBar.getHigh()-curBar.getLow())*((curBar.getClose()-curBar.getOpen())>0?1:-1);
+    		double result = low-low2;
+    		this.maxSMALow2Diff = Math.max(result, this.maxSMALow2Diff);
+    		this.minSMALow2Diff = Math.min(result, this.minSMALow2Diff);
+    		return result;
     	}
 
     	/**
     	 *Utility for indicator VXY lists
     	 */
     	public enum SeriesType {
-    		MAHigh2, MAHigh, MAHL, MALow, MALow2, MAHigh2Diff, MALow2Diff,
+    		MAHigh2, MAHigh, MAHL, MALow, MALow2, MALow2Diff,
     	}
     	
     	public List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
@@ -221,7 +227,7 @@ public class StrategyMA implements Strategy {
     				case MAHL: indicatorVal =  indicator.getSMAHL(); break;
     				case MALow: indicatorVal =  indicator.getSMALow(); break;
     				case MALow2: indicatorVal =  indicator.getSMALow2(); break;
-    				case MAHigh2Diff: indicatorVal =  indicator.getSMAHigh2Diff(); break;
+    				case MALow2Diff: indicatorVal =  indicator.getSMALow2Diff(); break;
     				default:break;
     			}
 
@@ -248,7 +254,8 @@ public class StrategyMA implements Strategy {
     	public List<VSeries> getPlot1VSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlot1VSeriesList(barList));
-    		vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
+    		//vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
+    		vseriesList.add(new VSeries("Diff(MAHigh-MAHigh2)", getVXYList(SeriesType.MALow2Diff, barList), null, java.awt.Color.gray));
     		return vseriesList;
     	}
     
