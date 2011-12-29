@@ -4,6 +4,8 @@ import org.apache.commons.math.stat.correlation.Covariance;
 import org.apache.commons.math.stat.correlation.PearsonsCorrelation;
 import org.apache.commons.math.stat.regression.SimpleRegression;
 
+import utils.Formatter;
+
 public class TestApacheMath {
 
     /**
@@ -11,9 +13,9 @@ public class TestApacheMath {
      */
     public static void main(String[] args) {
 
-        //testSimpleRegression1();
+        testSimpleRegression1();
     	//testSimpleRegression2();
-    	testCovariance();
+    	//testCovariance();
     }
 
     /**
@@ -36,6 +38,19 @@ public class TestApacheMath {
     	System.out.println("correlation(x,z)="+p.correlation(x, z));
     }
     
+    private static void testSimpleRegression1(){
+        SimpleRegression r = new SimpleRegression();
+        r.addData(0d, 0d);
+        r.addData(3d, 1d);
+        System.out.println("predict="+Formatter.DECIMAL_FORMAT.format(r.predict(5)));
+        System.out.println("slope="+Formatter.DECIMAL_FORMAT.format(r.getSlope()));
+        r.clear();
+        r.addData(0d, 0d);
+        r.addData(6d, 1d);
+        System.out.println("slope="+Formatter.DECIMAL_FORMAT.format(r.getSlope()));
+        
+    }
+
     private static void testSimpleRegression2() {
         SimpleRegression r = new SimpleRegression();
         r.addData(1d, 10d);
@@ -47,14 +62,6 @@ public class TestApacheMath {
         double predict = r.predict(7);
         System.out.println(predict);
         
-    }
-    
-    private static void testSimpleRegression1(){
-        SimpleRegression r = new SimpleRegression();
-        r.addData(1d, 0d);
-        r.addData(3d, 1d);
-        double predict = r.predict(5);
-        System.out.println(predict);
     }
 
 }

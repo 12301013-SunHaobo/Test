@@ -6,6 +6,7 @@ import java.util.List;
 import modules.at.formula.Indicators;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
+import modules.at.model.FixedLengthQueue;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
@@ -13,6 +14,7 @@ import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+import org.apache.commons.math.stat.regression.SimpleRegression;
 
 public class StrategyMA implements Strategy {
 
@@ -141,9 +143,15 @@ public class StrategyMA implements Strategy {
     	private DescriptiveStatistics ds4MALow;//for MA of Low
     	private DescriptiveStatistics ds4MALow2;//for (H+L)/2 - 2((H+L)/2-L)=(3L-H)/2
     	
-    	public double maxSMALow2Diff = Double.MIN_VALUE;
-    	public double minSMALow2Diff = Double.MAX_VALUE;
+    	//Low-Low2 diff
+    	public double maxSMALow2Diff = Double.MIN_VALUE;//max SMA Low-Low2 diff
+    	public double minSMALow2Diff = Double.MAX_VALUE;//min SMA Low-Low2 diff
 
+    	//calculate MA50 slope
+    	public double slopeMASlow = 0; //slope of MA50;
+    	private FixedLengthQueue<MAPoint> fixedLengthQ = new FixedLengthQueue<MAPoint>(3); //
+    	
+    	
     	public IndicatorsMA() {
     		super();
     		this.ds4MAHL = new DescriptiveStatistics(AlgoSetting.MA_HL_LENGTH);
@@ -160,6 +168,12 @@ public class StrategyMA implements Strategy {
     		this.ds4MAHigh.addValue(bar.getHigh());
     		this.ds4MALow.addValue(bar.getLow());
     		this.ds4MALow2.addValue((3*bar.getLow()-bar.getHigh())/2);
+    		
+    		double tmpSMALow2 = getSMALow2();
+    		if(!Double.isNaN(tmpSMALow2)){
+    			this.fixedLengthQ.add(new MAPoint(bar.getDate().getTime(), tmpSMALow2));
+    		}
+    		
     		getSMALow2Diff();//testing
     	}
     	
@@ -204,12 +218,27 @@ public class StrategyMA implements Strategy {
     		this.minSMALow2Diff = Math.min(result, this.minSMALow2Diff);
     		return result;
     	}
+    	public double getSMALow2Slope(){
+    		if(this.fixedLengthQ.size()<3){
+    			return Double.NaN;
+    		}
+    		SimpleRegression r = new SimpleRegression();
+    		for(int i=0;i<this.fixedLengthQ.size();i++){
+    			MAPoint tmpMAPoint = (MAPoint)this.fixedLengthQ.get(i);
+    			r.addData(tmpMAPoint.getTime(), tmpMAPoint.getMa());
+    		}
+    		double fullWidth = (5*60+30)*60*1000D;
+    		double fullHeight = 0.55D;
+    		
+    		return r.getSlope()*(fullWidth/fullHeight); 
+    	}
+    	
 
     	/**
     	 *Utility for indicator VXY lists
     	 */
     	public enum SeriesType {
-    		MAHigh2, MAHigh, MAHL, MALow, MALow2, MALow2Diff,
+    		MAHigh2, MAHigh, MAHL, MALow, MALow2, MALow2Diff, MALow2Slope
     	}
     	
     	public List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
@@ -228,6 +257,7 @@ public class StrategyMA implements Strategy {
     				case MALow: indicatorVal =  indicator.getSMALow(); break;
     				case MALow2: indicatorVal =  indicator.getSMALow2(); break;
     				case MALow2Diff: indicatorVal =  indicator.getSMALow2Diff(); break;
+    				case MALow2Slope: indicatorVal =  indicator.getSMALow2Slope(); break;
     				default:break;
     			}
 
@@ -255,7 +285,8 @@ public class StrategyMA implements Strategy {
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlot1VSeriesList(barList));
     		//vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
-    		vseriesList.add(new VSeries("Diff(MAHigh-MAHigh2)", getVXYList(SeriesType.MALow2Diff, barList), null, java.awt.Color.gray));
+    		vseriesList.add(new VSeries("MALow2Diff", getVXYList(SeriesType.MALow2Diff, barList), null, java.awt.Color.gray));
+    		//vseriesList.add(new VSeries("MALow2Slope", getVXYList(SeriesType.MALow2Slope, barList), null, java.awt.Color.gray));
     		return vseriesList;
     	}
     
@@ -267,6 +298,26 @@ public class StrategyMA implements Strategy {
 		return this.indicators;
 	}
     
-    
+    private static class MAPoint {
+    	private double time;
+    	private double ma;
+		public MAPoint(double time, double ma) {
+			super();
+			this.time = time;
+			this.ma = ma;
+		}
+		public double getMa() {
+			return ma;
+		}
+		public void setMa(double ma) {
+			this.ma = ma;
+		}
+		public double getTime() {
+			return time;
+		}
+		public void setTime(double time) {
+			this.time = time;
+		}
+    }
 
 }

@@ -6,8 +6,11 @@ package modules.at.model;
  * Using Array to implement a fixed length Queue,
  * newly inserted elements are added at the end, 
  * when queue is full, head element is removed
+ * 
+ * Java has linked list queue, but they provide sequential access.
+ * This implementation provide random access, and lightweight.
  */
-public class FixedLengthQueue {
+public class FixedLengthQueue<T> {
 	private Object[] array;
 	private int head=0;
 	private int tail=-1;
