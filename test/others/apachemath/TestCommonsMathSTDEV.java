@@ -10,7 +10,7 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import utils.Formatter;
 
 
-public class TestCommonsMath {
+public class TestCommonsMathSTDEV {
 
 	/**
 	 * @param args

@@ -29,8 +29,11 @@ public class TestFixedLengthQueue extends TestCase{
         //remove all of them
         arr.remove();
         assertEquals(arr.size(), 2);
+        assertEquals("f", arr.get(0));
+        assertEquals("g", arr.get(1));
         arr.remove();
         assertEquals(arr.size(), 1);
+        assertEquals("g", arr.get(0));
         arr.remove();
         assertEquals(arr.size(), 0);
         //remove from empty queue, size is still 0

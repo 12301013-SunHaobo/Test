@@ -32,12 +32,6 @@ public class TestStrategyAuto {
 	
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	static Strategy strategy =
-		//new StrategyMacd();
-		//new StrategyReversal();
-		new StrategyMA();
-	    //new MACrossStrategy();
-	
 	public static void main(String[] args) throws Exception {
 		long b0 = System.currentTimeMillis();
 		testByDates();
@@ -47,8 +41,9 @@ public class TestStrategyAuto {
 
 	private static void testByDates() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
-		String[][] dateTimeArr = initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		//String[][] dateTimeArr = initListedDate(); //listed dates only
+		String[][] dateTimeArr = 
+				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        initListedDate(); //listed dates only
 		//get barList
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
@@ -59,16 +54,28 @@ public class TestStrategyAuto {
 			barLists.add(barList);
 			barLists.add(barList2);
 			
+
+			//initialize strategy
+			Strategy strategy =
+				//new StrategyMacd();
+				//new StrategyReversal();
+				new StrategyMA();
+			    //new MACrossStrategy();
+			
 			//get tradeList
-			List<Trade> tradeList = auto(dateTimeArr[i][0], barList);
-			System.out.print(stockCode + ":" + dateTimeArr[i][0] + "-" + dateTimeArr[i][1]+", ");
-			TradeUtil.printTrades(tradeList, true);
+			List<Trade> tradeList = auto(dateTimeArr[i][0], barList, strategy);
+			System.out.print(stockCode + ":" + dateTimeArr[i][0] + "-" + dateTimeArr[i][1]+", ["
+					+ Formatter.DECIMAL_FORMAT.format(((modules.at.stg.StrategyMA.IndicatorsMA)strategy.getIndicators()).minSMALow2Diff)+", "
+					+ Formatter.DECIMAL_FORMAT.format(((modules.at.stg.StrategyMA.IndicatorsMA)strategy.getIndicators()).maxSMALow2Diff)+"]"
+					);
+			//TradeUtil.printTrades(tradeList, true);
+			System.out.println();
 			
 			//display chart with trade and mark info
-			VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList());
+			VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList(), strategy);
 			vchart.setTitle(tickFileName);
 			
-			boolean saveToFile = true;//save to file | display
+			boolean saveToFile = false;//save to file | display
 		    ChartBase cb = new ChartBase(vchart, !saveToFile && dateTimeArr.length==1);
 		    if(saveToFile){
 		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+i+"_"+dateTimeArr[i][0]+".png"; 
@@ -81,12 +88,12 @@ public class TestStrategyAuto {
 	
 
 	
-	private static List<Trade> auto(String dateStr, List<Bar> barList) throws Exception {
+	private static List<Trade> auto(String dateStr, List<Bar> barList, Strategy strategy) throws Exception {
 
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
 			//System.out.println("TestAuto:time="+Formatter.DEFAULT_DATETIME_FORMAT.format(bar.getDate())+", price="+Formatter.DECIMAL_FORMAT.format(bar.getClose()));
-			Trade trade = decide(bar, dateStr);
+			Trade trade = decide(bar, dateStr, strategy);
 			if(trade != null){
 				tradeList.add(trade);
 			}
@@ -107,7 +114,7 @@ public class TestStrategyAuto {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Trade decide(Bar bar, String dateStr) throws Exception{
+	private static Trade decide(Bar bar, String dateStr, Strategy strategy) throws Exception{
 		strategy.update(bar);//update strategy
 		double price = bar.getClose();
 		long time = bar.getDate().getTime();
@@ -254,7 +261,7 @@ public class TestStrategyAuto {
 	}
 	*/
 
-	private static VChart createMarkedChart(List<List<Bar>> barLists, List<Trade> tradeList, List<VMarker> decisionMarkerList){
+	private static VChart createMarkedChart(List<List<Bar>> barLists, List<Trade> tradeList, List<VMarker> decisionMarkerList, Strategy strategy){
 	    VChart vchart = BarChartUtil.createBasicChart(strategy, barLists);
         VPlot vplotBar = vchart.getPlotList().get(0);	
         //add trade annotations
@@ -277,59 +284,72 @@ public class TestStrategyAuto {
 	private static String[][] initListedDate(){
 		//sanple format: "20110915", "194819"
 		return new String[][] {
+//				{"20111026", "200246"},
+//				{"20111117", "200308"},
+//				{"20110929", "202100"},
+//				{"20110926", "200301"},
+//				{"20111116", "213410"},
+//				{"20111109", "200435"},
 //				{"20110928", "220751"},
 //				{"20111004", "195804"},
-//				{"20110930", "205736"},
 //				{"20110922", "200738"},
-//				{"20111205", "200105"},
-//				{"20111025", "200332"},
-//				{"20111011", "200137"},
-//				{"20111123", "200120"},
-//				{"20111118", "200223"},
-//				{"20111102", "200117"},
-//				{"20111114", "200132"},
-//				{"20110916", "195420"},
-//				{"20111117", "200308"},
-//				{"20111031", "200117"},
-//				{"20111121", "200136"},
-//				{"20110920", "212519"},
-//				{"20111017", "200114"},
-//				{"20111115", "200120"},
-//				{"20111202", "200058"},
-				{"20110923", "223948"},
-//				{"20111128", "200121"},
-//				{"20111021", "200115"},
-//				{"20111007", "001654"},
-//				{"20111014", "200153"},
-//				{"20111028", "200140"},
-//				{"20111130", "200141"},
-//				{"20110915", "194819"},
 //				{"20111020", "200135"},
-//				{"20111122", "200102"},
-//				{"20111012", "200149"},
-//				{"20111013", "200134"},
-//				{"20111104", "200117"},
-//				{"20111109", "200435"},
-//				{"20110927", "200425"},
-//				{"20111111", "200109"},
-//				{"20110926", "200301"},
-//				{"20111026", "200246"},
-//				{"20111201", "200119"},
-//				{"20111024", "200203"},
-//				{"20111206", "200048"},
-//				{"20111107", "200117"},
-//				{"20111116", "213410"},
-//				{"20111027", "200154"},
-//				{"20110929", "202100"},
-//				{"20111108", "200141"},
-//				{"20111003", "224038"},
-//				{"20111129", "200135"},
-//				{"20111101", "200252"},
-//				{"20111103", "200218"},
-//				{"20111018", "200248"},
 //				{"20111110", "200140"},
-//				{"20110919", "205230"},
+//				{"20111213", "200215"},
+//				{"20110927", "200425"},
+//				{"20110920", "212519"},
+//				{"20111208", "200123"},
+//				{"20111101", "200252"},
+//				{"20111003", "224038"},
+//				{"20111216", "200137"},
+//				{"20111123", "200120"},
+//				{"20111122", "200102"},
+//				{"20111027", "200154"},
+//				{"20111219", "200101"},
+//				{"20111108", "200141"},
+//				{"20111021", "200115"},
+//				{"20111107", "200117"},
+//				{"20110930", "205736"},
+//				{"20111017", "200114"},
+//				{"20111214", "200144"},
+//				{"20111205", "200105"},
+//				{"20111104", "200117"},
+				{"20110915", "194819"},
+//				{"20111031", "200117"},
+//				{"20111118", "200223"},
+//				{"20111215", "200308"},
+//				{"20111012", "200149"},
+//				{"20111114", "200132"},
+//				{"20111025", "200332"},
+//				{"20110923", "223948"},
+//				{"20110916", "195420"},
+//				{"20111202", "200058"},
+//				{"20111102", "200117"},
+//				{"20111129", "200135"},
+//				{"20111221", "200133"},
+//				{"20111014", "200153"},
+//				{"20111128", "200121"},
+//				{"20111007", "001654"},
+//				{"20111201", "200119"},
+//				{"20111103", "200218"},
+//				{"20111011", "200137"},
+//				{"20111121", "200136"},
+//				{"20111212", "200105"},
+//				{"20111018", "200248"},
+//				{"20111115", "200120"},
+//				{"20111111", "200109"},
+//				{"20111028", "200140"},
 //				{"20111207", "200059"},
+//				{"20111024", "200203"},
+//				{"20111013", "200134"},
+//				{"20110919", "205230"},
+//				{"20111206", "200048"},
+//				{"20111130", "200141"},
+//				{"20111223", "200030"},
+//				{"20111226", "200034"},
+//				{"20111220", "200110"},
+//				{"20111209", "200132"},
+//				{"20111222", "200040"},
 
 
 
