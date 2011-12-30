@@ -149,7 +149,8 @@ public class StrategyMA implements Strategy {
 
     	//calculate MA50 slope
     	public double slopeMASlow = 0; //slope of MA50;
-    	private FixedLengthQueue<MAPoint> fixedLengthQ = new FixedLengthQueue<MAPoint>(3); //
+    	public int MA_SLOPE_LENGTH = 5;
+    	private FixedLengthQueue<MAPoint> fixedLengthQ = new FixedLengthQueue<MAPoint>(MA_SLOPE_LENGTH); //
     	
     	
     	public IndicatorsMA() {
@@ -219,7 +220,7 @@ public class StrategyMA implements Strategy {
     		return result;
     	}
     	public double getSMALow2Slope(){
-    		if(this.fixedLengthQ.size()<3){
+    		if(this.fixedLengthQ.size()<MA_SLOPE_LENGTH){
     			return Double.NaN;
     		}
     		SimpleRegression r = new SimpleRegression();
@@ -238,7 +239,8 @@ public class StrategyMA implements Strategy {
     	 *Utility for indicator VXY lists
     	 */
     	public enum SeriesType {
-    		MAHigh2, MAHigh, MAHL, MALow, MALow2, MALow2Diff, MALow2Slope
+    		MAHigh2, MAHigh, MAHL, MALow, MALow2, MALow2Diff, 
+    		MALow2Slope//lagging, worse than MALow2Diff
     	}
     	
     	public List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
@@ -288,14 +290,16 @@ public class StrategyMA implements Strategy {
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlot1VSeriesList(barList));
     		//vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
-    		vseriesList.add(new VSeries("MALow2Diff", getVXYList(SeriesType.MALow2Diff, barList), null, java.awt.Color.gray));
+    		vseriesList.add(new VSeries("MALow2Diff", getVXYList(SeriesType.MALow2Diff, barList), null, java.awt.Color.black));
     		//vseriesList.add(new VSeries("MALow2Slope", getVXYList(SeriesType.MALow2Slope, barList), null, java.awt.Color.gray));
     		vSeriesLists.add(vseriesList);
     		
+    		/*
     		//plot 2
     		List<VSeries> vseriesList2 = new ArrayList<VSeries>();
     		vseriesList2.add(new VSeries("MALow2Slope", getVXYList(SeriesType.MALow2Slope, barList), null, java.awt.Color.gray));
     		vSeriesLists.add(vseriesList2);
+    		*/
     		
     		return vSeriesLists;
     	}

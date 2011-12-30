@@ -42,8 +42,8 @@ public class TestStrategyAuto {
 	private static void testByDates() throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
 		String[][] dateTimeArr = 
-				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		        initListedDate(); //listed dates only
+				initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        //initListedDate(); //listed dates only
 		//get barList
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
@@ -75,7 +75,7 @@ public class TestStrategyAuto {
 			VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList(), strategy);
 			vchart.setTitle(tickFileName);
 			
-			boolean saveToFile = false;//save to file | display
+			boolean saveToFile = true;//save to file | display
 		    ChartBase cb = new ChartBase(vchart, !saveToFile && dateTimeArr.length==1);
 		    if(saveToFile){
 		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+i+"_"+dateTimeArr[i][0]+".png"; 
@@ -284,7 +284,7 @@ public class TestStrategyAuto {
 	private static String[][] initListedDate(){
 		//sanple format: "20110915", "194819"
 		return new String[][] {
-//				{"20111026", "200246"},
+				{"20111026", "200246"},
 //				{"20111117", "200308"},
 //				{"20110929", "202100"},
 //				{"20110926", "200301"},
@@ -314,7 +314,7 @@ public class TestStrategyAuto {
 //				{"20111214", "200144"},
 //				{"20111205", "200105"},
 //				{"20111104", "200117"},
-				{"20110915", "194819"},
+//				{"20110915", "194819"},
 //				{"20111031", "200117"},
 //				{"20111118", "200223"},
 //				{"20111215", "200308"},
