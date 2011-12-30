@@ -273,7 +273,8 @@ public class Indicators extends Observable {
 		return vseriesList;
 	}
 	//Plot1
-	public List<VSeries> getPlot1VSeriesList(List<Bar> barList){
+	public List<List<VSeries>> getPlotsVSeriesLists(List<Bar> barList){
+		List<List<VSeries>> vSeriesLists = new ArrayList<List<VSeries>>();
 		List<VSeries> vseriesList = new ArrayList<VSeries>();
 //		vseriesList.add(new VSeries("RsiUpper", getVXYList(SeriesType.RsiUpper, barList), null, java.awt.Color.red));
 //		vseriesList.add(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", getVXYList(SeriesType.Rsi, barList), null, java.awt.Color.red));
@@ -283,8 +284,10 @@ public class Indicators extends Observable {
 		vseriesList.add(new VSeries("MacdSignal("+AlgoSetting.MACD_LENGTH+")", getVXYList(SeriesType.MacdSignal, barList), null, java.awt.Color.red));
 		vseriesList.add(new VSeries("MacdHistogram", getVXYList(SeriesType.MacdHistogram, barList), null, java.awt.Color.cyan));
 		vseriesList.add(new VSeries("0", getVXYList(SeriesType.MacdZero, barList), null, java.awt.Color.blue));
+		
+		vSeriesLists.add(vseriesList);
 
-		return vseriesList;
+		return vSeriesLists;
 	}
 	
 	

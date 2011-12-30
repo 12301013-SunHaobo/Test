@@ -267,7 +267,7 @@ public class StrategyMA implements Strategy {
     		}
     		return vxyList;
     	}	    
-    	//Plot0
+    	//PlotBar
     	@Override
     	public List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
@@ -279,15 +279,25 @@ public class StrategyMA implements Strategy {
     		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
     		return vseriesList;
     	}
-    	//Plot1
+    	//Plots
     	@Override
-    	public List<VSeries> getPlot1VSeriesList(List<Bar> barList){
+    	public List<List<VSeries>> getPlotsVSeriesLists(List<Bar> barList){
+    		List<List<VSeries>> vSeriesLists = new ArrayList<List<VSeries>>();
+    		
+    		//plot 1
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlot1VSeriesList(barList));
     		//vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
     		vseriesList.add(new VSeries("MALow2Diff", getVXYList(SeriesType.MALow2Diff, barList), null, java.awt.Color.gray));
     		//vseriesList.add(new VSeries("MALow2Slope", getVXYList(SeriesType.MALow2Slope, barList), null, java.awt.Color.gray));
-    		return vseriesList;
+    		vSeriesLists.add(vseriesList);
+    		
+    		//plot 2
+    		List<VSeries> vseriesList2 = new ArrayList<VSeries>();
+    		vseriesList2.add(new VSeries("MALow2Slope", getVXYList(SeriesType.MALow2Slope, barList), null, java.awt.Color.gray));
+    		vSeriesLists.add(vseriesList2);
+    		
+    		return vSeriesLists;
     	}
     
     }

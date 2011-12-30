@@ -145,14 +145,20 @@ public class BarChartUtil {
 				);
 	}
 
-	
+	/**
+	 * 
+	 * @param strategy
+	 * @param barLists Can overlay multiple barList on the vplotBar
+	 * @return
+	 */
 	public static VChart createBasicChart(Strategy strategy, List<List<Bar>> barLists){
 		List<Bar> barList = barLists.get(0);//main bar list
 		VChart vchart = new VChart();
 	    /**
 	     * bar plot0, always first one.
 	     */
-	    VPlot vplotBar = new VPlot(4);
+		int plotBarWeight = 4;
+	    VPlot vplotBar = new VPlot(plotBarWeight);
 	    vplotBar.addSeries(new VSeries("Bar", null, barList, java.awt.Color.red));
 	    
 	    //test begin <-- to overlay another barList2
@@ -164,23 +170,17 @@ public class BarChartUtil {
 	    }
 	    //test end
 	    
-	    //vplotBar.addAllSeries(Indicators.getPlotBarVSeriesList(barList));
 	    vplotBar.addAllSeries(strategy.getIndicators().getPlotBarVSeriesList(barList));
-
 	    vchart.addPlot(vplotBar);	
 
-	    /*
-	    //my invention UpperShadow
-	    VPlot vplotIndicator = new VPlot(1);
-	    vplotIndicator.addSeries(new VSeries("MAUpperShadow",Indicators.getVXYList(Indicators.SeriesType.MAUpperShadow, barList), null, java.awt.Color.red));
-	    vchart.addPlot(vplotIndicator);
-	    */
-
+	    int plotWeight = 1;
 	    //RSI plot
-	    VPlot vplotRsi = new VPlot(1);
-	    //vplotRsi.addAllSeries(Indicators.getPlot1VSeriesList(barList));
-	    vplotRsi.addAllSeries(strategy.getIndicators().getPlot1VSeriesList(barList));
-	    vchart.addPlot(vplotRsi);
+	    List<List<VSeries>> vSeriesLists = strategy.getIndicators().getPlotsVSeriesLists(barList);
+	    for(List<VSeries> vseriesList : vSeriesLists) {
+		    VPlot vplot = new VPlot(plotWeight);
+		    vplot.addAllSeries(vseriesList);
+		    vchart.addPlot(vplot);
+	    }
 
 	    return vchart;
 	}

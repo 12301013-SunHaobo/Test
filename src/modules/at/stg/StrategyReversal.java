@@ -254,11 +254,13 @@ public class StrategyReversal implements Strategy {
     	}
     	//Plot1
     	@Override
-    	public List<VSeries> getPlot1VSeriesList(List<Bar> barList){
-    		List<VSeries> vseriesList = new ArrayList<VSeries>();
-    		vseriesList.addAll(super.getPlot1VSeriesList(barList));
+    	public List<List<VSeries>> getPlotsVSeriesLists(List<Bar> barList){
+    		List<List<VSeries>> vSeriesLists = new ArrayList<List<VSeries>>();
+    		
+    		vSeriesLists.addAll(super.getPlotsVSeriesLists(barList));
+    		
+    		return vSeriesLists;
     		//vseriesList.add(new VSeries("MADiff(High2-HL)", getVXYList(SeriesType.MAHigh2Diff, barList), null, java.awt.Color.gray));
-    		return vseriesList;
     	}
     
     }
