@@ -7,13 +7,14 @@ LongEntry:
     3. 下跌拐点出现，但仍在MA50下，没有一下涨上来
     4. 小波浪，用highLow reversal；大波浪，直接反转。因为小波浪要多个才有一定幅度，而大波浪一个就够。
     
-    
+    [low:mark vertex; MALow2Diff: mark vertex] todo:
     [定量：多少算大幅？和最近bar比，最近平均bar体长度？]
     [统计：假止跌后，继续向下跌幅多少才真正止跌？以此跌幅作为止损。]
     [统计：longEntry的上升空间，第一个顶。以此作为止赢。]
     [指标：下跌Bar平均长度，上涨bar平均长度]
+    [形态匹配：列出各种常见形态，然后定量]
     
-    [加上:Pivot points]   
+    [加上:Pivot points]
 
     	[deprecated: lower plot: MA50 slope指标, 测试结果： 比MALow2Diff 差]   
     
