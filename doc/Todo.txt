@@ -6,6 +6,7 @@
 
 --------------------------------------------
 -- todo or bugs ----
+1. ParamContainer.java & TestAnnotation.java //something like: Range{double start=1.1, end=30.1, interval=3.1; totalIntervals=4};
 5. Create PatternHighLow
 7. math package to calculate lines
 8. use correlation to scan stocks avg 1-5 days ahead of qqq avg
@@ -16,13 +17,13 @@
 14. create a test to find all vertexes in a series
 15. google: different indicators pros and cons
 16. draw lines, crop in window, (NTH, dash dot in extension)
-17. horizontal scrollbar
 --------------------------------------------
 -- fixed bugs --
 1. cut win/loss is wrong(fixed by %)
 10. implement FixedLengthQueue.java, TestFixedLengthQueue.java(done)
 11. engulf need more testing(done)
 10. engulfing marker covered bars, change it to background
+17. horizontal scrollbar
 
 
 -------------------------------------------

@@ -10,7 +10,7 @@ import utils.WebUtil;
 public class TLiteJav implements Callable<String>{
 	
 	private static String encoding = "UTF-8";
-	private static String ROOT_PIC_DIR="D:/downloads/liteJav/pics";
+	private static String ROOT_PIC_DIR="D:/downloads/pics/liteJav";
 	
 	private String category;
 	private int pageNo;

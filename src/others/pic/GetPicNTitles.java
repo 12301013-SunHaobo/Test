@@ -9,19 +9,19 @@ import utils.BoundedExecutor;
 
 public class GetPicNTitles {
 
-	private static int censoredTotalPgNo = 11036;
-	private static int uncensoredTotalPgNo = 718;
+	private static int censoredTotalPgNo = 895;
+	private static int uncensoredTotalPgNo = 96;
 
 	public static void main(String[] args) throws Exception {
 		long b0 = System.currentTimeMillis();
 		
-		String category = "";//熟女, censored, uncensored <-------------------- change here
+		String category = "censor";//uncensor |censor <-------------------- change here
 		
 		//submit tasks for downloading mp3
 		BoundedExecutor be = new BoundedExecutor(10);
 		
-		for(int i=1;i<=172;i++){//1-72 <-------------------- change here
-			TLiteJav tpic = new TLiteJav(category, i);
+		for(int i=1;i<=censoredTotalPgNo;i++){//1-72 <-------------------- change here
+			TLikejav tpic = new TLikejav(category, i);
 			try {
 				be.submit(tpic);
 				System.out.println(category+", "+i+", submitted.");
