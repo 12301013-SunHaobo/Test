@@ -23,7 +23,7 @@ public class ConfigRangeContainer<T> {
         }
     }
 
-    private populateConfigs(Field f, List<T> configs){
+    private void populateConfigs(Field f, List<T> configs){
         
     }
     
@@ -84,8 +84,13 @@ public class ConfigRangeContainer<T> {
 
     public void setErrors(List<String> errors) {
         this.errors = errors;
-    }  
+    }
     
+    private void printErrors(List<String> errors) {
+        for(String error : errors){
+            System.out.println(error);
+        }
+    }    
     
     
     private static class ConfigField {
