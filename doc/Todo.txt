@@ -29,3 +29,9 @@
 -------------------------------------------
 --
 patternMATurnAround (good for big trend, bad for swing)
+
+--------------------------------------------
+-- new words tool --
+grab page source, find <p>xxx</p>, find sentences, find new words, 
+output.txt format:
+[word] sentence 
