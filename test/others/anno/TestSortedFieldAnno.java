@@ -15,14 +15,11 @@ public class TestSortedFieldAnno {
     }
     
 
-    //[numberOfCombinations][numberOfElementsInOneComb]
-    private static List<List<Object>> combs = new ArrayList<List<Object>>();
-    
     /**
      * 
      * @param combs  should initialize as new List<empty list> for the first set
      * @param newSet
-     * @return
+     * @return List< CombinationsList<elementObject>>
      */
     private static List<List<Object>> addNewSet(List<List<Object>> combs, List<Object> newSet){
         List<List<Object>> newCombs = new ArrayList<List<Object>>();
