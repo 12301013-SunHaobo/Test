@@ -16,15 +16,15 @@ public class TestSortedFieldAnno {
     
 
     /**
-     * 
      * @param combs  should initialize as new List<empty list> for the first set
      * @param newSet
      * @return List< CombinationsList<elementObject>>
      */
     private static List<List<Object>> addNewSet(List<List<Object>> combs, List<Object> newSet){
         List<List<Object>> newCombs = new ArrayList<List<Object>>();
-        for(Object obj : newSet){
-            for(List<Object> comb : combs){
+        //order of the nested loop affect order of output, but either way works.
+        for(List<Object> comb : combs){
+            for(Object obj : newSet){
                 List<Object> tmpList = new ArrayList<Object>(comb);
                 tmpList.add(obj);
                 newCombs.add(tmpList);
@@ -67,7 +67,14 @@ public class TestSortedFieldAnno {
         for(List<Object> combs : resultSet){
             System.out.println();
             for(Object element : combs){
-                System.out.print(element+",");
+                if(Double.class.equals(element.getClass())){
+                    System.out.print("[Double "+element+"],");
+                } else if (Integer.class.equals(element.getClass())) {
+                    System.out.print("[Integer "+element+"],");
+                } else {
+                    System.out.print("[Unknown "+element+"],");
+                }
+                
             }
         }
         
