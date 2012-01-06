@@ -65,4 +65,6 @@ public class AlgoSetting {
 		LongOnly, ShortOnly, Both
 	}
 	
+	
+	
 }
