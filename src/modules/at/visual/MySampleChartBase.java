@@ -354,9 +354,9 @@ public class MySampleChartBase extends ApplicationFrame {
 			indicator.addBar(bar);
 			double indicatorVal = Double.NaN;
 			switch (seriesType) {
-				case RsiUpper: indicatorVal = AlgoSetting.RSI_UPPER; break;
+				case RsiUpper: indicatorVal = AlgoSetting.rsiUpper; break;
 				case Rsi: indicatorVal = indicator.getRsi(); break;
-				case RsiLower: indicatorVal = AlgoSetting.RSI_LOWER; break;
+				case RsiLower: indicatorVal = AlgoSetting.rsiLower; break;
 				case BBUpper: indicatorVal = indicator.getBBUpper(); break;
 				case BBMiddle: indicatorVal = indicator.getBBMiddle(); break;
 				case BBLower: indicatorVal = indicator.getBBLower(); break;
@@ -364,8 +364,8 @@ public class MySampleChartBase extends ApplicationFrame {
 				case MASlow: indicatorVal =  indicator.getSMASlow(); break;
 				case StoK: indicatorVal = indicator.getStochasticK(); break;
 				case StoD: indicatorVal = indicator.getStochasticD(); break;
-				case StoUpper: indicatorVal = AlgoSetting.STOCHASTIC_UPPER; break;
-				case StoLower: indicatorVal = AlgoSetting.STOCHASTIC_LOWER; break;
+				case StoUpper: indicatorVal = AlgoSetting.stochasticUpper; break;
+				case StoLower: indicatorVal = AlgoSetting.stochasticLower; break;
 				default:break;
 			}
 			if(!Double.isNaN(indicatorVal)){

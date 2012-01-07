@@ -49,8 +49,8 @@ public class TestStrategyAuto {
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
 			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[i][0]);
 			List<List<Bar>> barLists = new ArrayList<List<Bar>>();
-			List<Bar> barList = TickToBarConverter.convert(tickList, AlgoSetting.BAR_TIME_PERIOD);
-			List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*AlgoSetting.BAR_TIME_PERIOD);
+			List<Bar> barList = TickToBarConverter.convert(tickList, AlgoSetting.barTimePeriod);
+			List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*AlgoSetting.barTimePeriod);
 			barLists.add(barList);
 			barLists.add(barList2);
 			
@@ -179,21 +179,21 @@ public class TestStrategyAuto {
 		
 		int pQty = position.getQty();
 	
-		if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.LongOnly)){
+		if(AlgoSetting.tradeDirection.equals(TradeDirection.LongOnly)){
 			if(pQty==0 && Decision.LongEntry.equals(decision)){
-				trade = new Trade(bar.getClose(), AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.LongEntry);
-				position.setPosition(pQty+1*AlgoSetting.TRADE_UNIT, bar.getClose());
+				trade = new Trade(bar.getClose(), AlgoSetting.tradeUnit, bar.getDate().getTime(), Trade.Type.LongEntry);
+				position.setPosition(pQty+1*AlgoSetting.tradeUnit, bar.getClose());
 			} else if(pQty>0 && Decision.LongExit.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*pQty*AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.LongExit);
+				trade = new Trade(bar.getClose(), -1*pQty*AlgoSetting.tradeUnit, bar.getDate().getTime(), Trade.Type.LongExit);
 				position.setPosition(0, bar.getClose());
 			}
-		}else if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.ShortOnly)){
+		}else if(AlgoSetting.tradeDirection.equals(TradeDirection.ShortOnly)){
 			if(pQty==0 && Decision.ShortEntry.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.ShortEntry);
+				trade = new Trade(bar.getClose(), -1*AlgoSetting.tradeUnit, bar.getDate().getTime(), Trade.Type.ShortEntry);
 			} else if(pQty<0 && Decision.ShortExit.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*pQty*AlgoSetting.TRADE_UNIT, bar.getDate().getTime(), Trade.Type.ShortExit);
+				trade = new Trade(bar.getClose(), -1*pQty*AlgoSetting.tradeUnit, bar.getDate().getTime(), Trade.Type.ShortExit);
 			}
-		}else if(AlgoSetting.TRADE_DIRECTION.equals(TradeDirection.Both)){
+		}else if(AlgoSetting.tradeDirection.equals(TradeDirection.Both)){
 			
 		}
 		

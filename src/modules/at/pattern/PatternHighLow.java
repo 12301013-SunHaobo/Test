@@ -13,7 +13,7 @@ import modules.at.model.visual.VMarker;
 
 public class PatternHighLow extends AbstractPattern {
 
-	private int highLowListLength = AlgoSetting.HIGH_LOW_LIST_LENGTH;
+	private int highLowListLength = AlgoSetting.highLowListLength;
 	private LinkedList<HighLowVertex> highList = new LinkedList<HighLowVertex>();
 	private LinkedList<HighLowVertex> lowList = new LinkedList<HighLowVertex>();
 	
@@ -26,7 +26,7 @@ public class PatternHighLow extends AbstractPattern {
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.PATTERN_WEIGHT_HL;
+		return AlgoSetting.patternWeightHL;
 	}
 
 	@Override

@@ -34,9 +34,9 @@ public class PatternRsi extends AbstractPattern {
 	public Trend getTrend() {
 		if(!Double.isNaN(this.curRsi)){
 			
-			if(this.curRsi>AlgoSetting.RSI_UPPER){
+			if(this.curRsi>AlgoSetting.rsiUpper){
 				return Pattern.Trend.Down;
-			} else if(this.curRsi<AlgoSetting.RSI_LOWER){
+			} else if(this.curRsi<AlgoSetting.rsiLower){
 				return Pattern.Trend.Up;
 			}
 		}
@@ -45,7 +45,7 @@ public class PatternRsi extends AbstractPattern {
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.PATTERN_WEIGHT_RSI;
+		return AlgoSetting.patternWeightRSI;
 	}
 
 	@Override

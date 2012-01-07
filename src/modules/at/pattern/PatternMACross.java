@@ -72,7 +72,7 @@ public class PatternMACross extends AbstractPattern{
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.PATTERN_WEIGHT_MA;
+		return AlgoSetting.patternWeightMA;
 	}
 
 	@Override

@@ -30,12 +30,12 @@ public class Position {
 			if(Double.isNaN(stopLossPrice)){
 				this.stopLossPrice = 0;
 			}
-			this.stopLossPrice = Math.max(curPrice*(1-AlgoSetting.CUT_LOSS), this.stopLossPrice);
+			this.stopLossPrice = Math.max(curPrice*(1-AlgoSetting.cutLoss), this.stopLossPrice);
 		} else if(this.qty<0){//keep decreasing for short
 			if(Double.isNaN(stopLossPrice)){
 				this.stopLossPrice = Double.MAX_VALUE;
 			}
-			this.stopLossPrice = Math.min(curPrice*(1+AlgoSetting.CUT_LOSS), this.stopLossPrice);
+			this.stopLossPrice = Math.min(curPrice*(1+AlgoSetting.cutLoss), this.stopLossPrice);
 		} else {//qty==0
 			this.stopLossPrice = Double.NaN;
 		}

@@ -280,13 +280,13 @@ public class MySampleChartData {
 			double indicatorVal = Double.NaN;
 			switch (seriesType) {
 			case RsiUpper:
-				indicatorVal = AlgoSetting.RSI_UPPER;
+				indicatorVal = AlgoSetting.rsiUpper;
 				break;
 			case Rsi:
 				indicatorVal = indicator.getRsi();
 				break;
 			case RsiLower:
-				indicatorVal = AlgoSetting.RSI_LOWER;
+				indicatorVal = AlgoSetting.rsiLower;
 				break;
 			case BBUpper:
 				indicatorVal = indicator.getBBUpper();
@@ -310,10 +310,10 @@ public class MySampleChartData {
 				indicatorVal = indicator.getStochasticD();
 				break;
 			case StoUpper:
-				indicatorVal = AlgoSetting.STOCHASTIC_UPPER;
+				indicatorVal = AlgoSetting.stochasticUpper;
 				break;
 			case StoLower:
-				indicatorVal = AlgoSetting.STOCHASTIC_LOWER;
+				indicatorVal = AlgoSetting.stochasticLower;
 				break;
 			default:
 				break;

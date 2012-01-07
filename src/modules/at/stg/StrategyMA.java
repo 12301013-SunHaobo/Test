@@ -155,11 +155,11 @@ public class StrategyMA implements Strategy {
     	
     	public IndicatorsMA() {
     		super();
-    		this.ds4MAHL = new DescriptiveStatistics(AlgoSetting.MA_HL_LENGTH);
-    		this.ds4MAHigh2 = new DescriptiveStatistics(AlgoSetting.MA_HIGH2_LENGTH);
-    		this.ds4MAHigh = new DescriptiveStatistics(AlgoSetting.MA_HIGH_LENGTH);
-    		this.ds4MALow = new DescriptiveStatistics(AlgoSetting.MA_LOW_LENGTH);
-    		this.ds4MALow2 = new DescriptiveStatistics(AlgoSetting.MA_LOW2_LENGTH);
+    		this.ds4MAHL = new DescriptiveStatistics(AlgoSetting.maHLLength);
+    		this.ds4MAHigh2 = new DescriptiveStatistics(AlgoSetting.maHigh2Length);
+    		this.ds4MAHigh = new DescriptiveStatistics(AlgoSetting.maHighLength);
+    		this.ds4MALow = new DescriptiveStatistics(AlgoSetting.maLowLength);
+    		this.ds4MALow2 = new DescriptiveStatistics(AlgoSetting.maLow2Length);
     	}
     	
     	public void addBar(Bar bar){
@@ -179,34 +179,34 @@ public class StrategyMA implements Strategy {
     	}
     	
     	public double getSMAHigh2(){
-    		if(this.barAdded<AlgoSetting.MA_HIGH2_LENGTH){
+    		if(this.barAdded<AlgoSetting.maHigh2Length){
     			return Double.NaN;
     		}
-    		return ds4MAHigh2.getSum()/AlgoSetting.MA_HIGH2_LENGTH;
+    		return ds4MAHigh2.getSum()/AlgoSetting.maHigh2Length;
     	}
     	public double getSMAHigh(){
-    		if(this.barAdded<AlgoSetting.MA_HIGH_LENGTH){
+    		if(this.barAdded<AlgoSetting.maHighLength){
     			return Double.NaN;
     		}
-    		return ds4MAHigh.getSum()/AlgoSetting.MA_HIGH_LENGTH;
+    		return ds4MAHigh.getSum()/AlgoSetting.maHighLength;
     	}
     	public double getSMAHL(){
-    		if(this.barAdded<AlgoSetting.MA_HL_LENGTH){
+    		if(this.barAdded<AlgoSetting.maHLLength){
     			return Double.NaN;
     		}
-    		return ds4MAHL.getSum()/AlgoSetting.MA_HL_LENGTH;
+    		return ds4MAHL.getSum()/AlgoSetting.maHLLength;
     	}
     	public double getSMALow(){
-    		if(this.barAdded<AlgoSetting.MA_LOW_LENGTH){
+    		if(this.barAdded<AlgoSetting.maLowLength){
     			return Double.NaN;
     		}
-    		return ds4MALow.getSum()/AlgoSetting.MA_LOW_LENGTH;
+    		return ds4MALow.getSum()/AlgoSetting.maLowLength;
     	}
     	public double getSMALow2(){
-    		if(this.barAdded<AlgoSetting.MA_LOW2_LENGTH){
+    		if(this.barAdded<AlgoSetting.maLow2Length){
     			return Double.NaN;
     		}
-    		return ds4MALow2.getSum()/AlgoSetting.MA_LOW2_LENGTH;
+    		return ds4MALow2.getSum()/AlgoSetting.maLow2Length;
     	}
     	public double getSMALow2Diff(){
     		double low = getSMALow();
@@ -274,11 +274,11 @@ public class StrategyMA implements Strategy {
     	public List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlotBarVSeriesList(barList));
-    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.MA_HIGH2_LENGTH+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.MA_HIGH_LENGTH+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
-    		vseriesList.add(new VSeries("MAHL("+AlgoSetting.MA_HL_LENGTH+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
-    		vseriesList.add(new VSeries("MALow("+AlgoSetting.MA_LOW_LENGTH+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
-    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.MA_LOW2_LENGTH+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.maHigh2Length+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.maHighLength+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MAHL("+AlgoSetting.maHLLength+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
+    		vseriesList.add(new VSeries("MALow("+AlgoSetting.maLowLength+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.maLow2Length+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
     		return vseriesList;
     	}
     	//Plots

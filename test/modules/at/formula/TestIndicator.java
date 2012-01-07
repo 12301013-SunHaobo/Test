@@ -25,8 +25,8 @@ public class TestIndicator {
         	//System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(indicator.getVolatilityStdDev()));
         	System.out.println(
         			Formatter.DISPLAY_DEFAULT_DATE_FORMAT.format(bar.getDate())+","+bar.getClose()+","+
-        			"SMA("+AlgoSetting.MA_FAST_LENGTH+")="+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast())+","+
-        			"BB("+AlgoSetting.BB_LENGTH+")=("+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast())+","+
+        			"SMA("+AlgoSetting.maFastLength+")="+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast())+","+
+        			"BB("+AlgoSetting.bbLength+")=("+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast())+","+
         					Formatter.DECIMAL_FORMAT.format(indicator.getBBLower())+","+
         					Formatter.DECIMAL_FORMAT.format(indicator.getBBUpper())+")"
         			
