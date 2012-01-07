@@ -2,65 +2,65 @@ package modules.at.model;
 
 public class AlgoSetting {
 
-	public int barTimePeriod = 1 * 60 * 1000 ; //milliseconds
+	private int barTimePeriod = 1 * 60 * 1000 ; //milliseconds
 	
     //trade unit, how many shares in one trade unit
-    public int tradeUnit = 1;
+    private int tradeUnit = 1;
 
 	//MA ------------------------------------------------------
-	public int maFastLength = 5;//default=5
-	public int maSlowLength = 14;//default=14
-	public int ma3Length = 25; 
-	public int maHLLength = 50;
-	public int maHigh2Length = maHLLength;
-	public int maHighLength = 5;//5
-	public int maLowLength = 5; //5
-	public int maLow2Length = maHLLength;//5
+	private int maFastLength = 5;//default=5
+	private int maSlowLength = 14;//default=14
+	private int ma3Length = 25; 
+	private int maHLLength = 50;
+	private int maHigh2Length = maHLLength;
+	private int maHighLength = 5;//5
+	private int maLowLength = 5; //5
+	private int maLow2Length = maHLLength;//5
 	
 	//BB ------------------------------------------------------
-	public int bbLength = 14;
+	private int bbLength = 14;
 	
 	//RSI ------------------------------------------------------
-	public int rsiLength = 14;
-	public double rsiUpper = 70;
-	public double rsiLower = 30;
+	private int rsiLength = 14;
+	private double rsiUpper = 70;
+	private double rsiLower = 30;
 	
 	//Stochastic ------------------------------------------------------
-	public int stochasticKLength = 10;
-	public int stochastickDLength = 3;
-	public double stochasticUpper = 80;
-	public double stochasticLower = 20;
+	private int stochasticKLength = 10;
+	private int stochastickDLength = 3;
+	private double stochasticUpper = 80;
+	private double stochasticLower = 20;
 	
 	//Macd ------------------------------------------------------
-	public int macdMAFastLength = 50; //12
-	public int macdMASlowLength = 75; //26
-	public int macdLength = 9; //9
+	private int macdMAFastLength = 50; //12
+	private int macdMASlowLength = 75; //26
+	private int macdLength = 9; //9
 	
 	//my invented ------------------------------------------------------
-	public int maUpperShadowLength = 3;
+	private int maUpperShadowLength = 3;
 	
 	//Cut loss & lock profit
-	//public double CUT_WIN = 0.001; //increase percentage % to cut win
-	public double cutLoss = 0.001; //drop percentage % to cut loss
+	//private double CUT_WIN = 0.001; //increase percentage % to cut win
+	private double cutLoss = 0.001; //drop percentage % to cut loss
 	
-	//public double PROFIT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss from previous profit  	
+	//private double PROFIT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss from previous profit  	
 	
 	//Pattern weight
-	public int patternWeightMA = 1;
-	public int patternWeightRSI = 1;
-	public int patternWeightSTO = 1;
-	public int patternWeightHL = 1;
+	private int patternWeightMA = 1;
+	private int patternWeightRSI = 1;
+	private int patternWeightSTO = 1;
+	private int patternWeightHL = 1;
 	
 	//PatternHighLow
-	public int highLowListLength =2000;//2 is the min useful size
-	public boolean alternativeHighLowPoints = true; //high low alternatively
+	private int highLowListLength =2000;//2 is the min useful size
+	private boolean alternativeHighLowPoints = true; //high low alternatively
 	
 	//PatternEngulf
-	public int engulfListLength =500;//saves all engulfing bars
+	private int engulfListLength =500;//saves all engulfing bars
 	
 	
 	//trade direction
-	public TradeDirection tradeDirection = TradeDirection.LongOnly;
+	private TradeDirection tradeDirection = TradeDirection.LongOnly;
 	public static enum TradeDirection {
 		LongOnly, ShortOnly, Both
 	}
