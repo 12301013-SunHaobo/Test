@@ -38,11 +38,11 @@ public class TestStrategyAuto {
 	public static void main(String[] args) throws Exception {
 		TestStrategyAuto tsa = new TestStrategyAuto();
 		long b0 = System.currentTimeMillis();
-		//AlgoSetting as = new AlgoSetting();
+		//loop AlgoSettings
 		ConfigRangeContainer<AlgoSetting> crc = new ConfigRangeContainer<AlgoSetting>(AlgoSetting.class);
 		List<AlgoSetting> asList = crc.getConfigList();
 		for(AlgoSetting as : asList){
-			tsa.testByDates(as);
+			tsa.testByDates(as); //testByDates
 		}
 		long e0 = System.currentTimeMillis();
 		System.out.println("total time used: "+ (e0-b0));
@@ -51,8 +51,8 @@ public class TestStrategyAuto {
 	private void testByDates(AlgoSetting as) throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
 		String[][] dateTimeArr = 
-				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		        initListedDate(); //listed dates only
+				initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        //initListedDate(); //listed dates only
 		//get barList
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";

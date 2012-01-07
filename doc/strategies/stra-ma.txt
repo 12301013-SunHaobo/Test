@@ -1,9 +1,14 @@
 LongEntry:
-    1. turning up
-    2. 3rd short swing turning up,
-    3. use both 5min Bar chart ma and 1 min bar chart ma(todo:) 
-    4. MALow5,25 cross for long entry
-	5. 蓝线以下有一定距离，然后进入蓝线。
+    1. 若干bar已经在Low2BB下，从BB下向上交叉
+    2. 
+    3.  
+    4. 
+	5. 
+
+LongExit:
+	1. %止损
+	2. n个bar后
+	3. High2BB向下交叉
 
 ShortEntry:
     1. 

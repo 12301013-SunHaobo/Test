@@ -6,6 +6,10 @@ public class AlgoSetting {
 	
 	private int barTimePeriod = 1 * 60 * 1000 ; //milliseconds
 	
+	//for testing
+	//@DoubleRange(start=1.0, end=2.0, intervals=10)
+	private double tmp = 2;
+	
     //trade unit, how many shares in one trade unit
     private int tradeUnit = 1;
 
@@ -13,15 +17,19 @@ public class AlgoSetting {
 	private int maFastLength = 5;//default=5
 	private int maSlowLength = 14;//default=14
 	private int ma3Length = 25; 
-	@IntRange(start=45, end=55, intervals=5)
+	//@IntRange(start=45, end=55, intervals=5)
 	private int maHLLength = 50;
 	//private int maHigh2Length = -1;//-1 is dummy, getter uses maHLLength
+	//@IntRange(start=5, end=15, intervals=3)
 	private int maHighLength = 5;//5
 	private int maLowLength = 5; //5
-	//private int maLow2Length = -1;//-1 is dummy, getter uses maHLLength
+	//@DoubleRange(start=0.1, end=3.0, intervals=30)
+	private double maHigh2BBTimes = 1.6;
+	//@DoubleRange(start=0.1, end=3.0, intervals=30)
+	private double maLow2BBTimes = 1.0;
 	
 	//BB ------------------------------------------------------
-	private int bbLength = 14;
+	private int bbLength = 50;
 	
 	//RSI ------------------------------------------------------
 	private int rsiLength = 14;
@@ -269,6 +277,24 @@ public class AlgoSetting {
 	}
 	public void setTradeDirection(TradeDirection tradeDirection) {
 		this.tradeDirection = tradeDirection;
+	}
+	public double getTmp() {
+		return tmp;
+	}
+	public void setTmp(double tmp) {
+		this.tmp = tmp;
+	}
+	public double getMaHigh2BBTimes() {
+		return maHigh2BBTimes;
+	}
+	public void setMaHigh2BBTimes(double maHigh2BBTimes) {
+		this.maHigh2BBTimes = maHigh2BBTimes;
+	}
+	public double getMaLow2BBTimes() {
+		return maLow2BBTimes;
+	}
+	public void setMaLow2BBTimes(double maLow2BBTimes) {
+		this.maLow2BBTimes = maLow2BBTimes;
 	}
 	@Override
 	public String toString() {

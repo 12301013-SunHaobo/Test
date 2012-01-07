@@ -265,9 +265,9 @@ public class Indicators extends Observable {
 	//PlotBar
 	public List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
 		List<VSeries> vseriesList = new ArrayList<VSeries>();
-		vseriesList.add(new VSeries("MAFast("+this.as.getMaFastLength()+")",getVXYList(SeriesType.MAFast, barList), null, java.awt.Color.magenta));
-		vseriesList.add(new VSeries("MASlow("+this.as.getMaSlowLength()+")", getVXYList(SeriesType.MASlow, barList), null, java.awt.Color.cyan));
-		vseriesList.add(new VSeries("MA3Low("+this.as.getMa3Length()+")", getVXYList(SeriesType.MA3, barList), null, java.awt.Color.blue));
+//		vseriesList.add(new VSeries("MAFast("+this.as.getMaFastLength()+")",getVXYList(SeriesType.MAFast, barList), null, java.awt.Color.magenta));
+//		vseriesList.add(new VSeries("MASlow("+this.as.getMaSlowLength()+")", getVXYList(SeriesType.MASlow, barList), null, java.awt.Color.cyan));
+//		vseriesList.add(new VSeries("MA3Low("+this.as.getMa3Length()+")", getVXYList(SeriesType.MA3, barList), null, java.awt.Color.blue));
 		
 		vseriesList.add(new VSeries("BBUpper",getVXYList(SeriesType.BBUpper, barList), null, java.awt.Color.gray));
 		vseriesList.add(new VSeries("BB("+this.as.getBbLength()+")",getVXYList(SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
