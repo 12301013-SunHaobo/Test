@@ -1,7 +1,9 @@
 package modules.at.model;
 
 public class AlgoSetting {
-
+	private static int idSeq = 0; //sequence number to count how many bars are created
+	private int id;
+	
 	private int barTimePeriod = 1 * 60 * 1000 ; //milliseconds
 	
     //trade unit, how many shares in one trade unit
@@ -11,11 +13,12 @@ public class AlgoSetting {
 	private int maFastLength = 5;//default=5
 	private int maSlowLength = 14;//default=14
 	private int ma3Length = 25; 
+	@IntRange(start=45, end=55, intervals=5)
 	private int maHLLength = 50;
-	private int maHigh2Length = maHLLength;
+	//private int maHigh2Length = -1;//-1 is dummy, getter uses maHLLength
 	private int maHighLength = 5;//5
 	private int maLowLength = 5; //5
-	private int maLow2Length = maHLLength;//5
+	//private int maLow2Length = -1;//-1 is dummy, getter uses maHLLength
 	
 	//BB ------------------------------------------------------
 	private int bbLength = 14;
@@ -67,9 +70,20 @@ public class AlgoSetting {
 	
 	
 	
+	public AlgoSetting() {
+		super();
+		this.id = ++idSeq;
+	}
 	//setters & getters
+	
 	public int getBarTimePeriod() {
 		return barTimePeriod;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setBarTimePeriod(int barTimePeriod) {
 		this.barTimePeriod = barTimePeriod;
@@ -105,11 +119,12 @@ public class AlgoSetting {
 		this.maHLLength = maHLLength;
 	}
 	public int getMaHigh2Length() {
-		return maHigh2Length;
+		//return maHigh2Length;
+		return maHLLength;
 	}
-	public void setMaHigh2Length(int maHigh2Length) {
-		this.maHigh2Length = maHigh2Length;
-	}
+//	public void setMaHigh2Length(int maHigh2Length) {
+//		this.maHigh2Length = maHigh2Length;
+//	}
 	public int getMaHighLength() {
 		return maHighLength;
 	}
@@ -123,11 +138,12 @@ public class AlgoSetting {
 		this.maLowLength = maLowLength;
 	}
 	public int getMaLow2Length() {
-		return maLow2Length;
+		//return maLow2Length;
+		return maHLLength;
 	}
-	public void setMaLow2Length(int maLow2Length) {
-		this.maLow2Length = maLow2Length;
-	}
+//	public void setMaLow2Length(int maLow2Length) {
+//		this.maLow2Length = maLow2Length;
+//	}
 	public int getBbLength() {
 		return bbLength;
 	}
@@ -253,6 +269,20 @@ public class AlgoSetting {
 	}
 	public void setTradeDirection(TradeDirection tradeDirection) {
 		this.tradeDirection = tradeDirection;
+	}
+	@Override
+	public String toString() {
+		return "AlgoSetting [id="+id+", barTimePeriod=" + barTimePeriod + ", tradeUnit=" + tradeUnit + ", maFastLength=" + maFastLength
+				+ ", maSlowLength=" + maSlowLength + ", ma3Length=" + ma3Length + ", maHLLength=" + maHLLength + ", maHigh2Length="
+				+ this.getMaHigh2Length() + ", maHighLength=" + maHighLength + ", maLowLength=" + maLowLength + ", maLow2Length=" + this.getMaLow2Length()
+				+ ", bbLength=" + bbLength + ", rsiLength=" + rsiLength + ", rsiUpper=" + rsiUpper + ", rsiLower=" + rsiLower
+				+ ", stochasticKLength=" + stochasticKLength + ", stochastickDLength=" + stochastickDLength + ", stochasticUpper="
+				+ stochasticUpper + ", stochasticLower=" + stochasticLower + ", macdMAFastLength=" + macdMAFastLength
+				+ ", macdMASlowLength=" + macdMASlowLength + ", macdLength=" + macdLength + ", maUpperShadowLength=" + maUpperShadowLength
+				+ ", cutLoss=" + cutLoss + ", patternWeightMA=" + patternWeightMA + ", patternWeightRSI=" + patternWeightRSI
+				+ ", patternWeightSTO=" + patternWeightSTO + ", patternWeightHL=" + patternWeightHL + ", highLowListLength="
+				+ highLowListLength + ", alternativeHighLowPoints=" + alternativeHighLowPoints + ", engulfListLength=" + engulfListLength
+				+ ", tradeDirection=" + tradeDirection + "]";
 	}
 	
 

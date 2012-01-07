@@ -10,6 +10,7 @@ import modules.at.feed.history.HistoryLoader;
 import modules.at.model.AlgoSetting;
 import modules.at.model.AlgoSetting.TradeDirection;
 import modules.at.model.Bar;
+import modules.at.model.ConfigRangeContainer;
 import modules.at.model.Position;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
@@ -32,28 +33,33 @@ public class TestStrategyAuto {
 	
 	private double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	private AlgoSetting as = new AlgoSetting();
+	//private AlgoSetting as = new AlgoSetting();
 	
 	public static void main(String[] args) throws Exception {
 		TestStrategyAuto tsa = new TestStrategyAuto();
 		long b0 = System.currentTimeMillis();
-		tsa.testByDates();
+		//AlgoSetting as = new AlgoSetting();
+		ConfigRangeContainer<AlgoSetting> crc = new ConfigRangeContainer<AlgoSetting>(AlgoSetting.class);
+		List<AlgoSetting> asList = crc.getConfigList();
+		for(AlgoSetting as : asList){
+			tsa.testByDates(as);
+		}
 		long e0 = System.currentTimeMillis();
 		System.out.println("total time used: "+ (e0-b0));
 	}
 
-	private void testByDates() throws Exception{
+	private void testByDates(AlgoSetting as) throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
 		String[][] dateTimeArr = 
-				initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		        //initListedDate(); //listed dates only
+				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        initListedDate(); //listed dates only
 		//get barList
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
 			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[i][0]);
 			List<List<Bar>> barLists = new ArrayList<List<Bar>>();
-			List<Bar> barList = TickToBarConverter.convert(tickList, this.as.getBarTimePeriod());
-			List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*this.as.getBarTimePeriod());
+			List<Bar> barList = TickToBarConverter.convert(tickList, as.getBarTimePeriod());
+			List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*as.getBarTimePeriod());
 			barLists.add(barList);
 			barLists.add(barList2);
 			
@@ -62,11 +68,11 @@ public class TestStrategyAuto {
 			Strategy strategy =
 				//new StrategyMacd();
 				//new StrategyReversal();
-				new StrategyMA(this.as);
+				new StrategyMA(as);
 			    //new MACrossStrategy();
 			
 			//get tradeList
-			List<Trade> tradeList = auto(dateTimeArr[i][0], barList, strategy);
+			List<Trade> tradeList = auto(dateTimeArr[i][0], barList, strategy, as);
 			System.out.print(stockCode + ":" + dateTimeArr[i][0] + "-" + dateTimeArr[i][1]+", ["
 					+ Formatter.DECIMAL_FORMAT.format(((modules.at.stg.StrategyMA.IndicatorsMA)strategy.getIndicators()).minSMALow2Diff)+", "
 					+ Formatter.DECIMAL_FORMAT.format(((modules.at.stg.StrategyMA.IndicatorsMA)strategy.getIndicators()).maxSMALow2Diff)+"]"
@@ -81,7 +87,7 @@ public class TestStrategyAuto {
 			boolean saveToFile = true;//save to file | display
 		    ChartBase cb = new ChartBase(vchart, !saveToFile && dateTimeArr.length==1);
 		    if(saveToFile){
-		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+i+"_"+dateTimeArr[i][0]+".png"; 
+		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+as.getId()+"_"+i+"_"+dateTimeArr[i][0]+".png"; 
 		    	cb.saveToFile(fileName);
 		    	System.out.println(fileName+" is created.");
 		    }
@@ -91,12 +97,12 @@ public class TestStrategyAuto {
 	
 
 	
-	private List<Trade> auto(String dateStr, List<Bar> barList, Strategy strategy) throws Exception {
+	private List<Trade> auto(String dateStr, List<Bar> barList, Strategy strategy, AlgoSetting as) throws Exception {
 
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {
 			//System.out.println("TestAuto:time="+Formatter.DEFAULT_DATETIME_FORMAT.format(bar.getDate())+", price="+Formatter.DECIMAL_FORMAT.format(bar.getClose()));
-			Trade trade = decide(bar, dateStr, strategy);
+			Trade trade = decide(bar, dateStr, strategy, as);
 			if(trade != null){
 				tradeList.add(trade);
 			}
@@ -117,7 +123,7 @@ public class TestStrategyAuto {
 	 * @return
 	 * @throws Exception
 	 */
-	private Trade decide(Bar bar, String dateStr, Strategy strategy) throws Exception{
+	private Trade decide(Bar bar, String dateStr, Strategy strategy, AlgoSetting as) throws Exception{
 		strategy.update(bar);//update strategy
 		double price = bar.getClose();
 		long time = bar.getDate().getTime();
@@ -126,7 +132,7 @@ public class TestStrategyAuto {
 			//System.out.println();
 		}
 		
-		Position position = Position.getInstance(this.as);
+		Position position = Position.getInstance(as);
 		int pQty = position.getQty();
 		double stopPrice = position.getStopLossPrice();
 //		System.out.println(Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time))+", stopPrice="+Formatter.DECIMAL_FORMAT4.format(stopPrice));
@@ -153,7 +159,7 @@ public class TestStrategyAuto {
 				}
 
 				Strategy.Decision decision = strategy.getDecision();
-				trade = processDecision(position, decision, bar);
+				trade = processDecision(position, decision, bar, as);
 				break;
 			case WrapUp :
 				if(pQty != 0){
@@ -177,26 +183,26 @@ public class TestStrategyAuto {
 	 * return null means don't do anything
 	 * 
 	 */
-	private Trade processDecision(Position position, Strategy.Decision decision, Bar bar){
+	private Trade processDecision(Position position, Strategy.Decision decision, Bar bar, AlgoSetting as){
 		Trade trade = null;
 		
 		int pQty = position.getQty();
 	
-		if(this.as.getTradeDirection().equals(TradeDirection.LongOnly)){
+		if(as.getTradeDirection().equals(TradeDirection.LongOnly)){
 			if(pQty==0 && Decision.LongEntry.equals(decision)){
-				trade = new Trade(bar.getClose(), this.as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.LongEntry);
-				position.setPosition(pQty + 1*this.as.getTradeUnit(), bar.getClose());
+				trade = new Trade(bar.getClose(), as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.LongEntry);
+				position.setPosition(pQty + 1*as.getTradeUnit(), bar.getClose());
 			} else if(pQty>0 && Decision.LongExit.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*pQty*this.as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.LongExit);
+				trade = new Trade(bar.getClose(), -1*pQty*as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.LongExit);
 				position.setPosition(0, bar.getClose());
 			}
-		}else if(this.as.getTradeDirection().equals(TradeDirection.ShortOnly)){
+		}else if(as.getTradeDirection().equals(TradeDirection.ShortOnly)){
 			if(pQty==0 && Decision.ShortEntry.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*this.as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.ShortEntry);
+				trade = new Trade(bar.getClose(), -1*as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.ShortEntry);
 			} else if(pQty<0 && Decision.ShortExit.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*pQty*this.as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.ShortExit);
+				trade = new Trade(bar.getClose(), -1*pQty*as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.ShortExit);
 			}
-		}else if(this.as.getTradeDirection().equals(TradeDirection.Both)){
+		}else if(as.getTradeDirection().equals(TradeDirection.Both)){
 			
 		}
 		

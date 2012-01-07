@@ -1,4 +1,4 @@
-package others.anno;
+package modules.at.model;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -9,6 +9,15 @@ import modules.at.model.DoubleRange;
 import modules.at.model.IntRange;
 import utils.Formatter;
 
+/**
+ * 
+ * Pass in class T, this container will parse class and populate all combinations of {@link DoubleRange IntRange} 
+ * 
+ * fields : contains all fields with range annotation
+ * configList : contains all range combinations, if no ranges set, has only single instance with default setting 
+ *
+ * @param <T>
+ */
 public class ConfigRangeContainer<T> {
 
     private boolean valid = false;
@@ -35,12 +44,17 @@ public class ConfigRangeContainer<T> {
         }
         
     }
-    
+    /**
+     * fields : contains all fields with range annotation
+     * configList : contains all range combinations, if no ranges set, has only single instance with default setting 
+     * @param clazz
+     * @throws Exception
+     */
     private void populateFieldsAndConfigInstances(Class<T> clazz) throws Exception{
         //create initial empty combinations
         List<List<Number>> combSet = new ArrayList<List<Number>>();
         combSet.add(new ArrayList<Number>());
-        Field[] field = clazz.getFields();
+        Field[] field = clazz.getDeclaredFields();
         for(int i=0;i<field.length;i++){
             Field f = field[i];
             IntRange intRange = f.getAnnotation(IntRange.class);
@@ -53,10 +67,13 @@ public class ConfigRangeContainer<T> {
         }
         //populate config instances
         for(List<Number> comb : combSet) {
-            T c = clazz.newInstance();
+            T c = clazz.newInstance(); //loaded with default settings
             for(int i=0; i<fields.size();i++){
                 Field f = fields.get(i);
                 Number n = comb.get(i);
+                if(!f.isAccessible()){
+                	f.setAccessible(true);
+                }
                 f.set(c, n);
             }
             configList.add(c);
@@ -93,12 +110,13 @@ public class ConfigRangeContainer<T> {
                 int intervals = doubleRange.intervals();
                 int increment = (end - start)/intervals; //int, so modulus
                 
-                for(int d = start; d<=end; d+= increment){
+                int d;
+                for(d = start; d<=end; d+= increment){
                     List<Number> tmpList = new ArrayList<Number>(comb);
                     tmpList.add(d);
                     newCombs.add(tmpList);
-                } 
-                if((start+intervals*increment)<end) {
+                }
+                if((d-increment)<end) {
                     List<Number> tmpList = new ArrayList<Number>(comb);
                     tmpList.add(end);
                     newCombs.add(tmpList);
@@ -107,15 +125,15 @@ public class ConfigRangeContainer<T> {
         }
         return newCombs;
     }
-    
-    
-    
-    
-    
-    
-    private List<String> validateConfig(Class<T> testClass){
+
+    /**
+     * range setting validation
+     * @param clazz
+     * @return
+     */
+    private List<String> validateConfig(Class<T> clazz){
         List<String> errorList = new ArrayList<String>();
-        Field[] field = testClass.getFields();
+        Field[] field = clazz.getFields();
         for(int i=0;i<field.length;i++){
             Field f = field[i];
             String name = f.getName();
@@ -166,7 +184,19 @@ public class ConfigRangeContainer<T> {
 
 
 
-    public boolean isValid() {
+    public List<Field> getFields() {
+		return fields;
+	}
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
+	}
+	public List<T> getConfigList() {
+		return configList;
+	}
+	public void setConfigList(List<T> configList) {
+		this.configList = configList;
+	}
+	public boolean isValid() {
         return valid;
     }
 
@@ -180,7 +210,7 @@ public class ConfigRangeContainer<T> {
         }
     }
     
-    public void printConfigs() {
+    public void printConfigsByFields() {
         try {
             System.out.println();
             for(T t : configList){
@@ -200,7 +230,12 @@ public class ConfigRangeContainer<T> {
             e.printStackTrace();
         }
     }
-
+    
+    public void printConfigsByToString() {
+    	for(T t : configList){
+    		System.out.println(t.toString());
+    	}
+    }
 }
 
 
