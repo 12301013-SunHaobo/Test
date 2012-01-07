@@ -17,6 +17,7 @@ import java.util.Set;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
+import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.Point;
 import modules.at.model.Point.Type;
@@ -24,7 +25,6 @@ import modules.at.model.Tick;
 import modules.at.pattern.highlow.HighLowUtil;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.axis.DateAxis;
@@ -58,10 +58,14 @@ public class TestHighLowBarChart extends ApplicationFrame {
 	
 	private List<Bar> barList = null;
 	
+	private AlgoSetting as;
+	
 	public TestHighLowBarChart(String s) {
 		super(s);
 		//init barList
 		this.barList = getBarList();
+		this.as = new AlgoSetting();
+		
 		
 		JFreeChart jfreechart = createChart();
 		ChartPanel chartpanel = new ChartPanel(jfreechart);
@@ -212,7 +216,7 @@ public class TestHighLowBarChart extends ApplicationFrame {
 		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
 		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
 		XYSeries bbLowerSeries = new XYSeries("BB Lower Line");
-		Indicators indicator = new Indicators();
+		Indicators indicator = new Indicators(this.as);
 
 		for(Bar bar : this.barList){
 			indicator.addBar(bar);
@@ -241,7 +245,7 @@ public class TestHighLowBarChart extends ApplicationFrame {
 		XYSeries rsiEmaUpperSeries = new XYSeries("RSI_EMA_UPPER");
 		XYSeries rsiEmaSeries = new XYSeries("RSI_EMA");
 		XYSeries rsiEmaLowerSeries = new XYSeries("RSI_EMA_LOWER");
-		Indicators indicator = new Indicators();
+		Indicators indicator = new Indicators(this.as);
 
 		for(Bar bar : this.barList){
 			indicator.addBar(bar);

@@ -5,11 +5,17 @@ import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.Indicators;
+import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
 
 public class PatternS1 extends AbstractPattern {
+
+	public PatternS1(AlgoSetting as) {
+		super(as);
+	}
+
 
 	private List<VMarker> patternMarkerList = new ArrayList<VMarker>();
 

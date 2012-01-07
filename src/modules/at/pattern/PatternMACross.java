@@ -27,8 +27,8 @@ public class PatternMACross extends AbstractPattern{
     private List<Double> maFastList;
     private List<Double> maSlowList;
     
-    public PatternMACross() {
-        super();
+    public PatternMACross(AlgoSetting as) {
+        super(as);
         this.preDiff = Double.NaN;
         this.curDiff = Double.NaN;
         this.trend = Trend.NA;
@@ -72,7 +72,7 @@ public class PatternMACross extends AbstractPattern{
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.patternWeightMA;
+		return this.as.getPatternWeightMA();
 	}
 
 	@Override

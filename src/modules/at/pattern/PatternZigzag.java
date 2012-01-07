@@ -25,8 +25,8 @@ public class PatternZigzag extends AbstractPattern{
     private ZigzagVertex tmpSwingHigh;//undetermined, maybe changed depending later bars
     private ZigzagVertex tmpSwingLow;//undetermined, maybe changed depending later bars
     
-    public PatternZigzag() {
-        super();
+    public PatternZigzag(AlgoSetting as) {
+        super(as);
         this.trend = Trend.NA;
         this.vertexList = new ArrayList<ZigzagVertex>();
     }
@@ -55,7 +55,7 @@ public class PatternZigzag extends AbstractPattern{
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.patternWeightMA;
+		return this.as.getPatternWeightMA();
 	}
 
 

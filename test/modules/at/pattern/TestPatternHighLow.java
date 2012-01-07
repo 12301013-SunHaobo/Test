@@ -7,21 +7,23 @@ import java.util.List;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
 import modules.at.formula.Indicators;
+import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
-import modules.at.model.Point;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.pattern.PatternHighLow.HighLowVertex;
-import modules.at.visual.MySampleChartBase;
 import utils.Formatter;
 
 public class TestPatternHighLow {
 
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
-	private static PatternHighLow patternHighLow = new PatternHighLow();
+	private static PatternHighLow patternHighLow;
+	private static AlgoSetting as = new AlgoSetting();
+	
 	
 	public static void main(String[] args) throws Exception {
+		patternHighLow = new PatternHighLow(as);
 		testOneDay();
 	}
 
@@ -33,7 +35,7 @@ public class TestPatternHighLow {
 		System.out.println(stockCode + ":" + dateTimeArr[0] + "-" + dateTimeArr[1]);
 		printTrades(tradeList, true);
 		
-		new MySampleChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
+		//new MySampleChartBase(stockCode, dateTimeArr[0], dateTimeArr[1], tradeList);
 	}
 	
 	private static List<Trade> auto(String stockCode, String dateStr, String timeStr) throws Exception {
@@ -41,7 +43,7 @@ public class TestPatternHighLow {
 		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateStr);
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
-		Indicators indicators = new Indicators();
+		Indicators indicators = new Indicators(as);
 		indicators.addObserver(patternHighLow);
 		
 		List<Trade> tradeList = new ArrayList<Trade>();

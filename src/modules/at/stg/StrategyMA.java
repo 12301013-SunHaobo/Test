@@ -31,8 +31,15 @@ public class StrategyMA implements Strategy {
     
     private Decision decision;
     
-    private IndicatorsMA indicators = new IndicatorsMA(); 
+    private AlgoSetting as = null;
+    private IndicatorsMA indicators = null; 
     
+	public StrategyMA(AlgoSetting as) {
+		super();
+		this.as = as;
+		this.indicators = new IndicatorsMA(this.as);
+	}
+
 	@Override
 	public Decision getDecision() {
 		//return this.decision;
@@ -153,13 +160,13 @@ public class StrategyMA implements Strategy {
     	private FixedLengthQueue<MAPoint> fixedLengthQ = new FixedLengthQueue<MAPoint>(MA_SLOPE_LENGTH); //
     	
     	
-    	public IndicatorsMA() {
-    		super();
-    		this.ds4MAHL = new DescriptiveStatistics(AlgoSetting.maHLLength);
-    		this.ds4MAHigh2 = new DescriptiveStatistics(AlgoSetting.maHigh2Length);
-    		this.ds4MAHigh = new DescriptiveStatistics(AlgoSetting.maHighLength);
-    		this.ds4MALow = new DescriptiveStatistics(AlgoSetting.maLowLength);
-    		this.ds4MALow2 = new DescriptiveStatistics(AlgoSetting.maLow2Length);
+    	public IndicatorsMA(AlgoSetting as) {
+    		super(as);
+    		this.ds4MAHL = new DescriptiveStatistics(this.as.getMaHLLength());
+    		this.ds4MAHigh2 = new DescriptiveStatistics(this.as.getMaHigh2Length());
+    		this.ds4MAHigh = new DescriptiveStatistics(this.as.getMaHighLength());
+    		this.ds4MALow = new DescriptiveStatistics(this.as.getMaLowLength());
+    		this.ds4MALow2 = new DescriptiveStatistics(this.as.getMaLow2Length());
     	}
     	
     	public void addBar(Bar bar){
@@ -179,34 +186,34 @@ public class StrategyMA implements Strategy {
     	}
     	
     	public double getSMAHigh2(){
-    		if(this.barAdded<AlgoSetting.maHigh2Length){
+    		if(this.barAdded<this.as.getMaHigh2Length()){
     			return Double.NaN;
     		}
-    		return ds4MAHigh2.getSum()/AlgoSetting.maHigh2Length;
+    		return ds4MAHigh2.getSum()/this.as.getMaHigh2Length();
     	}
     	public double getSMAHigh(){
-    		if(this.barAdded<AlgoSetting.maHighLength){
+    		if(this.barAdded<this.as.getMaHighLength()){
     			return Double.NaN;
     		}
-    		return ds4MAHigh.getSum()/AlgoSetting.maHighLength;
+    		return ds4MAHigh.getSum()/this.as.getMaHighLength();
     	}
     	public double getSMAHL(){
-    		if(this.barAdded<AlgoSetting.maHLLength){
+    		if(this.barAdded<this.as.getMaHLLength()){
     			return Double.NaN;
     		}
-    		return ds4MAHL.getSum()/AlgoSetting.maHLLength;
+    		return ds4MAHL.getSum()/this.as.getMaHLLength();
     	}
     	public double getSMALow(){
-    		if(this.barAdded<AlgoSetting.maLowLength){
+    		if(this.barAdded<this.as.getMaLowLength()){
     			return Double.NaN;
     		}
-    		return ds4MALow.getSum()/AlgoSetting.maLowLength;
+    		return ds4MALow.getSum()/this.as.getMaLowLength();
     	}
     	public double getSMALow2(){
-    		if(this.barAdded<AlgoSetting.maLow2Length){
+    		if(this.barAdded<this.as.getMaLow2Length()){
     			return Double.NaN;
     		}
-    		return ds4MALow2.getSum()/AlgoSetting.maLow2Length;
+    		return ds4MALow2.getSum()/this.as.getMaLow2Length();
     	}
     	public double getSMALow2Diff(){
     		double low = getSMALow();
@@ -246,20 +253,20 @@ public class StrategyMA implements Strategy {
     	public List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
 
     		List<VXY> vxyList = new ArrayList<VXY>();
-    		IndicatorsMA indicator = new IndicatorsMA();
+    		IndicatorsMA tmpIndicator = new IndicatorsMA(this.as);
     		
     		for(Bar bar : barList){
-    			indicator.addBar(bar);
+    			tmpIndicator.addBar(bar);
     			double indicatorVal = Double.NaN;
 
     			switch (seriesType) {
-    				case MAHigh2: indicatorVal =  indicator.getSMAHigh2(); break;
-    				case MAHigh: indicatorVal =  indicator.getSMAHigh(); break;
-    				case MAHL: indicatorVal =  indicator.getSMAHL(); break;
-    				case MALow: indicatorVal =  indicator.getSMALow(); break;
-    				case MALow2: indicatorVal =  indicator.getSMALow2(); break;
-    				case MALow2Diff: indicatorVal =  indicator.getSMALow2Diff(); break;
-    				case MALow2Slope: indicatorVal =  indicator.getSMALow2Slope(); break;
+    				case MAHigh2: indicatorVal =  tmpIndicator.getSMAHigh2(); break;
+    				case MAHigh: indicatorVal =  tmpIndicator.getSMAHigh(); break;
+    				case MAHL: indicatorVal =  tmpIndicator.getSMAHL(); break;
+    				case MALow: indicatorVal =  tmpIndicator.getSMALow(); break;
+    				case MALow2: indicatorVal =  tmpIndicator.getSMALow2(); break;
+    				case MALow2Diff: indicatorVal =  tmpIndicator.getSMALow2Diff(); break;
+    				case MALow2Slope: indicatorVal =  tmpIndicator.getSMALow2Slope(); break;
     				default:break;
     			}
 
@@ -274,11 +281,11 @@ public class StrategyMA implements Strategy {
     	public List<VSeries> getPlotBarVSeriesList(List<Bar> barList){
     		List<VSeries> vseriesList = new ArrayList<VSeries>();
     		//vseriesList.addAll(super.getPlotBarVSeriesList(barList));
-    		vseriesList.add(new VSeries("MAHigh2("+AlgoSetting.maHigh2Length+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-    		vseriesList.add(new VSeries("MAHigh("+AlgoSetting.maHighLength+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
-    		vseriesList.add(new VSeries("MAHL("+AlgoSetting.maHLLength+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
-    		vseriesList.add(new VSeries("MALow("+AlgoSetting.maLowLength+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
-    		vseriesList.add(new VSeries("MALow2("+AlgoSetting.maLow2Length+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MAHigh2("+this.as.getMaHigh2Length()+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
+    		vseriesList.add(new VSeries("MAHigh("+this.as.getMaHighLength()+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MAHL("+this.as.getMaHLLength()+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
+    		vseriesList.add(new VSeries("MALow("+this.as.getMaLowLength()+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
+    		vseriesList.add(new VSeries("MALow2("+this.as.getMaLow2Length()+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
     		return vseriesList;
     	}
     	//Plots

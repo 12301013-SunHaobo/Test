@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.Indicators;
+import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
@@ -18,6 +19,10 @@ import modules.at.model.visual.VMarker;
  *
  */
 public class PatternEngulfing extends AbstractPattern {
+
+	public PatternEngulfing(AlgoSetting as) {
+		super(as);
+	}
 
 	private int engulfTmpListLength = 21;
 	private LinkedList<Bar> tmpBarsList = new LinkedList<Bar>(); //last 3 bars(including currently added) to determin

@@ -6,7 +6,8 @@ package modules.at.model;
  *
  */
 public class Position {
-	
+
+	private AlgoSetting as = null;
 	private static Position instance;
 	
 	private int qty = 0; //- short, + long
@@ -14,13 +15,14 @@ public class Position {
 
 	private double stopLossPrice = Double.NaN;
 	
-	private Position() {
+	private Position(AlgoSetting as) {
 		super();
+		this.as = as;
 	}
 
-	public static synchronized Position getInstance(){
+	public static synchronized Position getInstance(AlgoSetting as){
 		if(instance == null){
-			instance = new Position();
+			instance = new Position(as);
 		}
 		return instance;
 	}
@@ -30,12 +32,12 @@ public class Position {
 			if(Double.isNaN(stopLossPrice)){
 				this.stopLossPrice = 0;
 			}
-			this.stopLossPrice = Math.max(curPrice*(1-AlgoSetting.cutLoss), this.stopLossPrice);
+			this.stopLossPrice = Math.max(curPrice*(1-this.as.getCutLoss()), this.stopLossPrice);
 		} else if(this.qty<0){//keep decreasing for short
 			if(Double.isNaN(stopLossPrice)){
 				this.stopLossPrice = Double.MAX_VALUE;
 			}
-			this.stopLossPrice = Math.min(curPrice*(1+AlgoSetting.cutLoss), this.stopLossPrice);
+			this.stopLossPrice = Math.min(curPrice*(1+this.as.getCutLoss()), this.stopLossPrice);
 		} else {//qty==0
 			this.stopLossPrice = Double.NaN;
 		}

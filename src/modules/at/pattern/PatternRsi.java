@@ -14,8 +14,8 @@ public class PatternRsi extends AbstractPattern {
 	
 	private List<Double> rsiList;
 
-	public PatternRsi() {
-		super();
+	public PatternRsi(AlgoSetting as) {
+		super(as);
 		this.rsiList = new ArrayList<Double>();
 	}
 
@@ -34,9 +34,9 @@ public class PatternRsi extends AbstractPattern {
 	public Trend getTrend() {
 		if(!Double.isNaN(this.curRsi)){
 			
-			if(this.curRsi>AlgoSetting.rsiUpper){
+			if(this.curRsi>this.as.getRsiUpper()){
 				return Pattern.Trend.Down;
-			} else if(this.curRsi<AlgoSetting.rsiLower){
+			} else if(this.curRsi<this.as.getRsiLower()){
 				return Pattern.Trend.Up;
 			}
 		}
@@ -45,7 +45,7 @@ public class PatternRsi extends AbstractPattern {
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.patternWeightRSI;
+		return this.as.getPatternWeightRSI();
 	}
 
 	@Override

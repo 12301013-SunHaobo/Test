@@ -1,8 +1,17 @@
 package modules.at.pattern;
 
+import modules.at.model.AlgoSetting;
+
 
 
 public abstract class AbstractPattern implements Pattern {
+
+	protected AlgoSetting as;
+	
+	public AbstractPattern(AlgoSetting as) {
+		super();
+		this.as = as;
+	}
 
 	@Override
 	public int getWeightedTrend() {

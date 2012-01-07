@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modules.at.formula.Indicators;
+import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
 import modules.at.pattern.Pattern.Trend;
-import modules.at.stg.StrategyMA.IndicatorsMA;
 
 public class StrategyMACross implements Strategy {
 
@@ -23,9 +23,18 @@ public class StrategyMACross implements Strategy {
     private double curDiff;
     
     private Decision decision;
-    private Indicators indicators = new Indicators(); 
+    private Indicators indicators; 
+    private AlgoSetting as;
     private Bar preBar;//previous bar
     
+    
+    
+	public StrategyMACross(AlgoSetting as) {
+		super();
+		this.as = as;
+		this.indicators = new Indicators(this.as);
+	}
+
 	@Override
 	public Decision getDecision() {
 		return this.decision;

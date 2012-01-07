@@ -30,8 +30,16 @@ public class StrategyMacd implements Strategy {
     
     private Decision decision;
     
-    private IndicatorsMacd indicators = new IndicatorsMacd(); 
+    private IndicatorsMacd indicators; 
     
+    private AlgoSetting as;
+    
+	public StrategyMacd(AlgoSetting as) {
+		super();
+		this.as = as;
+		this.indicators = new IndicatorsMacd(this.as);
+	}
+
 	@Override
 	public Decision getDecision() {
 		//return this.decision;
@@ -100,8 +108,8 @@ public class StrategyMacd implements Strategy {
     
     public static class IndicatorsMacd extends Indicators{
 
-    	public IndicatorsMacd() {
-    		super();
+    	public IndicatorsMacd(AlgoSetting as) {
+    		super(as);
     	}
     	
     	@Override

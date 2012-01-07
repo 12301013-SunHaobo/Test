@@ -13,11 +13,16 @@ import modules.at.model.visual.VMarker;
 
 public class PatternHighLow extends AbstractPattern {
 
-	private int highLowListLength = AlgoSetting.highLowListLength;
+	private int highLowListLength = -1;//this.as.getHighLowListLength();//AlgoSetting.highLowListLength;
 	private LinkedList<HighLowVertex> highList = new LinkedList<HighLowVertex>();
 	private LinkedList<HighLowVertex> lowList = new LinkedList<HighLowVertex>();
 	
 	private List<VMarker> patternMarkerList = new ArrayList<VMarker>();
+	
+	public PatternHighLow(AlgoSetting as) {
+		super(as);
+		this.highLowListLength = this.as.getHighLowListLength();
+	}	
 	
 	@Override
 	public Trend getTrend() {
@@ -26,7 +31,7 @@ public class PatternHighLow extends AbstractPattern {
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.patternWeightHL;
+		return this.as.getPatternWeightHL();
 	}
 
 	@Override

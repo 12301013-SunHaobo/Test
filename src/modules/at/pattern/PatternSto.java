@@ -25,21 +25,21 @@ public class PatternSto extends AbstractPattern{
     
     private Trend trend;
     
-    public PatternSto() {
-        super();
+    public PatternSto(AlgoSetting as) {
+        super(as);
         this.preK = Double.NaN;
         this.curK = Double.NaN;
         this.trend = Trend.NA;
     }
     
     public CrossType getCrossType(){
-        if(preK<AlgoSetting.stochasticUpper && curK>AlgoSetting.stochasticUpper){
+        if(preK<this.as.getStochasticUpper() && curK> this.as.getStochasticUpper()){
             return CrossType.UpperCrossUp;
-        } else if(preK>AlgoSetting.stochasticUpper && curK<AlgoSetting.stochasticUpper){
+        } else if(preK>this.as.getStochasticUpper() && curK< this.as.getStochasticUpper()){
             return CrossType.UpperCrossDown;
-        } else if(preK<AlgoSetting.stochasticLower && curK>AlgoSetting.stochasticLower){
+        } else if(preK<this.as.getStochasticLower() && curK> this.as.getStochasticLower()){
             return CrossType.LowerCrossUp;
-        } else if(preK>AlgoSetting.stochasticLower && curK<AlgoSetting.stochasticLower){
+        } else if(preK>this.as.getStochasticLower() && curK< this.as.getStochasticLower()){
         	return CrossType.LowerCrossDown;
         } 
         return CrossType.NoCross;
@@ -69,7 +69,7 @@ public class PatternSto extends AbstractPattern{
 
 	@Override
 	public int getWeight() {
-		return AlgoSetting.patternWeightSTO;
+		return this.as.getPatternWeightSTO();
 	}
 
 	@Override
