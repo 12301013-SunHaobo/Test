@@ -52,7 +52,7 @@ public class AlgoSetting {
 	
 	//Cut loss & lock profit
 	//private double CUT_WIN = 0.001; //increase percentage % to cut win
-	private double cutLoss = 0.001; //drop percentage % to cut loss
+	private double cutLoss = 0.009; //drop percentage % to cut loss, 0.005 covers most ranges of (high-avg)
 	
 	//private double PROFIT_LOSS = - 0.05 * TRADE_UNIT; //absolute price loss from previous profit  	
 	

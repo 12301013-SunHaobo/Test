@@ -12,11 +12,13 @@ public interface Strategy {
 	public enum Decision {
 		LongEntry, LongExit,
 		ShortEntry, ShortExit,
+		CutLossForLong, CutLossForShort,
 		NA
 	}
 	
 	public void update(Bar bar);
-	public Decision getDecision(); 
+	public Decision getPreBarDecision(); 
+	public void setPreBarDecision(Decision preBarDecision);
 	public List<VMarker> getDecisionMarkerList();
 	public Indicators getIndicators();
 }

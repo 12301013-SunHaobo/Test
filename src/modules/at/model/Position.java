@@ -1,5 +1,7 @@
 package modules.at.model;
 
+import modules.at.stg.Strategy.Decision;
+
 /**
  * Singleton Position class
  * 
@@ -11,7 +13,7 @@ public class Position {
 	private static Position instance;
 	
 	private int qty = 0; //- short, + long
-	private double entryPrice = Double.NaN;
+	private double entryPrice = 0;
 
 	private double stopLossPrice = Double.NaN;
 	
@@ -43,14 +45,34 @@ public class Position {
 		}
 	}
 	
-	
-	
-	public void setPosition(int qty, double entryPrice){
-		this.qty = qty;
-		this.entryPrice = entryPrice;
+	public void updatePosition(int qty, double curPrice) {
+		this.entryPrice = (this.qty*this.entryPrice + qty*curPrice)/(this.qty+qty);
+		this.qty += qty;
 		this.stopLossPrice = Double.NaN;
-		updateStopPrice(entryPrice);
+		updateStopPrice(curPrice);
 	}
+	
+	public Decision getCutLossDecision(Bar bar){
+		//check if need to cutloss for next bar
+		//lock profit & cut loss checking, including short|long
+		if(this.qty>0){//cut loss for long
+			if(bar.getLow()<this.stopLossPrice){
+				return Decision.CutLossForLong;
+			}
+		}else if(this.qty<0){//cut loss for short
+			if(bar.getHigh()>this.stopLossPrice){
+				return Decision.CutLossForShort;
+			}
+		}
+		return Decision.NA;
+	}
+	
+//	public void setPosition(int qty, double entryPrice){
+//		this.qty = qty;
+//		this.entryPrice = entryPrice;
+//		this.stopLossPrice = Double.NaN;
+//		updateStopPrice(entryPrice);
+//	}
 	
 	public int getQty() {
 		return qty;

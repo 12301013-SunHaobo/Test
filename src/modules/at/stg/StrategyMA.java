@@ -8,6 +8,7 @@ import modules.at.formula.Indicators.SeriesType;
 import modules.at.model.AlgoSetting;
 import modules.at.model.Bar;
 import modules.at.model.FixedLengthQueue;
+import modules.at.model.Position;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
@@ -21,16 +22,11 @@ public class StrategyMA implements Strategy {
 
 	private List<VMarker> decisionMarkerList = new ArrayList<VMarker>();
 	
-	//ma1->ma2->ma3 form a turning point
-    private double maLow1 = Double.NaN;
-    private double maLow2 = Double.NaN;
+	private int TOTAL_BARS_UNDER_LOW2BB = 3;
+    private FixedLengthQueue<Bar> preBars = new FixedLengthQueue<Bar>(TOTAL_BARS_UNDER_LOW2BB);
+    private FixedLengthQueue<Double> preMALow2BB = new FixedLengthQueue<Double>(TOTAL_BARS_UNDER_LOW2BB);
     
-    private double maHigh1 = Double.NaN;
-    private double maHigh2 = Double.NaN;
-
-    private Bar preBar = null;
-    
-    private Decision decision;
+    private Decision preBarDecision;
     
     private AlgoSetting as = null;
     private IndicatorsMA indicators = null; 
@@ -42,9 +38,13 @@ public class StrategyMA implements Strategy {
 	}
 
 	@Override
-	public Decision getDecision() {
-		return this.decision;
+	public Decision getPreBarDecision() {
+		return this.preBarDecision;
 		//return Decision.NA;
+	}
+	@Override
+	public void setPreBarDecision(Decision preBarDecision) {
+		this.preBarDecision = preBarDecision;
 	}
 
 	@Override
@@ -55,14 +55,32 @@ public class StrategyMA implements Strategy {
 	@Override
 	public void update(Bar bar) {
 		this.indicators.addBar(bar);
-		this.decision = Decision.NA;//reset decision 
+		this.preBarDecision = Decision.NA;//reset decision 
         double curMAHigh = indicators.getSMAHigh();
         double curMALow = indicators.getSMALow();
 		Bar curBar = indicators.getCurBar();
         //make decision
-		TurningType maHighTrend = getMAHighTrendType(this.maHigh1, this.maHigh2, curMAHigh);
-		TurningType maLowTrend = getMALowTrendType(this.maLow1, this.maLow2, curMALow); 
+		//check if need to cutloss
+		Position position = Position.getInstance(this.as);
+		Decision cutLossDecision = position.getCutLossDecision(curBar);
 		
+		if(Decision.CutLossForLong.equals(cutLossDecision) 
+				||Decision.CutLossForShort.equals(cutLossDecision)) {
+			this.preBarDecision = cutLossDecision;
+			return;
+		}
+		//strategy decision
+		if(isLowCrossUp()){
+			VXYsMarker m = new VXYsMarker();
+			m.setTrend(Pattern.Trend.Up);
+			//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point
+			m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
+			this.decisionMarkerList.add(m);
+			this.preBarDecision = Decision.LongEntry; 
+		}
+
+
+		/*		
 		switch (maLowTrend){
 			case Up : 
 				if(false
@@ -88,60 +106,37 @@ public class StrategyMA implements Strategy {
 				}
 				break;
 		}
-
-		//
-		this.maHigh1 = this.maHigh2;
-		this.maHigh2 = curMAHigh;
-		this.maLow1 = this.maLow2;
-		this.maLow2 = curMALow;
-		this.preBar = curBar;
+		*/
+		
+		//prepare for later calculation
+		this.preBars.add(curBar);
+		this.preMALow2BB.add(this.indicators.getSMALow2BB());
 	}
 
-    public static enum TurningType {
+    public static enum CrossType {
         Up, Down, NA
     }
-    public TurningType getMAHighTrendType(double maHigh1, double maHigh2, double curMAHigh){
-    	if(maHigh1==Double.NaN){
-    		this.maHigh1 = curMAHigh;
-    		return TurningType.NA;
+    
+    /**
+     * Condition:
+     * previous 3 bar.getLow < preMALow2BB
+     * and curBar.getLow > MALow2BB
+     */
+    private boolean isLowCrossUp() {
+    	Bar curBar = this.indicators.getCurBar();
+    	for(int i=0; i<TOTAL_BARS_UNDER_LOW2BB; i++){
+    		Bar preBar = (Bar)this.preBars.get(i);
+    		Double d = (Double)this.preMALow2BB.get(i);
+    		if(d == null || Double.isNaN(d)){
+    			return false;
+    		}
+    		if(preBar.getLow()>d){
+    			return false;
+    		}
     	}
-    	if(maHigh2==Double.NaN){
-    		this.maHigh2 = curMAHigh;
-    		return TurningType.NA;
-    	}
-    	
-    	if(maHigh2==curMAHigh){
-    		return TurningType.NA;
-    	} 
-    	
-    	if(maHigh1>=maHigh2 && maHigh2<curMAHigh){
-    		return TurningType.Up;
-    	} else if(maHigh1<=maHigh2 && maHigh2>curMAHigh){
-    		return TurningType.Down;
-    	}
-    	return TurningType.NA;
-    }    
-    public TurningType getMALowTrendType(double maLow1, double maLow2, double curMALow){
-    	if(maLow1==Double.NaN){
-    		this.maLow1 = curMALow;
-    		return TurningType.NA;
-    	}
-    	if(maLow2==Double.NaN){
-    		this.maLow2 = curMALow;
-    		return TurningType.NA;
-    	}
-    	
-    	if(maLow2==curMALow){
-    		return TurningType.NA;
-    	} 
-    	
-    	if(maLow1>=maLow2 && maLow2<curMALow){
-    		return TurningType.Up;
-    	} else if(maLow1<=maLow2 && maLow2>curMALow){
-    		return TurningType.Down;
-    	}
-    	return TurningType.NA;
+    	return curBar.getLow()>this.indicators.getSMALow2BB();
     }
+   
     
     
     public static class IndicatorsMA extends Indicators{

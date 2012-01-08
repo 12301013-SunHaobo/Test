@@ -36,7 +36,7 @@ public class StrategyMACross implements Strategy {
 	}
 
 	@Override
-	public Decision getDecision() {
+	public Decision getPreBarDecision() {
 		return this.decision;
 	}
 

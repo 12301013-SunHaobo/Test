@@ -1,5 +1,8 @@
 LongEntry:
     1. 若干bar已经在Low2BB下，从BB下向上交叉
+    	[前三个high<当时的low2BB, curBar.low>cur.low2BB
+    	and curBar.close<middle
+    	
     2. 
     3.  
     4. 

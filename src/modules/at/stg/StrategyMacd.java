@@ -41,7 +41,7 @@ public class StrategyMacd implements Strategy {
 	}
 
 	@Override
-	public Decision getDecision() {
+	public Decision getPreBarDecision() {
 		//return this.decision;
 		return Decision.NA;
 	}

@@ -51,8 +51,8 @@ public class TestStrategyAuto {
 	private void testByDates(AlgoSetting as) throws Exception{
 		String stockCode = "qqq";//qqq, tna, tza 
 		String[][] dateTimeArr = 
-				initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		        //initListedDate(); //listed dates only
+				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        initListedDate(); //listed dates only
 		//get barList
 		for(int i=0;i<dateTimeArr.length;i++){
 			String tickFileName = dateTimeArr[i][0] + "-" + dateTimeArr[i][1] + ".txt";
@@ -77,14 +77,14 @@ public class TestStrategyAuto {
 					+ Formatter.DECIMAL_FORMAT.format(((modules.at.stg.StrategyMA.IndicatorsMA)strategy.getIndicators()).minSMALow2Diff)+", "
 					+ Formatter.DECIMAL_FORMAT.format(((modules.at.stg.StrategyMA.IndicatorsMA)strategy.getIndicators()).maxSMALow2Diff)+"]"
 					);
-			//TradeUtil.printTrades(tradeList, true);
-			System.out.println();
+			TradeUtil.printTrades(tradeList, false);
+			//System.out.println();
 			
 			//display chart with trade and mark info
 			VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList(), strategy);
 			vchart.setTitle(tickFileName);
 			
-			boolean saveToFile = true;//save to file | display
+			boolean saveToFile = false;//save to file | display
 		    ChartBase cb = new ChartBase(vchart, !saveToFile && dateTimeArr.length==1);
 		    if(saveToFile){
 		    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+as.getId()+"_"+i+"_"+dateTimeArr[i][0]+".png"; 
@@ -124,12 +124,11 @@ public class TestStrategyAuto {
 	 * @throws Exception
 	 */
 	private Trade decide(Bar bar, String dateStr, Strategy strategy, AlgoSetting as) throws Exception{
-		strategy.update(bar);//update strategy
 		double price = bar.getClose();
 		long time = bar.getDate().getTime();
-		String tmpTimeStr = Formatter.DEFAULT_DATETIME_FORMAT.format(new Date(time));
-		if("20111028-10:41:46".equals(tmpTimeStr)){
-			//System.out.println();
+		String tmpTimeStr = Formatter.DEFAULT_DATETIME_MM_FORMAT.format(new Date(time));
+		if("20110930-13:01".equals(tmpTimeStr)){
+			System.out.println();
 		}
 		
 		Position position = Position.getInstance(as);
@@ -143,28 +142,20 @@ public class TestStrategyAuto {
 			case PreTrade :
 				break;
 			case InTrade :
-				//lock profit & cut loss checking, including short|long
-				if(pQty>0){//cut loss for long
-					if(price<stopPrice){
-						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
-						position.setPosition(0, price);
-						break;
-					}
-				}else if(pQty<0){//cut loss for short
-					if(price>stopPrice){
-						trade = new Trade(price, -1 * pQty, time, Trade.Type.CutLoss);
-						position.setPosition(0, price);
-						break;
-					}
-				}
-
-				Strategy.Decision decision = strategy.getDecision();
+				
+				Decision preBarDecision = strategy.getPreBarDecision();//must be called before strategy.update(bar), as this method changes preBarDecision
+				Strategy.Decision decision = preBarDecision;//decision basing on preBar
 				trade = processDecision(position, decision, bar, as);
+
 				break;
 			case WrapUp :
 				if(pQty != 0){
 					trade = new Trade(price, -1 * pQty, time, Trade.Type.WrapUp);
-					position.setPosition(0, price);
+					if(pQty>0){
+						position.updatePosition(-1 * pQty, bar.getLow());
+					} else if(pQty<0){
+						position.updatePosition(-1 * pQty, bar.getHigh());
+					}
 				}
 				break;
 			case AfterTrade:
@@ -175,54 +166,54 @@ public class TestStrategyAuto {
 		if(trade!=null){
 			trade.setPnl(0);//TODO: is this necessary?
 		}
+		strategy.update(bar);//update strategy
 		position.updateStopPrice(price);
 		return trade;
 	}
 	
 	/**
 	 * return null means don't do anything
+	 * To be strict: buy high, sell low 
 	 * 
 	 */
-	private Trade processDecision(Position position, Strategy.Decision decision, Bar bar, AlgoSetting as){
+	private Trade processDecision(Position position, Strategy.Decision preBarDecision, Bar bar, AlgoSetting as){
 		Trade trade = null;
 		
 		int pQty = position.getQty();
 	
-		if(as.getTradeDirection().equals(TradeDirection.LongOnly)){
-			if(pQty==0 && Decision.LongEntry.equals(decision)){
-				trade = new Trade(bar.getClose(), as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.LongEntry);
-				position.setPosition(pQty + 1*as.getTradeUnit(), bar.getClose());
-			} else if(pQty>0 && Decision.LongExit.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*pQty*as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.LongExit);
-				position.setPosition(0, bar.getClose());
-			}
-		}else if(as.getTradeDirection().equals(TradeDirection.ShortOnly)){
-			if(pQty==0 && Decision.ShortEntry.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.ShortEntry);
-			} else if(pQty<0 && Decision.ShortExit.equals(decision)){
-				trade = new Trade(bar.getClose(), -1*pQty*as.getTradeUnit(), bar.getDate().getTime(), Trade.Type.ShortExit);
-			}
-		}else if(as.getTradeDirection().equals(TradeDirection.Both)){
-			
-		}
+		long time = bar.getDate().getTime();
+		double high = bar.getHigh();
+		double low = bar.getLow();
 		
-		/*
-			if (pQty >= 0){//short
-				if(Decision.LongEntry.equals(trend)){
-				trade = new Trade(price, (-1*pQty)-AlgoSetting.TRADE_UNIT, time, Trade.Type.Short);
-				position.setPosition(pQty+(-1*pQty)-AlgoSetting.TRADE_UNIT, price);
+		//execute preBarDecision
+		//cut loss
+		if(Decision.CutLossForLong.equals(preBarDecision)){
+			trade = new Trade(low, -1 * pQty, time, Trade.Type.CutLoss);
+			position.updatePosition(-1 * pQty, low);
+		} else if(Decision.CutLossForShort.equals(preBarDecision)){
+			trade = new Trade(high, -1 * pQty, time, Trade.Type.CutLoss);
+			position.updatePosition(-1 * pQty, high);
+		} else {
+			if(as.getTradeDirection().equals(TradeDirection.LongOnly)){
+				if(pQty==0 && Decision.LongEntry.equals(preBarDecision)){//buy high for long
+					trade = new Trade(high, as.getTradeUnit(), time, Trade.Type.LongEntry);
+					position.updatePosition(as.getTradeUnit(), high);
+				} else if(pQty>0 && Decision.LongExit.equals(preBarDecision)){//sell low for long
+					trade = new Trade(low, -1*pQty*as.getTradeUnit(), time, Trade.Type.LongExit);
+					position.updatePosition(-1*pQty*as.getTradeUnit(), low);
+				}
+			}else if(as.getTradeDirection().equals(TradeDirection.ShortOnly)){
+				if(pQty==0 && Decision.ShortEntry.equals(preBarDecision)){
+					trade = new Trade(low, -1*as.getTradeUnit(), time, Trade.Type.ShortEntry);
+					position.updatePosition(-1*as.getTradeUnit(), low);
+				} else if(pQty<0 && Decision.ShortExit.equals(preBarDecision)){
+					trade = new Trade(high, -1*pQty*as.getTradeUnit(), time, Trade.Type.ShortExit);
+					position.updatePosition(-1*pQty*as.getTradeUnit(), low);
+				}
+			}else if(as.getTradeDirection().equals(TradeDirection.Both)){
 				
-			} else {//pQty<0?
-				//keep short position
 			}
-		} else if(Pattern.Trend.Up.equals(trend)) {
-			if (pQty <= 0){//long
-				trade = new Trade(price, (-1*pQty)+AlgoSetting.TRADE_UNIT, time, Trade.Type.Long);
-				position.setPosition(pQty + (-1*pQty)+AlgoSetting.TRADE_UNIT, price);
-			} else{//pQty>0?
-				//keep long position
-			}
-		}*/
+		}
 		return trade;
 	}
 	
@@ -293,7 +284,7 @@ public class TestStrategyAuto {
 	private static String[][] initListedDate(){
 		//sanple format: "20110915", "194819"
 		return new String[][] {
-				{"20111026", "200246"},
+//				{"20111026", "200246"},
 //				{"20111117", "200308"},
 //				{"20110929", "202100"},
 //				{"20110926", "200301"},
@@ -318,7 +309,7 @@ public class TestStrategyAuto {
 //				{"20111108", "200141"},
 //				{"20111021", "200115"},
 //				{"20111107", "200117"},
-//				{"20110930", "205736"},
+				{"20110930", "205736"},
 //				{"20111017", "200114"},
 //				{"20111214", "200144"},
 //				{"20111205", "200105"},
