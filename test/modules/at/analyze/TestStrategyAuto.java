@@ -56,6 +56,9 @@ public class TestStrategyAuto {
 			SAVE_CHART_TO_FILE = true;
 		}
 		
+		ConfigRangeContainer<SettingMaBB> crc = new ConfigRangeContainer<SettingMaBB>(SettingMaBB.class);
+		List<SettingMaBB> asList = crc.getConfigList();
+		
 		//loop dates
 		for(int i=0;i<dateTimeArr.length;i++){
 			String dateStr = dateTimeArr[i][0];
@@ -70,7 +73,7 @@ public class TestStrategyAuto {
 			barLists.add(barList2);
 
 			//test one day
-			tsa.testByDate(dateStr, tickFileName, barList, barLists);
+			tsa.testByDate(dateStr, tickFileName, barList, barLists, asList);
 			
 		}
 		
@@ -78,11 +81,10 @@ public class TestStrategyAuto {
 		System.out.println("total time used: "+ (e0-b0));
 	}
 
-	private void testByDate(String dateStr, String tickFileName, List<Bar> barList, List<List<Bar>> barLists) throws Exception{
+	private void testByDate(String dateStr, String tickFileName, List<Bar> barList, List<List<Bar>> barLists, List<SettingMaBB> asList) throws Exception{
 			
 			//loop Settings
-			ConfigRangeContainer<SettingMaBB> crc = new ConfigRangeContainer<SettingMaBB>(SettingMaBB.class);
-			List<SettingMaBB> asList = crc.getConfigList();
+
 			for(Setting setting : asList){
 				//initialize strategy
 				Strategy strategy =

@@ -28,9 +28,9 @@ public class StrategyMaBB implements Strategy {
     private SettingMaBB setting = null;
     
     
-	public StrategyMaBB(SettingMaBB as) {
+	public StrategyMaBB(Setting as) {
 		super();
-		this.setting = as;
+		this.setting = (SettingMaBB)as;
 		this.indicators = new IndicatorMaBB(as);
 	}
 
