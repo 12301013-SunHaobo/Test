@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.rsi.RsiEmaSelfImpl;
-import modules.at.model.AlgoSetting;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
-import modules.at.stg.StrategyMA;
+import modules.at.stg.mabb.StrategyMaBB;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
@@ -21,8 +21,8 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
  * @author r
  *
  */
-public class Indicators extends Observable {
-	protected AlgoSetting as = null;
+public class Indicator extends Observable {
+	protected Setting as = null;
 	
 	//MA
 	protected DescriptiveStatistics ds4MAFast;//for MA fast
@@ -60,7 +60,7 @@ public class Indicators extends Observable {
 	//for internal calculation only, tracks how many bars are added
 	protected int barAdded = 0;
 	
-	public Indicators(AlgoSetting as) {
+	public Indicator(Setting as) {
 		super();
 		this.as = as;
 		this.ds4MAFast = new DescriptiveStatistics(this.as.getMaFastLength());
@@ -227,7 +227,7 @@ public class Indicators extends Observable {
 	public List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
 
 		List<VXY> vxyList = new ArrayList<VXY>();
-		Indicators tmpIndicators = new Indicators(this.as);
+		Indicator tmpIndicators = new Indicator(this.as);
 		
 		for(Bar bar : barList){
 			tmpIndicators.addBar(bar);

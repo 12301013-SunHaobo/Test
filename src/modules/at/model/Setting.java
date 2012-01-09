@@ -1,6 +1,7 @@
 package modules.at.model;
 
-public class AlgoSetting {
+public class Setting {
+	///*
 	private static int idSeq = 0; //sequence number to count how many bars are created
 	private int id;
 	
@@ -17,15 +18,11 @@ public class AlgoSetting {
 	private int maFastLength = 5;//default=5
 	private int maSlowLength = 14;//default=14
 	private int ma3Length = 25; 
-	//@IntRange(start=45, end=55, intervals=5)
 	private int maHLLength = 50;
 	//private int maHigh2Length = -1;//-1 is dummy, getter uses maHLLength
-	//@IntRange(start=5, end=15, intervals=3)
 	private int maHighLength = 5;//5
 	private int maLowLength = 5; //5
-	//@DoubleRange(start=0.1, end=3.0, intervals=30)
 	private double maHigh2BBTimes = 1.6;
-	//@DoubleRange(start=0.1, end=3.0, intervals=30)
 	private double maLow2BBTimes = 1.0;
 	
 	//BB ------------------------------------------------------
@@ -72,13 +69,14 @@ public class AlgoSetting {
 	
 	//trade direction
 	private TradeDirection tradeDirection = TradeDirection.LongOnly;
+	//*/
 	public static enum TradeDirection {
 		LongOnly, ShortOnly, Both
 	}
 	
 	
-	
-	public AlgoSetting() {
+	///*
+	public Setting() {
 		super();
 		this.id = ++idSeq;
 	}
@@ -310,7 +308,7 @@ public class AlgoSetting {
 				+ highLowListLength + ", alternativeHighLowPoints=" + alternativeHighLowPoints + ", engulfListLength=" + engulfListLength
 				+ ", tradeDirection=" + tradeDirection + "]";
 	}
-	
+	//*/
 
 	
 }

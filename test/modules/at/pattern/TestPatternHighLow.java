@@ -6,8 +6,8 @@ import java.util.List;
 
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
@@ -19,7 +19,7 @@ public class TestPatternHighLow {
 	static double LOCK_PROFIT = Double.NaN;//keeps changing, and LOCK_PROFIT always > CUT_LOSS
 	
 	private static PatternHighLow patternHighLow;
-	private static AlgoSetting as = new AlgoSetting();
+	private static Setting as = new Setting();
 	
 	
 	public static void main(String[] args) throws Exception {
@@ -43,7 +43,7 @@ public class TestPatternHighLow {
 		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateStr);
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
-		Indicators indicators = new Indicators(as);
+		Indicator indicators = new Indicator(as);
 		indicators.addObserver(patternHighLow);
 		
 		List<Trade> tradeList = new ArrayList<Trade>();

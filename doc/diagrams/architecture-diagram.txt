@@ -1,0 +1,3 @@
+TestStrategyAuto->StrategyMA----->SettingMA   ->     AlgoSetting
+                           \       /                   /  
+                            \->IndicatorMA->Indicator-/

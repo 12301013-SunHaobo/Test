@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
 
 public class PatternS1 extends AbstractPattern {
 
-	public PatternS1(AlgoSetting as) {
+	public PatternS1(Setting as) {
 		super(as);
 	}
 
@@ -22,7 +22,7 @@ public class PatternS1 extends AbstractPattern {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		Indicators indicators = (Indicators)o;
+		Indicator indicators = (Indicator)o;
 		Bar curBar = indicators.getCurBar();
 		//checkStar(curBar);
 		

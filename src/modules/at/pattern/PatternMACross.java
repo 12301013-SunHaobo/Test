@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.visual.VMarker;
 
 /**
@@ -27,7 +27,7 @@ public class PatternMACross extends AbstractPattern{
     private List<Double> maFastList;
     private List<Double> maSlowList;
     
-    public PatternMACross(AlgoSetting as) {
+    public PatternMACross(Setting as) {
         super(as);
         this.preDiff = Double.NaN;
         this.curDiff = Double.NaN;
@@ -48,7 +48,7 @@ public class PatternMACross extends AbstractPattern{
 
     @Override
     public void update(Observable o, Object arg) {
-        Indicators indicators = (Indicators)o;
+        Indicator indicators = (Indicator)o;
         double maFast = indicators.getSMAFast();
         double maSlow = indicators.getSMASlow();
         this.maFastList.add(maFast);

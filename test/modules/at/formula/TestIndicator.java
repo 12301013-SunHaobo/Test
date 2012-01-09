@@ -3,12 +3,12 @@ package modules.at.formula;
 import java.util.List;
 
 import modules.at.feed.history.HistoryLoader;
-import modules.at.model.AlgoSetting;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import utils.Formatter;
 
 public class TestIndicator {
-	private AlgoSetting as = new AlgoSetting();
+	private Setting as = new Setting();
 	/**
 	 * @param args
 	 * @throws Exception 
@@ -20,7 +20,7 @@ public class TestIndicator {
 	
 	private void testBB() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
-        Indicators indicator = new Indicators(this.as);
+        Indicator indicator = new Indicator(this.as);
         for(Bar bar : barList){
         	indicator.addBar(bar);
         	//System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(indicator.getVolatilityStdDev()));

@@ -9,7 +9,7 @@ import modules.at.stg.Strategy.Decision;
  */
 public class Position {
 
-	private AlgoSetting as = null;
+	private Setting as = null;
 	private static Position instance;
 	
 	private int qty = 0; //- short, + long
@@ -17,12 +17,12 @@ public class Position {
 
 	private double stopLossPrice = Double.NaN;
 	
-	private Position(AlgoSetting as) {
+	private Position(Setting as) {
 		super();
 		this.as = as;
 	}
 
-	public static synchronized Position getInstance(AlgoSetting as){
+	public static synchronized Position getInstance(Setting as){
 		if(instance == null){
 			instance = new Position(as);
 		}

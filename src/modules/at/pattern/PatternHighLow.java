@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
@@ -19,7 +19,7 @@ public class PatternHighLow extends AbstractPattern {
 	
 	private List<VMarker> patternMarkerList = new ArrayList<VMarker>();
 	
-	public PatternHighLow(AlgoSetting as) {
+	public PatternHighLow(Setting as) {
 		super(as);
 		this.highLowListLength = this.as.getHighLowListLength();
 	}	
@@ -36,7 +36,7 @@ public class PatternHighLow extends AbstractPattern {
 
 	@Override
 	public void update(Observable o, Object arg) {
-        Indicators indicators = (Indicators)o;
+        Indicator indicators = (Indicator)o;
         addBar(indicators.getCurBar());
 
 	}

@@ -3,8 +3,8 @@ package modules.at.stg;
 import java.util.ArrayList;
 import java.util.List;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VSeries;
@@ -31,10 +31,11 @@ public class StrategyMacd implements Strategy {
     private Decision decision;
     
     private IndicatorsMacd indicators; 
+    private Decision preBarDecision;
     
-    private AlgoSetting as;
+    private Setting as;
     
-	public StrategyMacd(AlgoSetting as) {
+	public StrategyMacd(Setting as) {
 		super();
 		this.as = as;
 		this.indicators = new IndicatorsMacd(this.as);
@@ -45,6 +46,10 @@ public class StrategyMacd implements Strategy {
 		//return this.decision;
 		return Decision.NA;
 	}
+	@Override
+	public void setPreBarDecision(Decision preBarDecision) {
+		this.preBarDecision = preBarDecision;
+	}	
 
 	@Override
 	public List<VMarker> getDecisionMarkerList() {
@@ -106,9 +111,9 @@ public class StrategyMacd implements Strategy {
         }
     }  
     
-    public static class IndicatorsMacd extends Indicators{
+    public static class IndicatorsMacd extends Indicator{
 
-    	public IndicatorsMacd(AlgoSetting as) {
+    	public IndicatorsMacd(Setting as) {
     		super(as);
     	}
     	
@@ -137,9 +142,17 @@ public class StrategyMacd implements Strategy {
 
 
 	@Override
-	public Indicators getIndicators() {
+	public Indicator getIndicators() {
 		return this.indicators;
 	}
+
+	@Override
+	public Setting getSetting() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
     
 
 }

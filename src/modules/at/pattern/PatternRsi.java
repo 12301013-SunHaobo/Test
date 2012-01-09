@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.visual.VMarker;
 
 public class PatternRsi extends AbstractPattern {
@@ -14,7 +14,7 @@ public class PatternRsi extends AbstractPattern {
 	
 	private List<Double> rsiList;
 
-	public PatternRsi(AlgoSetting as) {
+	public PatternRsi(Setting as) {
 		super(as);
 		this.rsiList = new ArrayList<Double>();
 	}
@@ -25,7 +25,7 @@ public class PatternRsi extends AbstractPattern {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Indicators indicators = (Indicators)o;
+		Indicator indicators = (Indicator)o;
 		this.curRsi = indicators.getRsi();
 		
 	}

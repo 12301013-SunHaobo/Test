@@ -3,8 +3,8 @@ package modules.at.pattern;
 import java.util.List;
 import java.util.Observable;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.visual.VMarker;
 
 /**
@@ -25,7 +25,7 @@ public class PatternSto extends AbstractPattern{
     
     private Trend trend;
     
-    public PatternSto(AlgoSetting as) {
+    public PatternSto(Setting as) {
         super(as);
         this.preK = Double.NaN;
         this.curK = Double.NaN;
@@ -47,7 +47,7 @@ public class PatternSto extends AbstractPattern{
 
     @Override
     public void update(Observable o, Object arg) {
-        Indicators indicators = (Indicators)o;
+        Indicator indicators = (Indicator)o;
         preK = curK;
         curK = indicators.getStochasticK();
     	//System.out.println("preDiff:"+preDiff+", curDiff:"+curDiff);

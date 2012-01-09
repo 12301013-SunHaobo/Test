@@ -1,7 +1,7 @@
 package modules.at.analyze;
 
 import junit.framework.TestCase;
-import modules.at.model.AlgoSetting;
+import modules.at.model.Setting;
 import modules.at.model.Position;
 import utils.Formatter;
 
@@ -25,7 +25,7 @@ public class TestAutoUnitTest extends TestCase{
 
     public void testLongPosition(){
     	double[] testArr = ascAndDecArr;
-    	Position p = Position.getInstance(new AlgoSetting());
+    	Position p = Position.getInstance(new Setting());
     	p.setQty(1);//long
     	double stopLossPrice = Double.NaN;
     	for(int i=0;i<testArr.length;i++){
@@ -41,7 +41,7 @@ public class TestAutoUnitTest extends TestCase{
 
     public void testShortPosition(){
     	double[] testArr = ascAndDecArr;
-    	Position p = Position.getInstance(new AlgoSetting());
+    	Position p = Position.getInstance(new Setting());
     	p.setQty(-1);//long
     	double stopLossPrice = Double.NaN;
     	for(int i=0;i<testArr.length;i++){

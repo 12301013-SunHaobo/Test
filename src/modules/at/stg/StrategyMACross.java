@@ -3,12 +3,13 @@ package modules.at.stg;
 import java.util.ArrayList;
 import java.util.List;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
 import modules.at.pattern.Pattern.Trend;
+import modules.at.stg.Strategy.Decision;
 
 public class StrategyMACross implements Strategy {
 
@@ -23,23 +24,27 @@ public class StrategyMACross implements Strategy {
     private double curDiff;
     
     private Decision decision;
-    private Indicators indicators; 
-    private AlgoSetting as;
+    private Indicator indicators; 
+    private Setting as;
     private Bar preBar;//previous bar
     
+    private Decision preBarDecision;
     
     
-	public StrategyMACross(AlgoSetting as) {
+	public StrategyMACross(Setting as) {
 		super();
 		this.as = as;
-		this.indicators = new Indicators(this.as);
+		this.indicators = new Indicator(this.as);
 	}
 
 	@Override
 	public Decision getPreBarDecision() {
 		return this.decision;
 	}
-
+	@Override
+	public void setPreBarDecision(Decision preBarDecision) {
+		this.preBarDecision = preBarDecision;
+	}	
 	@Override
 	public List<VMarker> getDecisionMarkerList() {
 		return this.decisionMarkerList;
@@ -88,7 +93,13 @@ public class StrategyMACross implements Strategy {
     }
 
 	@Override
-	public Indicators getIndicators() {
+	public Indicator getIndicators() {
 		return this.indicators;
+	}
+
+	@Override
+	public Setting getSetting() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

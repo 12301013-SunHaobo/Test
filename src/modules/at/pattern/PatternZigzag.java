@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import modules.at.formula.Indicators;
-import modules.at.model.AlgoSetting;
+import modules.at.formula.Indicator;
+import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
 
@@ -25,7 +25,7 @@ public class PatternZigzag extends AbstractPattern{
     private ZigzagVertex tmpSwingHigh;//undetermined, maybe changed depending later bars
     private ZigzagVertex tmpSwingLow;//undetermined, maybe changed depending later bars
     
-    public PatternZigzag(AlgoSetting as) {
+    public PatternZigzag(Setting as) {
         super(as);
         this.trend = Trend.NA;
         this.vertexList = new ArrayList<ZigzagVertex>();
@@ -35,7 +35,7 @@ public class PatternZigzag extends AbstractPattern{
 
     @Override
     public void update(Observable o, Object arg) {
-        Indicators indicators = (Indicators)o;
+        Indicator indicators = (Indicator)o;
         Bar curBar = indicators.getCurBar();
         if(vertexList.size()==0){
         	vertexList.add(new ZigzagVertex(curBar.getDate().getTime(), curBar.getClose(), SwingType.Init));

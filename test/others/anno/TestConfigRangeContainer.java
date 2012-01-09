@@ -1,6 +1,6 @@
 package others.anno;
 
-import modules.at.model.AlgoSetting;
+import modules.at.model.Setting;
 import modules.at.model.ConfigRangeContainer;
 
 public class TestConfigRangeContainer {
@@ -13,7 +13,7 @@ public class TestConfigRangeContainer {
     	//test();
 
     	//ConfigRangeContainer<SampleConfig> crc = new ConfigRangeContainer<SampleConfig>(SampleConfig.class);
-        ConfigRangeContainer<AlgoSetting> crc = new ConfigRangeContainer<AlgoSetting>(AlgoSetting.class);
+        ConfigRangeContainer<Setting> crc = new ConfigRangeContainer<Setting>(Setting.class);
         crc.printConfigsByToString();
     }
 

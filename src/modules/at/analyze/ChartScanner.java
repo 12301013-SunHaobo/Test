@@ -5,7 +5,7 @@ import java.util.List;
 
 import modules.at.formula.rsi.Rsi;
 import modules.at.formula.rsi.RsiEmaSelfImpl;
-import modules.at.model.AlgoSetting;
+import modules.at.model.Setting;
 
 public class ChartScanner {
 	

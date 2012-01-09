@@ -1,14 +1,14 @@
 package modules.at.pattern;
 
-import modules.at.model.AlgoSetting;
+import modules.at.model.Setting;
 
 
 
 public abstract class AbstractPattern implements Pattern {
 
-	protected AlgoSetting as;
+	protected Setting as;
 	
-	public AbstractPattern(AlgoSetting as) {
+	public AbstractPattern(Setting as) {
 		super();
 		this.as = as;
 	}
