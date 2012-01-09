@@ -48,8 +48,8 @@ public class TestStrategyAuto {
 		
 		String stockCode = "qqq";//qqq, tna, tza 
 		String[][] dateTimeArr = 
-				initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		        //initListedDate(); //listed dates only
+				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        initListedDate(); //listed dates only
 		
 		//avoid displaying too many charts, only save to files
 		if(dateTimeArr.length>1){

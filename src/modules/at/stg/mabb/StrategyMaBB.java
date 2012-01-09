@@ -64,12 +64,15 @@ public class StrategyMaBB implements Strategy {
 			this.preBarDecision = cutLossDecision;
 			return;
 		}
-		if(isExit()){
-			
-		}
-		
 		//strategy decision
-		if(isLowCrossUp()){
+		if(position.getQty()>0 && isExit()){
+			VXYsMarker m = new VXYsMarker();
+			m.setTrend(Pattern.Trend.Down);
+			//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point
+			m.addVxy(new VXY(curBar.getDate().getTime(), curBar.getClose()));//curBar close
+			this.decisionMarkerList.add(m);
+			this.preBarDecision = Decision.LongExit; 
+		} else if(isLowCrossUp()){
 			VXYsMarker m = new VXYsMarker();
 			m.setTrend(Pattern.Trend.Up);
 			//m.addVxy(new VXY(this.preBar.getDate().getTime(), this.maLow2));//turning point
@@ -118,24 +121,33 @@ public class StrategyMaBB implements Strategy {
      * 
      */
     private boolean isExit() {
-    	//previous 3 bar.getLow < preMALow2BB
     	Bar curBar = this.indicators.getCurBar();
+    	
+    	//previous 3 bar.getLow > preMALow2BB and curBar.getLow<MALow2BB, then exit
+    	boolean preLowsAboveLow2BB = true;
     	for(int i=0; i<TOTAL_BARS_UNDER_LOW2BB; i++){
     		Bar preBar = (Bar)this.preBars.get(i);
     		Double d = (Double)this.preMALow2BB.get(i);
     		if(d == null || Double.isNaN(d)){
-    			return false;
+    			preLowsAboveLow2BB = false;
     		}
-    		if(preBar.getLow()>d){
-    			return false;
+    		if(preBar.getLow()<d){
+    			preLowsAboveLow2BB = false;
     		}
     	}
-    	//and curBar.getLow > MALow2BB
-    	boolean lowCrossUp = curBar.getLow()>this.indicators.getSMALow2BB();
-    	//and curBar.getClose < (MAHL+MALow2BB)/2
-    	lowCrossUp = lowCrossUp && (curBar.getClose()<(this.indicators.getSMAHL()+this.indicators.getSMALow2BB())/2);
-    	return lowCrossUp;
+    	if(preLowsAboveLow2BB && curBar.getLow()<this.indicators.getSMALow2BB()){
+    		return true;
+    	}
+    	
+    	//curBar.getHigh>SMAHigh2BB
+    	if(curBar.getHigh()>this.indicators.getSMAHigh2BB()){
+    		return true;
+    	}
+    	return false;
     }
+    
+    
+    
     
 
 	@Override
