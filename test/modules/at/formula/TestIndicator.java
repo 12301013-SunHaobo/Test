@@ -3,8 +3,9 @@ package modules.at.formula;
 import java.util.List;
 
 import modules.at.feed.history.HistoryLoader;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 import utils.Formatter;
 
 public class TestIndicator {

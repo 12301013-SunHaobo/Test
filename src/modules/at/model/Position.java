@@ -1,6 +1,7 @@
 package modules.at.model;
 
-import modules.at.stg.Strategy.Decision;
+import modules.at.stg.Setting;
+import modules.at.stg.other.Strategy.Decision;
 
 /**
  * Singleton Position class

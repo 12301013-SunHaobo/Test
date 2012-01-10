@@ -16,13 +16,13 @@ import java.util.Set;
 
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.Point;
 import modules.at.model.Point.Type;
 import modules.at.model.Tick;
 import modules.at.pattern.highlow.HighLowUtil;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;

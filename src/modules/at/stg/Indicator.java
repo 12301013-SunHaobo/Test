@@ -1,11 +1,10 @@
-package modules.at.formula;
+package modules.at.stg;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
 import modules.at.formula.rsi.RsiEmaSelfImpl;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;

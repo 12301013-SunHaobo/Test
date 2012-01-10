@@ -1,11 +1,11 @@
-package modules.at.stg;
+package modules.at.stg.other;
 
 import java.util.List;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 
 public interface Strategy {
 	

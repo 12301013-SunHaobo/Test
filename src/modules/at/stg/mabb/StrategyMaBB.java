@@ -3,8 +3,6 @@ package modules.at.stg.mabb;
 import java.util.ArrayList;
 import java.util.List;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.FixedLengthQueue;
 import modules.at.model.Position;
@@ -12,7 +10,9 @@ import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VXY;
 import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
-import modules.at.stg.Strategy;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
+import modules.at.stg.other.Strategy;
 
 public class StrategyMaBB implements Strategy {
 

@@ -3,9 +3,9 @@ package modules.at.pattern;
 import java.util.List;
 import java.util.Observable;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 
 /**
  * Observes Indicators 

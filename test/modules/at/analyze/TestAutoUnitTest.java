@@ -1,8 +1,8 @@
 package modules.at.analyze;
 
 import junit.framework.TestCase;
-import modules.at.model.Setting;
 import modules.at.model.Position;
+import modules.at.stg.Setting;
 import utils.Formatter;
 
 /**

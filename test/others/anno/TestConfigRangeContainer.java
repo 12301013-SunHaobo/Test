@@ -1,7 +1,7 @@
 package others.anno;
 
-import modules.at.model.Setting;
 import modules.at.model.ConfigRangeContainer;
+import modules.at.stg.Setting;
 
 public class TestConfigRangeContainer {
 

@@ -1,18 +1,18 @@
-package modules.at.stg;
+package modules.at.stg.other;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
 import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
-import modules.at.stg.Strategy.Decision;
-import modules.at.stg.StrategyMACross.CrossType;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
+import modules.at.stg.other.Strategy.Decision;
+import modules.at.stg.other.StrategyMACross.CrossType;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 

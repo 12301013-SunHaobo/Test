@@ -7,21 +7,21 @@ import java.util.List;
 import modules.at.TradeUtil;
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.model.Setting;
-import modules.at.model.Setting.TradeDirection;
 import modules.at.model.Bar;
 import modules.at.model.ConfigRangeContainer;
 import modules.at.model.Position;
-import modules.at.model.SettingAnalysis;
+import modules.at.model.SettingAuto;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VPlot;
-import modules.at.stg.Strategy;
-import modules.at.stg.Strategy.Decision;
+import modules.at.stg.Setting;
+import modules.at.stg.Setting.TradeDirection;
 import modules.at.stg.mabb.SettingMaBB;
 import modules.at.stg.mabb.StrategyMaBB;
+import modules.at.stg.other.Strategy;
+import modules.at.stg.other.Strategy.Decision;
 import modules.at.visual.BarChartUtil;
 import modules.at.visual.ChartBase;
 
@@ -66,7 +66,7 @@ public class TestStrategyAuto {
 			List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateTimeArr[i][0]);
 			List<List<Bar>> barLists = new ArrayList<List<Bar>>();
 		
-			SettingAnalysis settingAnalysis = new SettingAnalysis();
+			SettingAuto settingAnalysis = new SettingAuto();
 			List<Bar> barList = TickToBarConverter.convert(tickList, settingAnalysis.getBarTimePeriod());
 			List<Bar> barList2 = TickToBarConverter.convert(tickList, 5*settingAnalysis.getBarTimePeriod());
 			barLists.add(barList);
