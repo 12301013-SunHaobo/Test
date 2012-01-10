@@ -20,6 +20,10 @@
 
 17. Portfolio class + unittest; //stores all new positions
 
+18. Indicator.java rename to IndicatorOther.java, "Project Explorer" move to other package
+    Copy and paste to stg package, rename to Indicator.java
+    
+    
 
 --------------------------------------------
 -- fixed bugs --
