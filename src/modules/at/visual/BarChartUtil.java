@@ -7,8 +7,6 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.Trade;
 import modules.at.model.visual.VChart;
@@ -16,8 +14,7 @@ import modules.at.model.visual.VPlot;
 import modules.at.model.visual.VSeries;
 import modules.at.pattern.Pattern.Trend;
 import modules.at.pattern.PatternEngulfing.Engulf;
-import modules.at.stg.Strategy;
-import modules.at.stg.mabb.StrategyMaBB;
+import modules.at.stg.other.Strategy;
 
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYLineAnnotation;

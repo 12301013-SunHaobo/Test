@@ -2,11 +2,10 @@ package modules.at.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 
 /**
  * Observes Indicators 
@@ -46,9 +45,8 @@ public class PatternMACross extends AbstractPattern{
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        Indicator indicators = (Indicator)o;
+    public void update(Indicator o, Object arg) {
+    	Indicator indicators = (Indicator)o;
         double maFast = indicators.getSMAFast();
         double maSlow = indicators.getSMASlow();
         this.maFastList.add(maFast);

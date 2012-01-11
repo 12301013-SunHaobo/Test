@@ -1,6 +1,6 @@
 package modules.at.model;
 
-public class SettingAnalysis {
+public class SettingAuto {
 
 	private static int idSeq = 0; // sequence number to count how many bars are
 									// created
@@ -8,7 +8,7 @@ public class SettingAnalysis {
 
 	private int barTimePeriod = 1 * 60 * 1000; // milliseconds
 
-	public SettingAnalysis() {
+	public SettingAuto() {
 		super();
 		this.id = ++idSeq;
 	}

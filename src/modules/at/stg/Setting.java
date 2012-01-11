@@ -1,4 +1,4 @@
-package modules.at.model;
+package modules.at.stg;
 
 public class Setting {
 	///*

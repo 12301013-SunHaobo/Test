@@ -6,12 +6,12 @@ import java.util.List;
 
 import modules.at.feed.convert.TickToBarConverter;
 import modules.at.feed.history.HistoryLoader;
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.pattern.PatternHighLow.HighLowVertex;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 import utils.Formatter;
 
 public class TestPatternHighLow {
@@ -44,7 +44,7 @@ public class TestPatternHighLow {
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
 		Indicator indicators = new Indicator(as);
-		indicators.addObserver(patternHighLow);
+		//indicators.addObserver(patternHighLow);
 		
 		List<Trade> tradeList = new ArrayList<Trade>();
 		for (Bar bar : barList) {

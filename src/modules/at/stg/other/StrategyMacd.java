@@ -1,20 +1,16 @@
-package modules.at.stg;
+package modules.at.stg.other;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
 import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
-import modules.at.stg.Strategy.Decision;
-import modules.at.stg.StrategyMACross.CrossType;
-
-import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 
 /**
  * To find reversal bar
@@ -142,7 +138,7 @@ public class StrategyMacd implements Strategy {
 
 
 	@Override
-	public Indicator getIndicators() {
+	public IndicatorsMacd getIndicators() {
 		return this.indicators;
 	}
 

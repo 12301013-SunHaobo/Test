@@ -2,12 +2,11 @@ package modules.at.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 
 /**
  * Observes Indicators 
@@ -33,9 +32,8 @@ public class PatternZigzag extends AbstractPattern{
     
 
 
-    @Override
-    public void update(Observable o, Object arg) {
-        Indicator indicators = (Indicator)o;
+    public void update(Indicator o, Object arg) {
+    	Indicator indicators = (Indicator)o;
         Bar curBar = indicators.getCurBar();
         if(vertexList.size()==0){
         	vertexList.add(new ZigzagVertex(curBar.getDate().getTime(), curBar.getClose(), SwingType.Init));

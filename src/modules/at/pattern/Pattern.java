@@ -5,7 +5,7 @@ import java.util.Observer;
 
 import modules.at.model.visual.VMarker;
 
-public interface Pattern extends Observer{
+public interface Pattern {
 	
 	enum Trend {
 		Up, Down, NA

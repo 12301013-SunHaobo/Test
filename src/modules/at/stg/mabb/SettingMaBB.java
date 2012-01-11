@@ -1,7 +1,6 @@
 package modules.at.stg.mabb;
 
-import modules.at.model.Setting;
-import modules.at.model.IntRange;
+import modules.at.stg.Setting;
 
 public class SettingMaBB extends Setting{
     	private static int idSeq = 0; //sequence number to count how many bars are created

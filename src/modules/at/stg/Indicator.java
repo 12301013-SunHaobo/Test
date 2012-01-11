@@ -1,33 +1,34 @@
-package modules.at.formula;
+package modules.at.stg;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import modules.at.formula.rsi.RsiEmaSelfImpl;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.VSeries;
 import modules.at.model.visual.VXY;
-import modules.at.stg.mabb.StrategyMaBB;
 
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 /**
  * SMA fast/slow
  * BB
- * 
- * 
- * @author r
+ *
  *
  */
-public class Indicator extends Observable {
-	protected Setting as = null;
+public class Indicator {
+	
+	protected Setting setting = null;
+
+	//current bar
+	protected Bar curBar;
+	
+	//for internal calculation only, tracks how many bars are added
+	protected int barAdded = 0;
 	
 	//MA
 	protected DescriptiveStatistics ds4MAFast;//for MA fast
 	protected DescriptiveStatistics ds4MASlow;//for MA slow
-	protected DescriptiveStatistics ds4MA3;//for MA 3
 	//BB
 	protected DescriptiveStatistics ds4BB;//DescriptiveStatistics for BB
 	//RSI
@@ -36,10 +37,6 @@ public class Indicator extends Observable {
 	protected DescriptiveStatistics ds4MacdMAFast;//for MACD MA fast
 	protected DescriptiveStatistics ds4MacdMASlow;//for MACD MA slow
 	protected DescriptiveStatistics ds4Macd;//for MA 3
-	
-	
-	//upper shadow
-	protected DescriptiveStatistics ds4MAUpperShadow;//MA of upper shadow
 	
 	/**
 	 * for stochastic
@@ -54,31 +51,22 @@ public class Indicator extends Observable {
 	protected DescriptiveStatistics ds4StoD;//for stochastic D, saves K
 	protected double stoK = Double.NaN;
 
-	//current bar
-	protected Bar curBar;
-	
-	//for internal calculation only, tracks how many bars are added
-	protected int barAdded = 0;
-	
-	public Indicator(Setting as) {
+	public Indicator(Setting setting) {
 		super();
-		this.as = as;
-		this.ds4MAFast = new DescriptiveStatistics(this.as.getMaFastLength());
-		this.ds4MASlow = new DescriptiveStatistics(this.as.getMaSlowLength());
-		this.ds4MA3 = new DescriptiveStatistics(this.as.getMa3Length());
+		this.setting = setting;
+		this.ds4MAFast = new DescriptiveStatistics(this.setting.getMaFastLength());
+		this.ds4MASlow = new DescriptiveStatistics(this.setting.getMaSlowLength());
 
-		this.ds4BB = new DescriptiveStatistics(this.as.getBbLength());
-		this.rsi = new RsiEmaSelfImpl(this.as.getRsiLength());
+		this.ds4BB = new DescriptiveStatistics(this.setting.getBbLength());
+		this.rsi = new RsiEmaSelfImpl(this.setting.getRsiLength());
 		
-		this.ds4MacdMAFast = new DescriptiveStatistics(this.as.getMacdMAFastLength());
-		this.ds4MacdMASlow = new DescriptiveStatistics(this.as.getMacdMASlowLength());
-		this.ds4Macd = new DescriptiveStatistics(this.as.getMacdLength());
+		this.ds4MacdMAFast = new DescriptiveStatistics(this.setting.getMacdMAFastLength());
+		this.ds4MacdMASlow = new DescriptiveStatistics(this.setting.getMacdMASlowLength());
+		this.ds4Macd = new DescriptiveStatistics(this.setting.getMacdLength());
 		
-		this.ds4StoKHigh = new DescriptiveStatistics(this.as.getStochasticKLength());
-		this.ds4StoKLow = new DescriptiveStatistics(this.as.getStochasticKLength());
-		this.ds4StoD = new DescriptiveStatistics(this.as.getStochastickDLength());
-		//my invented
-		this.ds4MAUpperShadow = new DescriptiveStatistics(this.as.getMaUpperShadowLength());
+		this.ds4StoKHigh = new DescriptiveStatistics(this.setting.getStochasticKLength());
+		this.ds4StoKLow = new DescriptiveStatistics(this.setting.getStochasticKLength());
+		this.ds4StoD = new DescriptiveStatistics(this.setting.getStochastickDLength());
 	}
 	
 	public void addBar(Bar bar){
@@ -88,7 +76,6 @@ public class Indicator extends Observable {
 		//MA
 		this.ds4MAFast.addValue(bar.getClose());
 		this.ds4MASlow.addValue(bar.getClose());
-		this.ds4MA3.addValue(bar.getLow());
 		//BB
 		this.ds4BB.addValue(bar.getClose());
 		this.rsi.addValue(bar.getClose());
@@ -107,45 +94,37 @@ public class Indicator extends Observable {
 		this.stoK = (bar.getClose() - ds4StoKLow.getMin())/(ds4StoKHigh.getMax() - ds4StoKLow.getMin()) * 100;
 		this.ds4StoD.addValue(this.stoK);
 		
-		//my invented
-		this.ds4MAUpperShadow.addValue(bar.getHigh()-Math.max(bar.getOpen(), bar.getClose()));
 	}
 	
 	//MA
 	public double getSMAFast(){
-		if(this.barAdded<this.as.getMaFastLength()){
+		if(this.barAdded<this.setting.getMaFastLength()){
 			return Double.NaN;
 		}
-		return ds4MAFast.getSum()/this.as.getMaFastLength();
+		return ds4MAFast.getSum()/this.setting.getMaFastLength();
 	}
 	public double getSMASlow(){
-		if(this.barAdded<this.as.getMaSlowLength()){
+		if(this.barAdded<this.setting.getMaSlowLength()){
 			return Double.NaN;
 		}
-		return ds4MASlow.getSum()/this.as.getMaSlowLength();
-	}
-	public double getSMA3(){
-		if(this.barAdded<this.as.getMa3Length()){
-			return Double.NaN;
-		}
-		return ds4MA3.getSum()/this.as.getMa3Length();
+		return ds4MASlow.getSum()/this.setting.getMaSlowLength();
 	}
 	
 	//BB
 	public double getBBUpper(){
-		if(this.barAdded<this.as.getBbLength()){
+		if(this.barAdded<this.setting.getBbLength()){
 			return Double.NaN;
 		}
 		return getBBMiddle()+getStdDev()*2;
 	}
 	public double getBBMiddle(){
-		if(this.barAdded<this.as.getBbLength()){
+		if(this.barAdded<this.setting.getBbLength()){
 			return Double.NaN;
 		}
-		return ds4BB.getSum()/this.as.getBbLength();
+		return ds4BB.getSum()/this.setting.getBbLength();
 	}
 	public double getBBLower(){
-		if(this.barAdded<this.as.getBbLength()){
+		if(this.barAdded<this.setting.getBbLength()){
 			return Double.NaN;
 		}
 		return getBBMiddle()-getStdDev()*2;
@@ -153,7 +132,7 @@ public class Indicator extends Observable {
 	
 	//RSI
 	public double getRsi(){
-		if(this.barAdded<this.as.getRsiLength()){
+		if(this.barAdded<this.setting.getRsiLength()){
 			return Double.NaN;
 		}
 		return rsi.getValue();
@@ -166,19 +145,19 @@ public class Indicator extends Observable {
 	
 	//MACD
 	public double getMacd(){
-		if(this.barAdded<this.as.getMacdMASlowLength()
-				|| this.barAdded<this.as.getMacdMAFastLength()){
+		if(this.barAdded<this.setting.getMacdMASlowLength()
+				|| this.barAdded<this.setting.getMacdMAFastLength()){
 			return Double.NaN;
 		}
-		double macdFastSMA = this.ds4MacdMAFast.getSum()/this.as.getMacdMAFastLength();
-		double macdSlowSMA = this.ds4MacdMASlow.getSum()/this.as.getMacdMASlowLength();
+		double macdFastSMA = this.ds4MacdMAFast.getSum()/this.setting.getMacdMAFastLength();
+		double macdSlowSMA = this.ds4MacdMASlow.getSum()/this.setting.getMacdMASlowLength();
 		return (macdFastSMA - macdSlowSMA);
 	}
 	public double getMacdSignal(){
-		if(this.ds4Macd.getN()<this.as.getMacdLength()){
+		if(this.ds4Macd.getN()<this.setting.getMacdLength()){
 			return Double.NaN;
 		}
-		return this.ds4Macd.getSum()/this.as.getMacdLength();
+		return this.ds4Macd.getSum()/this.setting.getMacdLength();
 	}
 	public double getMacdHistogram(){
 		double macd = getMacd();
@@ -195,18 +174,10 @@ public class Indicator extends Observable {
 		return this.stoK; 
 	}
 	public double getStochasticD(){
-		if(this.ds4StoD.getN()<this.as.getStochastickDLength()){
+		if(this.ds4StoD.getN()<this.setting.getStochastickDLength()){
 			return Double.NaN;
 		}
-		return this.ds4StoD.getSum()/this.as.getStochastickDLength();
-	}
-	
-	//my invented
-	public double getMAUpperShadow() {
-		if(this.ds4MAUpperShadow.getN()<this.as.getMaUpperShadowLength()){
-			return Double.NaN;
-		}
-		return this.ds4MAUpperShadow.getSum()/this.as.getMaUpperShadowLength();
+		return this.ds4StoD.getSum()/this.setting.getStochastickDLength();
 	}
 	
 	public Bar getCurBar() {
@@ -216,18 +187,19 @@ public class Indicator extends Observable {
 	/**
 	 *Utility for indicator VXY lists
 	 */
-	public enum SeriesType {
-		MAFast, MASlow, MA3, 
+	public static enum SeriesType {
+		MAFast, MASlow, 
 		BBUpper, BBMiddle, BBLower,
 		RsiUpper, Rsi, RsiLower,
 		Macd, MacdSignal, MacdHistogram, MacdZero,
 		MAUpperShadow,
 		StoK, StoD, StoUpper, StoLower
 	}	
+	
 	public List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
 
 		List<VXY> vxyList = new ArrayList<VXY>();
-		Indicator tmpIndicators = new Indicator(this.as);
+		Indicator tmpIndicators = new Indicator(this.setting);
 		
 		for(Bar bar : barList){
 			tmpIndicators.addBar(bar);
@@ -236,22 +208,20 @@ public class Indicator extends Observable {
 			switch (seriesType) {
 				case MAFast: indicatorVal = tmpIndicators.getSMAFast(); break;
 				case MASlow: indicatorVal =  tmpIndicators.getSMASlow(); break;
-				case MA3: indicatorVal =  tmpIndicators.getSMA3(); break;
-				case MAUpperShadow: indicatorVal =  tmpIndicators.getMAUpperShadow(); break;
 				case BBUpper: indicatorVal = tmpIndicators.getBBUpper(); break;
 				case BBMiddle: indicatorVal = tmpIndicators.getBBMiddle(); break;
 				case BBLower: indicatorVal = tmpIndicators.getBBLower(); break;
-				case RsiUpper: indicatorVal = this.as.getRsiUpper(); break;
+				case RsiUpper: indicatorVal = this.setting.getRsiUpper(); break;
 				case Rsi: indicatorVal = tmpIndicators.getRsi(); break;
-				case RsiLower: indicatorVal = this.as.getRsiLower(); break;
+				case RsiLower: indicatorVal = this.setting.getRsiLower(); break;
 				case Macd: indicatorVal = tmpIndicators.getMacd(); break;
 				case MacdSignal: indicatorVal = tmpIndicators.getMacdSignal(); break;
 				case MacdHistogram: indicatorVal = tmpIndicators.getMacdHistogram(); break;
 				case MacdZero: indicatorVal = 0; break;
 				case StoK: indicatorVal = tmpIndicators.getStochasticK(); break;
 				case StoD: indicatorVal = tmpIndicators.getStochasticD(); break;
-				case StoUpper: indicatorVal = this.as.getStochasticUpper(); break;
-				case StoLower: indicatorVal = this.as.getStochasticLower(); break;
+				case StoUpper: indicatorVal = this.setting.getStochasticUpper(); break;
+				case StoLower: indicatorVal = this.setting.getStochasticLower(); break;
 				default:break;
 			}
 
@@ -270,7 +240,7 @@ public class Indicator extends Observable {
 //		vseriesList.add(new VSeries("MA3Low("+this.as.getMa3Length()+")", getVXYList(SeriesType.MA3, barList), null, java.awt.Color.blue));
 		
 		vseriesList.add(new VSeries("BBUpper",getVXYList(SeriesType.BBUpper, barList), null, java.awt.Color.gray));
-		vseriesList.add(new VSeries("BB("+this.as.getBbLength()+")",getVXYList(SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
+		vseriesList.add(new VSeries("BB("+this.setting.getBbLength()+")",getVXYList(SeriesType.BBMiddle, barList), null, java.awt.Color.gray));
 		vseriesList.add(new VSeries("BBLower",getVXYList(SeriesType.BBLower, barList), null, java.awt.Color.gray));
 
 		return vseriesList;
@@ -283,8 +253,8 @@ public class Indicator extends Observable {
 //		vseriesList.add(new VSeries("Rsi("+AlgoSetting.RSI_LENGTH+")", getVXYList(SeriesType.Rsi, barList), null, java.awt.Color.red));
 //		vseriesList.add(new VSeries("RsiLower", getVXYList(SeriesType.RsiLower, barList), null, java.awt.Color.red));
 		
-		vseriesList.add(new VSeries("Macd("+this.as.getMacdMAFastLength()+","+this.as.getMacdMASlowLength()+")", getVXYList(SeriesType.Macd, barList), null, java.awt.Color.black));
-		vseriesList.add(new VSeries("MacdSignal("+this.as.getMacdLength()+")", getVXYList(SeriesType.MacdSignal, barList), null, java.awt.Color.red));
+		vseriesList.add(new VSeries("Macd("+this.setting.getMacdMAFastLength()+","+this.setting.getMacdMASlowLength()+")", getVXYList(SeriesType.Macd, barList), null, java.awt.Color.black));
+		vseriesList.add(new VSeries("MacdSignal("+this.setting.getMacdLength()+")", getVXYList(SeriesType.MacdSignal, barList), null, java.awt.Color.red));
 		vseriesList.add(new VSeries("MacdHistogram", getVXYList(SeriesType.MacdHistogram, barList), null, java.awt.Color.cyan));
 		vseriesList.add(new VSeries("0", getVXYList(SeriesType.MacdZero, barList), null, java.awt.Color.blue));
 		

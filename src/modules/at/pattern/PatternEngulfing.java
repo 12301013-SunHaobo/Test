@@ -3,13 +3,12 @@ package modules.at.pattern;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
 
-import modules.at.formula.Indicator;
-import modules.at.model.Setting;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
+import modules.at.stg.Setting;
 
 /**
  * bearish Engulfing reversal is recognized if:
@@ -43,8 +42,7 @@ public class PatternEngulfing extends AbstractPattern {
 		return 1;
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Indicator o, Object arg) {
 		Indicator indicators = (Indicator)o;
 		Bar curBar = indicators.getCurBar();
 		addToLast3Bars(tmpBarsList, curBar);

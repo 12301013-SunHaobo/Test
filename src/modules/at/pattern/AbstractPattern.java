@@ -1,6 +1,6 @@
 package modules.at.pattern;
 
-import modules.at.model.Setting;
+import modules.at.stg.Setting;
 
 
 
