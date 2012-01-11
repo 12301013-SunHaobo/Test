@@ -2,7 +2,10 @@ package modules.at.analyze;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import modules.at.TradeUtil;
 import modules.at.feed.convert.TickToBarConverter;
@@ -40,6 +43,8 @@ import utils.Formatter;
  */
 public class TestStrategyAuto {
 	
+	private static Map<String, Double> tradeSummaryMap = new HashMap<String, Double>();
+	
 	private static boolean SAVE_CHART_TO_FILE = false;
 	
 	public static void main(String[] args) throws Exception {
@@ -48,8 +53,8 @@ public class TestStrategyAuto {
 		
 		String stockCode = "qqq";//qqq, tna, tza 
 		String[][] dateTimeArr = 
-				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		        initListedDate(); //listed dates only
+				initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        //initListedDate(); //listed dates only
 		
 		//avoid displaying too many charts, only save to files
 		if(dateTimeArr.length>1){
@@ -77,6 +82,8 @@ public class TestStrategyAuto {
 			
 		}
 		
+		tsa.printPnlSummary();
+		
 		long e0 = System.currentTimeMillis();
 		System.out.println("total time used: "+ (e0-b0));
 	}
@@ -94,7 +101,9 @@ public class TestStrategyAuto {
 				//get tradeList
 				List<Trade> tradeList = auto(dateStr, barList, strategy, setting);
 
-				TradeUtil.printTrades(tradeList, false);
+				//put pnl to tradeSummaryMap<dateStr-settingId, pnl>
+				double pnl = TradeUtil.printTrades(tradeList, false);
+				tradeSummaryMap.put(dateStr+"-"+setting.getId(), pnl);
 				//System.out.println();
 				
 				//display chart with trade and mark info
@@ -289,6 +298,19 @@ public class TestStrategyAuto {
         	barRenderer.addAnnotation(m.toAnno(),Layer.BACKGROUND);
         }
         return vchart;
+	}
+	
+	private void printPnlSummary(){
+		System.out.println("<< ---------- all dates pnl summary ----------- >>");
+		double allDatesPnl = 0;
+		for(Entry<String, Double> entry : tradeSummaryMap.entrySet()){
+			allDatesPnl += entry.getValue();
+			System.out.println(entry.getKey()+" : "+Formatter.DECIMAL_FORMAT.format(entry.getValue()));
+		}
+		int totalDates = tradeSummaryMap.size();
+		System.out.println("total days : "+totalDates);
+		System.out.println("allDatesPnl : "+Formatter.DECIMAL_FORMAT.format(allDatesPnl));
+		System.out.println("avg Pnl/day : "+Formatter.DECIMAL_FORMAT.format(allDatesPnl/totalDates));
 	}
 	
 
