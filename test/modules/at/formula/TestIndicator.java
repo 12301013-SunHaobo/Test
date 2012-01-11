@@ -4,8 +4,8 @@ import java.util.List;
 
 import modules.at.feed.history.HistoryLoader;
 import modules.at.model.Bar;
-import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
+import modules.at.stg.other.IndicatorOther;
 import utils.Formatter;
 
 public class TestIndicator {
@@ -21,7 +21,7 @@ public class TestIndicator {
 	
 	private void testBB() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
-        Indicator indicator = new Indicator(this.as);
+        IndicatorOther indicator = new IndicatorOther(this.as);
         for(Bar bar : barList){
         	indicator.addBar(bar);
         	//System.out.println(bar+" "+Formatter.DECIMAL_FORMAT.format(indicator.getVolatilityStdDev()));

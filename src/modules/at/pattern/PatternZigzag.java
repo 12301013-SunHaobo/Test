@@ -6,8 +6,8 @@ import java.util.Observable;
 
 import modules.at.model.Bar;
 import modules.at.model.visual.VMarker;
-import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
+import modules.at.stg.other.IndicatorOther;
 
 /**
  * Observes Indicators 
@@ -35,7 +35,7 @@ public class PatternZigzag extends AbstractPattern{
 
     @Override
     public void update(Observable o, Object arg) {
-        Indicator indicators = (Indicator)o;
+        IndicatorOther indicators = (IndicatorOther)o;
         Bar curBar = indicators.getCurBar();
         if(vertexList.size()==0){
         	vertexList.add(new ZigzagVertex(curBar.getDate().getTime(), curBar.getClose(), SwingType.Init));

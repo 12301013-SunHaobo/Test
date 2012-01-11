@@ -9,7 +9,6 @@ import modules.at.model.visual.VMarker;
 import modules.at.pattern.Pattern.Trend;
 import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
-import modules.at.stg.other.Strategy.Decision;
 
 public class StrategyMACross implements Strategy {
 

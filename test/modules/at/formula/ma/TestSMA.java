@@ -4,8 +4,8 @@ import java.util.List;
 
 import modules.at.feed.history.HistoryLoader;
 import modules.at.model.Bar;
-import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
+import modules.at.stg.other.IndicatorOther;
 import utils.Formatter;
 
 public class TestSMA {
@@ -41,7 +41,7 @@ public class TestSMA {
     private static void testDailyMAByMathLib() throws Exception{
     	List<Bar> barList = HistoryLoader.getNazHistDailyBars("qqq", "daily-20010917-20110916.txt");
     	int length = 14;
-    	Indicator indicator = new Indicator(new Setting());
+    	IndicatorOther indicator = new IndicatorOther(new Setting());
         for(Bar bar : barList){
         	indicator.addBar(bar);
         	System.out.println(bar+" SMA("+length+")="+Formatter.DECIMAL_FORMAT.format(indicator.getSMAFast()));

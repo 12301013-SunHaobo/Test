@@ -10,8 +10,8 @@ import modules.at.model.Bar;
 import modules.at.model.Tick;
 import modules.at.model.Trade;
 import modules.at.pattern.PatternHighLow.HighLowVertex;
-import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
+import modules.at.stg.other.IndicatorOther;
 import utils.Formatter;
 
 public class TestPatternHighLow {
@@ -43,7 +43,7 @@ public class TestPatternHighLow {
 		List<Tick> tickList = HistoryLoader.getNazHistTicks(stockCode, tickFileName, dateStr);
 		List<Bar> barList = TickToBarConverter.convert(tickList, TickToBarConverter.MINUTE);
 
-		Indicator indicators = new Indicator(as);
+		IndicatorOther indicators = new IndicatorOther(as);
 		indicators.addObserver(patternHighLow);
 		
 		List<Trade> tradeList = new ArrayList<Trade>();

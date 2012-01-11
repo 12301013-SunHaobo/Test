@@ -11,10 +11,6 @@ import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
 import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
-import modules.at.stg.other.Strategy.Decision;
-import modules.at.stg.other.StrategyMACross.CrossType;
-
-import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 /**
  * To find reversal bar
@@ -142,7 +138,7 @@ public class StrategyMacd implements Strategy {
 
 
 	@Override
-	public Indicator getIndicators() {
+	public IndicatorsMacd getIndicators() {
 		return this.indicators;
 	}
 

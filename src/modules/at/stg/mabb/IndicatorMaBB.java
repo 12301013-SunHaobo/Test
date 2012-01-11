@@ -35,13 +35,13 @@ public class IndicatorMaBB extends Indicator{
 	
 	public IndicatorMaBB(Setting as) {
 		super(as);
-		this.ds4MAHL = new DescriptiveStatistics(this.as.getMaHLLength());
-		this.ds4MAHigh2 = new DescriptiveStatistics(this.as.getMaHigh2Length());
-		this.ds4MAHigh = new DescriptiveStatistics(this.as.getMaHighLength());
-		this.ds4MALow = new DescriptiveStatistics(this.as.getMaLowLength());
-		this.ds4MALow2 = new DescriptiveStatistics(this.as.getMaLow2Length());
-		this.ds4MAHigh2BB = new DescriptiveStatistics(this.as.getMaLow2Length());
-		this.ds4MALow2BB = new DescriptiveStatistics(this.as.getMaLow2Length());
+		this.ds4MAHL = new DescriptiveStatistics(this.setting.getMaHLLength());
+		this.ds4MAHigh2 = new DescriptiveStatistics(this.setting.getMaHigh2Length());
+		this.ds4MAHigh = new DescriptiveStatistics(this.setting.getMaHighLength());
+		this.ds4MALow = new DescriptiveStatistics(this.setting.getMaLowLength());
+		this.ds4MALow2 = new DescriptiveStatistics(this.setting.getMaLow2Length());
+		this.ds4MAHigh2BB = new DescriptiveStatistics(this.setting.getMaLow2Length());
+		this.ds4MALow2BB = new DescriptiveStatistics(this.setting.getMaLow2Length());
 	}
 	
 	public void addBar(Bar bar){
@@ -63,46 +63,46 @@ public class IndicatorMaBB extends Indicator{
 	}
 	
 	public double getSMAHigh2(){
-		if(this.barAdded<this.as.getMaHigh2Length()){
+		if(this.barAdded<this.setting.getMaHigh2Length()){
 			return Double.NaN;
 		}
-		return ds4MAHigh2.getSum()/this.as.getMaHigh2Length();
+		return ds4MAHigh2.getSum()/this.setting.getMaHigh2Length();
 	}
 	public double getSMAHigh(){
-		if(this.barAdded<this.as.getMaHighLength()){
+		if(this.barAdded<this.setting.getMaHighLength()){
 			return Double.NaN;
 		}
-		return ds4MAHigh.getSum()/this.as.getMaHighLength();
+		return ds4MAHigh.getSum()/this.setting.getMaHighLength();
 	}
 	public double getSMAHL(){
-		if(this.barAdded<this.as.getMaHLLength()){
+		if(this.barAdded<this.setting.getMaHLLength()){
 			return Double.NaN;
 		}
-		return ds4MAHL.getSum()/this.as.getMaHLLength();
+		return ds4MAHL.getSum()/this.setting.getMaHLLength();
 	}
 	public double getSMALow(){
-		if(this.barAdded<this.as.getMaLowLength()){
+		if(this.barAdded<this.setting.getMaLowLength()){
 			return Double.NaN;
 		}
-		return ds4MALow.getSum()/this.as.getMaLowLength();
+		return ds4MALow.getSum()/this.setting.getMaLowLength();
 	}
 	public double getSMALow2(){
-		if(this.barAdded<this.as.getMaLow2Length()){
+		if(this.barAdded<this.setting.getMaLow2Length()){
 			return Double.NaN;
 		}
-		return ds4MALow2.getSum()/this.as.getMaLow2Length();
+		return ds4MALow2.getSum()/this.setting.getMaLow2Length();
 	}
 	public double getSMAHigh2BB() {
-		if(this.barAdded<this.as.getMaHigh2Length()){
+		if(this.barAdded<this.setting.getMaHigh2Length()){
 			return Double.NaN;
 		}
-		return ds4MAHigh2BB.getSum()/this.as.getMaHigh2Length() + this.as.getMaHigh2BBTimes()*ds4MAHigh2BB.getStandardDeviation();
+		return ds4MAHigh2BB.getSum()/this.setting.getMaHigh2Length() + this.setting.getMaHigh2BBTimes()*ds4MAHigh2BB.getStandardDeviation();
 	}
 	public double getSMALow2BB() {
-		if(this.barAdded<this.as.getMaLow2Length()){
+		if(this.barAdded<this.setting.getMaLow2Length()){
 			return Double.NaN;
 		}
-		return ds4MALow2BB.getSum()/this.as.getMaLow2Length() - this.as.getMaLow2BBTimes()*ds4MALow2BB.getStandardDeviation();
+		return ds4MALow2BB.getSum()/this.setting.getMaLow2Length() - this.setting.getMaLow2BBTimes()*ds4MALow2BB.getStandardDeviation();
 	}
 	
 	public double getSMALow2Diff(){
@@ -144,13 +144,13 @@ public class IndicatorMaBB extends Indicator{
 	public List<VXY> getVXYList(SeriesType seriesType, List<Bar> barList){
 
 		List<VXY> vxyList = new ArrayList<VXY>();
-		IndicatorMaBB tmpIndicator = new IndicatorMaBB(this.as);
+		IndicatorMaBB tmpIndicator = new IndicatorMaBB(this.setting);
 		
 		for(Bar bar : barList){
 			tmpIndicator.addBar(bar);
 			double indicatorVal = Double.NaN;
 
-			double rate = this.as.getTmp();//
+			double rate = this.setting.getTmp();//
 			switch (seriesType) {
 				//case MAHigh2: indicatorVal =  tmpIndicator.getSMAHigh2(); break;
 				case MAHigh2: indicatorVal =  rate*(tmpIndicator.getSMAHigh2()-tmpIndicator.getSMAHL())+tmpIndicator.getSMAHL(); break;
@@ -179,14 +179,14 @@ public class IndicatorMaBB extends Indicator{
 		List<VSeries> vseriesList = new ArrayList<VSeries>();
 		//vseriesList.addAll(super.getPlotBarVSeriesList(barList));
 		//High2+Low2 band
-		//vseriesList.add(new VSeries("MAHigh2("+this.as.getMaHigh2Length()+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
-		//vseriesList.add(new VSeries("MAHigh("+this.as.getMaHighLength()+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
-		vseriesList.add(new VSeries("MAHL("+this.as.getMaHLLength()+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
-		//vseriesList.add(new VSeries("MALow("+this.as.getMaLowLength()+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
-		//vseriesList.add(new VSeries("MALow2("+this.as.getMaLow2Length()+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
+		//vseriesList.add(new VSeries("MAHigh2("+this.setting.getMaHigh2Length()+")", getVXYList(SeriesType.MAHigh2, barList), null, java.awt.Color.blue));
+		//vseriesList.add(new VSeries("MAHigh("+this.setting.getMaHighLength()+")", getVXYList(SeriesType.MAHigh, barList), null, java.awt.Color.red));
+		vseriesList.add(new VSeries("MAHL("+this.setting.getMaHLLength()+")", getVXYList(SeriesType.MAHL, barList), null, java.awt.Color.cyan));
+		//vseriesList.add(new VSeries("MALow("+this.setting.getMaLowLength()+")", getVXYList(SeriesType.MALow, barList), null, java.awt.Color.red));
+		//vseriesList.add(new VSeries("MALow2("+this.setting.getMaLow2Length()+")", getVXYList(SeriesType.MALow2, barList), null, java.awt.Color.blue));
 		
-		vseriesList.add(new VSeries("MAHigh2BB("+this.as.getMaHigh2Length()+")", getVXYList(SeriesType.MAHigh2BB, barList), null, java.awt.Color.gray));
-		vseriesList.add(new VSeries("MALow2BB("+this.as.getMaLow2Length()+")", getVXYList(SeriesType.MALow2BB, barList), null, java.awt.Color.gray));
+		vseriesList.add(new VSeries("MAHigh2BB("+this.setting.getMaHigh2Length()+")", getVXYList(SeriesType.MAHigh2BB, barList), null, java.awt.Color.gray));
+		vseriesList.add(new VSeries("MALow2BB("+this.setting.getMaLow2Length()+")", getVXYList(SeriesType.MALow2BB, barList), null, java.awt.Color.gray));
 		
 		return vseriesList;
 	}

@@ -8,8 +8,8 @@ import java.util.Observable;
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
-import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
+import modules.at.stg.other.IndicatorOther;
 
 /**
  * bearish Engulfing reversal is recognized if:
@@ -45,7 +45,7 @@ public class PatternEngulfing extends AbstractPattern {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Indicator indicators = (Indicator)o;
+		IndicatorOther indicators = (IndicatorOther)o;
 		Bar curBar = indicators.getCurBar();
 		addToLast3Bars(tmpBarsList, curBar);
 		

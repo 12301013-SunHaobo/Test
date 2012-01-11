@@ -151,7 +151,7 @@ public class StrategyMaBB implements Strategy {
     
 
 	@Override
-	public Indicator getIndicators() {
+	public IndicatorMaBB getIndicators() {
 		return this.indicators;
 	}
 

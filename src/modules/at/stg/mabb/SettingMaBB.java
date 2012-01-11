@@ -1,6 +1,5 @@
 package modules.at.stg.mabb;
 
-import modules.at.model.IntRange;
 import modules.at.stg.Setting;
 
 public class SettingMaBB extends Setting{

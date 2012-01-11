@@ -21,8 +21,8 @@ import modules.at.model.Point;
 import modules.at.model.Point.Type;
 import modules.at.model.Tick;
 import modules.at.pattern.highlow.HighLowUtil;
-import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
+import modules.at.stg.other.IndicatorOther;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -216,7 +216,7 @@ public class TestHighLowBarChart extends ApplicationFrame {
 		XYSeries bbUpperSeries = new XYSeries("BB Upper Line");
 		XYSeries bbMiddleSeries = new XYSeries("BB Middle Line");
 		XYSeries bbLowerSeries = new XYSeries("BB Lower Line");
-		Indicator indicator = new Indicator(this.as);
+		IndicatorOther indicator = new IndicatorOther(this.as);
 
 		for(Bar bar : this.barList){
 			indicator.addBar(bar);
@@ -245,7 +245,7 @@ public class TestHighLowBarChart extends ApplicationFrame {
 		XYSeries rsiEmaUpperSeries = new XYSeries("RSI_EMA_UPPER");
 		XYSeries rsiEmaSeries = new XYSeries("RSI_EMA");
 		XYSeries rsiEmaLowerSeries = new XYSeries("RSI_EMA_LOWER");
-		Indicator indicator = new Indicator(this.as);
+		IndicatorOther indicator = new IndicatorOther(this.as);
 
 		for(Bar bar : this.barList){
 			indicator.addBar(bar);
