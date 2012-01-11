@@ -2,11 +2,10 @@ package modules.at.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
-import modules.at.stg.other.IndicatorOther;
 
 public class PatternRsi extends AbstractPattern {
 	
@@ -23,9 +22,8 @@ public class PatternRsi extends AbstractPattern {
 		rsiList.add(rsi);
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		IndicatorOther indicators = (IndicatorOther)o;
+	public void update(Indicator o, Object arg) {
+		Indicator indicators = (Indicator)o;
 		this.curRsi = indicators.getRsi();
 		
 	}

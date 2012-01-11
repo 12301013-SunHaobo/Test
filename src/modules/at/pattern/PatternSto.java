@@ -1,11 +1,10 @@
 package modules.at.pattern;
 
 import java.util.List;
-import java.util.Observable;
 
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
-import modules.at.stg.other.IndicatorOther;
 
 /**
  * Observes Indicators 
@@ -45,9 +44,8 @@ public class PatternSto extends AbstractPattern{
         return CrossType.NoCross;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        IndicatorOther indicators = (IndicatorOther)o;
+    public void update(Indicator o, Object arg) {
+    	Indicator indicators = (Indicator)o;
         preK = curK;
         curK = indicators.getStochasticK();
     	//System.out.println("preDiff:"+preDiff+", curDiff:"+curDiff);

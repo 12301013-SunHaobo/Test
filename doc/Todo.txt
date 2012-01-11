@@ -23,6 +23,11 @@
 18. Indicator.java rename to IndicatorOther.java, "Project Explorer" move to other package
     Copy and paste to stg package, rename to Indicator.java
     
+19. clean up  
+	src/modules/at/pattern/* (most patters are not in using, but keep their logic as reference, DON'T delete them)
+	src/modules/at/stg/other/* (IndicatorOther.java is not in using, other Strategy*.java keep them, DON'T delete)
+	test/* (some tests are not necessary to keep)
+	 
     
 
 --------------------------------------------

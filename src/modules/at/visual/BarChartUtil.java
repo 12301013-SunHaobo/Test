@@ -14,9 +14,6 @@ import modules.at.model.visual.VPlot;
 import modules.at.model.visual.VSeries;
 import modules.at.pattern.Pattern.Trend;
 import modules.at.pattern.PatternEngulfing.Engulf;
-import modules.at.stg.Setting;
-import modules.at.stg.mabb.StrategyMaBB;
-import modules.at.stg.other.IndicatorOther;
 import modules.at.stg.other.Strategy;
 
 import org.jfree.chart.annotations.XYAnnotation;

@@ -2,13 +2,12 @@ package modules.at.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import modules.at.model.Bar;
 import modules.at.model.visual.BarsMarker;
 import modules.at.model.visual.VMarker;
+import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
-import modules.at.stg.other.IndicatorOther;
 
 public class PatternS1 extends AbstractPattern {
 
@@ -20,9 +19,8 @@ public class PatternS1 extends AbstractPattern {
 	private List<VMarker> patternMarkerList = new ArrayList<VMarker>();
 
 	
-	@Override
-	public void update(Observable o, Object arg) {
-		IndicatorOther indicators = (IndicatorOther)o;
+	public void update(Indicator o, Object arg) {
+		Indicator indicators = (Indicator)o;
 		Bar curBar = indicators.getCurBar();
 		//checkStar(curBar);
 		

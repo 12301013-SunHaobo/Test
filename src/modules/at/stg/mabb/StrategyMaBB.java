@@ -10,7 +10,6 @@ import modules.at.model.visual.VMarker;
 import modules.at.model.visual.VXY;
 import modules.at.model.visual.VXYsMarker;
 import modules.at.pattern.Pattern;
-import modules.at.stg.Indicator;
 import modules.at.stg.Setting;
 import modules.at.stg.other.Strategy;
 
