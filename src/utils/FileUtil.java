@@ -110,14 +110,21 @@ public class FileUtil {
 		}
 	}
 	
-	public static List<String> getAllFileNames(String dir){
+	public static List<String> getAllFileNames(String dir, boolean includeFolder){
 		List<String> fileNames = new ArrayList<String>();
 		File dirFolder = new File(dir);
 		if(dirFolder.exists()){
 			for(File file : dirFolder.listFiles()) {
-				fileNames.add(file.getName());
+			    if(!includeFolder && file.isDirectory()){
+			        ;//skip
+			    } else {
+			        fileNames.add(file.getName());
+			    }
 			}
 		}
 		return fileNames;
+	}
+	public static List<String> getAllFileNames(String dir){
+	    return getAllFileNames(dir, false);//by default, don't include dir
 	}
 }
