@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import others.e.EUtil;
-import others.utils.FileUtil;
+import utils.FileUtil;
 /**
  * create textOnly file by words under specified folder
  */

@@ -3,7 +3,7 @@ package others.e.copy;
 import java.util.ArrayList;
 import java.util.List;
 
-import others.utils.FileUtil;
+import utils.FileUtil;
 
 /**
  * 1. filter words with ` and save to a new textOnly file with '20110707' suffix

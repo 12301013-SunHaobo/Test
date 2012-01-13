@@ -9,7 +9,7 @@ import java.util.Set;
 import others.e.EUtil;
 import others.e.EUtil.Columns;
 import others.e.model.Word;
-import others.utils.FileUtil;
+import utils.FileUtil;
 
 /**
  * 1. filter words with ` and save to a new textOnly file with '20110707' suffix

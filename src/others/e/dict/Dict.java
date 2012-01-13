@@ -20,7 +20,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import others.utils.AuthUtil;
-import others.utils.FileUtil;
+import utils.FileUtil;
 
 
 

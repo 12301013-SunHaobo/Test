@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.http.client.HttpClient;
 
-import others.utils.FileUtil;
+import utils.FileUtil;
 import utils.BoundedExecutor;
 
 public class TaskDict {

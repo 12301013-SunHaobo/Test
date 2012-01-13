@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.StopWatch;
 
 import others.e.model.Word;
-import others.utils.FileUtil;
+import utils.FileUtil;
 import utils.BoundedExecutor;
 
 public class TaskPhone {
