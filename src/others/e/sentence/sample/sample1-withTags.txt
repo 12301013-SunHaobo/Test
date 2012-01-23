@@ -1,0 +1,962 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+<title>Israel Says No Decision Yet to Attack Iran - NYTimes.com</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Israel’s defense minister said on Wednesday that a decision on a possible attack was “very far off,” as Russia signaled renewed aversion to tighter sanctions on Iran.">
+<meta name="keywords" content="Embargoes and Economic Sanctions,Nuclear Weapons,Traffic Accidents and Safety,International Relations,Defense and Military Forces,Barak  Ehud,Iran,Russia,Israel">
+<meta name="ROBOTS" content="NOARCHIVE">
+<meta name="DISPLAYDATE" content="January 18, 2012">
+<meta name="hdl" content="Israel Says No Decision Yet to Attack Iran">
+<meta name="hdl_p" content="As Powers Maneuver, Israel Says No Decision Yet to Attack Iran">
+<meta name="byl" content="By ISABEL KERSHNER, ELLEN BARRY and ALAN COWELL">
+<meta name="lp" content="Israel’s defense minister said on Wednesday that a decision on a possible attack was “very far off,” as Russia signaled renewed aversion to tighter sanctions on Iran.">
+<meta name="cre" content="The New York Times">
+<meta name="edt" content="The New York Times on the Web">
+<meta name="pdate" content="20120118">
+
+<meta name="ttl" content="">
+<meta name="virtloc" content="">
+<meta name="des" content="Embargoes and Economic Sanctions;Nuclear Weapons;Traffic Accidents and Safety;International Relations;Defense and Military Forces">
+<meta name="per" content="Barak, Ehud">
+<meta name="org" content="">
+<meta name="geo" content="Iran;Russia;Israel">
+<meta name="slug" content="19iran">
+<meta name="misspelling" content="">
+<meta name="dat" content="January 18, 2012">
+<meta name="tom" content="News">
+<meta name="cat" content="">
+<meta name="col" content="">
+<meta name="dsk" content="World / Middle East">
+<meta name="articleid" content="100000001293582">
+<meta name="ARTICLE_TEMPLATE_VERSION" CONTENT="700">
+<meta name="hdr_img" content="/images/article/header/sect_world.gif">
+<meta name="thumbnail" content="">
+
+<meta name="thumbnail_height" content="">
+<meta name="thumbnail_width" content="">
+<meta name="xlarge" content="">
+<meta name="xlarge_height" content="">
+<meta name="xlarge_width" content="">
+<meta name="sectionfront_jsonp" content="http://json8.nytimes.com/pages/world/middleeast/index.jsonp">
+<meta name="CG" content="world">
+<meta name="SCG" content="middleeast">
+<meta name="PT" content="Article">
+<meta name="PST" content="News">
+<meta name="msapplication-starturl" content="http://www.nytimes.com/">
+<link rel="canonical" href="http://www.nytimes.com/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?pagewanted=all">
+<meta property="og:url" content="http://www.nytimes.com/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?pagewanted=all"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="Israel Says No Decision Yet to Attack Iran"/>
+<meta property="og:image" content="http://graphics8.nytimes.com/images/common/icons/t_wb_75.gif"/>
+<meta property="fb:app_id" content="9869919170"/>
+
+
+<link rel="stylesheet" type="text/css" href="http://graphics8.nytimes.com/css/0.1/screen/build/article/2.0/styles.css"><!--[if IE]>
+    <style type="text/css">
+        @import url(http://graphics8.nytimes.com/css/0.1/screen/common/ie.css);
+    </style>
+<![endif]-->
+<!--[if IE 6]>
+    <style type="text/css">
+        @import url(http://graphics8.nytimes.com/css/0.1/screen/common/ie6.css);
+    </style>
+<![endif]-->
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/common.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/common/screen/DropDown.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/util/tooltip.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/common/screen/altClickToSearch.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/app/article/upNext.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/article/articleShare.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/article/comments/crnrXHR.js"></script>
+
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/app/article/articleCommentCount.js?v=20111130"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/app/lib/jquery/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/EmbeddedComments/jquery.tmpl.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/EmbeddedComments/commentsConfig.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/EmbeddedComments/embeddedComments.js"></script>
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/app/article/articleEmbeddedComments.js"></script>
+</head>
+
+    
+
+<body >
+
+<script type="text/javascript">
+function getMetaValue(name) {
+  var els = document.getElementsByName(name);
+  if (els && els[0]) { return els[0].content; }
+  return "";
+}
+
+<!-- Begin KRUX Digital Control Tag for New York Times -->
+
+KRUXSetup = {
+   pubid: "79816aa8-435a-471a-be83-4b3e0946daf2",
+   site: "NYTimes",
+   section: getMetaValue('CG'),
+   subSection: getMetaValue('SCG'),
+   pageAttributes: {
+      page_type: getMetaValue('PT')
+   }
+};
+</script>
+<script type="text/javascript" src="http://cdn.krxd.net/kruxcontent/releases/krux-4.7.2.js"></script>
+<!-- End KRUX Digital Control Tag for New York Times -->
+
+<a name="top"></a>
+<div id="shell">
+<ul id="memberTools">
+
+<!-- start text link -->
+<li class="cColumn-TextAdsHeader">Subscribe:
+<a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Bar1&sn2=958e0354/bcb65934&sn1=b40a0f68/25a41e6a&camp=nyt2011-circ-bar1-dbl-test-side-x-side-non-hp&ad=052711-bar1-hd-digi-h3847Q-d3847R&goto=https%3A%2F%2Fwww%2Enytimesathome%2Ecom%2Fhd%2F142%3FMediaCode%3DW47AF%26CMP%3D3847Q" target="_blank">
+Home Delivery</a> / <a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Bar1&sn2=958e0354/bcb65934&sn1=baec058e/381f84b2&camp=nyt2011-circ-bar1-dbl-test-side-x-side-non-hp&ad=052711-bar1-hd-digi-h3847Q-d3847R&goto=http%3A%2F%2Fwww%2Enytimes%2Ecom%2Fsubscriptions%2FMultiproduct%2Flp5558%2Ehtml%3Fadxc%3D162578%26adxa%3D267522%26page%3Dwww.nytimes.com/yr/mo/day/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html%26pos%3DBar1%26campaignId%3D3847R" target="_blank">Digital</a>
+
+</li>
+<!-- end text link -->
+
+ 
+                        <li><a id="memberToolsLogin" href="https://myaccount.nytimes.com/auth/login">Log In</a></li>
+            <li><a href="https://myaccount.nytimes.com/gst/regi.html" onClick="dcsMultiTrack('WT.z_ract', 'Regnow', 'WT.z_rprod', 'Masthead');">Register Now</a></li>
+                            
+
+<li><a href="http://www.nytimes.com/membercenter/sitehelp.html">Help</a></li>
+</ul>
+<div class="tabsContainer">
+<ul id="mainTabs" class="tabs">
+<li class="first mainTabHome"><a href="http://www.nytimes.com">Home Page</a></li>
+
+<li class="mainTabTodaysPaper"><a href="http://www.nytimes.com/pages/todayspaper/index.html">Today's Paper</a></li>
+<li class="mainTabVideo"><a href="http://www.nytimes.com/video">Video</a></li>
+<li class="mainTabMostPopular"><a href="http://www.nytimes.com/mostpopular">Most Popular</a></li>
+<li class="mainTabTimesTopics"><a href="http://topics.nytimes.com/top/reference/timestopics">Times Topics</a></li>
+</ul>
+</div>
+<script type="text/javascript">
+window.setTimeout(function() {
+  var login = document.getElementById('memberToolsLogin');
+  if (login) {
+    login.href += "?URI=" + window.location.href;
+  }
+}, 0)
+</script>
+<div id="page" class="tabContent active">
+<div class="clearfix" id="masthead">
+
+<div class="singleAd" id="Middle1C">
+<!-- ADXINFO classification="Button88x31" campaign="ING_DirectSiteSearch12-1786280-nyt1"--><A HREF="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Middle1C&sn2=7303e834/ab9afbe3&sn1=facc780b/b59f6e47&camp=ING_DirectSiteSearch12-1786280-nyt1&ad=DirectSiteSearch12.ROS.dart88x31&goto=http://ad.doubleclick.net/jump/N3282.nytimes.comSD6440/B6188947;sz=88x31;pc=nyt176128A288112;ord=2012.01.18.18.28.29?" TARGET="_blank">
+
+<IMG SRC="http://ad.doubleclick.net/ad/N3282.nytimes.comSD6440/B6188947;sz=88x31;pc=nyt176128A288112;ord=2012.01.18.18.28.29?"
+ BORDER=0 WIDTH=88 HEIGHT=31
+ ALT="Click Here"></A>
+</div>
+
+<div id="searchWidget">
+<div class="inlineSearchControl">
+<form enctype="application/x-www-form-urlencoded" action="http://query.nytimes.com/search/sitesearch" method="get" name="searchForm" id="searchForm">
+<input type="hidden" value="full" name="date_select"/>
+<label for="searchQuery">Search All NYTimes.com</label>
+<input type="text" class="text" value="" size="" name="query" id="searchQuery"/>
+<input type="hidden" id="searchAll" name="type" value="nyt"/>
+<input id="searchSubmit" title="Search" width="22" height="19" alt="Search" type="image" src="http://graphics8.nytimes.com/images/global/buttons/go.gif">
+</form>
+</div>
+</div>
+<div id="branding" >
+<a href="http://www.nytimes.com"><span id="nytIhtMastheadLogo">
+
+<a href="http://www.nytimes.com"><img src="http://graphics8.nytimes.com/images/misc/nytlogo152x23.gif" alt="New York Times" id="NYTLogo"/></a>
+</span></a>
+</div>
+
+<h2>
+
+<a href="http://www.nytimes.com/pages/world/middleeast/index.html">Middle East</a>
+</h2>
+
+</div>
+<div class="navigation tabsContainer">
+<ul class="tabs">
+<li id="navWorld" class="first selected">
+<a href="http://www.nytimes.com/pages/world/index.html">World</a>
+<ul class="subNavigation"><li id="subNav_africa"><a href="/pages/world/africa/index.html">Africa</a></li><li id="subNav_americas"><a href="/pages/world/americas/index.html">Americas</a></li><li id="subNav_asia"><a href="/pages/world/asia/index.html">Asia Pacific</a></li><li id="subNav_europe"><a href="/pages/world/europe/index.html">Europe</a></li><li id="subNav_middleeast" class="selected nochildren" ><a href="/pages/world/middleeast/index.html">Middle East</a></li></ul></li>   <li id="navUs" >
+
+<a href="http://www.nytimes.com/pages/national/index.html">U.S.</a>
+</li>   <li id="navNyregion" >
+<a href="http://www.nytimes.com/pages/nyregion/index.html">N.Y. / Region</a>
+</li>   <li id="navBusiness" >
+<a href="http://www.nytimes.com/pages/business/index.html">Business</a>
+</li>   <li id="navTechnology" >
+<a href="http://www.nytimes.com/pages/technology/index.html">Technology</a>
+</li>   <li id="navScience" >
+<a href="http://www.nytimes.com/pages/science/index.html">Science</a>
+
+</li>   <li id="navHealth" >
+<a href="http://www.nytimes.com/pages/health/index.html">Health</a>
+</li>   <li id="navSports" >
+<a href="http://www.nytimes.com/pages/sports/index.html">Sports</a>
+</li>   <li id="navOpinion" >
+<a href="http://www.nytimes.com/pages/opinion/index.html">Opinion</a>
+</li>   <li id="navArts" >
+<a href="http://www.nytimes.com/pages/arts/index.html">Arts</a>
+</li>   <li id="navStyle" >
+
+<a href="http://www.nytimes.com/pages/style/index.html">Style</a>
+</li>   <li id="navTravel" >
+<a href="http://www.nytimes.com/pages/travel/index.html">Travel</a>
+</li>   <li id="navJobs" >
+<a href="http://www.nytimes.com/pages/jobs/index.html">Jobs</a>
+</li>   <li id="navRealestate" >
+<a href="http://www.nytimes.com/pages/realestate/index.html">Real Estate</a>
+</li>   <li id="navAutomobiles" >
+<a href="http://www.nytimes.com/pages/automobiles/index.html">Autos</a>
+
+</li></ul>
+</div>
+
+
+
+
+<div id="main">
+<div class="spanAB wrap closing">
+<div id="abColumn" class="abColumn"><!--open abColumn -->
+<div id="article">
+<!--cur: prev:-->
+<div class="columnGroup first">             
+<h1 class="articleHeadline"><NYT_HEADLINE  version="1.0" type=" ">As Powers Maneuver, Israel Says No Decision Yet to Attack Iran</NYT_HEADLINE></h1>
+<NYT_BYLINE >    <h6 class="byline">By ISABEL KERSHNER, ELLEN BARRY and ALAN COWELL</h6>
+
+</NYT_BYLINE>
+<h6 class="dateline">Published: January 18, 2012    </h6>
+<script type="text/javascript">
+var articleToolsShareData = {"url":"http:\/\/www.nytimes.com\/2012\/01\/19\/world\/middleeast\/iran-nuclear-program-sanctions-russia-israel-attack.html","headline":"As Powers Maneuver, Israel Says No Decision Yet to Attack Iran","description":"Israel\u2019s defense minister said on Wednesday that a decision on a possible attack was \u201cvery far off,\u201d as Russia signaled renewed aversion to tighter sanctions on Iran.","keywords":"Embargoes and Economic Sanctions,Nuclear Weapons,Traffic Accidents and Safety,International Relations,Defense and Military Forces,Barak  Ehud,Iran,Russia,Israel","section":"world","sub_section":"middleeast","section_display":"World","sub_section_display":"Middle East","byline":"By ISABEL KERSHNER, ELLEN BARRY and ALAN COWELL","pubdate":"January 18, 2012","passkey":null};
+function getShareURL() {
+    return encodeURIComponent(articleToolsShareData.url);
+}
+function getShareHeadline() {
+    return encodeURIComponent(articleToolsShareData.headline);
+}
+function getShareDescription() {
+    return encodeURIComponent(articleToolsShareData.description);
+}
+function getShareKeywords() {
+    return encodeURIComponent(articleToolsShareData.keywords);
+}
+function getShareSection() {
+    return encodeURIComponent(articleToolsShareData.section);
+}
+function getShareSubSection() {
+    return encodeURIComponent(articleToolsShareData.sub_section);
+}
+function getShareSectionDisplay() {
+    return encodeURIComponent(articleToolsShareData.section_display);
+}
+function getShareSubSectionDisplay() {
+    return encodeURIComponent(articleToolsShareData.sub_section_display);
+}
+function getShareByline() {
+    return encodeURIComponent(articleToolsShareData.byline);
+}
+function getSharePubdate() {
+    return encodeURIComponent(articleToolsShareData.pubdate);
+}
+function getSharePasskey() {
+    return encodeURIComponent(articleToolsShareData.passkey);
+}
+</script>
+<div id="articleToolsTop" class="articleTools">
+<div class="box">
+<div class="inset">
+<ul id="toolsList" class="toolsList wrap">
+<li class="comments"><a href="#commentsContainer" >comments <span id="commentCount"></span></a></li>
+<li class="email">
+
+<a id="emailThis" onClick="s_code_linktrack('Article-Tool-EmailSignIn');" 
+           href="http://www.nytimes.com/auth/login?URI=http://www.nytimes.com/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html">Sign In to E-Mail</a>
+</li>
+<li class="print">
+
+<A HREF="/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?_r=1&hp=&pagewanted=print">Print</a>
+</li>
+ <li class="singlePage">
+<A HREF="/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?_r=1&hp=&pagewanted=all"> Single Page</a>
+ </li>
+<NYT_REPRINTS_FORM>
+
+<script name="javascript">
+    function submitCCCForm(){
+        var PopUp = window.open('', '_Icon','location=no,toolbar=no,status=no,width=650,height=550,scrollbars=yes,resizable=yes');
+        var form = document.forms["cccform"];
+        // ensure that we are operating on the Form, not a NodeList
+        if (form.nodeName == "FORM") {
+            form.submit();
+        } else if (form[0] && form[0].nodeName == "FORM") {
+            form[0].submit();
+        }
+    }
+    </script>
+<li class="reprints">           <form name="cccform" action="https://s100.copyright.com/CommonApp/LoadingApplication.jsp" target="_Icon">
+<input type="hidden" name="Title" value="As Powers Maneuver, Israel Says No Decision Yet to Attack Iran">
+
+<input type="hidden" name="Author" value="By ISABEL KERSHNER, ELLEN BARRY and ALAN COWELL ">
+<input type="hidden" name="ContentID" value="http://www.nytimes.com/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html">
+<input type="hidden" name="FormatType" value="default">
+<input type="hidden" name="PublicationDate" value="January 19, 2012">
+<input type="hidden" name="PublisherName" value="The New York Times">
+<input type="hidden" name="Publication" value="nytimes.com">
+<input type="hidden" name="wordCount" value="12">
+</form>
+<a href="#" onClick="submitCCCForm()">Reprints</a>
+</li>           
+</NYT_REPRINTS_FORM>
+</ul>
+<div class="articleToolsSponsor" id="Frame4A"><!-- ADXINFO classification="Button120x60" campaign="FSL2012_ArticleTools_120x60_1787487b_nyt5"--><a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Frame4A&sn2=8ca84067/d4c26d2b&sn1=fecde0f6/ddaab28d&camp=FSL2012_ArticleTools_120x60_1787487b_nyt5&ad=BEMH_120x60_jan13&goto=http%3A%2F%2Fwww%2Efoxsearchlight%2Ecom%2Fthebestexoticmarigoldhotel%2F" target="_blank">
+<img src="http://graphics8.nytimes.com/adx/images/ADS/28/94/ad.289411/BEMH_NYT120x60.gif" width="120" height="60" border="0"></a>
+</div>        </div>
+
+</div>
+</div>
+<div class="articleBody">
+
+
+
+
+<NYT_TEXT >
+
+<NYT_CORRECTION_TOP>
+</NYT_CORRECTION_TOP>
+    <p>
+JERUSALEM &mdash; Defense Minister <a title="Times Topic Page" href="http://topics.nytimes.com/top/reference/timestopics/people/b/ehud_barak/index.html?scp=1-spot&sq=Ehud%20Barak&st=cse">Ehud Barak</a> of <a title="Times Topic Page" href="http://topics.nytimes.com/top/news/international/countriesandterritories/israel/index.html?scp=1-spot&sq=Israel&st=cse">Israel</a> said on Wednesday that any decision on attacking <a title="Times Topic Page" href="http://topics.nytimes.com/top/news/international/countriesandterritories/iran/index.html?scp=1-spot&sq=Iran&st=cse">Iran</a> because of its <a href="http://topics.nytimes.com/top/news/international/countriesandterritories/iran/nuclear_program/index.html?inline=nyt-classifier" title="Recent and archival news about Iran's nuclear program." class="meta-classifier">nuclear program</a> was &ldquo;very far off,&rdquo; apparently seeking to lower the tone of increasingly nervous discourse as powers maneuver in advance of European moves to intensify sanctions against Tehran.        </p> 
+
+</div>
+<div class="articleInline runaroundLeft">
+  
+<!--forceinline-->    
+<div class="columnGroup doubleRule">     
+<h3 class="sectionHeader">Related</h3>
+<ul class="headlinesOnly multiline flush">
+<li>
+<h6><a href="http://www.nytimes.com/2012/01/18/world/middleeast/after-iran-scientists-death-arrests-and-heightened-security.html?ref=middleeast">
+Iran Tightens Its Security for Scientists After Killing</a>
+(January 18, 2012)
+</h6>
+</li>
+</ul>
+</div>
+
+<div class="doubleRule"><div class="story">
+
+<div class="runaroundRight"><a href="http://twitter.com/#!/nytimesworld"><img src="http://graphics8.nytimes.com/images/2011/09/26/world/world_75_twitter/world_75_twitter-thumbStandard.jpg" height="75" width="75" alt="Metro Twitter Logo." /></a></div>
+  <h4><a href="http://twitter.com/#!/nytimesworld">Connect With Us on Twitter</a></h4>
+  <p class="summary">Follow <a href="http://twitter.com/#!/nytimesworld">@nytimesworld</a> for international breaking news and headlines.</p>
+
+</div></div>  
+</div>
+<div id="readerscomment" class="inlineLeft"></div>
+<div class="articleBody">
+
+ <p>
+At the same time, Foreign Minister Sergey V. Lavrov of <a href="http://topics.nytimes.com/top/news/international/countriesandterritories/russiaandtheformersovietunion/index.html?inline=nyt-geo" title="More news and information about Russia and the Post-Soviet Nations." class="meta-loc">Russia</a> renewed his country&rsquo;s aversion to sanctions and military threats against Tehran, while Foreign Minister Ali Akbar Salehi of Iran said his country was ready to resume negotiations with the outside powers &mdash; Britain, China, France, Germany, Russia and the United States &mdash; trying to broker a settlement.        </p><p>
+Mr. Salehi said during a visit to Turkey on Wednesday that negotiations were under way about the venue and date, Iran&rsquo;s official Islamic Republic News Agency reported, and that the talks &ldquo;will most probably be held in Istanbul.&rdquo;        </p><p>
+
+The previous negotiations &mdash; also in Istanbul &mdash; broke off a year ago when Iran presented its own set of preconditions, including a lifting of sanctions, that the West considered unacceptable.        </p><p>
+Mr. Salehi made similar remarks about a resumption of the talks during a visit to Tehran two weeks ago by Foreign Minister Ahmet Davutoglu of Turkey, and some European officials have interpreted his remarks as an effort to buy time just days before European foreign ministers are to meet next week to discuss possible measures to curb Iran&rsquo;s critical oil exports.        </p><p>
+Speaking at an annual news conference in Moscow, Mr. Lavrov took issue with Western policy on Iran, saying a military strike would be a &ldquo;disaster.&rdquo;        </p><p>
+He said sanctions now being proposed against Tehran had been couched in terms of nuclear nonproliferation but were &ldquo;seriously intended to have a smothering effect on the Iranian economy and the Iranian population, probably in the hopes of provoking discontent.&rdquo;&nbsp;        </p><p>
+
+Mr. Barak was speaking in an interview with Israel&rsquo;s Army Radio at time of high tension following the <a title="Times article" href="http://www.nytimes.com/2012/01/12/world/middleeast/iran-reports-killing-of-nuclear-scientist.html?scp=1&sq=Mostafa%20Ahmadi%20Roshan&st=cse">assassination of on Jan. 11 of Mostafa Ahmadi Roshan</a>, the deputy director of Iran&rsquo;s Natanz uranium enrichment site &mdash; an act blamed by President <a title="Times Topic Page" href="http://topics.nytimes.com/top/reference/timestopics/people/a/mahmoud_ahmadinejad/index.html?scp=1-spot&sq=Mahmoud%20Ahmadinejad&st=cse">Mahmoud Ahmadinejad</a> on Tuesday as the work of &ldquo;the evil hands of arrogance and Zionist agents.&rdquo; On Tuesday, Mr. Ahmadinejad ordered stricter security to protect Iranian scientists from what some experts have portrayed as a covert war against Iran&rsquo;s nuclear program.        </p><p>
+After the assassination, Israel&rsquo;s leaders maintained a customary, cryptic silence while the White House condemned it and vigorously denied any responsibility. At least five Iranian scientists with nuclear connections have been killed since 2007.        </p><p>
+
+Tehran says its uranium enrichment efforts are for peaceful civilian purposes, but that assertion jars increasingly with Western insistence, supported by the International Atomic Energy Agency, that Iranian scientists have been working toward building <a href="http://topics.nytimes.com/top/news/science/topics/atomic_weapons/index.html?inline=nyt-classifier" title="More articles about nuclear weapons." class="meta-classifier">nuclear weapons</a>.        </p><p>
+Twisting the spiral of regional tension, <a title="Times Topic Page" href="http://topics.nytimes.com/top/news/international/countriesandterritories/israel/index.html?scp=1-spot&sq=Israel&st=cse">Israel</a> has been pressing for more aggressive and immediate American-led sanctions against Iran while the Iranians have threatened to shut off the Strait of Hormuz, the maritime conduit for a fifth of the world&rsquo;s oil.        </p><p>
+Mr. Barak&rsquo;s remarks also came ahead of an imminent visit to Israel by the American chairman of the Joint Chiefs of Staff, Gen. Martin E. Dempsey. Israeli media commentators have suggested that General Dempsey was coming in part to warn Israel against going it alone in striking Iran&rsquo;s nuclear facilities.        </p><p>
+Mr. Barak denied that suggestion, saying that military chiefs &ldquo;are concerned with formulating different military options and bringing their views to the political leadership, and don&rsquo;t deal with delivering diplomatic messages.&rdquo;        </p><p>
+
+Still, efforts seem to be under way on both sides to reduce regional anxieties.        </p><p>
+Israel and the United States agreed this week to postpone major joint missile-defense exercises that had been scheduled for the spring. Israel&rsquo;s foreign minister, Avigdor Lieberman, cited &ldquo;diplomatic and regional reasons, the tensions and instability,&rdquo; as factors in the delay.        </p><p>
+In the interview with Army Radio on Wednesday Mr. Barak reiterated the Israeli assessment that Iran has not started building nuclear weapons.        </p><p>
+&ldquo;The Iranians have not ended the oversight exercised by the International Atomic Energy Agency,&rdquo; he said, adding, &ldquo;They have not done that because they know that that would constitute proof of the military nature of their nuclear program and that would provoke stronger international sanctions or other types of action against their country.&rdquo;        </p><p>
+The official Islamic Republic News Agency confirmed on Tuesday that a team from the International Atomic Energy Agency would visit Iran for three days starting Jan. 29.        </p><p>
+
+Israel has kept open the possibility of military action against Iran, saying that a credible threat is necessary to back up the sanctions effort.        </p><div id="pageLinks"><ul id="pageNumbers"><li> 1 </li><li> <a onClick="s_code_linktrack('Article-MultiPagePageNum2');" title="Page 2" href="/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?pagewanted=2&_r=1&hp">2</a> </li></ul><a class="next" onClick="s_code_linktrack('Article-MultiPage-Next');"
+            title="Next Page"
+            href="/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?pagewanted=2&_r=1&hp">Next Page &#x00bb;</a></div><NYT_AUTHOR_ID>   <div class="authorIdentification">
+<p>Isabel Kershner reported from Jerusalem, Ellen Barry from Moscow and Alan Cowell from London.
+</p>    </div>
+</NYT_AUTHOR_ID><NYT_CORRECTION_BOTTOM> <div class="articleCorrection">
+</div>
+</NYT_CORRECTION_BOTTOM><NYT_UPDATE_BOTTOM>
+</NYT_UPDATE_BOTTOM>
+
+</NYT_TEXT>
+</div>  </div>
+<!--cur: prev:-->
+<div class="columnGroup ">              
+<div class="articleFooter">
+</div>  </div>
+<!--cur: prev:-->
+<div class="columnGroup ">              
+<div id="articleExtras">
+<div class="expandedToolsRight">
+<div class="articleTools">
+<div class="box">
+<div class="inset">
+<ul id="toolsList" class="toolsList wrap">
+<li class="comments"><a href="#commentsContainer" >comments <span id="commentCount"></span></a></li>
+
+<li class="email">
+<a id="emailThis" onClick="s_code_linktrack('Article-Tool-EmailSignIn');" 
+            href="http://www.nytimes.com/auth/login?URI=http://www.nytimes.com/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html">Sign In to E-Mail</a>
+</li>
+<li class="print">
+<A HREF="/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?_r=1&hp=&pagewanted=print">Print</a>
+</li>
+ <li class="singlePage">
+<A HREF="/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html?_r=1&hp=&pagewanted=all"> Single Page</a>
+ </li>
+<NYT_REPRINTS_FORM>
+
+<script name="javascript">
+    function submitCCCForm(){
+        var PopUp = window.open('', '_Icon','location=no,toolbar=no,status=no,width=650,height=550,scrollbars=yes,resizable=yes');
+        var form = document.forms["cccform"];
+        // ensure that we are operating on the Form, not a NodeList
+        if (form.nodeName == "FORM") {
+            form.submit();
+        } else if (form[0] && form[0].nodeName == "FORM") {
+            form[0].submit();
+        }
+    }
+    </script>
+<li class="reprints">           <form name="cccform" action="https://s100.copyright.com/CommonApp/LoadingApplication.jsp" target="_Icon">
+<input type="hidden" name="Title" value="As Powers Maneuver, Israel Says No Decision Yet to Attack Iran">
+<input type="hidden" name="Author" value="By ISABEL KERSHNER, ELLEN BARRY and ALAN COWELL ">
+<input type="hidden" name="ContentID" value="http://www.nytimes.com/2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html">
+<input type="hidden" name="FormatType" value="default">
+<input type="hidden" name="PublicationDate" value="January 19, 2012">
+<input type="hidden" name="PublisherName" value="The New York Times">
+<input type="hidden" name="Publication" value="nytimes.com">
+<input type="hidden" name="wordCount" value="12">
+</form>
+<a href="#" onClick="submitCCCForm()">Reprints</a>
+</li>           
+</NYT_REPRINTS_FORM>
+
+</ul>
+        </div>
+</div>
+</div>
+<script type="text/javascript">
+writePost();
+</script>
+</div>
+</div>
+
+<div class="singleAd" id="Bottom1">
+<table width="100%" border="0">
+<tr>
+<td><a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Bottom1&sn2=b9754b02/2563d4ee&sn1=bf8e7366/71c21872&camp=nyt2012-circ-footer_clickhere-36H9U&ad=051110-footer_clickhere-36H9U&goto=https%3A%2F%2Fwww%2Enytimesathome%2Ecom%2Fhd%2F101%3FSPTR%5FID%3DhdNYT%26MediaCode%3DW16AK%26CMP%3D36H9U"><img src="http://graphics8.nytimes.com/ads/circulation/icon-newspaper.jpg" height="27" width="40" alt="Get Home
+Delivery" align="middle" border="0"/><font size="-1" class="nav" color="#000066" align="left">&nbsp;Get 50% Off The New York Times & Free All Digital Access.</font></a>
+
+</td>
+</tr>
+</table>
+</div>
+
+</div>
+<!--cur: prev:-->
+<div class="columnGroup ">              
+<div id="embeddedCommentsTileAd" class="hidden">   
+
+<div class="singleAd" id="Spon2">
+<!-- ADXINFO classification="Button88x31" campaign="FSL2012_ArticleTools_88x31_1787487h_nyt5"--><a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Spon2&sn2=1e465ba/af8a6e55&sn1=dd5e6e0d/c73d3a3f&camp=FSL2012_ArticleTools_88x31_1787487h_nyt5&ad=BEMH_88x31_sept16&goto=http%3A%2F%2Fwww%2Efoxsearchlight%2Ecom%2Fthebestexoticmarigoldhotel" target="_blank">
+<img src="http://graphics8.nytimes.com/adx/images/ADS/27/65/ad.276503/BEMH_88x31.jpg" width="88" height="31" border="0"></a>
+
+</div>
+
+</div>
+<div id="commentsContainer" class="commentsContainer" ></div>
+
+</div>
+<!--cur: prev:-->
+<div class="columnGroup ">              
+<div class="singleRuleDivider"></div>
+<div class="articleBottomExtra subColumns">
+<div class="column">
+<script type="text/javascript" src="http://graphics8.nytimes.com/js/app/article/outbrain.js"></script>    </div>                
+<div class="column lastColumn">
+<div class="emailAlertModule module">
+<h5 class="sectionHeaderSm">Get Free E-mail Alerts on These Topics</h5>
+<form action="https://myaccount.nytimes.com/mem/tnt.html" method="GET" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="retA" value="http://www.nytimes.com//2012/01/19/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html" >
+<input type="hidden" name="retT" value="As Powers Maneuver, Israel Says No Decision Yet to Attack Iran">
+<input type="hidden" name="module" value="call">
+
+<input type="hidden" name="alert_context" value="1">
+<ul class="flush">
+<li>
+<input type="hidden" name="topic1" value="Iran">
+<input type="hidden" name="topic_field1" value="geo">
+<a class="inTextReferEmail" href="https://myaccount.nytimes.com/mem/tnt.html?module=call&alert_context=1&topic1=Iran&topic_field1=geo&topic1_check=y&retA=&retT=&cskey=" onClick="javascript:s_code_linktrack('Article-RelatedTopics'); dcsMultiTrack('DCS.dcssip','www.nytimes.com','DCS.dcsuri','/newstracker/add.html','WT.ti','Newstracker Add','WT.z_nta','Add','WT.pers','Per','WT.z_dcsm','1');" onmousedown="NYTD.relatedSearches.clickHandler(event);"  >Iran</a>
+</li>
+<li>
+<input type="hidden" name="topic1" value="Russia">
+<input type="hidden" name="topic_field1" value="geo">
+<a class="inTextReferEmail" href="https://myaccount.nytimes.com/mem/tnt.html?module=call&alert_context=1&topic1=Russia&topic_field1=geo&topic1_check=y&retA=&retT=&cskey=" onClick="javascript:s_code_linktrack('Article-RelatedTopics'); dcsMultiTrack('DCS.dcssip','www.nytimes.com','DCS.dcsuri','/newstracker/add.html','WT.ti','Newstracker Add','WT.z_nta','Add','WT.pers','Per','WT.z_dcsm','1');" onmousedown="NYTD.relatedSearches.clickHandler(event);"  >Russia</a>
+</li>
+<li>
+<input type="hidden" name="topic1" value="Embargoes+and+Economic+Sanctions">
+<input type="hidden" name="topic_field1" value="des">
+
+<a class="inTextReferEmail" href="https://myaccount.nytimes.com/mem/tnt.html?module=call&alert_context=1&topic1=Embargoes+and+Economic+Sanctions&topic_field1=des&topic1_check=y&retA=&retT=&cskey=" onClick="javascript:s_code_linktrack('Article-RelatedTopics'); dcsMultiTrack('DCS.dcssip','www.nytimes.com','DCS.dcsuri','/newstracker/add.html','WT.ti','Newstracker Add','WT.z_nta','Add','WT.pers','Per','WT.z_dcsm','1');" onmousedown="NYTD.relatedSearches.clickHandler(event);"  >Embargoes and Economic Sanctions</a>
+</li>
+<li>
+<input type="hidden" name="topic1" value="Nuclear+Weapons">
+<input type="hidden" name="topic_field1" value="des">
+<a class="inTextReferEmail" href="https://myaccount.nytimes.com/mem/tnt.html?module=call&alert_context=1&topic1=Nuclear+Weapons&topic_field1=des&topic1_check=y&retA=&retT=&cskey=" onClick="javascript:s_code_linktrack('Article-RelatedTopics'); dcsMultiTrack('DCS.dcssip','www.nytimes.com','DCS.dcsuri','/newstracker/add.html','WT.ti','Newstracker Add','WT.z_nta','Add','WT.pers','Per','WT.z_dcsm','1');" onmousedown="NYTD.relatedSearches.clickHandler(event);"  >Nuclear Weapons</a>
+</li>
+</ul>
+</form>
+</div>
+</div>
+</div>  </div>
+<!--cur: prev:-->
+<div class="columnGroup last">              
+
+
+<div class="columnGroup" id="adxSponLink"></div>
+<script language="JavaScript">
+        google_hints="As Powers Maneuver, Israel Says No Decision Yet to Attack Iran";google_ad_channel="archive, archive_world, archive_World";
+</script>
+<!-- ADXINFO classification="feature_squares" campaign="ARTICLE_GOOGLE_SPONLINK_2012"--><script language="JavaScript" type="text/javascript">
+    
+    // Sponlink_short
+
+    NYTD.GoogleAds.getGoogleAds("AFC", { 
+        google_ad_client:'nytimes_article_var',
+    google_ad_channel:'left',
+        ad_target_list:'sponLink'
+    });
+</script>
+
+</div>
+</div>
+</div><!--close abColumn -->
+<div id="cColumn" class="cColumn">
+
+<div class="columnGroup">
+
+</div>
+<!---->                    <div class="columnGroup first">
+
+</div>
+<!---->                    <div class="columnGroup ">
+
+<div class="singleAd" id="MiddleRight">
+<!-- ADXINFO classification="sumo" campaign="ColeHaan_Jan2012_1786623a_nyt8"--><div align="center">
+<SCRIPT type="text/javascript" SRC="http://ad.doubleclick.net/adj/N3093.6440.3838575242521/B6219381.5;sz=300x600;pc=nyt177371A288832;ord=2012.01.18.18.28.29?;click=http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=MiddleRight&camp=ColeHaan_Jan2012_1786623a_nyt8&ad=ColeHaanJan_InternationalNews_300x600&sn2=5355cf72/cfe8985b&snr=doubleclick&snx=1326910857&sn1=e5ef3e6e/714f7a40&goto=">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=MiddleRight&sn2=5355cf72/cfe8985b&sn1=f0a6587c/7aae10f8&camp=ColeHaan_Jan2012_1786623a_nyt8&ad=ColeHaanJan_InternationalNews_300x600&goto=http://ad.doubleclick.net/jump/N3093.6440.3838575242521/B6219381.5;sz=300x600;pc=nyt177371A288832;ord=2012.01.18.18.28.29?" TARGET="_blank">
+<IMG SRC="http://ad.doubleclick.net/ad/N3093.6440.3838575242521/B6219381.5;sz=300x600;pc=nyt177371A288832;ord=2012.01.18.18.28.29?"
+ BORDER=0 WIDTH=300 HEIGHT=600
+ ALT="Click Here"></A>
+</NOSCRIPT>
+</div>
+</div>
+
+</div>
+<!---->                    <div class="columnGroup ">
+
+<div class="singleAd" id="Box3">
+<!-- ADXINFO classification="feature_squares" campaign="nyt2011-regilite-P2-ticketwatch"--><IFRAME title="regilite" src="https://myaccount.nytimes.com/regilite?product=TR" width="336" height="90" marginheight="0" marginwidth="0" frameborder="0" vspace="0" hspace="0" scrolling="no"></IFRAME> 
+
+</div>
+
+</div>
+<!---->                    <div class="columnGroup ">
+
+</div>
+<!---->                    <div class="columnGroup ">
+<div id="mostPopWidget" class="doubleRule nocontent"></div>
+<script src="http://graphics8.nytimes.com/js/app/recommendations/recommendationsModule.js" type="text/javascript" charset="utf-8"></script>
+</div>
+<!---->                    <div class="columnGroup ">
+
+</div>
+<!---->                    <div class="columnGroup ">
+
+<div class="bigAd" id="Box1">
+<!-- ADXINFO classification="ModuleBigAd" campaign="nyt2011-digi-thinkInt-worldtest-module-drop-388Q6"--><div align="center">
+<script language="javascript">
+
+function get_cookie (cookie_name)
+{
+  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+  if ( results )
+    return ( unescape ( results[300] ) );
+  else
+    return null;
+}
+var x = get_cookie ( "nytNonDigiSubs" );
+    if ( ! get_cookie ( "nytNonDigiSubs" ) )
+        {
+         document.cookie ='nytNonDigiSubs=NYTimesDropCookie; expires=Sun, 31 Mar 2012 23:59:00 UTC; path=/'
+        //alert("cookie cold dropped");
+        }
+    else
+        {     
+             //alert("cookie found");
+        }
+   var movieWidth = 300;
+   var movieHeight = 250;
+   var altSrc = "http://graphics8.nytimes.com/adx/images/ADS/28/63/ad.286335/11-1115_International_300x250.gif";
+   var swfFile = "http://graphics8.nytimes.com/adx/images/ADS/28/63/ad.286335/11-1115_International_300x250_v2.swf";
+   var altClickThru = "http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Box1&sn2=95880354/bd4e5934&sn1=545dd66/69436bbe&camp=nyt2011-digi-thinkInt-worldtest-module-drop-388Q6&ad=think-global-acquisition-INTL-module-drop-388Q6&goto=http%3A%2F%2Fwww%2Enytimes%2Ecom%2Fsubscriptions%2FMultiproduct%2Flp5558%2Ehtml%3Fadxc%3D175320%26adxa%3D286335%26page%3Dwww.nytimes.com/yr/mo/day/world/middleeast/iran-nuclear-program-sanctions-russia-israel-attack.html%26pos%3DBox1%26campaignId%3D388Q6";
+   var swfSrc = swfFile + "?clickTag=" + escape(altClickThru);
+</script>
+<script type="text/javascript" src="http://www.nytimes.com/ads/common/embed3.js">
+</script>
+</div>
+
+</div>
+
+</div>
+<!---->                    <div class="columnGroup ">
+
+<!--[TwoColumnAdLeft - Begin] -->
+    <div class="adHeader">
+<h4>
+Advertisements      </h4>
+</div>
+<div class="cColumn-TextAdsBox">
+    <div class="cColumn-TextAdsLeft">
+<div class="cColumn-TextAd">
+<!-- ADXINFO classification="SiteForADay" campaign="NYT2011-Mktg-NeediestCases-S4D-ROS"--><div style="width:320px; height:60px;"> 
+
+<a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Right5A&sn2=4b2c958/406f595b&sn1=83a259e6/49fd2187&camp=NYT2011-Mktg-NeediestCases-S4D-ROS&ad=Mtkg_NeediestCases_S4D_2011&goto=https%3A%2F%2Fnytneediestcases%2Ecom%2F" target="_blank"> 
+<img style="float:left; margin-right:10px;" src="http://graphics8.nytimes.com/adx/images/ADS/28/26/ad.282606/11-1929_NeediestCasses_86x60.jpg" width="86" height="60" border="0" style="vertical-align:text-top;"></a>
+
+<a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Right5A&sn2=4b2c958/406f595b&sn1=83a259e6/49fd2187&camp=NYT2011-Mktg-NeediestCases-S4D-ROS&ad=Mtkg_NeediestCases_S4D_2011&goto=https%3A%2F%2Fnytneediestcases%2Ecom%2F" target="_blank">  <br />Help New Yorkers in need.<br />Donate Today.</a>
+
+</div>
+            </div>
+</div>
+    </div>
+<!--[TwoColumnAdLeft - End] -->
+</div>
+<!---->                    <div class="columnGroup ">
+
+<div class="singleAd" id="Middle5">
+<!-- ADXINFO classification="feature_position" campaign="nyt2012-circ-middle5_promise-373LX-38R9W-AK"--><a href="http://www.nytimes.com/adx/bin/adx_click.html?type=goto&opzn&page=www.nytimes.com/yr/mo/day/world/middleeast&pos=Middle5&sn2=f765577a/3e607ccf&sn1=11a3277a/6f515234&camp=nyt2012-circ-middle5_promise-373LX-38R9W-AK&ad=092111-11-middle5_promise-AK&goto=https%3A%2F%2Fwww%2Enytimesathome%2Ecom%2Fhd%2F142%3FMediaCode%3DW42CS%26CMP%3D373LX" target="_blank">
+<img src="http://graphics8.nytimes.com/adx/images/ADS/27/71/ad.277140/11-0922_HDGenericD2_336x79_AK.jpg" width="336" height="79" border="0"></a><div class='kj_cx'></div>
+<script type='text/javascript'>
+var kjData = {akin: 'NYT-IP-4d0abbb3acf67-y05', adWidth: 10, adHeight: 10, btnStyle: 2, crnr: 'bl'};
+if(!kjG){var kjG=[]}kjG.push(kjData);if(!kjLdr){var kjLdr={ld:function(){var b=document; var a=b.createElement('script');a.type='text/javascript';a.src='http://a.akncdn.com/adkeeper.1.0.js'; (b.getElementsByTagName('body')[0]||b.getElementsByTagName('head')[0]).appendChild(a) },init:function(){var a=window,b=document;if(b.addEventListener){a.addEventListener('load',this.ld,false) }else{if(a.attachEvent){a.attachEvent('onload',this.ld)}}}};kjLdr.init()}; </script>
+</div>
+
+</div>
+<!---->                    <div class="columnGroup last">
+
+</div>
+<div class="columnGroup">
+
+<div  id="adxSponLinkA"></div>
+<script language="JavaScript" type="text/javascript">
+    // Sponlink_A_Short
+
+     if (document.getElementById("MiddleRight")) { google_targeting = 'content'; }
+     NYTD.GoogleAds.getGoogleAds("AFC", { 
+        google_ad_client:'nytimes_article_var',
+        ad_target_list:'sponLinkA'
+     });
+
+</script>
+
+</div>
+
+
+
+
+
+<div class="columnGroup">
+</div>
+</div>
+</div><!--close spanAB -->
+
+  <!-- start MOTH -->
+    <div id="insideNYTimes" class="doubleRule">
+            <script type="text/javascript" src="http://js.nyt.com/js/app/moth/moth.js"></script>
+        <div id="insideNYTimesHeader">
+                    <div class="navigation"><span id="leftArrow"><img id="mothReverse" src="http://i1.nyt.com/images/global/buttons/moth_reverse.gif" /></span>&nbsp;<span id="rightArrow"><img id="mothForward" src="http://i1.nyt.com/images/global/buttons/moth_forward.gif" /></span></div>
+
+                <h4>
+            Inside NYTimes.com        </h4>
+    </div>
+    
+        
+    <div id="insideNYTimesScrollWrapper">
+        <table id="insideNYTimesBrowser" cellspacing="0">
+            <tbody>
+                <tr>
+                                                <td class="first">
+
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://www.nytimes.com/pages/health/index.html">Health &raquo;</a>                            </h6>
+            <div class="mothImage">
+                <a href="http://well.blogs.nytimes.com/2012/01/18/how-exercise-may-keep-alzheimers-at-bay/?ref=health"><img src="http://i1.nyt.com/images/2012/01/17/health/MOTH18Physed/MOTH18Physed-moth.jpg" alt="How Exercise May Keep Alzheimer&rsquo;s at Bay" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://well.blogs.nytimes.com/2012/01/18/how-exercise-may-keep-alzheimers-at-bay/?ref=health">How Exercise May Keep Alzheimer&rsquo;s at Bay</a></h6>
+
+        </div>
+    </td>
+                                                <td>
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://www.nytimes.com/pages/opinion/index.html">Opinion &raquo;</a>
+                            </h6>
+            <div class="mothImage">
+
+                <a href="http://www.nytimes.com/2012/01/18/opinion/invitation-to-a-dialogue-right-to-work-laws.html"><img src="http://i1.nyt.com/images/2012/01/18/opinion/18moth_letters/18moth_letters-moth.jpg" alt="Invitation to a Dialogue: &lsquo;Right to Work&rsquo; Laws" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://www.nytimes.com/2012/01/18/opinion/invitation-to-a-dialogue-right-to-work-laws.html">Invitation to a Dialogue: &lsquo;Right to Work&rsquo; Laws</a></h6>
+        </div>
+    </td>
+                                                <td>
+        <div class="story">
+
+            <h6 class="kicker">
+                                    <a href="http://www.nytimes.com/pages/dining/index.html">Dining & Wine &raquo;</a>
+                            </h6>
+            <div class="mothImage">
+                <a href="http://www.nytimes.com/2012/01/18/dining/reviews/wines-of-the-canary-islands-review.html"><img src="http://i1.nyt.com/images/2012/01/18/dining/18MOTH_WINE/18MOTH_WINE-moth.jpg" alt="Grapes Born of Volcano and Sea" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://www.nytimes.com/2012/01/18/dining/reviews/wines-of-the-canary-islands-review.html">Grapes Born of Volcano and Sea</a></h6>
+
+        </div>
+    </td>
+                                                <td>
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://tmagazine.blogs.nytimes.com/">T Magazine &raquo;</a>                            </h6>
+            <div class="mothImage">
+                <a href="http://tmagazine.blogs.nytimes.com/2012/01/17/coming-soon-double-breasted-suits/"><img src="http://i1.nyt.com/images/2012/01/17/t-magazine/18moth-tmag-suits/18moth-tmag-suits-moth.jpg" alt="Coming Soon | Double-Breasted Suits" width="151" height="151" /></a>
+
+            </div>
+            <h6 class="headline"><a href="http://tmagazine.blogs.nytimes.com/2012/01/17/coming-soon-double-breasted-suits/">Coming Soon | Double-Breasted Suits</a></h6>
+        </div>
+    </td>
+                                                    <td>
+            <div class="story">
+                <h6 class="kicker"><a href="http://www.nytimes.com/pages/opinion/index.html">Opinion &raquo;</a></h6>
+                <h3><a href="http://latitude.blogs.nytimes.com/2012/01/17/possible-change-in-lebanon-electoral-system-is-move-to-address-sectarianism/">Latitude: Lebanon, by the Numbers</a></h3>
+
+                <p class="summary">The president&rsquo;s move to introduce proportional representation to Lebanese elections is a step toward dismantling political sectarianism.</p>
+            </div>
+        </td>
+                                                <td>
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://theater.nytimes.com/pages/theater/index.html">Theater &raquo;</a>
+
+                            </h6>
+            <div class="mothImage">
+                <a href="http://www.nytimes.com/2012/01/18/theater/spider-man-producers-sue-taymor-for-breach.html"><img src="http://i1.nyt.com/images/2012/01/18/theater/18moth_spider/18moth_spider-moth.jpg" alt="&lsquo;Spider-Man&rsquo; Producers Sue Taymor for Breach" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://www.nytimes.com/2012/01/18/theater/spider-man-producers-sue-taymor-for-breach.html">&lsquo;Spider-Man&rsquo; Producers Sue Taymor for Breach</a></h6>
+        </div>
+    </td>
+
+                                                <td class="hidden">
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://www.nytimes.com/pages/dining/index.html">Dining & Wine &raquo;</a>
+                            </h6>
+            <div class="mothImage">
+                <a href="http://www.nytimes.com/2012/01/18/dining/modernist-cuisine-adapted-to-home-entertaining.html"><span class="img" src="http://i1.nyt.com/images/2012/01/18/dining/18MOTH_APPE/18MOTH_APPE-moth.jpg" alt="Sorcerer&rsquo;s Apprentice Hosts a Dinner" width="151" height="151" /></a>
+            </div>
+
+            <h6 class="headline"><a href="http://www.nytimes.com/2012/01/18/dining/modernist-cuisine-adapted-to-home-entertaining.html">Sorcerer&rsquo;s Apprentice Hosts a Dinner</a></h6>
+        </div>
+    </td>
+                                                <td class="hidden">
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://www.nytimes.com/pages/opinion/index.html">Opinion &raquo;</a>
+
+                            </h6>
+            <div class="mothImage">
+                <a href="http://opinionator.blogs.nytimes.com/2012/01/17/shermans-southern-sympathies/"><span class="img" src="http://i1.nyt.com/images/2012/01/18/opinion/18moth_disunion/18moth_disunion-moth.jpg" alt="Disunion: Sherman&rsquo;s Southern Sympathies" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://opinionator.blogs.nytimes.com/2012/01/17/shermans-southern-sympathies/">Disunion: Sherman&rsquo;s Southern Sympathies</a></h6>
+        </div>
+    </td>
+                                                <td class="hidden">
+
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://movies.nytimes.com/pages/movies/index.html">Movies &raquo;</a>
+                            </h6>
+            <div class="mothImage">
+                <a href="http://movies.nytimes.com/2012/01/18/movies/crazy-horse-by-frederick-wiseman-review.html"><span class="img" src="http://i1.nyt.com/images/2012/01/18/movies/18moth_crazy/18moth_crazy-moth.jpg" alt="&lsquo;Crazy Horse&rsquo; by Frederick Wiseman" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://movies.nytimes.com/2012/01/18/movies/crazy-horse-by-frederick-wiseman-review.html">&lsquo;Crazy Horse&rsquo; by Frederick Wiseman</a></h6>
+
+        </div>
+    </td>
+                                                <td class="hidden">
+        <div class="story">
+            <h6 class="kicker">
+                                    <a href="http://www.nytimes.com/pages/world/index.html">World &raquo;</a>
+                            </h6>
+            <div class="mothImage">
+
+                <a href="http://www.nytimes.com/2012/01/18/world/europe/croatia-wavers-over-joining-the-european-union.html"><span class="img" src="http://i1.nyt.com/images/2012/01/18/world/18moth_croatia/18moth_croatia-moth.jpg" alt="European Union&rsquo;s Allure Fades for Wary Croatia" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://www.nytimes.com/2012/01/18/world/europe/croatia-wavers-over-joining-the-european-union.html">European Union&rsquo;s Allure Fades for Wary Croatia</a></h6>
+        </div>
+    </td>
+                                                    <td class="hidden">
+            <div class="story">
+                <h6 class="kicker"><a href="http://www.nytimes.com/pages/opinion/index.html">Opinion &raquo;</a></h6>
+
+                <h3><a href="http://www.nytimes.com/roomfordebate/2012/01/17/what-the-polls-cant-tell-us/">What the Polls Can&rsquo;t Tell Us</a></h3>
+                <p class="summary">Room for Debate asks: By November, can we expect big swings in public opinion? What issues could upend the race?</p>
+            </div>
+        </td>
+                                                <td class="hidden">
+        <div class="story">
+            <h6 class="kicker">
+
+                                    <a href="http://www.nytimes.com/pages/business/index.html">Business &raquo;</a>
+                            </h6>
+            <div class="mothImage">
+                <a href="http://www.nytimes.com/2012/01/18/business/for-some-internet-start-ups-a-failure-is-just-the-beginning.html"><span class="img" src="http://i1.nyt.com/images/2012/01/18/business/18moth_pivot/18moth_pivot-moth.jpg" alt="In Tech, Starting Up by Failing" width="151" height="151" /></a>
+            </div>
+            <h6 class="headline"><a href="http://www.nytimes.com/2012/01/18/business/for-some-internet-start-ups-a-failure-is-just-the-beginning.html">In Tech, Starting Up by Failing</a></h6>
+        </div>
+    </td>
+
+                                    </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    </div><!-- end #insideNYTimes -->
+
+            </div><!--close main -->
+<div id="footer">
+<ul class="first">
+<li class="first"><a href="http://www.nytimes.com">Home</a></li>
+
+<li >
+<a href="http://www.nytimes.com/pages/world/index.html">World</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/national/index.html">U.S.</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/nyregion/index.html">N.Y. / Region</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/business/index.html">Business</a>
+</li>
+<li >
+
+<a href="http://www.nytimes.com/pages/technology/index.html">Technology</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/science/index.html">Science</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/health/index.html">Health</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/sports/index.html">Sports</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/opinion/index.html">Opinion</a>
+
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/arts/index.html">Arts</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/style/index.html">Style</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/travel/index.html">Travel</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/jobs/index.html">Jobs</a>
+</li>
+
+<li >
+<a href="http://www.nytimes.com/pages/realestate/index.html">Real Estate</a>
+</li>
+<li >
+<a href="http://www.nytimes.com/pages/automobiles/index.html">Autos</a>
+</li>
+<li><a href="http://spiderbites.nytimes.com/">Site Map</a></li>
+</ul>    <ul>
+<li class="first"><a href="http://www.nytimes.com/ref/membercenter/help/copyright.html">&copy; 2012</a> <a href="http://www.nytco.com/">The New York Times Company</a></li>
+
+<li><a href="http://www.nytimes.com/privacy">Privacy</a></li>
+<li><a href="http://www.nytimes.com/ref/membercenter/help/privacy.html#pp">Your Ad Choices</a></li>
+<li><a href="http://www.nytimes.com/ref/membercenter/help/agree.html">Terms of Service</a></li>
+<li class="termsOfSale"><a href="http://www.nytimes.com/content/help/rights/sale/terms-of-sale.html">Terms of Sale</a></li>
+<li><a href="http://www.nytimes.com/pages/corrections/index.html">Corrections</a></li>
+<li><a class="rssButton" href="http://www.nytimes.com/rss">RSS</a></li>
+<li><a href="http://www.nytimes.com/membercenter/sitehelp.html">Help</a></li>
+<li><a href="http://www.nytimes.com/ref/membercenter/help/infoservdirectory.html">Contact Us</a></li>
+<li><a href="http://www.nytco.com/careers">Work for Us</a></li>
+
+<li><a href="http://www.nytimes.whsites.net/mediakit/">Advertise</a></li>
+</ul>
+</div>
+</div><!--close page -->
+</div><!--close shell -->
+<IMG SRC="/adx/bin/clientside/3a4be1adQ2FjQ22SxnDnMbKQ5EnQ5CQ22xKS_)nDb3" height="1" width="3">
+   
+
+
+</body>
+
+
+            
+        <!-- Start UPT call -->
+        <img height="1" width="3" border=0 src="http://up.nytimes.com/?d=0//2&t=2&s=0&ui=0&r=http%3a%2f%2fwww%2enytimes%2ecom%2f&u=www%2enytimes%2ecom%2f2012%2f01%2f19%2fworld%2fmiddleeast%2firan%2dnuclear%2dprogram%2dsanctions%2drussia%2disrael%2dattack%2ehtml%3f%5fr%3d1%26hp%3d">
+        <!-- End UPT call -->
+
+    
+        
+        <script language="JavaScript"><!--
+          var dcsvid="0";
+          var regstatus="non-registered";
+        //--></script>
+        <script src="http://graphics8.nytimes.com/js/app/analytics/trackingTags_v1.1.js" type="text/javascript"></script>
+        <noscript>
+          <div><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://wt.o.nytimes.com/dcsym57yw10000s1s8g0boozt_9t1x/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=1.0.7"/></div>
+        </noscript>
+   
+<script src="http://www.nytimes.com/adx/bin/adx_remote.html?type=fastscript&page=www.nytimes.com/growl&posall=Left9&query=qstring&keywords=?"></script>
+
+<!-- Left9 position -->
+<script language="JavaScript">
+<!--
+if (typeof adxpos_Left9 != "undefined")
+    document.write(adxads[adxpos_Left9]);
+// -->
+</script>
+<noscript>
+<a href="http://www.nytimes.com/adx/bin/adx_click.html?type=cookie&pos=Left9"><img src="/adx/bin/adx_remote.html?type=noscript&page=www.nytimes.com/growl&posall=Left9&pos=Left9&query=qstring&keywords=?"></a></noscript>
+
+
+</html>
+
+
+<script type="text/javascript" src="http://rt.legolas-media.com/lgrt?ci=2&ti=1475&pbi=10833"></script>
+
+
