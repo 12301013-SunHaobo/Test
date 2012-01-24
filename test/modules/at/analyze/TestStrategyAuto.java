@@ -45,6 +45,7 @@ public class TestStrategyAuto {
 	
 	private static Map<String, Double> tradeSummaryMap = new HashMap<String, Double>();
 	
+	private static boolean VISIBLE = false;
 	private static boolean SAVE_CHART_TO_FILE = false;
 	
 	public static void main(String[] args) throws Exception {
@@ -58,7 +59,7 @@ public class TestStrategyAuto {
 		
 		//avoid displaying too many charts, only save to files
 		if(dateTimeArr.length>1){
-			SAVE_CHART_TO_FILE = true;
+			VISIBLE = false;
 		}
 		
 		ConfigRangeContainer<SettingMaBB> crc = new ConfigRangeContainer<SettingMaBB>(SettingMaBB.class);
@@ -110,7 +111,7 @@ public class TestStrategyAuto {
 				VChart vchart = createMarkedChart(barLists, tradeList, strategy.getDecisionMarkerList(), strategy);
 				vchart.setTitle(tickFileName);
 				
-			    ChartBase cb = new ChartBase(vchart, !SAVE_CHART_TO_FILE);
+			    ChartBase cb = new ChartBase(vchart, !SAVE_CHART_TO_FILE && VISIBLE);
 			    if(SAVE_CHART_TO_FILE){
 			    	String fileName = "D:/user/stock/us/screen-snapshot/MAStrategy/tmp/"+dateStr+"_"+setting.getId()+".png"; 
 			    	cb.saveToFile(fileName);
