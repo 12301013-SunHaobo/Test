@@ -1,0 +1,40 @@
+1. load all mastered words (multi files) from 
+	mastered folder all files
+	notMastered folder all files but only lines not marked with prefix '
+	
+2. load all notMastered words (multi files)
+3. extract web pages, save all sentences with notMastered workds to a new notMastered-20120101-164053.txt
+(human)read above files, mark lines as mastered, 
+       all lines are marked, rename files to masteredxxx.txt
+
+
+
+-----------------------------
+-- mastered-####.txt
+word1   wefasdfasdf [word1] asdf
+word2   wefasdfasdf [word2] asdf
+
+
+-----------------------------
+-- notMastered-####.txt
+word1   wefasdfasdf [word1] asdf
+word2   wefasdfasdf [word2] asdf
+
+
+-----------------------------
+-- unknown-####.txt
+word1   wefasdfasdf [word1] asdf
+word2   wefasdfasdf [word2] asdf
+
+
+
+
+
+
+        
+
+
+
+
+
+

@@ -28,12 +28,12 @@ public class ExcelOnlyFile2Mp3Dir {
 		String rootDir = "D:/user/english/en";
 
 		// change begin
-		String textOnlyFile = rootDir+"/output4excel/20111010-manualUpdated-1.xls";
+		String textOnlyFile = rootDir+"/output4excel/20111207-manualUpdated-2.xls";//excel file
 		String srcMp3DirLow =  rootDir+"/mp3/all/low";
-		String newMp3DirLow = rootDir+"/mp3/all/20111010-2/low";
+		String newMp3DirLow = rootDir+"/mp3/all/20111010-3/low";//new low folder
 		
 		String srcMp3DirHigh =  rootDir+"/mp3/all/high";
-		String newMp3DirHigh = rootDir+"/mp3/all/20111010-2/high";
+		String newMp3DirHigh = rootDir+"/mp3/all/20111010-3/high";//new high folder
 		// change end
 		
 		List<String> wordList = getWordList(textOnlyFile);
