@@ -50,6 +50,7 @@ public class Item {
     @Override
     public String toString() {
         return word + "; " + meaning + "; " + sentence;
+        //return word;
     }
 
     

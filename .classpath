@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="libs/jfreechart-1.0.13.jar" sourcepath="D:/projects/java/workspace/jfreechart/source"/>
 	<classpathentry kind="lib" path="libs/iText-2.1.5.jar"/>
 	<classpathentry kind="lib" path="libs/flexjson-2.1.jar"/>
+	<classpathentry kind="lib" path="libs/jsoup-1.6.1.jar" sourcepath="libs/jsoup-1.6.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
