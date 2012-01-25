@@ -1,6 +1,6 @@
 package others.e.sentence;
 
-public class Item {
+public class Item implements Comparable{
 
     private String word;
     private String meaning;
@@ -49,8 +49,15 @@ public class Item {
     }
     @Override
     public String toString() {
-        return word + "; " + meaning + "; " + sentence;
-        //return word;
+        //return word + "; " + meaning + "; " + sentence;
+        return word;
+    }
+    @Override
+    public int compareTo(Object o) {
+        if(this.word==null || o==null){
+            return 0;
+        }
+        return this.word.compareTo(((Item)o).getWord());
     }
 
     

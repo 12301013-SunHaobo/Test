@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FileUtil {
@@ -126,5 +127,11 @@ public class FileUtil {
 	}
 	public static List<String> getAllFileNames(String dir){
 	    return getAllFileNames(dir, false);//by default, don't include dir
+	}
+	
+	//  /mastered-purged-%s.txt //%s is to be replaced with timestamp
+	public static String createFileNameWithTimestamp(String fileFullPathFormat) {
+	    return String.format(fileFullPathFormat, 
+                Formatter.DEFAULT_FILENAME_DATETIME_FORMAT.format(new Date(System.currentTimeMillis()))); 
 	}
 }

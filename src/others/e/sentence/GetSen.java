@@ -1,13 +1,19 @@
 package others.e.sentence;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import utils.FileUtil;
+import utils.Formatter;
 import utils.GlobalSetting;
 import utils.RegUtil;
 
@@ -20,31 +26,39 @@ public class GetSen {
     private static final String DIR_SAMPLE = ROOT_DIR+"/sample";
     private static final String DIR_UNKNOWN = ROOT_DIR+"/unknown";
     
-    private List<Item> mastered = new ArrayList<Item>();
-    private List<Item> notmastered = new ArrayList<Item>();
-    private List<Item> unknown = new ArrayList<Item>();
+    private Set<Item> mastered = new HashSet<Item>();
+    private Set<Item> notmastered = new HashSet<Item>();
+    private Set<Item> unknown = new HashSet<Item>();
     
     //http://stackoverflow.com/questions/5553410/regular-expression-match-a-sentence
     private static final String SEN_REG_EX = "[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)";
+    
+    private static boolean isPurge = false;
     /**
      * @param args
      */
     public static void main(String[] args) throws Exception{
-        //MyWatch.start();
         GetSen gs = new GetSen();
-        //MyWatch.printAndRestart("Instantiation");
-        gs.load();
-        //MyWatch.printAndRestart("load");
+        
+        //----------- testing ---------------
         //gs.testExtractTextFromHtml();
-        Set<Item> todoItems = gs.process(DIR_SAMPLE+"/sample2-textOnly.txt");
-        //MyWatch.printAndRestart("process");
-        
+        //gs.testExtractLinksFromHtml();
         //gs.testListFiles();
-        //MyWatch.totalTime("finished.");
         
+        //if(true)return;
+        
+        if(isPurge){
+            gs.purge();
+        }else {
+            gs.load();
+            gs.process(DIR_SAMPLE+"/sample2-textOnly.txt");
+        }        
     }
-    
-    private Set<Item> process(String fileFullPath) throws Exception {
+
+    /**
+     * process text only content,  extract all items
+     */
+    private void process(String fileFullPath) throws Exception {
         Set<Item> resultItems = new HashSet<Item>();//all items not in mastered
         String content = FileUtil.fileToString(fileFullPath);
         List<String> senList = RegUtil.getMatchedStrings(content, SEN_REG_EX);
@@ -53,7 +67,8 @@ public class GetSen {
             String[] strArr = sen.split(",|\\.|\\s|\"");
             Set<Item> lineWSet = new HashSet<Item>();
             for(int i=0;i<strArr.length;i++){
-                String origW = strArr[i].replaceAll("\\W", "");//remove non-word character
+              //remove non-word, digit character, 
+                String origW = strArr[i].replaceAll("\\W|\\d", "");
                 if(origW!=null && !"".equals(origW)){
                     String lowerCaseW = origW.toLowerCase();
                     Item itemW = new Item();
@@ -69,11 +84,30 @@ public class GetSen {
                 }
             }
         }
+        List<String> itemNames = new ArrayList<String>();
         for(Item item : resultItems){
+            itemNames.add(item.toString());
             System.out.println(item.toString());
         }
-        return resultItems;
+        String unknownFileFullPath = FileUtil.createFileNameWithTimestamp(DIR_UNKNOWN+"/unknown-%s.txt");
+        FileUtil.listToFile(itemNames, unknownFileFullPath); 
     }
+    
+    /**
+     * Deletes duplicate items and consolidate them to a separate file
+     */
+    private void purge() throws Exception{
+        this.mastered = loadOneFolder(DIR_MASTERED);
+        String outputFilePath = DIR_MASTERED+"/mastered-purged-%s.txt"; 
+        List<String> itemNames = new ArrayList<String>();
+        for(Item item : this.mastered){
+            itemNames.add(item.getWord());
+        }
+        Collections.sort(itemNames);
+        String fileFullPath = FileUtil.createFileNameWithTimestamp(outputFilePath);
+        FileUtil.listToFile(itemNames, fileFullPath); 
+    }
+    
     
     private void load() throws Exception{
         this.mastered = loadOneFolder(DIR_MASTERED);
@@ -82,20 +116,21 @@ public class GetSen {
         //System.out.println("this.mastered.size()="+this.mastered.size());
     }
     
-    private List<Item> loadOneFolder(String dir) throws Exception{
+    private Set<Item> loadOneFolder(String dir) throws Exception{
         List<String> fileNames = FileUtil.getAllFileNames(dir, true);
         List<String> lines = new ArrayList<String>();
         for(String fileName : fileNames) {
-            System.out.println(dir+"/"+fileName);
+            //System.out.println(dir+"/"+fileName);
             lines.addAll(FileUtil.fileToList(dir+"/"+fileName));
         }
-        List<Item> items = new ArrayList<Item>();
+        Set<Item> items = new HashSet<Item>();
         for(String line : lines) {
             items.add(extractItem(line));
         }
         return items;
     }    
     
+    //extract item from one line
     private Item extractItem(String line){
         String[] lineArr = line.split(";");
         Item item = new Item();
@@ -111,6 +146,14 @@ public class GetSen {
         return item;
     }
     
+    private void testExtractLinksFromHtml() throws Exception{
+        String html = FileUtil.fileToString(DIR_SAMPLE+"/sample1-withTags.txt");
+        Document doc = Jsoup.parse(html);
+        Elements links = doc.select("a[href]"); // a with href
+        for(Element e : links){
+            System.out.println(e.attr("href"));    
+        }
+    }
     
     private void testExtractTextFromHtml() throws Exception{
         String html = FileUtil.fileToString(DIR_SAMPLE+"/sample1-withTags.txt");
