@@ -51,18 +51,19 @@ public class GetSen {
             gs.purge();
         }else {
             gs.load();
-            gs.process(DIR_SAMPLE+"/sample2-textOnly.txt");
+            String textOnlyContent = FileUtil.fileToString(DIR_SAMPLE+"/sample2-textOnly.txt");
+            
+            gs.process(textOnlyContent);
         }        
     }
 
     /**
      * process text only content,  extract all items
      */
-    private void process(String fileFullPath) throws Exception {
-        Set<Item> resultItems = new HashSet<Item>();//all items not in mastered
-        String content = FileUtil.fileToString(fileFullPath);
-        List<String> senList = RegUtil.getMatchedStrings(content, SEN_REG_EX);
+    private void process(String textOnlyContent) throws Exception {
+        List<String> senList = RegUtil.getMatchedStrings(textOnlyContent, SEN_REG_EX);
         
+        Set<Item> resultItems = new HashSet<Item>();//all items not in mastered
         for(String sen : senList){
             String[] strArr = sen.split(",|\\.|\\s|\"");
             Set<Item> lineWSet = new HashSet<Item>();
