@@ -34,7 +34,7 @@ public class GetSen {
     
     //change here!
     private static boolean isPurge = false;
-    private static String sampleFileName = DIR_SAMPLE+"/sample3-test-fullset.txt";
+    private static String sampleFileName = DIR_SAMPLE+"/c.txt";
     
     public static void main(String[] args) throws Exception{
         GetSen gs = new GetSen();
@@ -96,19 +96,27 @@ public class GetSen {
     /**
      * Deletes duplicate items and consolidate them to a separate file
      */
-    private void purge() throws Exception{
-        this.mastered = loadOneFolder(DIR_MASTERED);
-        String outputFilePath = DIR_MASTERED+"/mastered-purged-%s.txt"; 
-        List<String> itemNames = new ArrayList<String>();
-        for(Item item : this.mastered){
-            itemNames.add(item.getWord());
+    private void purge() throws Exception {
+        purgeOneFolder(DIR_MASTERED, "mastered-purged-%s.txt");
+        purgeOneFolder(DIR_SPECIAL, "special-purged-%s.txt");
+    }
+    private void purgeOneFolder(String folder, String fileNameFormat) throws Exception {
+        Set<Item> items = loadOneFolder(folder);
+        if(items.size()>0){
+            String outputFilePath = folder+"/"+fileNameFormat; 
+            List<String> itemNames = new ArrayList<String>();
+            for(Item item : items){
+                itemNames.add(item.getWord());
+            }
+            Collections.sort(itemNames);
+            String fileFullPath = FileUtil.createFileNameWithTimestamp(outputFilePath);
+            FileUtil.listToFile(itemNames, fileFullPath);
         }
-        Collections.sort(itemNames);
-        String fileFullPath = FileUtil.createFileNameWithTimestamp(outputFilePath);
-        FileUtil.listToFile(itemNames, fileFullPath); 
     }
     
-    
+    /**
+     *  load all folders 
+     */
     private void load() throws Exception{
         this.mastered = loadOneFolder(DIR_MASTERED);
         this.special = loadOneFolder(DIR_SPECIAL);
