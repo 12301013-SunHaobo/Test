@@ -2,7 +2,6 @@ package others.e.sentence;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +12,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import utils.FileUtil;
-import utils.Formatter;
 import utils.GlobalSetting;
 import utils.RegUtil;
 
@@ -24,19 +22,20 @@ public class GetSen {
     private static final String DIR_MASTERED = ROOT_DIR+"/mastered";
     private static final String DIR_NOT_MASTERED = ROOT_DIR+"/notmastered";
     private static final String DIR_SAMPLE = ROOT_DIR+"/sample";
+    private static final String DIR_SPECIAL = ROOT_DIR+"/special";
     private static final String DIR_UNKNOWN = ROOT_DIR+"/unknown";
     
     private Set<Item> mastered = new HashSet<Item>();
     private Set<Item> notmastered = new HashSet<Item>();
-    private Set<Item> unknown = new HashSet<Item>();
+    private Set<Item> special = new HashSet<Item>();
     
     //http://stackoverflow.com/questions/5553410/regular-expression-match-a-sentence
     private static final String SEN_REG_EX = "[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)";
     
+    //change here!
     private static boolean isPurge = false;
-    /**
-     * @param args
-     */
+    private static String sampleFileName = DIR_SAMPLE+"/sample3-test-fullset.txt";
+    
     public static void main(String[] args) throws Exception{
         GetSen gs = new GetSen();
         
@@ -51,8 +50,7 @@ public class GetSen {
             gs.purge();
         }else {
             gs.load();
-            String textOnlyContent = FileUtil.fileToString(DIR_SAMPLE+"/sample2-textOnly.txt");
-            
+            String textOnlyContent = FileUtil.fileToString(sampleFileName);
             gs.process(textOnlyContent);
         }        
     }
@@ -74,10 +72,11 @@ public class GetSen {
                     String lowerCaseW = origW.toLowerCase();
                     Item itemW = new Item();
                     itemW.setWord(lowerCaseW);
-                    if(notmastered.contains(itemW)
-                            || !mastered.contains(itemW)
-                            || false //add more conditions here
-                            ){
+                    //keep items not in "notmastered" or "mastered" or "special"
+                    if(!(notmastered.contains(itemW)
+                            ||mastered.contains(itemW)
+                            ||special.contains(itemW)
+                        )){
                         lineWSet.add(itemW);
                         itemW.setSentence(sen.replaceAll(origW, "["+origW+"]"));
                         resultItems.add(itemW);
@@ -112,8 +111,8 @@ public class GetSen {
     
     private void load() throws Exception{
         this.mastered = loadOneFolder(DIR_MASTERED);
+        this.special = loadOneFolder(DIR_SPECIAL);
         this.notmastered = loadOneFolder(DIR_NOT_MASTERED);
-        this.unknown = loadOneFolder(DIR_UNKNOWN);
         //System.out.println("this.mastered.size()="+this.mastered.size());
     }
     

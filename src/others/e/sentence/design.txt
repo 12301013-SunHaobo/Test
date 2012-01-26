@@ -1,3 +1,12 @@
+functionalities:
+1. extract all items from /Test/src/others/e/sentence/sample/sample2-textOnly.txt
+2. keep items not in "notmastered" or "mastered" or "special"
+3. save remaining items to "unknown" as "unknown-%s.txt"
+
+
+
+
+---------------------------------------------------
 1. load all mastered words (multi files) from 
 	mastered folder all files
 	notMastered folder all files but only lines not marked with prefix '
