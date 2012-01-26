@@ -24,16 +24,19 @@ public class GetSen {
     private static final String DIR_SAMPLE = ROOT_DIR+"/sample";
     private static final String DIR_SPECIAL = ROOT_DIR+"/special";
     private static final String DIR_UNKNOWN = ROOT_DIR+"/unknown";
+    private static final String DIR_FULLSET = ROOT_DIR+"/fullset";
     
     private Set<Item> mastered = new HashSet<Item>();
     private Set<Item> notmastered = new HashSet<Item>();
     private Set<Item> special = new HashSet<Item>();
+    private Set<Item> fullSet = new HashSet<Item>();
     
     //http://stackoverflow.com/questions/5553410/regular-expression-match-a-sentence
     private static final String SEN_REG_EX = "[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)";
     
     //change here!
     private static boolean isPurge = false;
+    private static boolean fullSetOnly = false; //restrict item to be valid in fullSet
     private static String sampleFileName = DIR_SAMPLE+"/c.txt";
     
     public static void main(String[] args) throws Exception{
@@ -73,9 +76,9 @@ public class GetSen {
                     Item itemW = new Item();
                     itemW.setWord(lowerCaseW);
                     //keep items not in "notmastered" or "mastered" or "special"
-                    if(!(notmastered.contains(itemW)
-                            ||mastered.contains(itemW)
-                            ||special.contains(itemW)
+                    if( (!fullSetOnly || fullSet.contains(itemW)) &&
+                            //(fullSetOnly && fullSet.contains(itemW) || !fullSetOnly) &&
+                            !(notmastered.contains(itemW)||mastered.contains(itemW)||special.contains(itemW)
                         )){
                         lineWSet.add(itemW);
                         itemW.setSentence(sen.replaceAll(origW, "["+origW+"]"));
@@ -121,6 +124,7 @@ public class GetSen {
         this.mastered = loadOneFolder(DIR_MASTERED);
         this.special = loadOneFolder(DIR_SPECIAL);
         this.notmastered = loadOneFolder(DIR_NOT_MASTERED);
+        this.fullSet = loadOneFolder(DIR_FULLSET);
         //System.out.println("this.mastered.size()="+this.mastered.size());
     }
     
