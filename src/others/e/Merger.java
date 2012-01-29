@@ -28,7 +28,7 @@ public class Merger {
 	}
 
 	private static void merge() throws Exception {
-		String mainFile = EUtil.PHONE_ROOT+"/output4excel/merged-20110717.xls";//changed-20101120.xls";
+		String mainFile = EUtil.PHONE_ROOT+"/output4excel/20111207-manualUpdated-2.xls";//changed-20101120.xls";
 		Columns[] columns1 = new Columns[] { 
 				Columns.WORD, 
 				Columns.MW_MP3, Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
@@ -47,11 +47,11 @@ public class Merger {
 				};
 
 		List<Word> extraList = EUtil.excelToList(extraFile, columns2);
-		
+		//List<Word> extraList = new ArrayList<Word>(); //
 		
 		Columns[] columnsResult = new Columns[] { 
 				Columns.WORD, 
-				Columns.MW_MP3, Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
+				Columns.VCAB_MP3, Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
 				Columns.CN_MEANING, 
 				Columns.WWO_SENTENCES, Columns.MW_SENTENCES, Columns.XR_SENTENCES  
 				};

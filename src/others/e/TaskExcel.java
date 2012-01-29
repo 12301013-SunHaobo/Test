@@ -56,7 +56,7 @@ public class TaskExcel {
 	/*
 	 * 1. input list
 	 * 2. missingList: missing phones in both en&&us
-	 * 3. download missing phones
+	 * 3. download missing meanings
 	 */
 	private static void createExcel() throws Exception{
 

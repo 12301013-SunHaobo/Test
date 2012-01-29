@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 
 import others.e.model.Iciba;
 import others.e.model.Mw;
+import others.e.model.Vcab;
 import others.e.model.Word;
 import utils.WebUtil;
 
@@ -27,9 +28,29 @@ public class TPhone implements Callable<String>{
 	
 	@Override
 	public String call() throws Exception {
-		downloadMwWav();
-		downloadICIBAMp3();
+		downloadVcabMp3();
+		//downloadMwWav();
+		//downloadICIBAMp3();
 		return null;
+	}
+	
+	private void downloadVcabMp3() throws Exception{
+		String name = this.word.getName();
+		Map<String, String> phones = Vcab.getPhones(name);
+		
+		for(String word: phones.keySet()){
+			String phoneUrl = phones.get(word);
+			if(!"".equals(phoneUrl)){
+				if(!this.word.getVcab().isLocalHasPhone()){
+					WebUtil.download(phoneUrl, Vcab.OUTPUT_DIR+"/"+word+".mp3");
+					System.out.println(this.word.getInputIndex()+":"+word+".mp3: downloaded.");
+				}
+			}else {
+				//System.out.println(this.word.getInputIndex()+":"+word+":en: not on site.");
+				errorList.add(this.word.getInputIndex()+":"+word+":mw: not on site.");
+			}
+		}
+		
 	}
 	
 	private void downloadMwWav() throws Exception{

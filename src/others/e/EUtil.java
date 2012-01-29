@@ -41,6 +41,7 @@ public class EUtil {
 
 	private static final String MP3_OUTPUT_DIR = PHONE_ROOT+"output4excel";
 
+	public static Set<String> vcabSet = getLocalMp3Set(MP3_OUTPUT_DIR + "/vcab/mp3/");
 	public static Set<String> mwSet = getLocalMp3Set(MP3_OUTPUT_DIR + "/mw/mp3/");
 	public static Set<String> enSet = getLocalMp3Set(MP3_OUTPUT_DIR + "/iciba/en/");
 	public static Set<String> usSet = getLocalMp3Set(MP3_OUTPUT_DIR + "/iciba/us/");
@@ -48,7 +49,7 @@ public class EUtil {
 
 	
 	public enum Columns {
-		WORD, MW_MP3, ICIBA_EN, ICIBA_US, PHONE_XR, CN_MEANING, MW_SENTENCES, WWO_SENTENCES, XR_SENTENCES, EMPTY
+		WORD, VCAB_MP3, MW_MP3, ICIBA_EN, ICIBA_US, PHONE_XR, CN_MEANING, MW_SENTENCES, WWO_SENTENCES, XR_SENTENCES, EMPTY
 	}
 
 	/**
@@ -99,6 +100,12 @@ public class EUtil {
 					switch (columns[j]) {
 					case WORD:
 						word.setName(cellValue);
+						break;
+					case VCAB_MP3:
+						hyperlink = cell.getHyperlink();
+						if (hyperlink == null) {
+							word.getVcab().setLocalHasPhone(false);
+						}
 						break;
 					case ICIBA_EN:
 						hyperlink = cell.getHyperlink();
@@ -190,6 +197,24 @@ public class EUtil {
 					nameCell.setCellValue(word.getName());
 					nameCell.setCellStyle(cs);
 					break;
+
+				case VCAB_MP3:
+					// vcab mp3
+					Cell vcabMp3Cell = row.createCell(j);
+					vcabMp3Cell.setCellValue("[V]");
+					//if (word.getIciba().isLocalEnHasMp3()) {
+					if(mwSet.contains(word.getName())){
+						Hyperlink mwLink = createHelper
+								.createHyperlink(Hyperlink.LINK_URL);
+						mwLink.setAddress("./vcab/mp3/" + word.getName()
+								+ AUDIO_SUFFIX);
+						vcabMp3Cell.setHyperlink(mwLink);
+						vcabMp3Cell.setCellStyle(hlink_style);
+					} else {
+						vcabMp3Cell.setCellStyle(cs);
+					}
+					break;
+					
 				case MW_MP3:
 					// mw mp3
 					Cell mwMp3Cell = row.createCell(j);

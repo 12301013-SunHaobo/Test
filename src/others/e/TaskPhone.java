@@ -25,6 +25,7 @@ public class TaskPhone {
 	
 	private static final String INPUT_FILE= "all-list.txt"; //"GW-list-full.txt";
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"input/";
+	private static final String VCAB_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/vcab/";
 	private static final String MP3_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/iciba/";
 	private static final String WAV_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/mw/";
 	private static final String TODAY_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/today/iciba/en/";
@@ -60,6 +61,7 @@ public class TaskPhone {
 	private static void updatePhones() throws Exception{
 		// [word, en-missing, us-missing]
 		List<String> allWords = getAllWords();
+		Set<String> vcabSet = getLocalMp3Set(VCAB_OUTPUT_DIR + "/mp3/");
 		Set<String> enSet = getLocalMp3Set(MP3_OUTPUT_DIR + "/en/");
 		Set<String> usSet = getLocalMp3Set(MP3_OUTPUT_DIR + "/us/");
 		Set<String> wavSet = getLocalMp3Set(WAV_OUTPUT_DIR + "/wav/");
@@ -69,12 +71,16 @@ public class TaskPhone {
 		String tmpWord;
 		for (int i = 0; i < allWords.size(); i++) {
 			tmpWord = allWords.get(i);
-			if (!enSet.contains(tmpWord)  
+			if (!vcabSet.contains(tmpWord)
+					|| !enSet.contains(tmpWord)  
 					|| !usSet.contains(tmpWord)
 					|| !wavSet.contains(tmpWord)
 					) {
 
 				Word word = new Word(i, tmpWord);
+				if (!vcabSet.contains(tmpWord)) {
+					word.getVcab().setLocalHasPhone(false);
+				}
 				if (!enSet.contains(tmpWord)) {
 					word.getIciba().setLocalEnHasMp3(false);
 				}
