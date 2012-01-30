@@ -3,7 +3,11 @@ package others.e.model;
 import java.io.IOException;
 
 import utils.FileUtil;
-
+/**
+ * 
+ * haven't found a way to download
+ *
+ */
 public class Dictcn {
     //instance members
     private String meaning;

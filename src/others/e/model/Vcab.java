@@ -9,9 +9,7 @@ import others.e.EUtil;
 import utils.WebUtil;
 
 /**
- * vocabulary
- * @author rong
- *
+ * vocabulary.com has good pronouncation
  */
 public class Vcab {
 

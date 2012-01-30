@@ -14,6 +14,9 @@ import utils.FileUtil;
 //weather:  [en][en-mp3][us][      ] 
 //converse: [en][      ][us][us-mp3]
 
+/**
+ * Meaning is bad comparing with dict.cn and wordreference.com
+ */
 public class Iciba {
 	
 	//static members

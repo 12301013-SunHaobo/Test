@@ -421,6 +421,11 @@ public class EUtil {
 			meaningCell.setCellValue(word.getIciba().getMeaning());
 			meaningCell.setCellStyle(cs);
 
+//			// wordreference meaning
+//			Cell meaningCell = row.createCell(4);
+//			meaningCell.setCellValue(word.getWr().getMeaning());
+//			meaningCell.setCellStyle(cs);
+
 			// wwo sentence
 			Cell wwoCell = row.createCell(5);
 			wwoCell.setCellValue(word.getWwo().getSentences());

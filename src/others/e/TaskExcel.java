@@ -87,7 +87,7 @@ public class TaskExcel {
 		TExcel.init(errorList);
 		
 		//submit tasks for downloading mp3
-		BoundedExecutor be = new BoundedExecutor(300);
+		BoundedExecutor be = new BoundedExecutor(300);//default 300
 		for (int i = 0; i < allWords.size(); i++) {
 			tmpWord = allWords.get(i);
 			TExcel tp = new TExcel(allWords.get(i));
@@ -107,7 +107,6 @@ public class TaskExcel {
 		}
 		
 		EUtil.toExcel(EUtil.sortBySentence(allWords));
-		
 		
 		//log errors
 		DateFormat dfLog = new SimpleDateFormat("yyyyMMdd-hhmmss");
