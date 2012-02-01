@@ -33,14 +33,14 @@ public class Vcab {
 	
 	// for testing
 	public static void main(String args[]){
-		String pageContent = WebUtil.getPageSource(Vcab.URL +"red", "utf-8");
+//		String pageContent = WebUtil.getPageSource(Vcab.URL +"red", "utf-8");
 //		System.out.println(pageContent);
 //		Map<String,String> map = getPhones("ticket");
 //		for(String word: map.keySet()){
 //			System.out.println(word+":"+map.get(word));
 //		}
 		
-		Set<String> synonyms = extractSynonyms(pageContent);
+		Set<String> synonyms = getSynonyms("red");
 		synonyms.size();
 
 		
@@ -68,10 +68,12 @@ public class Vcab {
 	}
 	
 	
-	public static Set<String> extractSynonyms(String pageContent){
+	public static Set<String> getSynonyms(String name){
 		Set<String> synonyms = new HashSet<String>();
+		String urlWord = Vcab.URL+name;
+		String pageWord = WebUtil.getPageSource(urlWord, "utf-8");
 		String ddPattern = "<dd>.*?</dd>";
-		List<String> ddList = RegUtil.getMatchedStrings(pageContent, ddPattern);
+		List<String> ddList = RegUtil.getMatchedStrings(pageWord, ddPattern);
 		
 		for(int i=0;i<ddList.size();i++){
 			String tmpSynonyms = ddList.get(i);   
@@ -85,7 +87,17 @@ public class Vcab {
 	}
 	
 	
-	
+	public static String getSynonymLine(String name, Set<String> synonymSet){
+		StringBuilder sb = new StringBuilder();
+		sb.append(name);
+		sb.append(" [");
+		for(String s : synonymSet) {
+			sb.append(s);
+			sb.append(",");
+		}
+		sb.append("]");
+		return sb.toString();
+	}
 	
 	
 	

@@ -3,7 +3,6 @@ package others.e.synonym;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,15 +10,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
 
 import others.e.EUtil;
+import others.e.model.Vcab;
 import others.e.model.Word;
-import utils.FileUtil;
 import utils.BoundedExecutor;
+import utils.FileUtil;
 
 /**
  * Grab phones from
@@ -32,10 +33,11 @@ import utils.BoundedExecutor;
 public class TaskSynonym {
 	
 	
-	private static final String INPUT_FILE= "all-list.txt"; //"GW-list-full.txt";
+	private static final String INPUT_FILE= "all-list.txt"; //"GW-list-full.txt"; "test-synonyms-list.txt"
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"input/";
 	private static final String VCAB_SYNONYM_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/vcab/synonym";
-	
+	private static final String LOG_DIR = EUtil.PHONE_ROOT+"output/log/";
+
 	
 	/**
 	 * @param args
@@ -68,37 +70,16 @@ public class TaskSynonym {
 		String tmpWord;
 		for (int i = 0; i < allWords.size(); i++) {
 			tmpWord = allWords.get(i);
-			if (!vcabSet.contains(tmpWord)
-					|| !enSet.contains(tmpWord)  
-					|| !usSet.contains(tmpWord)
-					|| !wavSet.contains(tmpWord)
-					) {
-
-				Word word = new Word(i, tmpWord);
-				if (!vcabSet.contains(tmpWord)) {
-					word.getVcab().setLocalHasPhone(false);
-				}
-				if (!enSet.contains(tmpWord)) {
-					word.getIciba().setLocalEnHasMp3(false);
-				}
-				if (!usSet.contains(tmpWord)) {
-					word.getIciba().setLocalUsHasMp3(false);
-				}
-				if (!wavSet.contains(tmpWord)) {
-					word.getMw().setLocalHasWav(false);
-				}				
-				
-				missingMp3Words.add(word);
-			}
+			Word word = new Word(i, tmpWord);
+			missingMp3Words.add(word);
 		}
 		//create errorList
 		List<String> errorList = Collections.synchronizedList(new ArrayList<String>());
-		TPhone.init(errorList);
 		
 		//submit tasks for downloading mp3
 		BoundedExecutor be = new BoundedExecutor(200);
 		for (int i = 0; i < missingMp3Words.size(); i++) {
-			TPhone tp = new TPhone(missingMp3Words.get(i));
+			TSynonym tp = new TSynonym(missingMp3Words.get(i));
 			try {
 				be.submit(tp);
 				System.out.println(i + ":submited:");
@@ -113,6 +94,15 @@ public class TaskSynonym {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		
+		List<String> synonymLines = new ArrayList<String>();
+		for(Entry<String, Set<String>> entry : TSynonym.wordSynonymsMap.entrySet()) {
+			String line = Vcab.getSynonymLine(entry.getKey(), entry.getValue());
+			synonymLines.add(line);
+		}
+		FileUtil.listToFile(synonymLines, FileUtil.createFileNameWithTimestamp(VCAB_SYNONYM_OUTPUT_DIR+"/synonym_%s.txt"));
+		
 		//log errors
 		DateFormat dfLog = new SimpleDateFormat("yyyyMMdd-hhmmss");
 		String errorFileName = LOG_DIR + "/error-" + dfLog.format(new Date()) + ".txt";
