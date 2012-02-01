@@ -18,6 +18,8 @@ public class WR {
 	
 	private String meaning;
 
+	private String synonyms;//TODO:
+	
 	// for testing
 	public static void main(String args[]){
 		String pageContent = WebUtil.getPageSource(WR.URL +"red", "utf-8");
@@ -46,6 +48,12 @@ public class WR {
 		return sb.toString();
 	}
 
+//	public static String extractSynonyms(String pageContent){
+//		
+//	}
+	
+	
+	
 	public String getMeaning() {
 		return meaning;
 	}
