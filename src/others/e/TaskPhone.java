@@ -20,6 +20,14 @@ import others.e.model.Word;
 import utils.FileUtil;
 import utils.BoundedExecutor;
 
+/**
+ * Grab phones from
+ * Vcab
+ * MW
+ * Iciba
+ * and save to mp3 folders
+ *
+ */
 public class TaskPhone {
 	
 	

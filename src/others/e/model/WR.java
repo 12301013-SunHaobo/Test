@@ -1,11 +1,11 @@
 package others.e.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import others.e.EUtil;
+import utils.RegUtil;
 import utils.WebUtil;
 
 /**
@@ -18,13 +18,13 @@ public class WR {
 	
 	private String meaning;
 
-	private String synonyms;//TODO:
+
 	
 	// for testing
 	public static void main(String args[]){
 		String pageContent = WebUtil.getPageSource(WR.URL +"red", "utf-8");
-		String meaning = extractMeaning(pageContent);
-		System.out.println(meaning);
+		//String meaning = extractMeaning(pageContent);
+		//System.out.println(meaning);
 		
 	}	
 	
@@ -48,9 +48,7 @@ public class WR {
 		return sb.toString();
 	}
 
-//	public static String extractSynonyms(String pageContent){
-//		
-//	}
+
 	
 	
 	

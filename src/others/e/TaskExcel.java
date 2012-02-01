@@ -33,6 +33,13 @@ import others.e.model.Xr;
 import utils.FileUtil;
 import utils.BoundedExecutor;
 
+/**
+ * Grab 
+ * iciba meaning
+ * WWO sentences
+ * MW sentences
+ * and save to excel
+ */
 public class TaskExcel {
 	private static final String INPUT_FILE="GW-list-full.txt"; //"GW-list.txt"; //"GW-list-full.txt";
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"/input/";

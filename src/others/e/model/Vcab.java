@@ -1,11 +1,15 @@
 package others.e.model;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import others.e.EUtil;
+import utils.RegUtil;
 import utils.WebUtil;
 
 /**
@@ -25,15 +29,20 @@ public class Vcab {
 	private Map<String, String> mp3s;
 	private boolean localHasPhone = true;
 	
-
+	private Set<String> synonyms;
+	
 	// for testing
 	public static void main(String args[]){
-		String pageContent = WebUtil.getPageSource(Vcab.URL +"book", "utf-8");
-		System.out.println(pageContent);
-		Map<String,String> map = getPhones("ticket");
-		for(String word: map.keySet()){
-			System.out.println(word+":"+map.get(word));
-		}
+		String pageContent = WebUtil.getPageSource(Vcab.URL +"red", "utf-8");
+//		System.out.println(pageContent);
+//		Map<String,String> map = getPhones("ticket");
+//		for(String word: map.keySet()){
+//			System.out.println(word+":"+map.get(word));
+//		}
+		
+		Set<String> synonyms = extractSynonyms(pageContent);
+		synonyms.size();
+
 		
 	}	
 	
@@ -57,6 +66,28 @@ public class Vcab {
 		}
 		return resultMap;
 	}
+	
+	
+	public static Set<String> extractSynonyms(String pageContent){
+		Set<String> synonyms = new HashSet<String>();
+		String ddPattern = "<dd>.*?</dd>";
+		List<String> ddList = RegUtil.getMatchedStrings(pageContent, ddPattern);
+		
+		for(int i=0;i<ddList.size();i++){
+			String tmpSynonyms = ddList.get(i);   
+			tmpSynonyms = tmpSynonyms.replaceAll("<dd>|<a.*?>|</a>|</dd>| ", "");
+			String[] tmpSynonymsArr = tmpSynonyms.split(",");
+			for(String s : tmpSynonymsArr){
+				synonyms.add(s.toLowerCase());
+			}
+		}
+		return synonyms;
+	}
+	
+	
+	
+	
+	
 	
 	public String getSentences() {
 		return sentences;
