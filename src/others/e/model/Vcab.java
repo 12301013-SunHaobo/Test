@@ -87,16 +87,24 @@ public class Vcab {
 	}
 	
 	
-	public static String getSynonymLine(String name, Set<String> synonymSet){
+	public static String getSynonymLine(String name, Set<String> synonymSet, List<String> allWords){
+		boolean contains = false;
 		StringBuilder sb = new StringBuilder();
 		sb.append(name);
 		sb.append(" [");
 		for(String s : synonymSet) {
-			sb.append(s);
-			sb.append(",");
+			if(allWords.contains(s)){
+				contains = true;
+				sb.append(s);
+				sb.append(",");
+			}
 		}
 		sb.append("]");
-		return sb.toString();
+		if(contains){
+			return sb.toString();
+		}else{
+			return null;
+		}
 	}
 	
 	

@@ -33,7 +33,7 @@ import utils.FileUtil;
 public class TaskSynonym {
 	
 	
-	private static final String INPUT_FILE= "all-list.txt"; //"GW-list-full.txt"; "test-synonyms-list.txt"
+	private static final String INPUT_FILE= "all-list.txt"; //"all-list.txt"; "GW-list-full.txt"; "test-synonyms-list.txt"
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"input/";
 	private static final String VCAB_SYNONYM_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/vcab/synonym";
 	private static final String LOG_DIR = EUtil.PHONE_ROOT+"output/log/";
@@ -98,8 +98,10 @@ public class TaskSynonym {
 		
 		List<String> synonymLines = new ArrayList<String>();
 		for(Entry<String, Set<String>> entry : TSynonym.wordSynonymsMap.entrySet()) {
-			String line = Vcab.getSynonymLine(entry.getKey(), entry.getValue());
-			synonymLines.add(line);
+			String line = Vcab.getSynonymLine(entry.getKey(), entry.getValue(), allWords);
+			if(line!=null){
+				synonymLines.add(line);
+			}
 		}
 		FileUtil.listToFile(synonymLines, FileUtil.createFileNameWithTimestamp(VCAB_SYNONYM_OUTPUT_DIR+"/synonym_%s.txt"));
 		
