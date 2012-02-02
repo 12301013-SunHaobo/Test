@@ -5,7 +5,7 @@ import java.util.concurrent.Callable;
 
 import others.e.model.Iciba;
 import others.e.model.Mw;
-import others.e.model.WR;
+import others.e.model.Vcab;
 import others.e.model.Word;
 import others.e.model.Wwo;
 import utils.WebUtil;
@@ -49,10 +49,10 @@ public class TExcel implements Callable<String>{
 		Iciba iciba = this.word.getIciba();
 		iciba.setMeaning(Iciba.extractICIBAMeaning(icibaContent));
 		
-//		//get WordReference first meaning
-//		String wrContent =  WebUtil.getPageSource(WR.URL + name, "utf-8");
-//		WR wr = this.word.getWr();
-//		wr.setMeaning(WR.extractMeaning(wrContent));
+		//get WordReference first meaning
+		String vcabContent =  WebUtil.getPageSource(Vcab.URL + name, "utf-8");
+		Vcab vcab = this.word.getVcab();
+		vcab.setSynonyms(Vcab.getSynonyms(vcabContent));
 		
 		//get WWO sentences
 		String wwoContent = WebUtil.getPageSource(Wwo.WWO_URL + name.toUpperCase(), "utf-8");
