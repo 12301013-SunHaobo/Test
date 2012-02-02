@@ -98,7 +98,7 @@ public class TaskSynonym {
 		
 		List<String> synonymLines = new ArrayList<String>();
 		for(Entry<String, Set<String>> entry : TSynonym.wordSynonymsMap.entrySet()) {
-			String line = Vcab.getSynonymLine(entry.getKey(), entry.getValue(), allWords);
+			String line = Vcab.toSynonymLine(entry.getKey(), entry.getValue(), allWords);
 			if(line!=null){
 				synonymLines.add(line);
 			}

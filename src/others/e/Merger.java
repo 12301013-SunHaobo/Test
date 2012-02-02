@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFHyperlink;
@@ -28,21 +29,21 @@ public class Merger {
 	}
 
 	private static void merge() throws Exception {
-		String mainFile = EUtil.PHONE_ROOT+"/output4excel/20111207-manualUpdated-2.xls";//changed-20101120.xls";
+		String mainFile = EUtil.PHONE_ROOT+"/output4excel/20120129-manualUpdated-1.xls";//changed-20101120.xls";
 		Columns[] columns1 = new Columns[] { 
 				Columns.WORD, 
-				Columns.MW_MP3, Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
+				Columns.VCAB_MP3, Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
 				Columns.CN_MEANING, 
 				Columns.WWO_SENTENCES, Columns.MW_SENTENCES, Columns.XR_SENTENCES  
 				};
 
 		List<Word> mainList = EUtil.excelToList(mainFile, columns1);
 		
-		String extraFile = EUtil.PHONE_ROOT+"/output4excel/auto20110801-022123.xls";//words-20101003.xls";
+		String extraFile = EUtil.PHONE_ROOT+"/output4excel/auto20120202-003849.xls";//words-20101003.xls";
 		Columns[] columns2 = new Columns[] { 
 				Columns.WORD, 
-				Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
-				Columns.CN_MEANING, 
+				Columns.VCAB_MP3, Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
+				Columns.VCAB_SYNONYMS, Columns.CN_MEANING, 
 				Columns.WWO_SENTENCES, Columns.MW_SENTENCES, Columns.XR_SENTENCES  
 				};
 
@@ -52,7 +53,7 @@ public class Merger {
 		Columns[] columnsResult = new Columns[] { 
 				Columns.WORD, 
 				Columns.VCAB_MP3, Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
-				Columns.CN_MEANING, 
+				Columns.VCAB_SYNONYMS, Columns.CN_MEANING, 
 				Columns.WWO_SENTENCES, Columns.MW_SENTENCES, Columns.XR_SENTENCES  
 				};
 		List<Word> listResult = mergeLists(mainList,extraList);
@@ -92,7 +93,11 @@ public class Merger {
 					if(tmpSentence==null || "".equals(tmpSentence.trim())){
 						word1.getXr().setSentences(word2.getXr().getSentences());
 					}
-					
+
+					Set<String> tmpSynonyms = word1.getVcab().getSynonyms();
+					if(tmpSynonyms.isEmpty()){
+						word1.getVcab().setSynonyms(word2.getVcab().getSynonyms());
+					}
 				}
 			}
 			

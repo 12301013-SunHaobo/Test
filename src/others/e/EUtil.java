@@ -49,7 +49,7 @@ public class EUtil {
 
 	
 	public enum Columns {
-		WORD, VCAB_MP3, MW_MP3, ICIBA_EN, ICIBA_US, PHONE_XR, CN_MEANING, MW_SENTENCES, WWO_SENTENCES, XR_SENTENCES, EMPTY
+		WORD, VCAB_MP3, VCAB_SYNONYMS, MW_MP3, ICIBA_EN, ICIBA_US, PHONE_XR, CN_MEANING, MW_SENTENCES, WWO_SENTENCES, XR_SENTENCES, EMPTY
 	}
 
 	/**
@@ -124,6 +124,9 @@ public class EUtil {
 						if (hyperlink == null) {
 							word.getXr().setLocalXrHasMp3(false);
 						}
+						break;
+					case VCAB_SYNONYMS:
+						word.getVcab().fromSynonymsStr(cellValue);
 						break;
 					case CN_MEANING:
 						word.getIciba().setMeaning(cellValue);
@@ -279,6 +282,12 @@ public class EUtil {
 						xrCell.setCellStyle(cs);
 					}
 					break;
+				case VCAB_SYNONYMS:
+					// iciba meaning
+					Cell synonymsCell = row.createCell(j);
+					synonymsCell.setCellValue(word.getVcab().toSynonymsStr());
+					synonymsCell.setCellStyle(cs);
+					break;
 				case CN_MEANING:
 					// iciba meaning
 					Cell meaningCell = row.createCell(j);
@@ -377,8 +386,21 @@ public class EUtil {
 			nameCell.setCellValue(word.getName());
 			nameCell.setCellStyle(cs);
 
+			// vcab phone
+			Cell vcabPhoneCell = row.createCell(1);
+			vcabPhoneCell.setCellValue("[V]");
+			if (word.getVcab().isLocalHasPhone()) {
+				Hyperlink enLink = createHelper
+						.createHyperlink(Hyperlink.LINK_URL);
+				enLink.setAddress("./vcab/mp3/" + word.getName() + AUDIO_SUFFIX);
+				vcabPhoneCell.setHyperlink(enLink);
+				vcabPhoneCell.setCellStyle(hlink_style);
+			} else {
+				vcabPhoneCell.setCellStyle(cs);
+			}
+			
 			// en phone
-			Cell enCell = row.createCell(1);
+			Cell enCell = row.createCell(2);
 			enCell.setCellValue("[" + Iciba.ICIBA_EN + "]");
 			if (word.getIciba().isLocalEnHasMp3()) {
 				Hyperlink enLink = createHelper
@@ -391,7 +413,7 @@ public class EUtil {
 			}
 
 			// us phone
-			Cell usCell = row.createCell(2);
+			Cell usCell = row.createCell(3);
 			usCell.setCellValue("[" + Iciba.ICIBA_US + "]");
 			if (word.getIciba().isLocalUsHasMp3()) {
 				Hyperlink usLink = createHelper
@@ -404,7 +426,7 @@ public class EUtil {
 			}
 
 			// xr phone
-			Cell xrCell = row.createCell(3);
+			Cell xrCell = row.createCell(4);
 			xrCell.setCellValue("[" + Xr.PHONE_XR + "]");
 			if (word.getXr().isLocalXrHasMp3()) {
 				Hyperlink xrLink = createHelper
@@ -416,23 +438,23 @@ public class EUtil {
 				xrCell.setCellStyle(cs);
 			}
 
+			//vcab synonyms
+			Cell synonymsCell = row.createCell(5);
+			synonymsCell.setCellValue(word.getVcab().toSynonymsStr());
+			synonymsCell.setCellStyle(cs);
+			
 			// iciba meaning
-			Cell meaningCell = row.createCell(4);
+			Cell meaningCell = row.createCell(6);
 			meaningCell.setCellValue(word.getIciba().getMeaning());
 			meaningCell.setCellStyle(cs);
 
-//			// wordreference meaning
-//			Cell meaningCell = row.createCell(4);
-//			meaningCell.setCellValue(word.getWr().getMeaning());
-//			meaningCell.setCellStyle(cs);
-
 			// wwo sentence
-			Cell wwoCell = row.createCell(5);
+			Cell wwoCell = row.createCell(7);
 			wwoCell.setCellValue(word.getWwo().getSentences());
 			wwoCell.setCellStyle(cs);
 
 			// mw sentence
-			Cell mwCell = row.createCell(6);
+			Cell mwCell = row.createCell(8);
 			mwCell.setCellValue(word.getMw().getSentences());
 			mwCell.setCellStyle(cs);
 

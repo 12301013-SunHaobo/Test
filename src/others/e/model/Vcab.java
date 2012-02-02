@@ -1,5 +1,6 @@
 package others.e.model;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import others.e.EUtil;
+import utils.FileUtil;
 import utils.RegUtil;
 import utils.WebUtil;
 
@@ -19,7 +21,6 @@ public class Vcab {
 
 	//static members
 	public static String URL = "http://www.vocabulary.com/definition/";//  + lowercase
-	private final static int SENTENCE_SIZE_LIMIT = 120;
 	
 	public static final String OUTPUT_DIR = EUtil.PHONE_ROOT+"/output/vcab/mp3/";
 	
@@ -28,8 +29,21 @@ public class Vcab {
 	//<word,wavUrl>
 	private Map<String, String> mp3s;
 	private boolean localHasPhone = true;
-	
-	private Set<String> synonyms;
+
+	//synonyms
+	private Set<String> synonyms = new HashSet<String>();
+	private static List<String> allWords = null;
+	private static boolean filterWithAllWords = false;//switch to use all-list.txt to filter or not 
+		static {
+			if(filterWithAllWords){
+				try {
+					//"all-list.txt"; "GW-list-full.txt"; "test-synonyms-list.txt"
+					allWords = FileUtil.fileToList(EUtil.PHONE_ROOT+"input/all-list.txt");
+				} catch (IOException e) {
+					e.printStackTrace();
+				} 
+			}
+		}
 	
 	// for testing
 	public static void main(String args[]){
@@ -68,12 +82,11 @@ public class Vcab {
 	}
 	
 	
-	public static Set<String> getSynonyms(String name){
+	public static Set<String> getSynonyms(String pageContent){
 		Set<String> synonyms = new HashSet<String>();
-		String urlWord = Vcab.URL+name;
-		String pageWord = WebUtil.getPageSource(urlWord, "utf-8");
+		
 		String ddPattern = "<dd>.*?</dd>";
-		List<String> ddList = RegUtil.getMatchedStrings(pageWord, ddPattern);
+		List<String> ddList = RegUtil.getMatchedStrings(pageContent, ddPattern);
 		
 		for(int i=0;i<ddList.size();i++){
 			String tmpSynonyms = ddList.get(i);   
@@ -86,8 +99,8 @@ public class Vcab {
 		return synonyms;
 	}
 	
-	
-	public static String getSynonymLine(String name, Set<String> synonymSet, List<String> allWords){
+	/** to save to synonyms file  **/
+	public static String toSynonymLine(String name, Set<String> synonymSet, List<String> allWords){
 		boolean contains = false;
 		StringBuilder sb = new StringBuilder();
 		sb.append(name);
@@ -107,7 +120,35 @@ public class Vcab {
 		}
 	}
 	
-	
+	/** to excel cell **/
+	public String toSynonymsStr(){
+		boolean contains = false;
+		StringBuilder sb = new StringBuilder();
+		for(String s : synonyms) {
+			if(filterWithAllWords && allWords.contains(s) || !filterWithAllWords){
+				contains = true;
+				sb.append(s);
+				sb.append(", ");
+			}
+		}
+		if(contains){
+			return sb.toString();
+		}else{
+			return "";
+		}
+	}
+	/** from excel synonyms cell to set **/
+	public void fromSynonymsStr(String synonymsStr) {
+		if(synonymsStr!=null){
+			String[] arr = synonymsStr.split(",");
+			for(String s : arr) {
+				String tmpStr = s.trim();
+				if(tmpStr!=null && !"".equals(tmpStr)){
+					synonyms.add(tmpStr);
+				}
+			}
+		}
+	}
 	
 	public String getSentences() {
 		return sentences;
@@ -124,7 +165,15 @@ public class Vcab {
 	public void setLocalHasPhone(boolean localHasPhone) {
 		this.localHasPhone = localHasPhone;
 	}
-	
 
+	public Set<String> getSynonyms() {
+		return synonyms;
+	}
+
+	public void setSynonyms(Set<String> synonyms) {
+		this.synonyms = synonyms;
+	}
+	
+	
 	
 }

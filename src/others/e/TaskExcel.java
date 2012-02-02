@@ -1,11 +1,7 @@
 package others.e;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,21 +13,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Hyperlink;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 
-import others.e.model.Iciba;
 import others.e.model.Word;
-import others.e.model.Xr;
-import utils.FileUtil;
 import utils.BoundedExecutor;
+import utils.FileUtil;
 
 /**
  * Grab 
@@ -41,7 +26,7 @@ import utils.BoundedExecutor;
  * and save to excel
  */
 public class TaskExcel {
-	private static final String INPUT_FILE="GW-list-full.txt"; //"GW-list.txt"; //"GW-list-full.txt";
+	private static final String INPUT_FILE="remaining.txt"; //"GW-list.txt, GW-list-full.txt , test-small.txt, remaining.txt 
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"/input/";
 	private static final String LOG_DIR = EUtil.PHONE_ROOT+"/output/log/";
 	
@@ -78,6 +63,9 @@ public class TaskExcel {
 			
 			//set phone flag
 			tmpWord = allWords.get(i);
+			if (!EUtil.vcabSet.contains(tmpWord.getName())) {
+				tmpWord.getVcab().setLocalHasPhone(false);
+			}
 			if (!EUtil.enSet.contains(tmpWord.getName())) {
 				tmpWord.getIciba().setLocalEnHasMp3(false);
 			}
@@ -94,10 +82,10 @@ public class TaskExcel {
 		TExcel.init(errorList);
 		
 		//submit tasks for downloading mp3
-		BoundedExecutor be = new BoundedExecutor(300);//default 300
+		BoundedExecutor be = new BoundedExecutor(200);//default 300
 		for (int i = 0; i < allWords.size(); i++) {
 			tmpWord = allWords.get(i);
-			TExcel tp = new TExcel(allWords.get(i));
+			TExcel tp = new TExcel(tmpWord);
 			try {
 				be.submit(tp);
 				System.out.println(i + ":"+tmpWord.getName()+":submited:");
