@@ -6,8 +6,8 @@ public class TestString {
      * @param args
      */
     public static void main(String[] args) {
-        testSplitLine();
-        //testSplit();
+        //testSplitLine();
+        testSplit();
         //testRemovePackageStr();
 
     }
@@ -20,10 +20,11 @@ public class TestString {
     }
 
     private static void testSplit(){
-        String s = "abc, def , ehi j , ";
+        String s = ",abc, def , ehi j ,,";
         String[] split = s.split(",");
-        
-        System.out.println(s);
+        for(int i=0;i<split.length;i++){
+            System.out.println("["+split[i]+"]");
+        }
     }
     
     private static void testRemovePackageStr(){
