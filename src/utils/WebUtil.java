@@ -3,6 +3,7 @@ package utils;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,6 +81,44 @@ public class WebUtil {
 	    out.write(data);
 	    out.flush();
 	    out.close();	
+	}
+	
+
+	//download a binary file, which has unknown length like https://docs.google.com/document/pubimage?id=
+	public static void downloadUnknownLength(String urlStr, String fileName) throws Exception {
+		if(urlStr==null || urlStr.trim().equals("")){
+			return;
+		}
+		URL u = new URL(urlStr);
+	    URLConnection uc = u.openConnection();
+	    
+	    //some sites require this, otherwise 403 error
+	    //uc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");//working for most sites
+	    uc.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0) Gecko/20100101 Firefox/10.0");
+	    
+	    InputStream raw = uc.getInputStream();
+	    InputStream in = new BufferedInputStream(raw);
+	    
+        byte[] buffer = new byte[4096];
+        int n = - 1;
+
+	    FileUtil.createFolderIfNotExist(fileName);
+	    FileOutputStream out = null;
+        try {
+			out = new FileOutputStream(fileName);
+			while ((n = in.read(buffer)) != -1) {
+				if (n > 0) {
+					out.write(buffer, 0, n);
+				}
+			}
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			if(out!=null){
+				out.close();
+			}
+			e.printStackTrace();
+		}
 	}
 
 }

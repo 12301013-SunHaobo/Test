@@ -15,13 +15,14 @@ public class GetPicNTitles {
 	public static void main(String[] args) throws Exception {
 		long b0 = System.currentTimeMillis();
 		
-		String category = "censor";//uncensor |censor <-------------------- change here
+		String category = "人妻・熟女";//uncensor |censor <-------------------- change here
 		
 		//submit tasks for downloading mp3
 		BoundedExecutor be = new BoundedExecutor(10);
 		
-		for(int i=1;i<=censoredTotalPgNo;i++){//1-72 <-------------------- change here
-			TLikejav tpic = new TLikejav(category, i);
+		for(int i=1;i<=42;i++){//1-72 <-------------------- change here
+			//TLikejav tpic = new TLikejav(category, i);
+			THotPPic tpic = new THotPPic(category, i);
 			try {
 				be.submit(tpic);
 				System.out.println(category+", "+i+", submitted.");
