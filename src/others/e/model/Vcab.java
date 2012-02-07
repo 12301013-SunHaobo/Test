@@ -90,10 +90,10 @@ public class Vcab {
 		
 		for(int i=0;i<ddList.size();i++){
 			String tmpSynonyms = ddList.get(i);   
-			tmpSynonyms = tmpSynonyms.replaceAll("<dd>|<a.*?>|</a>|</dd>| ", "");
+			tmpSynonyms = tmpSynonyms.replaceAll("<dd>|<a.*?>|</a>|</dd>", "");
 			String[] tmpSynonymsArr = tmpSynonyms.split(",");
 			for(String s : tmpSynonymsArr){
-				synonyms.add(s.toLowerCase());
+				synonyms.add(s.trim().toLowerCase());
 			}
 		}
 		return synonyms;

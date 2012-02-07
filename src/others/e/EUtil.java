@@ -443,9 +443,9 @@ public class EUtil {
 			synonymsCell.setCellValue(word.getVcab().toSynonymsStr());
 			synonymsCell.setCellStyle(cs);
 			
-			// iciba meaning
+			// dictcn meaning
 			Cell meaningCell = row.createCell(6);
-			meaningCell.setCellValue(word.getIciba().getMeaning());
+			meaningCell.setCellValue(word.getDictcn().getMeaning());
 			meaningCell.setCellStyle(cs);
 
 			// wwo sentence

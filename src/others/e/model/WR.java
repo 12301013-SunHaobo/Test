@@ -11,6 +11,7 @@ import utils.WebUtil;
 /**
  * WordReference has relatively better meaning than iciba.com
  */
+@Deprecated
 public class WR {
 
 	//static members

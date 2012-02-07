@@ -1,38 +1,52 @@
 package others.e.model;
 
 import java.io.IOException;
+import java.util.List;
 
-import utils.FileUtil;
+import utils.RegUtil;
+import utils.WebUtil;
 /**
  * 
  * haven't found a way to download
  *
  */
 public class Dictcn {
+	//static members
+	public static String URL = "http://dict.cn/ws.php?q=";//  + lowercase
+	public static String ENCODING = "GBK";
+	
     //instance members
     private String meaning;
     public final static String NOT_FOUND="NotFound";
     
-    private String enIPA;//International Phonetic Alphabet
-    private String enMp3Url;
-    private boolean enHasMp3;//iciba site
-    
-    private String usIPA;
-    private String usMp3url;
-    private boolean usHasMp3;//iciba site
-
-    //indicate if local has mp3
-    private boolean localEnHasMp3 = true;
-    private boolean localUsHasMp3 = true;
-    
-    
     //testing
     public static void main(String [] args) throws IOException{
-        System.out.println("aaa");
+		String pageContent = WebUtil.getPageSource(Dictcn.URL +"hook", Dictcn.ENCODING);
+		//System.out.println(pageContent);
+		String meaning = extractMeaning(pageContent);
+		System.out.println(meaning);
+
     }
     
     
-    public static String extractICIBAMeaning(String icibaContent) {
-        return null;
-    }
+	public static String extractMeaning(String pageContent){
+		
+		String ddPattern = "<def>.*?</def>";
+		List<String> ddList = RegUtil.getMatchedStrings(pageContent, ddPattern);
+		if(ddList.size()>0){
+			return ddList.get(0).replaceAll("<def>", "").replaceAll("</def>", "");
+		}
+		return NOT_FOUND;
+	}
+
+	//auto generated
+	public String getMeaning() {
+		return meaning;
+	}
+	public void setMeaning(String meaning) {
+		this.meaning = meaning;
+	}
+	
+	
+	
 }

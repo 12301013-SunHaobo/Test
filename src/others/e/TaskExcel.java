@@ -26,7 +26,7 @@ import utils.FileUtil;
  * and save to excel
  */
 public class TaskExcel {
-	private static final String INPUT_FILE="remaining.txt"; //"GW-list.txt, GW-list-full.txt , test-small.txt, remaining.txt 
+	private static final String INPUT_FILE="vs-list.txt"; //"GW-list.txt, GW-list-full.txt , test-small.txt, remaining.txt 
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"/input/";
 	private static final String LOG_DIR = EUtil.PHONE_ROOT+"/output/log/";
 	
@@ -101,7 +101,8 @@ public class TaskExcel {
 			e.printStackTrace();
 		}
 		
-		EUtil.toExcel(EUtil.sortBySentence(allWords));
+		//EUtil.toExcel(EUtil.sortBySentence(allWords));
+		EUtil.toExcel(allWords);
 		
 		//log errors
 		DateFormat dfLog = new SimpleDateFormat("yyyyMMdd-hhmmss");

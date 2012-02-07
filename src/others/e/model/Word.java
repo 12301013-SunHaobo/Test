@@ -5,7 +5,7 @@ public class Word {
 	private int inputIndex;
 	private String name;
 	
-	private WR wr;
+	private Dictcn dictcn;
 	private Vcab vcab;
 	private Iciba iciba;
 	private Wwo wwo;
@@ -17,7 +17,7 @@ public class Word {
 	
 	public Word(){
 		super();
-		this.wr = new WR();
+		this.dictcn = new Dictcn();
 		this.vcab = new Vcab();
 		this.iciba = new Iciba();
 		this.wwo = new Wwo();
@@ -29,7 +29,7 @@ public class Word {
 		super();
 		this.inputIndex = inputIndex;
 		this.name = name;
-		this.wr = new WR();
+		this.dictcn = new Dictcn();
 		this.vcab = new Vcab();
 		this.iciba = new Iciba();
 		this.wwo = new Wwo();
@@ -72,21 +72,17 @@ public class Word {
 	public void setXr(Xr xr) {
 		this.xr = xr;
 	}
-
 	public Vcab getVcab() {
 		return vcab;
 	}
-
 	public void setVcab(Vcab vcab) {
 		this.vcab = vcab;
 	}
-
-	public WR getWr() {
-		return wr;
+	public Dictcn getDictcn() {
+		return dictcn;
 	}
-
-	public void setWr(WR wr) {
-		this.wr = wr;
+	public void setDictcn(Dictcn dictcn) {
+		this.dictcn = dictcn;
 	}
 	
 
