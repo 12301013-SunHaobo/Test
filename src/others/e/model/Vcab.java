@@ -22,6 +22,9 @@ public class Vcab {
 	//static members
 	public static String URL = "http://www.vocabulary.com/definition/";//  + lowercase
 	
+	//this url can retrieve sentences
+	public static String UrlSentences = "http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5000&startOffset=0&filter=0";
+		
 	public static final String OUTPUT_DIR = EUtil.PHONE_ROOT+"/output/vcab/mp3/";
 	
 	//instance members
