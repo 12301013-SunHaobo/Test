@@ -12,7 +12,11 @@ import utils.WebUtil;
 
 public class GetNazData {
 
-	private static String[] stockcodes = {"qqq", "tna", "tza"};//qqq, tna, 
+	private static String[] stockcodes = {
+//		"qqq", 
+		"tna", 
+		"tza"
+		};//qqq, tna, 
     /**
      * to make tick order by : earliest -> latest
      * timeLot 1->13
@@ -56,7 +60,7 @@ public class GetNazData {
     //initialize totalPageArr
     private static void initTotalPageArr(String stockcode){
         for(int i=0;i<13;i++){
-            int totalPageNum = getTotalPages(stockcode, i+1);
+            int totalPageNum = getTotalPageStr(stockcode, i+1);
             totalPageArr[i] = totalPageNum;
             System.out.println("page "+(i+1)+" done.");
         }
@@ -67,21 +71,27 @@ public class GetNazData {
     }
     
     //get total pages for specified time lot
-    private static int getTotalPages(String stockcode, int timeLot){
-        //String urlStr = baseUrlStr+"?time="+timeLot;
+    private static int getTotalPageStr(String stockcode, int timeLot){
         String urlStr = String.format(baseUrlStr, stockcode)+"?time="+timeLot;
+        //urlStr = "http://www.nasdaq.com/symbol/qqq/time-sales?time=4";
         String tmpPage = WebUtil.getPageSource(urlStr, encoding);
-        String totalPagePattern = "<span id=\"TotalPagesLabel\">.*?</span>";
-        List<String> totalPageList = RegUtil.getMatchedStrings(tmpPage, totalPagePattern);
-        String totalPageStr = totalPageList.get(0).replace("<span id=\"TotalPagesLabel\">", "").replace("</span>", "").trim();
-        return Integer.parseInt(totalPageStr);
+        //System.out.println(tmpPage);
+    	//<a href="[^>]*?"lb_Last.*?>
+    	String lastPagePattern = "<a href=\"[^>]*?\"lb_Last.*?>";
+    	List<String> totalPageList = RegUtil.getMatchedStrings(tmpPage, lastPagePattern);
+    	String totalPageStr = totalPageList.get(0);
+    	String pgNoPattern = "=\\d+?\"";
+    	List<String> pgNoList = RegUtil.getMatchedStrings(totalPageStr, pgNoPattern);
+    	String totalPageNo = pgNoList.get(0).replaceAll("=|\"", "");
+    	System.out.println("totalpageStr="+totalPageNo);
+    	return Integer.parseInt(totalPageNo);
     }
     
     
     private static Stack<String> extractPageTicks(String stockcode, int timeLot, int pageno){
         String page = WebUtil.getPageSource(String.format(baseUrlStr, stockcode)+"?pageno="+pageno+"&time="+timeLot, encoding);
 
-        String dataTablePattern = "<table class=\"AfterHoursPagingContents\" name=\"AfterHoursPagingContents_Table\".*</table>";
+        String dataTablePattern = "<table class=\"AfterHoursPagingContents\" id=\"AfterHoursPagingContents_Table\".*</table>";
         List<String> dataTableList = RegUtil.getMatchedStrings(page, dataTablePattern);
         String dataTable = dataTableList.get(0);
         

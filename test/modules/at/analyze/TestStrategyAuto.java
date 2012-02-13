@@ -45,17 +45,17 @@ public class TestStrategyAuto {
 	
 	private static Map<String, Double> tradeSummaryMap = new HashMap<String, Double>();
 	
-	private static boolean VISIBLE = false;
+	private static boolean VISIBLE = true;
 	private static boolean SAVE_CHART_TO_FILE = false;
 	
 	public static void main(String[] args) throws Exception {
 		TestStrategyAuto tsa = new TestStrategyAuto();
 		long b0 = System.currentTimeMillis();
 		
-		String stockCode = "qqq";//qqq, tna, tza 
+		String stockCode = "tza";//qqq, tna, tza 
 		String[][] dateTimeArr = 
-				initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
-		        //initListedDate(); //listed dates only
+				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
+		        initListedDate(); //listed dates only
 		
 		//avoid displaying too many charts, only save to files
 		if(dateTimeArr.length>1){
@@ -335,7 +335,7 @@ public class TestStrategyAuto {
 //				{"20110929", "202100"},
 //				{"20110930", "205736"},
 //				{"20111003", "224038"},
-				{"20111004", "195804"},
+//				{"20111004", "195804"},
 //				{"20111007", "001654"},
 //				{"20111011", "200137"},
 //				{"20111012", "200149"},
@@ -395,7 +395,7 @@ public class TestStrategyAuto {
 //				{"20120102", "200100"},
 //				{"20120103", "200122"},
 //				{"20120105", "200245"},
-
+				{"20120210", "033511"}
 				};
 
 	}
