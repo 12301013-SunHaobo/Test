@@ -13,7 +13,7 @@ import utils.WebUtil;
 public class GetNazData {
 
 	private static String[] stockcodes = {
-//		"qqq", 
+		"qqq", 
 		"tna", 
 		"tza"
 		};//qqq, tna, 
