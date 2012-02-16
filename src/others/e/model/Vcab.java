@@ -23,11 +23,18 @@ public class Vcab {
 	public static String URL = "http://www.vocabulary.com/definition/";//  + lowercase
 	
 	//this url can retrieve sentences
-	public static String UrlSentences = "http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5000&startOffset=0&filter=0";
+	//"http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5000&startOffset=0&filter=0";
+	public static String UrlSentences = "http://corpus.vocabulary.com/examples.json?query=%s&maxResults=5&startOffset=0&filter=0";
 		
 	public static final String OUTPUT_DIR = EUtil.PHONE_ROOT+"/output/vcab/mp3/";
 	
-	//instance members
+	//blurb
+	private String blurbShort;
+	private String blurbLong;
+	
+	//meaning
+	private String meaning;
+	//sentences
 	private String sentences;
 	//<word,wavUrl>
 	private Map<String, String> mp3s;
@@ -50,17 +57,77 @@ public class Vcab {
 	
 	// for testing
 	public static void main(String args[]){
-//		String pageContent = WebUtil.getPageSource(Vcab.URL +"red", "utf-8");
+		String pageContent = WebUtil.getPageSource(Vcab.URL +"book", "utf-8");
 //		System.out.println(pageContent);
 //		Map<String,String> map = getPhones("ticket");
 //		for(String word: map.keySet()){
 //			System.out.println(word+":"+map.get(word));
 //		}
 		
-		Set<String> synonyms = getSynonyms("red");
-		synonyms.size();
+//		Set<String> synonyms = getSynonyms("red");
+//		synonyms.size();
 
+//		String meaning = getBlurbLong(pageContent);
+//		System.out.println(meaning);
 		
+		System.out.println(extractSentences("imperative"));
+	}	
+	
+	//cannot get word type like: adj, n
+	@Deprecated
+	public static String getPrimaryMeanings(String pageContent){
+		StringBuilder sb = new StringBuilder();
+		String meaningPattern = "class=\"def(\\s|\").*?</div>";
+		List<String> ddList = RegUtil.getMatchedStrings(pageContent, meaningPattern);
+		for(String s : ddList){
+			System.out.println(s);
+		}
+		return sb.toString();
+	}
+	
+	
+	public static String extractSentences(String word){
+		StringBuilder sb = new StringBuilder();
+		String url = String.format(UrlSentences, word);
+		String json = WebUtil.getPageSource(url, "utf-8");
+		String sentencePattern = "\"sentence\":\".*?\",";
+		List<String> ddList = RegUtil.getMatchedStrings(json, sentencePattern);
+		for(String s : ddList){
+			String tmp = s.replaceAll("\"sentence\":\"|\",|\\\\", "");
+			sb.append(tmp);
+			sb.append("\r\n");
+		}
+		return sb.toString();
+	}
+	
+	public static String getBlurbShort(String pageContent){
+		String blurbShortPattern = "<p class=\"short\">.*?</p>";
+		List<String> ddList = RegUtil.getMatchedStrings(pageContent, blurbShortPattern);
+		String tmp = ddList.get(0);
+		tmp = tmp.replaceAll("<p.*?>|</p>", "");
+		return tmp;
+		
+	}
+	public static String getBlurbLong(String pageContent){
+		String blurbShortPattern = "<p class=\"long\">.*?</p>";
+		List<String> ddList = RegUtil.getMatchedStrings(pageContent, blurbShortPattern);
+		String tmp = ddList.get(0);
+		tmp = tmp.replaceAll("<p.*?>|</p>", "");
+		return tmp;
+	}
+	public static String getFullDefinitions(String pageContent){
+		StringBuilder sb = new StringBuilder();
+		String meaningPattern = "<h3.*?h3>";
+		List<String> ddList = RegUtil.getMatchedStrings(pageContent, meaningPattern);
+		for(String s : ddList){
+			String tmpS = s.replaceAll("\\s(\\s)+", "");
+			tmpS = tmpS.replaceAll("</a>", ". ");
+			tmpS = tmpS.replaceAll("<.*?>|\r|\n", "");
+			
+			sb.append(tmpS);
+			sb.append("\r\n");
+		}
+		return sb.toString();
 	}	
 	
 	public static Map<String,String> getPhones(String name){
@@ -83,7 +150,6 @@ public class Vcab {
 		}
 		return resultMap;
 	}
-	
 	
 	public static Set<String> getSynonyms(String pageContent){
 		Set<String> synonyms = new HashSet<String>();
@@ -153,6 +219,32 @@ public class Vcab {
 		}
 	}
 	
+	
+	//////////////////////////////////////
+	public String getBlurbShort() {
+		return blurbShort;
+	}
+
+	public void setBlurbShort(String blurbShort) {
+		this.blurbShort = blurbShort;
+	}
+
+	public String getBlurbLong() {
+		return blurbLong;
+	}
+
+	public void setBlurbLong(String blurbLong) {
+		this.blurbLong = blurbLong;
+	}
+
+	public String getMeaning() {
+		return meaning;
+	}
+
+	public void setMeaning(String meaning) {
+		this.meaning = meaning;
+	}
+
 	public String getSentences() {
 		return sentences;
 	}

@@ -49,7 +49,14 @@ public class EUtil {
 
 	
 	public enum Columns {
-		WORD, VCAB_MP3, VCAB_SYNONYMS, MW_MP3, ICIBA_EN, ICIBA_US, PHONE_XR, CN_MEANING, MW_SENTENCES, WWO_SENTENCES, XR_SENTENCES, EMPTY
+		WORD, 
+		VCAB_MP3, VCAB_SYNONYMS, VCAB_BLURB_SHORT, VCAB_BLURB_LONG, VCAB_SENTENCES, VCAB_MEANING,
+		DICTCN_MEANING,
+		MW_MP3, 
+		ICIBA_EN, ICIBA_US, 
+		PHONE_XR, CN_MEANING, 
+		MW_SENTENCES, WWO_SENTENCES, XR_SENTENCES, 
+		EMPTY
 	}
 
 	/**
@@ -127,6 +134,21 @@ public class EUtil {
 						break;
 					case VCAB_SYNONYMS:
 						word.getVcab().fromSynonymsStr(cellValue);
+						break;
+					case VCAB_BLURB_SHORT:
+						word.getVcab().setBlurbShort(cellValue);
+						break;
+					case VCAB_BLURB_LONG:
+						word.getVcab().setBlurbLong(cellValue);
+						break;
+					case VCAB_SENTENCES:
+						word.getVcab().setSentences(cellValue);
+						break;
+					case VCAB_MEANING:
+						word.getVcab().setMeaning(cellValue);
+						break;
+					case DICTCN_MEANING:
+						word.getDictcn().setMeaning(cellValue);
 						break;
 					case CN_MEANING:
 						word.getIciba().setMeaning(cellValue);
@@ -288,6 +310,39 @@ public class EUtil {
 					synonymsCell.setCellValue(word.getVcab().toSynonymsStr());
 					synonymsCell.setCellStyle(cs);
 					break;
+
+				//VCAB_BLURB_SHORT, VCAB_BLURB_LONG, VCAB_SENTENCES, VCAB_MEANING, 	
+				case VCAB_BLURB_SHORT:
+					// iciba meaning
+					Cell blurbShortCell = row.createCell(j);
+					blurbShortCell.setCellValue(word.getVcab().getBlurbShort());
+					blurbShortCell.setCellStyle(cs);
+					break;
+				case VCAB_BLURB_LONG:
+					// iciba meaning
+					Cell blurbLongCell = row.createCell(j);
+					blurbLongCell.setCellValue(word.getVcab().getBlurbLong());
+					blurbLongCell.setCellStyle(cs);
+					break;
+				case VCAB_SENTENCES:
+					// iciba meaning
+					Cell sentenceCell = row.createCell(j);
+					sentenceCell.setCellValue(word.getVcab().getSentences());
+					sentenceCell.setCellStyle(cs);
+					break;
+				case VCAB_MEANING:
+					// iciba meaning
+					Cell meaningsCell = row.createCell(j);
+					meaningsCell.setCellValue(word.getVcab().getMeaning());
+					meaningsCell.setCellStyle(cs);
+					break;					
+
+				case DICTCN_MEANING:
+					// dictcn meaning
+					Cell dictcnMeaningCell = row.createCell(j);
+					dictcnMeaningCell.setCellValue(word.getDictcn().getMeaning());
+					dictcnMeaningCell.setCellStyle(cs);
+					break;
 				case CN_MEANING:
 					// iciba meaning
 					Cell meaningCell = row.createCell(j);
@@ -312,6 +367,8 @@ public class EUtil {
 					xrMeaningCell.setCellValue(word.getXr().getSentences());
 					xrMeaningCell.setCellStyle(cs);
 					break;
+					
+					
 				case EMPTY:
 					// empty column
 					Cell emptyCell = row.createCell(j);
@@ -351,6 +408,7 @@ public class EUtil {
 	 * 
 	 * @param strArr
 	 */
+	@Deprecated
 	public static void toExcel(List<Word> strArr) {
 
 		HSSFWorkbook workbook = new HSSFWorkbook();

@@ -54,10 +54,14 @@ public class TExcel implements Callable<String>{
 //		Iciba iciba = this.word.getIciba();
 //		iciba.setMeaning(Iciba.extractICIBAMeaning(icibaContent));
 		
-		//get WordReference first meaning
+		//get vcab info
 		String vcabContent =  WebUtil.getPageSource(Vcab.URL + name, "utf-8");
 		Vcab vcab = this.word.getVcab();
 		vcab.setSynonyms(Vcab.getSynonyms(vcabContent));
+		vcab.setBlurbShort(Vcab.getBlurbShort(vcabContent));
+		vcab.setBlurbLong(Vcab.getBlurbLong(vcabContent));
+		vcab.setSentences(Vcab.extractSentences(this.word.getName()));
+		vcab.setMeaning(Vcab.getFullDefinitions(vcabContent));
 		
 		//get WWO sentences
 		String wwoContent = WebUtil.getPageSource(Wwo.WWO_URL + name.toUpperCase(), "utf-8");
