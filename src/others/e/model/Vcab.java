@@ -57,20 +57,30 @@ public class Vcab {
 	
 	// for testing
 	public static void main(String args[]){
-		String pageContent = WebUtil.getPageSource(Vcab.URL +"book", "utf-8");
-//		System.out.println(pageContent);
-//		Map<String,String> map = getPhones("ticket");
-//		for(String word: map.keySet()){
-//			System.out.println(word+":"+map.get(word));
-//		}
+		String word = "hound";
+		String vcabContent = WebUtil.getPageSource(Vcab.URL +word, "utf-8");
+		Vcab vcab = new Vcab();
+		vcab.setSynonyms(Vcab.getSynonyms(vcabContent));
+		vcab.setBlurbShort(Vcab.getBlurbShort(vcabContent));
+		vcab.setBlurbLong(Vcab.getBlurbLong(vcabContent));
+		vcab.setSentences(Vcab.extractSentences(word));
+		vcab.setMeaning(Vcab.getFullDefinitions(vcabContent));
 		
-//		Set<String> synonyms = getSynonyms("red");
-//		synonyms.size();
+		System.out.println("----- meaning ----");
+		System.out.println(vcab.getMeaning());
 
-//		String meaning = getBlurbLong(pageContent);
-//		System.out.println(meaning);
+		System.out.println("----- blurbShort ----");
+		System.out.println(vcab.getBlurbShort());
 		
-		System.out.println(extractSentences("imperative"));
+		System.out.println("----- blurbLong ----");
+		System.out.println(vcab.getBlurbLong());
+		
+		System.out.println("----- Sentences ----");
+		System.out.println(vcab.getSentences());
+		
+		System.out.println("----- synonyms ----");
+		System.out.println(vcab.getSynonyms());
+		
 	}	
 	
 	//cannot get word type like: adj, n
@@ -103,16 +113,22 @@ public class Vcab {
 	public static String getBlurbShort(String pageContent){
 		String blurbShortPattern = "<p class=\"short\">.*?</p>";
 		List<String> ddList = RegUtil.getMatchedStrings(pageContent, blurbShortPattern);
-		String tmp = ddList.get(0);
-		tmp = tmp.replaceAll("<p.*?>|</p>", "");
+		String tmp = "";
+		if(ddList.size()>0){
+			tmp = ddList.get(0);
+			tmp = tmp.replaceAll("<p.*?>|</p>", "");
+		}
 		return tmp;
 		
 	}
 	public static String getBlurbLong(String pageContent){
 		String blurbShortPattern = "<p class=\"long\">.*?</p>";
 		List<String> ddList = RegUtil.getMatchedStrings(pageContent, blurbShortPattern);
-		String tmp = ddList.get(0);
-		tmp = tmp.replaceAll("<p.*?>|</p>", "");
+		String tmp = "";
+		if(ddList.size()>0){
+			tmp = ddList.get(0);
+			tmp = tmp.replaceAll("<p.*?>|</p>", "");
+		}
 		return tmp;
 	}
 	public static String getFullDefinitions(String pageContent){
