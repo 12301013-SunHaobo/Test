@@ -105,13 +105,14 @@ public class TaskExcel {
 		//EUtil.toExcel(EUtil.sortBySentence(allWords));
 		//EUtil.toExcel(allWords);
 		Columns[] columnsResult = new Columns[] { 
+				Columns.VCAB_SYNONYMS,
+				Columns.DICTCN_MEANING,
 				Columns.WORD, 
 				Columns.VCAB_MP3, 
 				//Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
-				Columns.VCAB_SYNONYMS, Columns.DICTCN_MEANING, 
 				Columns.VCAB_MEANING, 
-				Columns.VCAB_BLURB_SHORT, Columns.VCAB_BLURB_LONG, Columns.VCAB_SENTENCES
-				//Columns.WWO_SENTENCES, Columns.MW_SENTENCES, Columns.XR_SENTENCES  
+				Columns.VCAB_BLURB_SHORT, 
+				//Columns.VCAB_BLURB_LONG, Columns.VCAB_SENTENCES
 				};
 		EUtil.listToExcel(allWords, columnsResult);
 		

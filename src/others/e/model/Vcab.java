@@ -103,9 +103,11 @@ public class Vcab {
 		String sentencePattern = "\"sentence\":\".*?\",";
 		List<String> ddList = RegUtil.getMatchedStrings(json, sentencePattern);
 		for(String s : ddList){
+			if(sb.length()>0){
+				sb.append("\r\n");
+			}
 			String tmp = s.replaceAll("\"sentence\":\"|\",|\\\\", "");
 			sb.append(tmp);
-			sb.append("\r\n");
 		}
 		return sb.toString();
 	}
@@ -136,12 +138,14 @@ public class Vcab {
 		String meaningPattern = "<h3.*?h3>";
 		List<String> ddList = RegUtil.getMatchedStrings(pageContent, meaningPattern);
 		for(String s : ddList){
+			if(sb.length()>0){
+				sb.append("\r\n");
+			}
 			String tmpS = s.replaceAll("\\s(\\s)+", "");
 			tmpS = tmpS.replaceAll("</a>", ". ");
 			tmpS = tmpS.replaceAll("<.*?>|\r|\n", "");
 			
 			sb.append(tmpS);
-			sb.append("\r\n");
 		}
 		return sb.toString();
 	}	
