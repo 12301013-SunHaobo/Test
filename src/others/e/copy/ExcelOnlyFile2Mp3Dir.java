@@ -27,36 +27,45 @@ public class ExcelOnlyFile2Mp3Dir {
 	public static void main(String[] args) throws Exception {
 		String rootDir = "D:/user/english/en";
 
+		//==========================================================
 		// change begin
-		String textOnlyFile = rootDir+"/output4excel/copy_mp3.xls";//excel file
-		String srcMp3DirLow =  rootDir+"/mp3/all/low";
-		String newMp3DirLow = rootDir+"/mp3/all/20120209-1/low";//new low folder
+		//my read mp3 files
+//		String textOnlyFile = rootDir+"/output4excel/copy_mp3.xls";//excel file
+//		String srcMp3DirLow =  rootDir+"/mp3/all/low";
+//		String newMp3DirLow = rootDir+"/mp3/all/20120209-1/low";//new low folder
+//		
+//		String srcMp3DirHigh =  rootDir+"/mp3/all/high";
+//		String newMp3DirHigh = rootDir+"/mp3/all/20120209-1/high";//new high folder
 		
-		String srcMp3DirHigh =  rootDir+"/mp3/all/high";
-		String newMp3DirHigh = rootDir+"/mp3/all/20120209-1/high";//new high folder
+		//vcab mp3 files
+		String textOnlyFile = rootDir+"/output4excel/copy_mp3.xls";//excel file
+		String srcMp3DirLow =  rootDir+"/output/vcab/mp3";
+		String newMp3DirLow = rootDir+"/mp3/all/vcab";//new low folder
+		
 		// change end
+		//==========================================================
 		
 		List<String> wordList = getWordList(textOnlyFile);
 		Set<String> lowWordsSet = new HashSet<String>();
 		//copy mp3 files
 		int i=0;
 		for(String word: wordList){
-			String sourceFilePath = srcMp3DirLow+"/"+word+".wav";
+			String sourceFilePath = srcMp3DirLow+"/"+word+".mp3";
 			File sourceFile=new File(sourceFilePath);
 			
 			if(sourceFile.exists()){
 				lowWordsSet.add(word); 
 			}
-			System.out.println((i++)+" "+srcMp3DirLow+"/"+word+".wav -> "+newMp3DirLow+"/"+word+".wav");
-			FileUtil.copyFile(sourceFilePath, newMp3DirLow+"/"+word+".wav");
+			System.out.println((i++)+" "+srcMp3DirLow+"/"+word+".mp3 -> "+newMp3DirLow+"/"+word+".mp3");
+			FileUtil.copyFile(sourceFilePath, newMp3DirLow+"/"+word+".mp3");
 		}
 		
-		for(String word: wordList){
-			if(!lowWordsSet.contains(word)){
-				System.out.println((i++)+" "+srcMp3DirHigh+"/"+word+".wav -> "+newMp3DirHigh+"/"+word+".wav");
-				FileUtil.copyFile(srcMp3DirHigh+"/"+word+".wav", newMp3DirHigh+"/"+word+".wav");
-			}
-		}
+//		for(String word: wordList){
+//			if(!lowWordsSet.contains(word)){
+//				System.out.println((i++)+" "+srcMp3DirHigh+"/"+word+".wav -> "+newMp3DirHigh+"/"+word+".wav");
+//				FileUtil.copyFile(srcMp3DirHigh+"/"+word+".wav", newMp3DirHigh+"/"+word+".wav");
+//			}
+//		}
 	}
 	
 	

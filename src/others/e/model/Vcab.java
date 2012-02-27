@@ -106,7 +106,8 @@ public class Vcab {
 			if(sb.length()>0){
 				sb.append("\r\n");
 			}
-			String tmp = s.replaceAll("\"sentence\":\"|\",|\\\\", "");
+			String tmp = s; 
+				//s.replaceAll("\"sentence\":\"|\",|\\\\", "");
 			sb.append(tmp);
 		}
 		return sb.toString();

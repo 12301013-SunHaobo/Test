@@ -21,12 +21,22 @@ public class TextOnlyFile2Mp3Dir {
 	public static void main(String[] args) throws Exception {
 		String rootDir = "D:/user/english/en";
 
-		// change begin
-		String textOnlyFile = rootDir+"/output/text-only-unsorted-low-20110723-0.txt";
-		String mp3Dir =  rootDir+"/mp3/all/low";
-		String newMp3Dir = rootDir+"/mp3/all/text-only-unsorted-low-20110723-1";
-		String textOnlyDateFile = newMp3Dir+"/text-only-unsorted-low-20110723-1.txt";
+		//==========================================================
+		// change begin 
+		//my read mp3 files
+//		String textOnlyFile = rootDir+"/output/text-only-unsorted-low-20110723-0.txt";
+//		String mp3Dir =  rootDir+"/mp3/all/low";
+//		String newMp3Dir = rootDir+"/mp3/all/text-only-unsorted-low-20110723-1";
+//		String textOnlyDateFile = newMp3Dir+"/text-only-unsorted-low-20110723-1.txt";
+		
+		//vcab mp3 files
+		String textOnlyFile = rootDir+"/output/vcab-list.txt";
+		String mp3Dir =  rootDir+"/output/vcab/mp3";
+		String newMp3Dir = rootDir+"/mp3/all/vcab";
+		String textOnlyDateFile = newMp3Dir+"/vcab-list.txt";
+
 		// change end
+		//==========================================================
 		
 		List<String> wordList = new ArrayList<String>(); 
 		//copy textOnlyFile
