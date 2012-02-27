@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+
 import others.e.EUtil;
 import utils.FileUtil;
 import utils.RegUtil;
@@ -19,13 +22,17 @@ import utils.WebUtil;
  */
 public class Vcab {
 
+	private static final int TOTAL_SAMPLE_SENTENCES = 5;
 	//static members
 	public static String URL = "http://www.vocabulary.com/definition/";//  + lowercase
 	
 	//this url can retrieve sentences
 	//"http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5000&startOffset=0&filter=0";
-	public static String UrlSentences = "http://corpus.vocabulary.com/examples.json?query=%s&maxResults=5&startOffset=0&filter=0";
-		
+	public static String UrlSentences = "http://corpus.vocabulary.com/examples.json?query=%s&maxResults="+TOTAL_SAMPLE_SENTENCES+"&startOffset=0&filter=0";
+	/** set by extractSentences method**/
+	private int[][] sentencesOffSetsArr = new int[TOTAL_SAMPLE_SENTENCES][2];
+	//private int[] sentencesLengthArr = new int[TOTAL_SAMPLE_SENTENCES];
+	 
 	public static final String OUTPUT_DIR = EUtil.PHONE_ROOT+"/output/vcab/mp3/";
 	
 	//blurb
@@ -57,13 +64,13 @@ public class Vcab {
 	
 	// for testing
 	public static void main(String args[]){
-		String word = "hound";
+		String word = "mooring";
 		String vcabContent = WebUtil.getPageSource(Vcab.URL +word, "utf-8");
 		Vcab vcab = new Vcab();
 		vcab.setSynonyms(Vcab.getSynonyms(vcabContent));
 		vcab.setBlurbShort(Vcab.getBlurbShort(vcabContent));
 		vcab.setBlurbLong(Vcab.getBlurbLong(vcabContent));
-		vcab.setSentences(Vcab.extractSentences(word));
+		vcab.setSentences(vcab.extractSentences(word));
 		vcab.setMeaning(Vcab.getFullDefinitions(vcabContent));
 		
 		System.out.println("----- meaning ----");
@@ -96,21 +103,41 @@ public class Vcab {
 	}
 	
 	
-	public static String extractSentences(String word){
+	public String extractSentences(String word){
 		StringBuilder sb = new StringBuilder();
 		String url = String.format(UrlSentences, word);
 		String json = WebUtil.getPageSource(url, "utf-8");
+		
+		//set sentencesOffSetsArr
+		String sentenceOffSetsPattern = "\"offsets\"\\:\\[.*?\\]";
+		List<String> offSetsList = RegUtil.getMatchedStrings(json, sentenceOffSetsPattern);
+		for(int i=0; i<offSetsList.size(); i++){
+			String tmpStr = offSetsList.get(i);
+			//tmpStr = tmpStr.replaceAll("\"offsets\":[", "");
+			sentencesOffSetsArr[i][0] = Integer.parseInt(tmpStr.substring(tmpStr.indexOf("[")+1, tmpStr.indexOf(",")));
+			sentencesOffSetsArr[i][1] = Integer.parseInt(tmpStr.substring(tmpStr.indexOf(",")+1, tmpStr.indexOf("]")));
+		}
+		//update offSets
 		String sentencePattern = "\"sentence\":\".*?\",";
 		List<String> ddList = RegUtil.getMatchedStrings(json, sentencePattern);
-		for(String s : ddList){
+		for(int i=0; i<ddList.size(); i++){
+			String s = ddList.get(i);
 			if(sb.length()>0){
 				sb.append("\r\n");
 			}
-			String tmp = s; 
-				//s.replaceAll("\"sentence\":\"|\",|\\\\", "");
+			sentencesOffSetsArr[i][0] = sentencesOffSetsArr[i][0]+sb.length();
+			sentencesOffSetsArr[i][1] = sentencesOffSetsArr[i][1]+sb.length();
+			String tmp = s.replaceAll("\"sentence\":\"|\",|\\\\", "");
 			sb.append(tmp);
 		}
 		return sb.toString();
+	}
+	public HSSFRichTextString getSentencesRTS(HSSFFont font) {
+		HSSFRichTextString rts = new HSSFRichTextString(this.sentences);
+		for(int i=0; i<this.sentencesOffSetsArr.length; i++) {
+			rts.applyFont(this.sentencesOffSetsArr[i][0], this.sentencesOffSetsArr[i][1], font);
+		}
+		return rts;
 	}
 	
 	public static String getBlurbShort(String pageContent){
@@ -239,7 +266,6 @@ public class Vcab {
 			}
 		}
 	}
-	
 	
 	//////////////////////////////////////
 	public String getBlurbShort() {

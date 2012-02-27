@@ -60,7 +60,7 @@ public class TExcel implements Callable<String>{
 		vcab.setSynonyms(Vcab.getSynonyms(vcabContent));
 		vcab.setBlurbShort(Vcab.getBlurbShort(vcabContent));
 		vcab.setBlurbLong(Vcab.getBlurbLong(vcabContent));
-		vcab.setSentences(Vcab.extractSentences(this.word.getName()));
+		vcab.setSentences(vcab.extractSentences(this.word.getName()));
 		vcab.setMeaning(Vcab.getFullDefinitions(vcabContent));
 		
 		//get WWO sentences

@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFHyperlink;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -200,6 +202,9 @@ public class EUtil {
 		cs.setVerticalAlignment(CellStyle.VERTICAL_TOP);
 		cs.setAlignment(CellStyle.ALIGN_LEFT);
 
+		HSSFFont boldFont = workbook.createFont();
+		boldFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		
 		Sheet sheet = workbook.createSheet("Auto");
 		int wordCount = 0;
 		for (int i = 0; i < strArr.size(); i++) {
@@ -327,7 +332,8 @@ public class EUtil {
 				case VCAB_SENTENCES:
 					// iciba meaning
 					Cell sentenceCell = row.createCell(j);
-					sentenceCell.setCellValue(word.getVcab().getSentences());
+					//sentenceCell.setCellValue(word.getVcab().getSentences());
+					sentenceCell.setCellValue(word.getVcab().getSentencesRTS(boldFont));
 					sentenceCell.setCellStyle(cs);
 					break;
 				case VCAB_MEANING:
@@ -609,4 +615,37 @@ public class EUtil {
 		return localMp3List;
 	}
 
+	
+	/**
+	 * remove the Open|Close tag, and return richTextString for excel 
+	 */
+	public static HSSFRichTextString convertToRTS(String str, String tagOpen, String tagClose, HSSFFont font) {
+		List<Integer> tagOpenIdxList = new ArrayList<Integer>();
+		List<Integer> tagCloseIdxList = new ArrayList<Integer>();
+		
+		String tmpStr = str;
+		int idxOpen = tmpStr.indexOf(tagOpen);
+		int idxClose = tmpStr.indexOf(tagClose);
+		while((idxOpen != -1) && (idxClose != -1)) {
+			tmpStr = tmpStr.replaceFirst(tagOpen, "");
+			idxClose = idxClose - tagOpen.length();
+			tmpStr = tmpStr.replaceFirst(tagClose, "");
+			tagOpenIdxList.add(idxOpen);
+			tagCloseIdxList.add(idxClose);
+
+			idxOpen = tmpStr.indexOf(tagOpen);
+			idxClose = tmpStr.indexOf(tagClose);
+		}
+		HSSFRichTextString rts = new HSSFRichTextString(tmpStr);
+		if(tagOpenIdxList.size() != tagCloseIdxList.size()){
+			System.out.println("tag counts don't match :"+tagOpen+"|"+tagClose);
+			return rts; 
+		}
+
+		for(int i=0; i<tagOpenIdxList.size(); i++) {
+			rts.applyFont(tagOpenIdxList.get(i), tagCloseIdxList.get(i), font);
+		}
+		System.out.println();
+		return rts;
+	}
 }

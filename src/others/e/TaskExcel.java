@@ -112,7 +112,8 @@ public class TaskExcel {
 				//Columns.ICIBA_EN, Columns.ICIBA_US, Columns.PHONE_XR,
 				Columns.VCAB_MEANING, 
 				Columns.VCAB_BLURB_SHORT, 
-				//Columns.VCAB_BLURB_LONG, Columns.VCAB_SENTENCES
+				Columns.VCAB_BLURB_LONG, 
+				Columns.VCAB_SENTENCES
 				};
 		EUtil.listToExcel(allWords, columnsResult);
 		

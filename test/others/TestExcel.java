@@ -36,12 +36,23 @@ public class TestExcel {
 
 		HSSFFont font = wb.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		HSSFRichTextString rts = convertToRTS(sampleString, tagOpen, tagClose, font);
+		//HSSFRichTextString rts = convertToRTS(sampleString, tagOpen, tagClose, font);
+		HSSFRichTextString rts = convertToRTS(sampleString, "advert", font);
 
 		cell.setCellValue(rts);
 		wb.write(fileOut);
 		fileOut.close();
 
+	}
+	
+	
+	
+	private static HSSFRichTextString convertToRTS(String str, String word, HSSFFont font) {
+		int startIdx = str.indexOf(word);
+		int endIdx = startIdx+word.length();
+		HSSFRichTextString rts = new HSSFRichTextString(str);
+		rts.applyFont(startIdx, endIdx, font);
+		return rts;
 	}
 	
 	/**
