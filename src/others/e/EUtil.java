@@ -233,7 +233,7 @@ public class EUtil {
 					Cell vcabMp3Cell = row.createCell(j);
 					vcabMp3Cell.setCellValue("[V]");
 					//if (word.getIciba().isLocalEnHasMp3()) {
-					if(mwSet.contains(word.getName())){
+					if(vcabSet.contains(word.getName())){
 						Hyperlink mwLink = createHelper
 								.createHyperlink(Hyperlink.LINK_URL);
 						mwLink.setAddress("./vcab/mp3/" + word.getName()

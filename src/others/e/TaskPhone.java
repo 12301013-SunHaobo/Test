@@ -31,7 +31,7 @@ import utils.BoundedExecutor;
 public class TaskPhone {
 	
 	
-	private static final String INPUT_FILE= "all-list.txt"; //"GW-list-full.txt";
+	private static final String INPUT_FILE= "manualUpdated.txt"; //"GW-list-full.txt";"all-list.txt"
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"input/";
 	private static final String VCAB_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/vcab/";
 	private static final String MP3_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/iciba/";
@@ -98,7 +98,6 @@ public class TaskPhone {
 				if (!wavSet.contains(tmpWord)) {
 					word.getMw().setLocalHasWav(false);
 				}				
-				
 				missingMp3Words.add(word);
 			}
 		}

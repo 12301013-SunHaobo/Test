@@ -45,18 +45,39 @@ public class WebUtil {
 		return sb.toString();
 	}
 
+	public static URLConnection getURLConnection(String urlStr) {
+		URLConnection uc = null;
+		try {
+			URL url = new URL(urlStr);
+			uc = url.openConnection();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		return uc;
+	}
+	
+	
+	
 	//download a binary file
 	public static void download(String urlStr, String fileName) throws Exception{
+		download(urlStr, fileName, null);
+	}
+	public static void download(String urlStr, String fileName, CookieManager cm) throws Exception{
 		if(urlStr==null || urlStr.trim().equals("")){
 			return;
 		}
 		URL u = new URL(urlStr);
 	    URLConnection uc = u.openConnection();
 	    uc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");//some sites require this, otherwise 403 error
+	    //use cookie if CookieManager is not null
+	    if(cm!=null){
+	    	cm.setCookies(uc);
+	    }
+	    
 	    String contentType = uc.getContentType();
 	    int contentLength = uc.getContentLength();
 	    if (contentType.startsWith("text/") || contentLength == -1) {
-	      throw new IOException("This is not a binary file.");
+	        throw new IOException(urlStr+", This is not a binary file.");
 	    }
 	    InputStream raw = uc.getInputStream();
 	    InputStream in = new BufferedInputStream(raw);

@@ -17,7 +17,7 @@ public class Audio2Log {
 	 */
 	public static void main(String[] args) {
 
-		//copyAudio2Log("D:/user/english/en/output/vcab/mp3","mp3","D:/user/english/en/output4excel/vcab/mp3");
+		copyAudio2Log("D:/user/english/en/output/vcab/mp3","mp3","D:/user/english/en/output4excel/vcab/mp3");
 		//copyAudio2Log("D:/user/english/en/output/iciba/us","mp3","D:/user/english/en/output4excel/iciba/us");
 		//copyAudio2Log("D:/user/english/en/output/iciba/en","mp3","D:/user/english/en/output4excel/iciba/en");
 		//copyAudio2Log("D:/user/english/en/output/mw/mp3","mp3","D:/user/english/en/output4excel/mw/mp3");

@@ -1,6 +1,8 @@
 package others.e.model;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 
 import others.e.EUtil;
+import utils.CookieManager;
 import utils.FileUtil;
 import utils.RegUtil;
 import utils.WebUtil;
@@ -25,6 +28,8 @@ public class Vcab {
 	private static final int TOTAL_SAMPLE_SENTENCES = 5;
 	//static members
 	public static String URL = "http://www.vocabulary.com/definition/";//  + lowercase
+	public static String URLAudio = "http://www.vocabulary.com/dictionary/audio/en/";
+	public static String URLSite = "http://www.vocabulary.com";
 	
 	//this url can retrieve sentences
 	//"http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5000&startOffset=0&filter=0";
@@ -64,7 +69,13 @@ public class Vcab {
 	
 	// for testing
 	public static void main(String args[]){
-		String word = "mooring";
+		String word = "amusement";
+		String mp3Url = Vcab.getPhoneUrl(word);
+		
+		if(true){
+			return;
+		}
+		
 		String vcabContent = WebUtil.getPageSource(Vcab.URL +word, "utf-8");
 		Vcab vcab = new Vcab();
 		vcab.setSynonyms(Vcab.getSynonyms(vcabContent));
@@ -133,9 +144,17 @@ public class Vcab {
 		return sb.toString();
 	}
 	public HSSFRichTextString getSentencesRTS(HSSFFont font) {
-		HSSFRichTextString rts = new HSSFRichTextString(this.sentences);
+		String tmpS = "";
+		if(this.sentences!=null){
+			tmpS = this.sentences;
+		}
+		HSSFRichTextString rts = new HSSFRichTextString(tmpS);
 		for(int i=0; i<this.sentencesOffSetsArr.length; i++) {
-			rts.applyFont(this.sentencesOffSetsArr[i][0], this.sentencesOffSetsArr[i][1], font);
+			if( this.sentencesOffSetsArr[i][0]<tmpS.length()
+					&& this.sentencesOffSetsArr[i][1]<tmpS.length()
+					){
+				rts.applyFont(this.sentencesOffSetsArr[i][0], this.sentencesOffSetsArr[i][1], font);
+			}
 		}
 		return rts;
 	}
@@ -178,25 +197,9 @@ public class Vcab {
 		return sb.toString();
 	}	
 	
-	public static Map<String,String> getPhones(String name){
+	public static String getPhoneUrl(String name){
 		String tmpName = name.toLowerCase();
-		
-		Map<String,String> resultMap = new HashMap<String,String>();
-		
-		String urlWord = Vcab.URL+tmpName;
-		String pageWord = WebUtil.getPageSource(urlWord, "utf-8");
-		
-		String phonePattern = "(http://audio.vocabulary.com.*?\\.mp3)";
-		Pattern p = Pattern.compile(phonePattern, Pattern.DOTALL);
-		Matcher m = p.matcher(pageWord);
-		boolean found = m.find();
-		while(found){
-			String tmpPhoneBlock = m.group();
-			resultMap.put(tmpName, tmpPhoneBlock);
-			
-			found = m.find();//loop for next
-		}
-		return resultMap;
+		return Vcab.URLAudio+tmpName;
 	}
 	
 	public static Set<String> getSynonyms(String pageContent){
@@ -265,6 +268,15 @@ public class Vcab {
 				}
 			}
 		}
+	}
+	
+	public static CookieManager createCookieManager() throws Exception {
+		CookieManager cm = new CookieManager(); 
+		URL siteUrl = new URL(URLSite);
+		URLConnection siteUc = siteUrl.openConnection();
+		siteUc.connect();
+		cm.storeCookies(siteUc);
+		return cm;
 	}
 	
 	//////////////////////////////////////

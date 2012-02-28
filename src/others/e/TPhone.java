@@ -8,6 +8,7 @@ import others.e.model.Iciba;
 import others.e.model.Mw;
 import others.e.model.Vcab;
 import others.e.model.Word;
+import utils.CookieManager;
 import utils.WebUtil;
 
 public class TPhone implements Callable<String>{
@@ -36,21 +37,17 @@ public class TPhone implements Callable<String>{
 	
 	private void downloadVcabMp3() throws Exception{
 		String name = this.word.getName();
-		Map<String, String> phones = Vcab.getPhones(name);
+		String phoneUrl = Vcab.getPhoneUrl(name);
+		CookieManager cm = Vcab.createCookieManager();
 		
-		for(String word: phones.keySet()){
-			String phoneUrl = phones.get(word);
-			if(!"".equals(phoneUrl)){
-				if(!this.word.getVcab().isLocalHasPhone()){
-					WebUtil.download(phoneUrl, Vcab.OUTPUT_DIR+"/"+word+".mp3");
-					System.out.println(this.word.getInputIndex()+":"+word+".mp3: downloaded.");
-				}
-			}else {
-				//System.out.println(this.word.getInputIndex()+":"+word+":en: not on site.");
-				errorList.add(this.word.getInputIndex()+":"+word+":mw: not on site.");
+		if(!this.word.getVcab().isLocalHasPhone()){
+			try {
+				WebUtil.download(phoneUrl, Vcab.OUTPUT_DIR+"/"+name+".mp3", cm);
+				System.out.println(this.word.getInputIndex()+":"+name+".mp3: downloaded.");
+			} catch (Exception e){
+				errorList.add(this.word.getInputIndex()+":"+name+":mp3: not on site.");
 			}
 		}
-		
 	}
 	
 	private void downloadMwWav() throws Exception{
