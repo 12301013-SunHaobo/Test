@@ -52,7 +52,7 @@ public class TestStrategyAuto {
 		TestStrategyAuto tsa = new TestStrategyAuto();
 		long b0 = System.currentTimeMillis();
 		
-		String stockCode = "tza";//qqq, tna, tza 
+		String stockCode = "qqq";//qqq, tna, tza 
 		String[][] dateTimeArr = 
 				//initAllDates(stockCode); //all dates under data/naz/tick/output/qqq
 		        initListedDate(); //listed dates only
@@ -395,7 +395,8 @@ public class TestStrategyAuto {
 //				{"20120102", "200100"},
 //				{"20120103", "200122"},
 //				{"20120105", "200245"},
-				{"20120210", "033511"}
+//				{"20120210", "033511"},
+				{"20120301", "182938"}
 				};
 
 	}
