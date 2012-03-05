@@ -40,7 +40,7 @@ public class ExcelOnlyFile2Mp3Dir {
 		//vcab mp3 files
 		String textOnlyFile = rootDir+"/output4excel/copy_mp3.xls";//excel file
 		String srcMp3DirLow =  rootDir+"/output/vcab/mp3";
-		String newMp3DirLow = rootDir+"/mp3/all/vcab";//new low folder
+		String newMp3DirLow = rootDir+"/mp3/all/vcab-daily";//new low folder
 		
 		// change end
 		//==========================================================
