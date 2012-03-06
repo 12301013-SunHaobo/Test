@@ -1,6 +1,7 @@
 package others.e.model;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class Vcab {
 	public static String URLSite = "http://www.vocabulary.com";
 	
 	//this url can retrieve sentences
-	//"http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5000&startOffset=0&filter=0";
+	//"http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5&startOffset=0&filter=0";
 	public static String UrlSentences = "http://corpus.vocabulary.com/examples.json?query=%s&maxResults="+TOTAL_SAMPLE_SENTENCES+"&startOffset=0&filter=0";
 	/** set by extractSentences method**/
 	private int[][] sentencesOffSetsArr = new int[TOTAL_SAMPLE_SENTENCES][2];
@@ -69,12 +70,12 @@ public class Vcab {
 	
 	// for testing
 	public static void main(String args[]){
-		String word = "amusement";
-		String mp3Url = Vcab.getPhoneUrl(word);
+		String word = "constituency";
+//		String mp3Url = Vcab.getPhoneUrl(word);
 		
-		if(true){
-			return;
-		}
+//		if(true){
+//			return;
+//		}
 		
 		String vcabContent = WebUtil.getPageSource(Vcab.URL +word, "utf-8");
 		Vcab vcab = new Vcab();
@@ -138,7 +139,9 @@ public class Vcab {
 			}
 			sentencesOffSetsArr[i][0] = sentencesOffSetsArr[i][0]+sb.length();
 			sentencesOffSetsArr[i][1] = sentencesOffSetsArr[i][1]+sb.length();
-			String tmp = s.replaceAll("\"sentence\":\"|\",|\\\\", "");
+			//String tmp = s.replaceAll("\"sentence\":\"|\",|\\\\", "");
+			String tmp = s.replaceAll("\"sentence\":\"|\",", "");
+			tmp = converUtf8ToAscii(tmp);
 			sb.append(tmp);
 		}
 		return sb.toString();
@@ -277,6 +280,20 @@ public class Vcab {
 		siteUc.connect();
 		cm.storeCookies(siteUc);
 		return cm;
+	}
+	
+	private static String converUtf8ToAscii(String origStr){
+		String tmp = 
+			origStr.replaceAll("u2014", "—")
+		.replaceAll("u2018", "‘")
+		.replaceAll("u2019", "’")
+		.replaceAll("u201c", "“")
+		.replaceAll("u201d", "”")
+		.replaceAll("u2026", "…")
+		.replaceAll("u2032", "′")
+		.replaceAll("\\\\", "")
+		;
+		return tmp;
 	}
 	
 	//////////////////////////////////////

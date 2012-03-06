@@ -39,6 +39,7 @@ public class WebUtil {
 			}
 			in.close();
 		} catch (Throwable t) {
+			System.out.println("urlStr="+urlStr);
 			t.printStackTrace();
 		}
 		//System.out.println(sb.toString());// testing
