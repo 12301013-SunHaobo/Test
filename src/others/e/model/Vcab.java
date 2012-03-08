@@ -29,7 +29,7 @@ public class Vcab {
 	private static final int TOTAL_SAMPLE_SENTENCES = 5;
 	//static members
 	public static String URL = "http://www.vocabulary.com/definition/";//  + lowercase
-	public static String URLAudio = "http://www.vocabulary.com/dictionary/audio/en/";
+	public static String URLAudio = "http://www.vocabulary.com/dictionary/audio/en/%s/0";
 	public static String URLSite = "http://www.vocabulary.com";
 	
 	//this url can retrieve sentences
@@ -202,7 +202,7 @@ public class Vcab {
 	
 	public static String getPhoneUrl(String name){
 		String tmpName = name.toLowerCase();
-		return Vcab.URLAudio+tmpName;
+		return String.format(Vcab.URLAudio, tmpName);
 	}
 	
 	public static Set<String> getSynonyms(String pageContent){
