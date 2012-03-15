@@ -284,7 +284,8 @@ public class Vcab {
 	
 	private static String converUtf8ToAscii(String origStr){
 		String tmp = 
-			origStr.replaceAll("u2014", "—")
+			origStr.replaceAll("u2013", "–")
+		.replaceAll("u2014", "—")
 		.replaceAll("u2018", "‘")
 		.replaceAll("u2019", "’")
 		.replaceAll("u201c", "“")
