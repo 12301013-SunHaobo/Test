@@ -1,3 +1,4 @@
-e:
+D:
+cd D:/projects/java/workspace/batch
 java -classpath ./Test.jar modules.at.feed.naz.GetNazData
-REM echo "GetDataBatch.bat 001"
+echo "GetDataBatch.bat 001"

@@ -28,9 +28,12 @@ public class Audio2Log {
 	static void copyAudio2Log(String srcDir, String srcFormat, String destDir){
 		
 		Set<String> audioSet = EUtil.getLocalMp3Set(srcDir);
+		int total = audioSet.size();
+		int count = 0;
 		for(String audio: audioSet){
 			try {
 				FileUtil.copyFile(srcDir+"/"+audio+"."+srcFormat, destDir+"/"+audio+".log");
+				System.out.println((++count)+"/"+total+ ", "+ srcDir+"/"+audio+"."+srcFormat +" --> "+ destDir+"/"+audio+".log");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

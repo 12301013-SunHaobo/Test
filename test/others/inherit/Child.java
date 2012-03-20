@@ -2,7 +2,16 @@ package others.inherit;
 
 public class Child extends Parent {
 
-    public static String conStr = "child const str";
+	{
+		System.out.println("dynamic block Child called 001");
+	}
+
+	static {
+		System.out.println("static block Child called 001");
+	}
+	
+
+	public static String conStr = "child const str";
 	//protected String varStr = "inChild"; 
     @Override
     public void printName(){
