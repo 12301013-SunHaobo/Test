@@ -1,16 +1,13 @@
 package others.e.model;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
@@ -35,9 +32,11 @@ public class Vcab {
 	//this url can retrieve sentences
 	//"http://corpus.vocabulary.com/examples.json?query=felicitous&maxResults=5&startOffset=0&filter=0";
 	public static String UrlSentences = "http://corpus.vocabulary.com/examples.json?query=%s&maxResults="+TOTAL_SAMPLE_SENTENCES+"&startOffset=0&filter=0";
+	public static String UrlSentencesBatch = "http://corpus.vocabulary.com/examples.json?query=%s&maxResults=%d&startOffset=%d&filter=0&jsonp=json%d";
+	
+	private static final int SENTENCE_MIN_WORDS = 30;
 	/** set by extractSentences method**/
-	private int[][] sentencesOffSetsArr = new int[TOTAL_SAMPLE_SENTENCES][2];
-	//private int[] sentencesLengthArr = new int[TOTAL_SAMPLE_SENTENCES];
+	private List<Offset> offsetList = new ArrayList<Offset>();
 	 
 	public static final String OUTPUT_DIR = EUtil.PHONE_ROOT+"/output/vcab/mp3/";
 	
@@ -70,15 +69,16 @@ public class Vcab {
 	
 	// for testing
 	public static void main(String args[]){
-		String word = "constituency";
-//		String mp3Url = Vcab.getPhoneUrl(word);
+		String word = "elegy";//constituency, elegy
+		Vcab vcab = new Vcab();
+		String sentences = vcab.extractSentences(word);
+		System.out.println(sentences);
 		
-//		if(true){
-//			return;
-//		}
+		if(true){
+			return;
+		}
 		
 		String vcabContent = WebUtil.getPageSource(Vcab.URL +word, "utf-8");
-		Vcab vcab = new Vcab();
 		vcab.setSynonyms(Vcab.getSynonyms(vcabContent));
 		vcab.setBlurbShort(Vcab.getBlurbShort(vcabContent));
 		vcab.setBlurbLong(Vcab.getBlurbLong(vcabContent));
@@ -102,32 +102,49 @@ public class Vcab {
 		
 	}	
 	
-	//cannot get word type like: adj, n
-	@Deprecated
-	public static String getPrimaryMeanings(String pageContent){
-		StringBuilder sb = new StringBuilder();
-		String meaningPattern = "class=\"def(\\s|\").*?</div>";
-		List<String> ddList = RegUtil.getMatchedStrings(pageContent, meaningPattern);
-		for(String s : ddList){
-			System.out.println(s);
-		}
-		return sb.toString();
-	}
-	
 	
 	public String extractSentences(String word){
+    	int batchSize = 5;//24
+    	int startOffset = 0;
+    	int jsonIdx = 0;
+    	
 		StringBuilder sb = new StringBuilder();
-		String url = String.format(UrlSentences, word);
-		String json = WebUtil.getPageSource(url, "utf-8");
+    	for(int i=0;i<1;i++){
+    		jsonIdx = i;
+    		startOffset = jsonIdx * batchSize; 
+    		String batchUrl = String.format("http://corpus.vocabulary.com/examples.json?query=%s&maxResults=%d&startOffset=%d&filter=0&jsonp=json%d", 
+				word, batchSize, startOffset, jsonIdx);
+    		
+    		//System.out.println(batchUrl);
+    		String json = WebUtil.getPageSource(batchUrl, "utf-8");
+    		if(json.isEmpty()){//empty means reached the end of sentences list in vcab site
+    			break;
+    		}
+    		extractSentencesOneJsonBatch(sb, json);
+    		//System.out.println(jsonIdx+" done");
+    	}
+    	return sb.toString();
+	}
+
+	public void extractSentencesOneJsonBatch(StringBuilder sb, String json){
+		List<Offset> tmpOffsetList = new ArrayList<Offset>();
 		
 		//set sentencesOffSetsArr
 		String sentenceOffSetsPattern = "\"offsets\"\\:\\[.*?\\]";
 		List<String> offSetsList = RegUtil.getMatchedStrings(json, sentenceOffSetsPattern);
 		for(int i=0; i<offSetsList.size(); i++){
 			String tmpStr = offSetsList.get(i);
-			//tmpStr = tmpStr.replaceAll("\"offsets\":[", "");
-			sentencesOffSetsArr[i][0] = Integer.parseInt(tmpStr.substring(tmpStr.indexOf("[")+1, tmpStr.indexOf(",")));
-			sentencesOffSetsArr[i][1] = Integer.parseInt(tmpStr.substring(tmpStr.indexOf(",")+1, tmpStr.indexOf("]")));
+
+			//set begin=end=0 for multiple occurrence
+			int begin = 0;
+			int end = 0;
+			if(tmpStr.indexOf(",")==tmpStr.lastIndexOf(",")){
+				begin = Integer.parseInt(tmpStr.substring(tmpStr.indexOf("[")+1, tmpStr.indexOf(",")));
+				end = Integer.parseInt(tmpStr.substring(tmpStr.indexOf(",")+1, tmpStr.indexOf("]")));
+			}
+			Offset offset = new Offset(begin, end);
+			tmpOffsetList.add(offset);
+
 		}
 		//update offSets
 		String sentencePattern = "\"sentence\":\".*?\",";
@@ -137,26 +154,29 @@ public class Vcab {
 			if(sb.length()>0){
 				sb.append("\r\n");
 			}
-			sentencesOffSetsArr[i][0] = sentencesOffSetsArr[i][0]+sb.length();
-			sentencesOffSetsArr[i][1] = sentencesOffSetsArr[i][1]+sb.length();
-			//String tmp = s.replaceAll("\"sentence\":\"|\",|\\\\", "");
+			Offset offset = tmpOffsetList.get(i);
+			offset.setBegin(offset.getBegin() + sb.length());
+			offset.setEnd(offset.getEnd() + sb.length());
+
 			String tmp = s.replaceAll("\"sentence\":\"|\",", "");
 			tmp = converUtf8ToAscii(tmp);
 			sb.append(tmp);
 		}
-		return sb.toString();
+		offsetList.addAll(tmpOffsetList);
 	}
+	
 	public HSSFRichTextString getSentencesRTS(HSSFFont font) {
 		String tmpS = "";
 		if(this.sentences!=null){
 			tmpS = this.sentences;
 		}
 		HSSFRichTextString rts = new HSSFRichTextString(tmpS);
-		for(int i=0; i<this.sentencesOffSetsArr.length; i++) {
-			if( this.sentencesOffSetsArr[i][0]<tmpS.length()
-					&& this.sentencesOffSetsArr[i][1]<tmpS.length()
+		for(int i=0; i<offsetList.size(); i++) {
+			Offset offset = offsetList.get(i);
+			if(offset.getBegin() < tmpS.length()
+					&& offset.getEnd() < tmpS.length()
 					){
-				rts.applyFont(this.sentencesOffSetsArr[i][0], this.sentencesOffSetsArr[i][1], font);
+				rts.applyFont(offset.getBegin(), offset.getEnd(), font);
 			}
 		}
 		return rts;
@@ -297,6 +317,46 @@ public class Vcab {
 		return tmp;
 	}
 	
+	
+	private static class Offset {
+		private boolean delete;
+		int begin;
+		int end;
+		
+		public Offset(int begin, int end) {
+			super();
+			this.delete = false;
+			this.begin = begin;
+			this.end = end;
+		}
+
+		public boolean isDelete() {
+			return delete;
+		}
+
+		public void setDelete(boolean delete) {
+			this.delete = delete;
+		}
+
+		public int getBegin() {
+			return begin;
+		}
+
+		public void setBegin(int begin) {
+			this.begin = begin;
+		}
+
+		public int getEnd() {
+			return end;
+		}
+
+		public void setEnd(int end) {
+			this.end = end;
+		}
+		
+		
+		
+	}
 	//////////////////////////////////////
 	public String getBlurbShort() {
 		return blurbShort;

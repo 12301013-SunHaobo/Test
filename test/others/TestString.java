@@ -7,9 +7,25 @@ public class TestString {
      */
     public static void main(String[] args) {
         //testSplitLine();
-        testSplit();
+        //testSplit();
         //testRemovePackageStr();
+    	testFormat();
 
+    }
+    
+    private static void testFormat(){
+    	int batchSize = 24;
+    	int startOffset = 720;
+    	int jsonIdx = 30;
+    	
+    	for(int i=0;i<10;i++){
+    		jsonIdx = i;
+    		startOffset = jsonIdx * batchSize; 
+    		System.out.println(
+    			String.format("http://corpus.vocabulary.com/examples.json?query=%s&maxResults=%d&startOffset=%d&filter=0&jsonp=json%d", 
+    					"elegy", batchSize, startOffset, jsonIdx));
+    	
+    	}
     }
     
     private static void testSplitLine(){
