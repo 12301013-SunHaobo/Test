@@ -303,8 +303,9 @@ public class Vcab {
 	}
 	
 	private static String converUtf8ToAscii(String origStr){
-		String tmp = 
-			origStr.replaceAll("u2013", "–")
+		String tmp = origStr
+		.replaceAll("u2011", "‑")
+		.replaceAll("u2013", "–")
 		.replaceAll("u2014", "—")
 		.replaceAll("u2018", "‘")
 		.replaceAll("u2019", "’")
@@ -312,8 +313,7 @@ public class Vcab {
 		.replaceAll("u201d", "”")
 		.replaceAll("u2026", "…")
 		.replaceAll("u2032", "′")
-		.replaceAll("\\\\", "")
-		;
+		.replaceAll("\\\\", "")		;
 		return tmp;
 	}
 	
