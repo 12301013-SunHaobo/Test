@@ -62,7 +62,8 @@ public class TExcel implements Callable<String>{
 		vcab.setBlurbLong(Vcab.getBlurbLong(vcabContent));
 		vcab.setSentences(vcab.extractSentences(this.word.getName()));
 		vcab.setMeaning(Vcab.getFullDefinitions(vcabContent));
-		
+
+/*		working, but I'm not using below information
 		//get WWO sentences
 		String wwoContent = WebUtil.getPageSource(Wwo.WWO_URL + name.toUpperCase(), "utf-8");
 		Wwo wwo = this.word.getWwo();
@@ -72,7 +73,7 @@ public class TExcel implements Callable<String>{
 		String mwContent = WebUtil.getPageSource(Mw.MW_URL +name, "utf-8");
 		Mw mw = this.word.getMw();
 		mw.setSentences(Mw.extractMwS(mwContent));
-		
+*/		
 	}
 	
 	
