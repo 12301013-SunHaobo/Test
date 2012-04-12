@@ -6,10 +6,30 @@ table.offsetHeight=line-height * lineNumber + (3+3) //if table.border=0
 
 
 -->
+<body onload="load()" >
+<input type="button" onClick="startReading()" value="Scroll Page"><BR>
+<table id="mainTable" width="545" border="0"><tr><td>
+<p style="font-size:16px; line-height: 24px;" onClick="toggleScroll()"> 
+
+<font face="times new roman"><!-- arial   -->
+<!--  
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+-->
+<!--  CHANGE begin   -->
+
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Historians generally agree that, of the great modern innovations, the railroad had the most far-reaching impact on major events in the United States in the nineteenth and early twentieth centuries, particularly on the Industrial Revolution. There is, however, considerable disagreement among cultural historians regarding public attitudes toward the railroad, both at its inception in the 1830s and during the half century between 1880 and 1930, when the national rail system was completed and reached the zenith of its popularity in the United States. In a recent book, John Stilgoe has addressed this issue by arguing that the ¡°romantic-era distrust¡± of the railroad that he claims was present during the 1830s vanished in the decades after 1880. But the argument he provides in support of this position is unconvincing.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;What Stilgoe calls ¡°romantic-era distrust¡± was in fact the reaction of a minority of writers, artistes, and intellectuals who distrusted the railroad not so much for what it was as for what it signified. Thoreau and Hawthorne appreciated, even admired, an improved means of moving things and people from one place to another. What these writers and others were concerned about was not the new machinery as such, but the new kind of economy, social order, and culture that it prefigured. In addition, Stilgoe is wrong to imply that the critical attitude of these writers was typical of the period: their distrust was largely a reaction against the prevailing attitude in the 1830s that the railroad was an unqualified improvement.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Stilgoe¡¯s assertion that the ambivalence toward the railroad exhibited by writers like Hawthorne and Thoreau disappeared after the 1880s is also misleading. In support of this thesis, Stilgoe has unearthed an impressive volume of material, the work of hitherto unknown illustrators, journalists, and novelists, all devotees of the railroad; but it is not clear what this new material proves except perhaps that the works of popular culture greatly expanded at the time. The volume of the material proves nothing if Stilgoe¡¯s point is that the earlier distrust of a minority of intellectuals did not endure beyond the 1880s, and, oddly, much of Stilgoe¡¯s other evidence indicates that it did. When he glances at the treatment of railroads by writers like Henry James, Sinclair Lewis, or F. Scott Fitzgerald, what comes through in spite of Stilgoe¡¯s analysis is remarkably like Thoreau¡¯s feeling of contrariety and ambivalence. (Had he looked at the work of Frank Norris, Eugene O¡¯Neill, or Henry Adams, Stilgoe¡¯s case would have been much stronger.) The point is that the sharp contrast between the enthusiastic supporters of the railroad in the 1830s and the minority of intellectual dissenters during that period extended into the 1880s and beyond.
+
+<!-- CHANGE end -->
+</font></p> 
+</td></tr></table>	
+<BR>
+<input type="button" onClick="stopScroll(),goback()" value="Stop Scrolling & go back">
 <script type="text/javascript">
 //CHANGE begin
-var totalWords = 448;//total words
-var speed = 250; //words/min
+var totalWords = 446;//total words
+var speed = 12; //words/min
 //CHANGE end
 
 var scroll = false;
@@ -26,8 +46,10 @@ function load() {
 	scrollPerNMillisecond = totalTime * 1000 / tableHeight;
 }
 function startReading() {
-	scroll = true;
-	pageScroll();
+	if(!scroll){
+		scroll = true;
+		pageScroll();
+	}
 }
 function toggleScroll() {
 	if(scroll) {
@@ -49,27 +71,4 @@ function stopScroll() {
     clearTimeout(scrolldelay);
 }
 </script>
-
-<body onload="load()" >
-<input type="button" onClick="startReading()" value="Scroll Page"><BR>
-<table id="mainTable" width="545" border="0"><tr><td>
-<p style="font-size:16px; line-height: 24px;" onClick="toggleScroll()"> 
-
-<font face="times new roman"><!-- arial   -->
-<!--  
-<BR>&nbsp;&nbsp;&nbsp;&nbsp;
--->
-<!--  CHANGE begin   -->
-
-<BR>&nbsp;&nbsp;&nbsp;&nbsp;There is substantial evidence that by 1926, with the publication of The Weary Blues, Langston Hughes had broken with two well-established traditions in African American literature. In The Weary Blues, Hughes chose to modify the traditions that decreed that African American literature must promote racial acceptance and integration, and that, in order to do so, it must reflect an understanding and mastery of Western European literary techniques and styles. Necessarily excluded by this decree, linguistically and thematically, was the vast amount of secular folk material in the oral tradition that had been created by Black people in the years of slavery and after. It might be pointed out that even the spirituals or ¡°sorrow songs¡± of the slaves¡ªas distinct from their secular songs and stories¡ªhad been Europeanized to make them acceptable within these African American traditions after the Civil War. In 1862 northern White writers had commented favorably on the unique and provocative melodies of these ¡°sorrow songs¡± when they first heard them sung by slaves in the Carolina sea islands. But by 1916, ten years before the publication of The Weary Blues, Hurry T. Burleigh, the Black baritone soloist at New York¡¯s ultrafashionable Saint George¡¯s Episcopal Church, had published Jubilee Songs of the United States, with every spiritual arranged so that a concert singer could sing it ¡°in the manner of an art song.¡± Clearly, the artistic work of Black people could be used to promote racial acceptance and integration only on the condition that it became Europeanized.
-<BR>&nbsp;&nbsp;&nbsp;&nbsp;Even more than his rebellion against this restrictive tradition in African American art, Hughes¡¯s expression of the vibrant folk culture of Black people established his writing as a landmark in the history of African American literature. Most of his folk poems have the distinctive marks of this folk culture¡¯s oral tradition: they contain many instances of naming and enumeration, considerable hyperbole and understatement, and a strong infusion of street-talk rhyming. There is a deceptive veil of artlessness in these poems. Hughes prided himself on being an impromptu and impressionistic writer of poetry. His, he insisted, was not an artfully constructed poetry. Yet an analysis of his dramatic monologues and other poems reveals that his poetry was carefully and artfully crafted. In his folk poetry we find features common to all folk literature, such as dramatic ellipsis, narrative compression, rhythmic repetition, and monosyllabic emphasis. The peculiar mixture of irony and humor we find in his writing is a distinguishing feature of his folk poetry. Together, these aspects of Hughes¡¯s writing helped to modify the previous restrictions on the techniques and subject matter of Black writers and consequently to broaden the linguistic and thematic range of African American literature.
-
-<!-- CHANGE end -->
-
-</font></p> 
-</td></tr></table>	
-
-<BR>
-<input type="button" onClick="stopScroll(),goback()" value="Stop Scrolling & go back">
 </body>
-
