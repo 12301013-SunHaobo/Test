@@ -8,10 +8,11 @@ table.offsetHeight=line-height * lineNumber + (3+3) //if table.border=0
 -->
 <script type="text/javascript">
 //CHANGE begin
-var totalWords = 500;//total words
+var totalWords = 448;//total words
 var speed = 250; //words/min
 //CHANGE end
 
+var scroll = false;
 var totalTime = 0; //total seconds to display whole passage
 var tableHeight = 0;
 var scrollPerNMillisecond = 0;
@@ -22,25 +23,37 @@ function load() {
 	tableHeight = mainTable.offsetHeight;
 	
 	totalTime = (totalWords / speed) * 60;
-	
 	scrollPerNMillisecond = totalTime * 1000 / tableHeight;
-	//alert("Page is loaded:"+scrollPerNMillisecond);
+}
+function startReading() {
+	scroll = true;
+	pageScroll();
+}
+function toggleScroll() {
+	if(scroll) {
+		scroll = false;
+		stopScroll();
+	} else {
+		scroll = true;
+		pageScroll();
+	}
+}
+function goback() {
+	window.scrollTo(0,0);
 }
 function pageScroll() {
     window.scrollBy(0,1); // horizontal and vertical scroll increments
     scrolldelay = setTimeout('pageScroll()', scrollPerNMillisecond); // scrolls every n milliseconds
 }
 function stopScroll() {
-	//alert("000");
-	window.scrollTo(0,0);
     clearTimeout(scrolldelay);
 }
 </script>
 
-<body onload="load()">
-<input type="button" onClick="pageScroll()" value="Scroll Page"><BR>
+<body onload="load()" >
+<input type="button" onClick="startReading()" value="Scroll Page"><BR>
 <table id="mainTable" width="545" border="0"><tr><td>
-<p style="font-size:16px; line-height: 24px;"> 
+<p style="font-size:16px; line-height: 24px;" onClick="toggleScroll()"> 
 
 <font face="times new roman"><!-- arial   -->
 <!--  
@@ -57,6 +70,6 @@ function stopScroll() {
 </td></tr></table>	
 
 <BR>
-<input type="button" onClick="stopScroll()" value="Stop Scrolling & go back">
+<input type="button" onClick="stopScroll(),goback()" value="Stop Scrolling & go back">
 </body>
 
