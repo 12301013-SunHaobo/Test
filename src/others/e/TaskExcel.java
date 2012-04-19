@@ -27,7 +27,7 @@ import utils.FileUtil;
  * and save to excel
  */
 public class TaskExcel {
-	private static final String INPUT_FILE="manualUpdated.txt"; //"GW-list.txt, GW-list-full.txt , test-small.txt, remaining.txt 
+	private static final String INPUT_FILE="GW-list-full.txt"; //"GW-list.txt, GW-list-full.txt , test-small.txt, remaining.txt 
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"/input/";
 	private static final String LOG_DIR = EUtil.PHONE_ROOT+"/output/log/";
 	
@@ -113,7 +113,7 @@ public class TaskExcel {
 				Columns.VCAB_MEANING, 
 				Columns.VCAB_BLURB_SHORT, 
 				Columns.VCAB_BLURB_LONG, 
-				Columns.VCAB_SENTENCES
+				//Columns.VCAB_SENTENCES
 				};
 		EUtil.listToExcel(allWords, columnsResult);
 		
