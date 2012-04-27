@@ -24,13 +24,14 @@ public class Audio2Log {
 		//copyAudio2Log("D:/user/english/en/output/xr/mp3","mp3","D:/user/english/en/output4excel/xr/mp3");	
 	}
 
-	
+	//incrementally copy from mp3 folder to log folder
 	static void copyAudio2Log(String srcDir, String srcFormat, String destDir){
-		
-		Set<String> audioSet = EUtil.getLocalMp3Set(srcDir);
-		int total = audioSet.size();
+		Set<String> destAudioSet = EUtil.getLocalMp3Set(destDir);
+		Set<String> srcAudioSet = EUtil.getLocalMp3Set(srcDir);
+		srcAudioSet.removeAll(destAudioSet);
+		int total = srcAudioSet.size();
 		int count = 0;
-		for(String audio: audioSet){
+		for(String audio: srcAudioSet){
 			try {
 				FileUtil.copyFile(srcDir+"/"+audio+"."+srcFormat, destDir+"/"+audio+".log");
 				System.out.println((++count)+"/"+total+ ", "+ srcDir+"/"+audio+"."+srcFormat +" --> "+ destDir+"/"+audio+".log");
