@@ -9,7 +9,11 @@ import utils.GlobalSetting;
 import utils.RegUtil;
 import utils.TimeUtil;
 import utils.WebUtil;
-
+/**
+ * Scheduled in Task Scheduler/Task Scheduler Library
+ * right panel/"GetNazData"
+ *
+ */
 public class GetNazData {
 
 	private static String[] stockcodes = {

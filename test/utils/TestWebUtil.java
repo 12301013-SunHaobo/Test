@@ -11,7 +11,7 @@ public class TestWebUtil {
     }
     
     private static void testGetUrl(){
-        String pageContent = WebUtil.getPageSource("http://localhost:8000/oib/login","utf-8");
+        String pageContent = WebUtil.getPageSource("http://www.nasdaq.com/symbol/qqq/time-sales?time=1","utf-8");
         System.out.println(pageContent);
     }
 

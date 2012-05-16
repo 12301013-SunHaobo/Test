@@ -14,8 +14,8 @@ import java.net.URLConnection;
 public class WebUtil {
 
 	public static void main(String[] args) throws Exception {
-		// getPageSource(s, "UTF8");//UTF8,GBK,gb2312,,,,,,,,,
-
+//		String pageContent = getPageSource("http://www.nasdaq.com/symbol/qqq/time-sales?time=1", "UTF8");//UTF8,GBK,gb2312,,,,,,,,,
+//		System.out.println(pageContent);
 	}
 
 	// working
@@ -29,7 +29,7 @@ public class WebUtil {
 
 			URL url = new URL(urlStr);
 			URLConnection uc = url.openConnection();
-			uc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");//some sites require this, otherwise 403 error
+			uc.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0");//some sites require this, otherwise 403 error
 			uc.setReadTimeout(5*60*1000);
 			BufferedReader in = new BufferedReader(new InputStreamReader(uc
 					.getInputStream(), encoding));
