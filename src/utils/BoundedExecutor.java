@@ -18,13 +18,13 @@ public class BoundedExecutor {
         this.semaphore = new Semaphore(bound);
     }
 
-    public Future<String> submit(final Callable<String> command) throws InterruptedException {
+    public <T> Future<T> submit(final Callable<T> command) throws InterruptedException {
         semaphore.acquire();
-        Future<String> f = null;
+        Future<T> f = null;
         try {
-            f = executorService.submit(new Callable<String>() {
-                public String call() {
-                    String s = null;
+            f = executorService.submit(new Callable<T>() {
+                public T call() {
+                    T s = null;
                     try {
                         s = command.call();
                     } catch (Exception e) {
@@ -60,9 +60,5 @@ public class BoundedExecutor {
 	public ExecutorService getExecutorService() {
 		return executorService;
 	}
-
-
-    
-    
     
 }
