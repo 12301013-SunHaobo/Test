@@ -1,6 +1,5 @@
 package others.iv;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -16,11 +15,11 @@ import utils.BoundedExecutor;
  * 
  * e.g sum from 1 to 1000,000,005 = 500000005500000015
  */
-public class AddTo1Billion {
+public class AddTo1Billion2 {
 
-	private static final BigInteger batchSize = BigInteger.valueOf(1000 * 1000);
-	private static final BigInteger maxNumber = BigInteger.valueOf(1000 * 1000 * 1000 + 5);
-	private static final BigInteger minNumber = BigInteger.valueOf(1);
+	private static final long batchSize = 1000 * 1000;
+	private static final long maxNumber = 1000 * 1000 * 1000 + 5;
+	private static final long minNumber = 1;
 
 	/**
 	 * @param args
@@ -30,26 +29,20 @@ public class AddTo1Billion {
 	}
 
 	private static void testCalculation() {
-		ArrayList<Future<BigInteger>> results = new ArrayList<Future<BigInteger>>();
+		ArrayList<Future<Long>> results = new ArrayList<Future<Long>>();
 
 		BoundedExecutor be = new BoundedExecutor(10);
 
-		BigInteger i = minNumber;
+		long i = minNumber;
 
 		// i+batchSize-1<=maxNumber
-		BigInteger tmpEnd = i.add(batchSize).subtract(BigInteger.valueOf(1));
-		BigInteger compareResult = tmpEnd.subtract(maxNumber);
-		while (compareResult.signum() <= 0) {
+		while (i+batchSize-1<=maxNumber) {
 			// System.out.println("start="+i+"  end="+(i+batchSize-1));
-			addBatchTask(be, results, i, tmpEnd);
-			// i+=batchSize;
-			i = i.add(batchSize);
-			tmpEnd = i.add(batchSize).subtract(BigInteger.valueOf(1));
-			compareResult = tmpEnd.subtract(maxNumber);
+			addBatchTask(be, results, i, i+batchSize-1);
+			i+=batchSize;
 		}
 		// i<=maxNumber
-		compareResult = i.subtract(maxNumber);
-		if (compareResult.signum() <= 0) {
+		if (i<=maxNumber) {
 			// System.out.println("start="+i+"  end="+maxNumber);
 			addBatchTask(be, results, i, maxNumber);
 		}
@@ -63,10 +56,10 @@ public class AddTo1Billion {
 
 	}
 
-	private static void addBatchTask(BoundedExecutor be, ArrayList<Future<BigInteger>> results, 
-			BigInteger start, BigInteger end) {
-		Callable<BigInteger> batchCalculator = new BatchCalculator(start, end);
-		Future<BigInteger> task = null;
+	private static void addBatchTask(BoundedExecutor be, ArrayList<Future<Long>> results, 
+			long start, long end) {
+		Callable<Long> batchCalculator = new BatchCalculator(start, end);
+		Future<Long> task = null;
 		try {
 			task = be.submit(batchCalculator);
 		} catch (InterruptedException e) {
@@ -78,35 +71,35 @@ public class AddTo1Billion {
 	/**
 	 * Calculator to sum up one batch of numbers
 	 */
-	private static class BatchCalculator implements Callable<BigInteger> {
-		private BigInteger start;
-		private BigInteger end;
+	private static class BatchCalculator implements Callable<Long> {
+		private long start;
+		private long end;
 
-		public BatchCalculator(BigInteger start, BigInteger end) {
+		public BatchCalculator(long start, long end) {
 			super();
 			this.start = start;
 			this.end = end;
 		}
 
 		@Override
-		public BigInteger call() throws Exception {
-			BigInteger total = BigInteger.valueOf(0);
-			for (int i = this.start.intValue(); i <= this.end.intValue(); i++) {
-				total = total.add(BigInteger.valueOf(i));
+		public Long call() throws Exception {
+			long total = 0;
+			for (long i = this.start; i <= this.end; i++) {
+				total = total +i;
 			}
 			System.out.println("bc:start=" + this.start + ":end=" + this.end);
 			return total;
 		}
 	}
 
-	private static void printResults(ArrayList<Future<BigInteger>> results) {
-		BigInteger total = BigInteger.valueOf(0);
+	private static void printResults(ArrayList<Future<Long>> results) {
+		long total = 0;
 		int i = 0;
-		for (Future<BigInteger> result : results) {
+		for (Future<Long> result : results) {
 			try {
-				BigInteger sum = result.get();
+				long sum = result.get();
 				System.out.println("idx=" + i + " sum=" + sum + " total=" + total);
-				total = total.add(result.get());
+				total = total + result.get();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {

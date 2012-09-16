@@ -1,5 +1,8 @@
 package others.iv;
 
+/**
+ * Recursively reverse a String 
+ */
 public class ReverseString {
 
 	public static void main(String[] args) {
