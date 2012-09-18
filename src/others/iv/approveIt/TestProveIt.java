@@ -1,13 +1,8 @@
 package others.iv.approveIt;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
 
-public class Test1 {
+public class TestProveIt {
 
 	/**
 	 * @param args
@@ -35,7 +30,8 @@ public class Test1 {
 		}
 	}
 
-	private static void test2(){
+	
+	private static void test_x2(){
 		StringBuffer ms = new StringBuffer("Test123");
 		ms.reverse();
 		System.out.println(ms);
@@ -116,6 +112,10 @@ public class Test1 {
 	}
 	
 	private static void test9(){
+		ArrayList myList = new ArrayList();
+		myList.add("One");
+		myList.add("One");
+		myList.add("One");
 		
 	}
 	
