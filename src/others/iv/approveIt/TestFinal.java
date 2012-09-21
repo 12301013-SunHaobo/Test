@@ -7,8 +7,29 @@ public final class TestFinal {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+		String result = testFinallyMethod();
+		System.out.println(result);
+		
+		
+		
 	}
 
+	
+	private static String testFinallyMethod() {
+		try {
+			System.out.println("try");
+			if(false){
+				throw new Exception("exception");
+			}
+			return "001";
+			
+		} catch (Exception e){
+			System.out.println("catch");
+		} finally {
+			System.out.println("finally");
+			return "002";
+		}
+	}
+	
 }
