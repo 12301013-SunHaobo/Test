@@ -13,7 +13,8 @@ public class TestProveIt {
 		 //test3();
 		 //test4();
 		 //test5();
-		 test8();
+		 //test8();
+		 test21();
 	}
 	
 	private static void test1(){
@@ -119,6 +120,17 @@ public class TestProveIt {
 		
 	}
 	
+	private static void test21(){
+		int val = 0;
+		for(;;){
+			System.out.println(val);
+			val = val +1;
+			if(val >3) {
+				break;
+			}
+		}
+	}
+	
 	private static void test10(){
 		
 	}
@@ -163,9 +175,7 @@ public class TestProveIt {
 		
 	}
 	
-	private static void test21(){
-		
-	}
+
 	
 	private static void test22(){
 		

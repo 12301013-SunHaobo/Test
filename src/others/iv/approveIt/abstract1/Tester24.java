@@ -5,7 +5,8 @@ import java.io.IOException;
 public class Tester24 extends TestAbstract24 {
 
 	//A
-	public void printIt(String it){
+	@Override
+	public void printIt(String it) {
 		System.out.println(it);
 	}
 	
