@@ -1,4 +1,4 @@
-package others.iv.approveIt.abstract1;
+package others.iv.proveIt.abstract1;
 
 
 public class Tester26 extends Abstract2 {

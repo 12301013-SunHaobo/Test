@@ -1,4 +1,4 @@
-package others.iv.approveIt;
+package others.iv.proveIt;
 
 
 public class Tester2 {

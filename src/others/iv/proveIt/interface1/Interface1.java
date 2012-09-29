@@ -1,4 +1,4 @@
-package others.iv.approveIt.interface1;
+package others.iv.proveIt.interface1;
 
 public interface Interface1 {
 	public void method1();

@@ -1,4 +1,4 @@
-package others.iv.approveIt.interface1;
+package others.iv.proveIt.interface1;
 
 public class Tester29 implements Interface1, Interface2{
 

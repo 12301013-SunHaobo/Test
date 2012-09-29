@@ -1,4 +1,4 @@
-package others.iv.approveIt;
+package others.iv.proveIt;
 
 import java.io.IOException;
 import java.util.ArrayList;

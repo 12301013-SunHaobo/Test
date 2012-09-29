@@ -1,4 +1,4 @@
-package others.iv.approveIt;
+package others.iv.proveIt;
 
 public class Tester3 {
 	 public int calculate(int n){
