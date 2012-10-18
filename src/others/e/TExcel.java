@@ -45,14 +45,14 @@ public class TExcel implements Callable<String>{
 	private void createExcelRow() throws Exception{
 		String name = this.word.getName();
 
-		String dictcnContent = WebUtil.getPageSource(Dictcn.URL + name, Dictcn.ENCODING);
-		Dictcn dictcn = this.word.getDictcn();
-		dictcn.setMeaning(Dictcn.extractMeaning(dictcnContent));
+//		String dictcnContent = WebUtil.getPageSource(Dictcn.URL + name, Dictcn.ENCODING);
+//		Dictcn dictcn = this.word.getDictcn();
+//		dictcn.setMeaning(Dictcn.extractMeaning(dictcnContent));
 
 		//get iciba meanings
-//		String icibaContent = WebUtil.getPageSource(Iciba.ICIBA_URL + name, "utf-8");
-//		Iciba iciba = this.word.getIciba();
-//		iciba.setMeaning(Iciba.extractICIBAMeaning(icibaContent));
+		String icibaContent = WebUtil.getPageSource(Iciba.ICIBA_URL + name, "utf-8");
+		Iciba iciba = this.word.getIciba();
+		iciba.setMeaning(Iciba.extractICIBAMeaning(icibaContent));
 		
 		//get vcab info
 		String vcabContent =  WebUtil.getPageSource(Vcab.URL + name, "utf-8");
