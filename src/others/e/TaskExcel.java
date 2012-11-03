@@ -1,7 +1,9 @@
 package others.e;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import utils.FileUtil;
  */
 public class TaskExcel {
 	private static final String INPUT_FILE="manualUpdated.txt"; //"GW-list.txt, GW-list-full.txt , test-small.txt, remaining.txt 
+	private static final String INPUT_FILE_ENCODING= "UTF-8"; //UTF-8, 
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"/input/";
 	private static final String LOG_DIR = EUtil.PHONE_ROOT+"/output/log/";
 	
@@ -133,7 +136,10 @@ public class TaskExcel {
 	private static List<Word> getAllWords() throws Exception {
 		Set<String> addedWords = new HashSet<String>();
 		List<Word> allWords = new ArrayList<Word>();
-		BufferedReader input = new BufferedReader(new FileReader(INPUT_DIR+"/"+INPUT_FILE));
+		BufferedReader input = new BufferedReader(
+				new InputStreamReader(new
+						FileInputStream(INPUT_DIR+"/"+INPUT_FILE), INPUT_FILE_ENCODING));
+				//new FileReader(INPUT_DIR+"/"+INPUT_FILE));
 		String line = null;
 		int index = 0;
 		

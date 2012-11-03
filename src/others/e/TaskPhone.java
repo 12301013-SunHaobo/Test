@@ -2,8 +2,9 @@ package others.e;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.StopWatch;
 
 import others.e.model.Word;
-import utils.FileUtil;
 import utils.BoundedExecutor;
+import utils.FileUtil;
 
 /**
  * Grab phones from
@@ -32,6 +33,7 @@ public class TaskPhone {
 	
 	
 	private static final String INPUT_FILE= "phoneList.txt"; //"GW-list-full.txt";"all-list.txt"
+	private static final String INPUT_FILE_ENCODING= "UTF-8"; //UTF-8, 
 	private static final String INPUT_DIR = EUtil.PHONE_ROOT+"input/";
 	private static final String VCAB_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/vcab/";
 	private static final String MP3_OUTPUT_DIR = EUtil.PHONE_ROOT+"output/iciba/";
@@ -108,10 +110,11 @@ public class TaskPhone {
 		//submit tasks for downloading mp3
 		BoundedExecutor be = new BoundedExecutor(200);
 		for (int i = 0; i < missingMp3Words.size(); i++) {
-			TPhone tp = new TPhone(missingMp3Words.get(i));
+			Word w = missingMp3Words.get(i);
+			TPhone tp = new TPhone(w);
 			try {
 				be.submit(tp);
-				System.out.println(i + ":submited:");
+				System.out.println(i +":"+w.getName()+ ":submited:");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -162,10 +165,11 @@ public class TaskPhone {
 		//submit tasks for downloading mp3
 		BoundedExecutor be = new BoundedExecutor(200);
 		for (int i = 0; i < missingMp3Words.size(); i++) {
-			TPhone tp = new TPhone(missingMp3Words.get(i));
+			Word w = missingMp3Words.get(i);
+			TPhone tp = new TPhone(w);
 			try {
 				be.submit(tp);
-				System.out.println(i + ":submited:");
+				System.out.println(i + ":"+w.getName()+":submited:");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -282,7 +286,11 @@ public class TaskPhone {
 	
 	private static List<String> getAllWords() throws Exception {
 		List<String> allWords = new ArrayList<String>();
-		BufferedReader input = new BufferedReader(new FileReader(INPUT_DIR+"/"+INPUT_FILE));
+		BufferedReader input = new BufferedReader(
+				new InputStreamReader(new
+						FileInputStream(INPUT_DIR+"/"+INPUT_FILE), INPUT_FILE_ENCODING));
+				
+				//new FileReader(INPUT_DIR+"/"+INPUT_FILE));
 		String line = null;
 		while ((line = input.readLine()) != null) {
 			if(!"".equals(line.trim())){

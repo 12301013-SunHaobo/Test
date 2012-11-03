@@ -40,11 +40,12 @@ public class Dictcn {
 			String basicDDPattern = "<li>.*?</li>";
 			List<String> basicDDList = RegUtil.getMatchedStrings(tmpBasicMeaning, basicDDPattern);
 			if(basicDDList.size()>0){
+				String tagPattern = "(<|</).*?>";
 				for(String basicDD : basicDDList) {
 					if(sb.length()>0){
 						sb.append("\r\n");
 					}
-					sb.append(basicDD);
+					sb.append(basicDD.replaceAll(tagPattern, ""));
 				}
 			}
 			if(sb.length()>0){
